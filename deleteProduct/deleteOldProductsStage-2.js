@@ -19,6 +19,7 @@ const getShopify = function (option) {
             }
 
             setTimeout(() => {
+                console.log("getShopify");
                 resolve(body);
             }, 250);
         });
@@ -40,9 +41,7 @@ const deleteFromShopify = function (option) {
                 reject(err);
             }
             
-            setTimeout(() => {
-                resolve(body);
-            }, 250);
+            resolve(body);
         });
     });
 }
@@ -78,7 +77,7 @@ var fsWriteFile = function (fileName, jsonObj, errorMessage) {
  */
 
 const filterShopifyProducts = function(products, key, value) {
-    return products.map(product => {
+    return products.filter(product => {
         if(product[key] === value) {
             return product;
         }
@@ -103,7 +102,7 @@ const deleteProducts = function(productId) {
         };
         
         deleteFromShopify(params).then(() => {
-            resolve("Success Deleted: " + productId);
+            resolve(productId);
         })
         .catch((error) => {
             reject(error);
@@ -120,7 +119,7 @@ const deleteProducts = function(productId) {
  */
 
 const getProducts = async function(limit = 10, page = 1) {
-
+    console.log("page", page);
     const params = {
         url: `https://${process.env.SHOP}/admin/products.json?limit=${limit}&page=${page}`,
         headers: {
@@ -142,9 +141,11 @@ const deleteAndWriteProducts = function(filteredProducts) {
             for (let i = 0; i < filteredProducts.length; i++) {
                 const { id } = filteredProducts[i];
                 const writeFileMessage = await fsWriteFile(`./stage_deleted_products/${id}.json`, filteredProducts[i], `Error: file save - ${id}`);
-                const deleteMessage = await deleteProducts(id);
+                const oldProductID = await deleteProducts(id);
                 console.log(writeFileMessage);
-                console.log("\u001b[32;1m" + deleteMessage + "\u001b[0m");
+                // let ranNum = Math.floor(Math.random() * 255) + 1;
+                console.log(`\u001b[38;5;${oldProductID % 255}mSuccess Deleted ${oldProductID}\u001b[0m`);
+                // console.log("\u001b[32;1m" + deleteMessage + "\u001b[0m");
             }
             resolve();
         } catch (error) {
@@ -155,19 +156,20 @@ const deleteAndWriteProducts = function(filteredProducts) {
 
 const main = async function() {
     try {
-        let pages = 1;
+        let pages = 121;
         let moreItems = true;
         let pagesGoneBy = 0;
         
         while (moreItems) {
-            const { products } = await getProducts(100, pages);
+            const { products } = await getProducts(250, pages);
             if(!products) {
                 moreItems = false;
                 throw "Products is null"
             };
             if(products.length) {
-                const filteredProducts = await filterShopifyProducts(products);
-
+                const filteredProducts = filterShopifyProducts(products, "template_suffix", null);
+                
+                console.log("filteredProducts.length", filteredProducts.length);
                 if(filteredProducts.length) {
                     await deleteAndWriteProducts(filteredProducts);
                     pagesGoneBy = 0;
@@ -176,7 +178,7 @@ const main = async function() {
                     pages+=1;
                     pagesGoneBy+=1;
                     
-                    if(pagesGoneBy > 5) {
+                    if(pagesGoneBy > 30) {
                         moreItems = false;
                         break;
                     }
