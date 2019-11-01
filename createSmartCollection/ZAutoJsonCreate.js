@@ -2,28 +2,13 @@ require("dotenv").config();
 const request = require("request");
 const beautify = require("json-beautify");
 const fs = require("fs");
-const { vendors } = require("./vendors.json");
 
 /**
- * Post request to shopify
+ * Get request to shopify
  *
  * @param   {Object} option The request object for shopify
  * @returns {Promise}       Promise object represents the post body
  */
-
-const postShopify = function(option) {
-    return new Promise(function(resolve, reject) {
-        request.post(option, function(err, res, body) {
-            if (err) {
-                reject(err);
-            }
-
-            setTimeout(() => {
-                resolve(body);
-            }, 450);
-        });
-    });
-};
 
 const getShopify = function (option) {
 
@@ -118,7 +103,7 @@ const extractZAutoGalTag = async function(shopifyProducts) {
             };
         }
         
-        console.log(`\u001b[38;5;${shopifyProducts[i].id % 255}m${shopifyProducts[i].title}"\u001b[0m`);
+        console.log(`\u001b[38;5;${shopifyProducts[i].id % 255}m${shopifyProducts[i].title}\u001b[0m`);
     }
 }
 
