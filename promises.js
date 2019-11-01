@@ -1,8 +1,8 @@
 
 /**
  * 
- * @param {Boolean} isResolved True or False to return resolved or not
- * @returns {Promise}          Promise object represents the post body
+ * @param   {Boolean} isResolved True or False to return resolved or not
+ * @returns {Promise}            Promise object represents the post body
  */
 
 const someTimeOut = function(isResolved) {
