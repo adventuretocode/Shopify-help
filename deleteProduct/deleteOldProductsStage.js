@@ -42,7 +42,7 @@ const deleteFromShopify = function (option) {
             
             setTimeout(() => {
                 resolve(body);
-            }, 500);
+            }, 1000);
         });
     });
 }
@@ -180,6 +180,7 @@ const main = async function() {
                     
                     if(pagesGoneBy > 5) {
                         moreItems = false;
+                        console.log("Gone Over");
                         break;
                     }
                 }
