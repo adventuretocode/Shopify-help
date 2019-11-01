@@ -2,7 +2,6 @@ require("dotenv").config();
 const request = require("request");
 const beautify = require("json-beautify");
 const fs = require("fs");
-const { vendors } = require("./vendors.json");
 
 /**
  * Post request to shopify
@@ -12,7 +11,6 @@ const { vendors } = require("./vendors.json");
  */
 
 const postShopify = function(option) {
-
     return new Promise(function(resolve, reject) {
         request.post(option, function(err, res, body) {
             if (err) {
@@ -35,7 +33,6 @@ const postShopify = function(option) {
  */
 
 var fsWriteFile = function(fileName, jsonObj) {
-
     return new Promise(function(resolve, reject) {
         fs.writeFile(fileName, beautify(jsonObj, null, 2, 80), function(err) {
             if (err) {
@@ -52,15 +49,18 @@ var fsWriteFile = function(fileName, jsonObj) {
  * @param {Number} id  Shopify smart collection ID
  */
 
-const recordTag = async function(tag, id) {
-    try {
-        const file = await fs.readFileSync('./ZAutoProductColCreated.json', 'utf8');
-        const json = JSON.parse(file);
-        json[tag] = id;
-        await fsWriteFile(`./ZAutoProductColCreated.json`, json);
-    } catch (error) {
-        throw error;
-    }
+const recordTag = function(tag, id) {
+    return new Promise(async function(resolve, reject) {
+        try {
+            const file = await fs.readFileSync('./ZAutoProductColCreated.json', 'utf8');
+            const json = JSON.parse(file);
+            json[tag] = id;
+            await fsWriteFile(`./ZAutoProductColCreated.json`, json);
+            resolve();
+        } catch (error) {
+            reject(error);
+        }
+    });
   
 };
 
@@ -70,14 +70,17 @@ const recordTag = async function(tag, id) {
  * @returns {Number|undefined} The id of the smart collection on shopify
  */
 
-const checkTagExist = async function(tag) {
-    try {
-        const file = await fs.readFileSync('./ZAutoProductColCreated.json', 'utf8');
-        const json = JSON.parse(file);
-        return json[tag];
-    } catch (error) {
-        throw error;
-    } 
+const checkTagExist = function(tag) {
+    return new Promise(async function(resolve, reject) {
+        try {
+            const file = await fs.readFileSync('./ZAutoProductColCreated.json', 'utf8');
+            const json = JSON.parse(file);
+            resolve(json[tag]);
+        } catch (error) {
+            console.log("Error: checkTagExist - ", tag);
+            reject(error);
+        } 
+    });
 }
 
 /**
@@ -88,9 +91,7 @@ const checkTagExist = async function(tag) {
  */
 
 const createSmartCollection = function(body) {
-
     return new Promise(async function(resolve, reject) {
-
         const params = {
             url: `https://${process.env.SHOP}/admin/api/2019-10/smart_collections.json`,
             headers: {
@@ -105,6 +106,7 @@ const createSmartCollection = function(body) {
             const smartCollectionResponse = await postShopify(params);
             resolve(smartCollectionResponse);
         } catch (error) {
+            console.log("Error: createSmartCollection - ", body.smart_collection.title);
             reject(error);
         }
     });
@@ -116,32 +118,32 @@ const createSmartCollection = function(body) {
  * @param {String} title Title of the smart collection
  */
 
-const createArtistByZTag = async function(tag, title) {
-
-    const postBody = {
-        smart_collection: {
-            title: title,
-            rules: [
-                {
-                    column: "tag",
-                    relation: "equals",
-                    condition: tag
-                }
-            ]
+const createArtistByZTag = function(tag, title) {
+    return new Promise(async function(resolve, reject) {
+        const postBody = {
+            smart_collection: {
+                title: title,
+                rules: [
+                    {
+                        column: "tag",
+                        relation: "equals",
+                        condition: tag
+                    }
+                ]
+            }
+        };
+    
+        try {
+            const createdSmartCollection  = await createSmartCollection(postBody)
+            await fsWriteFile(`./artistProductCollection/${createdSmartCollection.id}.json`, createdSmartCollection);
+            await recordTag(tag, createdSmartCollection.id);
+            resolve(tag);
+    
+        } catch (error) {
+            console.log(" Error: createArtistByZTag - ", tag);
+            reject(error);
         }
-    };
-
-    try {
-        const createdSmartCollection  = await createSmartCollection(postBody)
-        await fsWriteFile(`./artistProductCollection/${createdSmartCollection.id}.json`, createdSmartCollection);
-        await recordTag(tag, createdSmartCollection.id);
-        return "ok";
-
-    } catch (error) {
-        console.log("createArtistByZTag: Error - ", tag)
-        throw error;
-    }
-
+    });
 };
 
 /**
@@ -149,20 +151,22 @@ const createArtistByZTag = async function(tag, title) {
  * @param {String} tag   Tag on shopify
  */
 
-const checkIfExist = async function(tag) {
-    const isAlreadyCreated = await checkTagExist(tag);
-    try {
-        if(isAlreadyCreated) {
-            console.log("Already Created: ", tag);
+const checkIfExist = function(tag) {
+    return new Promise(async function(resolve, reject) {
+        try {
+            const isAlreadyCreated = await checkTagExist(tag);
+            if(isAlreadyCreated) {
+                console.log("Already Created: ", tag);
+            }
+            else {
+                await createArtistByZTag(tag);
+            }
+            resolve();
+        } catch (error) {
+            console.log("Error: checkIfExist - ", tag);
+            reject(error);
         }
-        else {
-            await createArtistByZTag(tag);
-            return "ok";
-        }
-    } catch (error) {
-        console.log("checkIfExist: Error - ", artist);
-        throw error;
-    }
+    });
 }
 
 /**
@@ -177,7 +181,7 @@ const main = async function(tagsAndTitle) {
             await checkIfExist(tag, tagsAndTitle[tag]);
             console.log("Success: ", tag);
         } catch (error) {
-            console.log("Error: ", error, tag);
+            console.log("Error: main - ", error, tag);
             break;
         }
     }
