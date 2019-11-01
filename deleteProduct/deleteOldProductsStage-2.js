@@ -19,7 +19,6 @@ const getShopify = function (option) {
             }
 
             setTimeout(() => {
-                console.log("getShopify");
                 resolve(body);
             }, 250);
         });
@@ -156,32 +155,27 @@ const deleteAndWriteProducts = function(filteredProducts) {
 
 const main = async function() {
     try {
-        let pages = 121;
+        let pages = 1;
         let moreItems = true;
-        let pagesGoneBy = 0;
         
         while (moreItems) {
-            const { products } = await getProducts(250, pages);
-            if(!products) {
+            const shopifyProduct = await getProducts(250, pages);
+            if(!shopifyProduct) {
                 moreItems = false;
                 throw "Products is null"
             };
+
+            const { products } = shopifyProduct;
+
             if(products.length) {
-                const filteredProducts = filterShopifyProducts(products, "template_suffix", null);
+                const filteredProducts = filterShopifyProducts(products, "template_suffix", "");
                 
                 console.log("filteredProducts.length", filteredProducts.length);
                 if(filteredProducts.length) {
                     await deleteAndWriteProducts(filteredProducts);
-                    pagesGoneBy = 0;
                 }
                 else {
                     pages+=1;
-                    pagesGoneBy+=1;
-                    
-                    if(pagesGoneBy > 30) {
-                        moreItems = false;
-                        break;
-                    }
                 }
             }
             else {
