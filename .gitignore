@@ -2,3 +2,4 @@ node_modules
 .env
 artistUniqueArtWorkCollection
 stage_deleted_products
+artistProductCollection
