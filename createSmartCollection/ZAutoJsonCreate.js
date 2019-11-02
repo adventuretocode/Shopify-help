@@ -23,7 +23,7 @@ const getShopify = function (option) {
             }, 250);
         });
     });
-}
+};
 
 /**
  * Query the admin to get all products but limit amount received
@@ -33,24 +33,24 @@ const getShopify = function (option) {
  * @returns {Promise}      Promise object represents the post body
  */
 
-const getProducts = async function(limit = 10, page = 1) {
-
-    const params = {
-        url: `https://${process.env.SHOP}/admin/products.json?limit=${limit}&page=${page}`,
-        headers: {
+const getProducts = function(limit = 10, page = 1) {
+    return new Promise(async function(resolve, reject) {
+        const params = {
+            url: `https://${process.env.SHOP}/admin/products.json?limit=${limit}&page=${page}`,
+            headers: {
             "X-Shopify-Access-Token": process.env.ACCESS_TOKEN,
             "Content-Type": "application/json",
-        },
-        json: true,
-    };
-    
-    try {
-        const products = await getShopify(params);
-        return products;
-    } catch (error) {
-        throw error;
-    }
-
+            },
+            json: true,
+        };
+        
+        try {
+            const products = await getShopify(params);
+            resolve(products);
+        } catch (error) {
+            reject(error);
+        }
+    });
 };
 
 /**
@@ -62,7 +62,6 @@ const getProducts = async function(limit = 10, page = 1) {
  */
 
 var fsWriteFile = function (fileName, jsonObj) {
-
     return new Promise(function (resolve, reject) {
         fs.writeFile(fileName, beautify(jsonObj, null, 2, 80), function (err) {
             if (err) {
@@ -77,43 +76,51 @@ const cleanData = function(string) {
     return string.replace(/[^\w\s]/gi, "")
         .replace(/  /gi, " ")
         .replace(/ /g, "-").toLowerCase();
-}
+};
 
-const recordTag = async function(tag, handle) {
-    try {
-        const file = await fs.readFileSync('./ZAutoJson.json', 'utf8');
-        const json = JSON.parse(file);
-        json[tag] = handle;
-        await fsWriteFile(`./ZAutoJson.json`, json);
-    } catch (error) {
-        throw error;
-    }
-  
+const recordTag = function(tag, handle, id) {
+    return new Promise(async function(resolve, reject) {
+        try {
+            // const file = await fs.readFileSync('./ZAutoJsonWithID.json', 'utf8');
+            // const json = JSON.parse(file);
+            const json = require('./ZAutoJsonWithID.json');
+            json[tag] = { 
+                "id": id,
+                "handle": handle
+            };
+            await fsWriteFile(`./ZAutoJsonWithID.json`, json);
+            resolve();
+        } catch (error) {
+            reject(error);
+        }
+    });
 };
 
 const extractZAutoGalTag = async function(shopifyProducts) {
-    for (let i = 0; i < shopifyProducts.length; i++) {
+    for (let i = 0; i < shopifyProducts.length; i+=2) {
         let tags = shopifyProducts[i].tags.split(", ");
         for (let j = tags.length - 1; j > 0; j-=1) {
             if(~tags[j].indexOf("ZAuto_gallery")) {
                 let title = cleanData(shopifyProducts[i].title);
                 let artist = cleanData(shopifyProducts[i].vendor);
-                await recordTag(tags[j], `${artist}_${title}`);
+                await recordTag(tags[j], `${artist}_${title}`, shopifyProducts[i].id);
                 break;
             };
         }
         
         console.log(`\u001b[38;5;${shopifyProducts[i].id % 255}m${shopifyProducts[i].title}\u001b[0m`);
     }
-}
+};
 
 const main = async function() {
     try {
         let pages = 1;
+        // let pages = 213;
         let moreItems = true;
         
         while (moreItems) {
-            const shopifyProducts = await getProducts(1, pages);
+            const shopifyProducts = await getProducts(250, pages);
+            console.log(`==================== ${pages} ===================`);
             if(!shopifyProducts) {
                 moreItems = false;
                 throw "Products is null"
@@ -133,11 +140,11 @@ const main = async function() {
 
             console.log("success");
         }
-        
+      return "Completed";
     } catch (error) {
        throw error;
     }
-}
+};
 
 main()
     .then(success => console.log(success))
