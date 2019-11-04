@@ -3,6 +3,7 @@ const request = require("request");
 const beautify = require("json-beautify");
 const fs = require("fs");
 const axios = require("axios");
+const cleanData = require("../helpers/cleanData.js");
 
 /**
  * Post request to shopify
@@ -199,11 +200,12 @@ const createCustomCollection = function(body) {
  */
 
 const createArtistByZTag = function(productIds, title) {
+    const artistHandle = cleanData(title);
     return new Promise(async function(resolve, reject) {
         const postBody = {
           custom_collection: {
-              title: title,
-              "collects": productIds,
+              title: `${artistHandle}_mensbasictee`,
+              collects: productIds,
           }
         };
     
