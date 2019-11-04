@@ -3,6 +3,7 @@ const request = require("request");
 const beautify = require("json-beautify");
 const fs = require("fs");
 const { vendors } = require("./vendors.json");
+const cleanData = require("../helpers/cleanData.js");
 
 /**
  * Post request to shopify
@@ -82,10 +83,10 @@ const createSmartCollection = function(body) {
  */
 
 const createUniqueArtWork = async function(artist) {
-
+    const artistHandle = cleanData(artist);
     const postBody = {
         smart_collection: {
-            title: `${artist}_mensbasictee`,
+            title: `${artistHandle}_mensbasictee`,
             rules: [
                 {
                     column: "vendor",
