@@ -19,7 +19,7 @@ const postShopify = function(option) {
 
             setTimeout(() => {
                 resolve(body);
-            }, 450);
+            }, 500);
         });
     });
 };
@@ -52,8 +52,7 @@ var fsWriteFile = function(fileName, jsonObj) {
 const recordTag = function(tag, id) {
     return new Promise(async function(resolve, reject) {
         try {
-            const file = await fs.readFileSync('./ZAutoProductColCreated.json', 'utf8');
-            const json = JSON.parse(file);
+            const json = require('./ZAutoProductColCreated.json');
             json[tag] = id;
             await fsWriteFile(`./ZAutoProductColCreated.json`, json);
             resolve();
@@ -71,10 +70,9 @@ const recordTag = function(tag, id) {
  */
 
 const checkTagExist = function(tag) {
-    return new Promise(async function(resolve, reject) {
+    return new Promise(function(resolve, reject) {
         try {
-            const file = await fs.readFileSync('./ZAutoProductColCreated.json', 'utf8');
-            const json = JSON.parse(file);
+            const json = require('./ZAutoProductColCreated.json');
             resolve(json[tag]);
         } catch (error) {
             console.log("Error: checkTagExist - ", tag);
@@ -114,8 +112,9 @@ const createSmartCollection = function(body) {
 
 /**
  * Build the body of the 
- * @param {String} tag   Tag on shopify
- * @param {String} title Title of the smart collection
+ * @param   {String} tag   Tag on shopify
+ * @param   {String} title Title of the smart collection
+ * @returns {Number}       The id of the smart collection
  */
 
 const createArtistByZTag = function(tag, title) {
@@ -134,11 +133,11 @@ const createArtistByZTag = function(tag, title) {
         };
     
         try {
-            const createdSmartCollection  = await createSmartCollection(postBody)
-            await fsWriteFile(`./artistProductCollection/${createdSmartCollection.id}.json`, createdSmartCollection);
-            await recordTag(tag, createdSmartCollection.id);
-            resolve(tag);
-    
+            const createdSmartCollection  = await createSmartCollection(postBody);
+            const { smart_collection: { handle, id } } = createdSmartCollection;
+            await fsWriteFile(`./artistProductCollection/${handle}.json`, createdSmartCollection);
+            await recordTag(tag, id);
+            resolve(id);
         } catch (error) {
             console.log(" Error: createArtistByZTag - ", tag);
             reject(error);
@@ -148,20 +147,22 @@ const createArtistByZTag = function(tag, title) {
 
 /**
  * Check if collection already exist on shopify
- * @param {String} tag   Tag on shopify
+ * @param   {String}        tag Tag on shopify
+ * @returns {String|Number}     String "Already Created" or the ID of the new smart collection
  */
 
-const checkIfExist = function(tag) {
+const checkIfExist = function(tag, title) {
     return new Promise(async function(resolve, reject) {
         try {
+            let id = "Already Created";
             const isAlreadyCreated = await checkTagExist(tag);
             if(isAlreadyCreated) {
                 console.log("Already Created: ", tag);
             }
             else {
-                await createArtistByZTag(tag);
+                id = await createArtistByZTag(tag, title);
             }
-            resolve();
+            resolve(id);
         } catch (error) {
             console.log("Error: checkIfExist - ", tag);
             reject(error);
@@ -178,11 +179,15 @@ const main = async function(tagsAndTitle) {
 
     for(const tag in tagsAndTitle) {
         try {
-            await checkIfExist(tag, tagsAndTitle[tag]);
-            console.log("Success: ", tag);
+            const id = await checkIfExist(tag, tagsAndTitle[tag]);
+            const message = id === "Already Created" 
+                ? id : `\u001b[38;5;${id % 255}mSuccess: ${tag}\u001b[0m`;
+            console.log(message);
         } catch (error) {
             console.log("Error: main - ", error, tag);
-            break;
+            const errorJson = require("./ErrorZAutoProductColCreated.json");
+            errorJson[tag] = error;
+            await fsWriteFile(`./ErrorZAutoProductColCreated.json`, errorJson);
         }
     }
 }
