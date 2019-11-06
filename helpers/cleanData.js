@@ -1,18 +1,50 @@
 
 const cleanData = function(string) {
-    return string
+    let tempStr = string
         // Remove all special characters
         .replace(/!/gi, "")
         .replace(/\[/g, "")
         .replace(/\]/g, "")
         .replace(/'/g, "")
+        .replace(/"/g, "")
+        .replace(/\#/g, "")
+        .replace(/\$/g, "")
+        .replace(/\%/g, "")
+        .replace(/\&/g, "")
+        .replace(/\?/g, "")
+        .replace(/\)/g, "")
+        .replace(/\(/g, "")
+        .replace(/\*/g, "")
+        .replace(/\@/g, "")
+        .replace(/\+/g, "")
+        .replace(/\//g, "")
+        .replace(/\,/g, "")
+        .replace(/\~/g, "")
+        .replace(/\{/g, "")
+        .replace(/\}/g, "")
+        .replace(/\|/g, "")
+        .replace(/\}/g, "")
+        .replace(/\\/g, "")
+        .replace(/\:/g, "")
+        // .replace(//g, "")
         // Remove all double spaces
+        .replace(/\.\.\./g, "")
         .replace(/  /g, " ")
         // Replace some characters with dashes instead
+        .replace(/ /g, "-")
         .replace(/\./g, "-")
         .replace(/\^/g, "-")
-        .replace(/ /g, "-")
         .toLowerCase();
+    
+    while(tempStr.endsWith("-")) {
+      tempStr = tempStr.slice(0, -1);
+    }
+
+    while(tempStr.startsWith("-")) {
+      tempStr = tempStr.substr(1);
+    }
+
+    return tempStr;
 };
 
 module.exports = cleanData;
@@ -26,10 +58,14 @@ module.exports = cleanData;
 // console.log(cleanData("angi-pants"), "angi-pants");                 // angi-pants
 // console.log(cleanData("Dar'Qaris"), "darqaris");                    // darqaris
 // console.log(cleanData("Kyoki^3"), "kyoki-3");                       // kyoki-3
+// console.log(cleanData("America *!@# Yeah"), "america-at-yeah-hoodie");             // america-at-yeah-hoodie
+// console.log(cleanData("Can't Find Him..."), "cant-find-him");             // cant-find-him
+// console.log(cleanData("...finds a way"), "cant-find-him");             // ...finds a way
+// console.log(cleanData("3-2-1...Let's Jam"), "cant-find-him");             // ...finds a way
 
 
 // console.table([ 
-//     {Original: "Michael Myers Jr.", Expected: "michael-myers-jr-", Cleaned: cleanData("Michael Myers Jr."), isEqual: `${"michael-myers-jr-" === cleanData("Michael Myers Jr.")}`  }, 
+//     {Original: "Michael Myers Jr.", Expected: "michael-myers-jr", Cleaned: cleanData("Michael Myers Jr."), isEqual: `${"michael-myers-jr" === cleanData("Michael Myers Jr.")}`  }, 
 //     {Original: "R-evolution GFX", Expected: "r-evolution-gfx", Cleaned: cleanData("R-evolution GFX."), isEqual: `${"r-evolution-gfx" === cleanData("R-evolution GFX")}`  }, 
 //     {Original: "Tek-Man", Expected: "tek-man", Cleaned: cleanData("Tek-Man"), isEqual: `${"tek-man" === cleanData("Tek-Man")}`  }, 
 //     {Original: "H.Heal", Expected: "h-heal", Cleaned: cleanData("H.Heal"), isEqual: `${"h-heal" === cleanData("H.Heal")}`  }, 
@@ -38,5 +74,10 @@ module.exports = cleanData;
 //     {Original: "angi-pants", Expected: "ngi-pants", Cleaned: cleanData("angi-pants"), isEqual: `${"angi-pants" === cleanData("angi-pants")}`  }, 
 //     {Original: "Dar'Qaris", Expected: "darqaris", Cleaned: cleanData("Dar'Qaris"), isEqual: `${"darqaris" === cleanData("Dar'Qaris")}`  }, 
 //     {Original: "Kyoki^3", Expected: "kyoki-3", Cleaned: cleanData("Kyoki^3"), isEqual: `${"kyoki-3" === cleanData("Kyoki^3")}`  }, 
+//     {Original: "America *!@# Yeah", Expected: "america-yeah", Cleaned: cleanData("America *!@# Yeah"), isEqual: `${"america-yeah" === cleanData("America *!@# Yeah")}`  }, 
+//     {Original: "Can't Find Him...", Expected: "cant-find-him", Cleaned: cleanData("Can't Find Him..."), isEqual: `${"cant-find-him" === cleanData("Can't Find Him...")}`  }, 
+//     {Original: "...finds a way", Expected: "finds-a-way", Cleaned: cleanData("...finds a way"), isEqual: `${"finds-a-way" === cleanData("...finds a way")}`  }, 
+//     {Original: "3-2-1...Let's Jam", Expected: "3-2-1lets-jam", Cleaned: cleanData("3-2-1...Let's Jam"), isEqual: `${"3-2-1lets-jam" === cleanData("3-2-1...Let's Jam")}`  }, 
+//     {Original: "3 Little Pigs: Mechanized Assault", Expected: "3-little-pigs-mechanized-assault", Cleaned: cleanData("3 Little Pigs: Mechanized Assault"), isEqual: `${"3-little-pigs-mechanized-assault" === cleanData("3 Little Pigs: Mechanized Assault")}`  }, 
 //     {Original: "", Expected: "", Cleaned: cleanData(""), isEqual: `${"" === cleanData("")}`  }, 
 // ]);
