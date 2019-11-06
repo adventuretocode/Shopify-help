@@ -2,6 +2,7 @@ require("dotenv").config();
 const request = require("request");
 const beautify = require("json-beautify");
 const fs = require("fs");
+const cleanData = require("../helpers/cleanData.js");
 
 /**
  * Get request to shopify
@@ -72,23 +73,17 @@ var fsWriteFile = function (fileName, jsonObj) {
     });
 };
 
-const cleanData = function(string) {
-    return string.replace(/[^\w\s]/gi, "")
-        .replace(/  /gi, " ")
-        .replace(/ /g, "-").toLowerCase();
-};
-
 const recordTag = function(tag, handle, id) {
     return new Promise(async function(resolve, reject) {
         try {
-            // const file = await fs.readFileSync('./ZAutoJsonWithID.json', 'utf8');
-            // const json = JSON.parse(file);
-            const json = require('./ZAutoJsonWithID.json');
-            json[tag] = { 
+            const json = require(`./ZAutoJsonWithID${process.env.ENV}.json`);
+            if(!json[tag]) {
+              json[tag] = {
                 "id": id,
                 "handle": handle
-            };
-            await fsWriteFile(`./ZAutoJsonWithID.json`, json);
+              };
+              await fsWriteFile(`./ZAutoJsonWithID${process.env.ENV}.json`, json);
+            }
             resolve();
         } catch (error) {
             reject(error);
@@ -104,23 +99,22 @@ const extractZAutoGalTag = async function(shopifyProducts) {
                 let title = cleanData(shopifyProducts[i].title);
                 let artist = cleanData(shopifyProducts[i].vendor);
                 await recordTag(tags[j], `${artist}_${title}`, shopifyProducts[i].id);
+                console.log(`\u001b[38;5;${shopifyProducts[i].id % 255}m${shopifyProducts[i].title}\u001b[0m`);
                 break;
             };
         }
         
-        console.log(`\u001b[38;5;${shopifyProducts[i].id % 255}m${shopifyProducts[i].title}\u001b[0m`);
     }
 };
 
 const main = async function() {
     try {
         let pages = 1;
-        // let pages = 213;
+        // let pages = 302;
         let moreItems = true;
         
         while (moreItems) {
             const shopifyProducts = await getProducts(250, pages);
-            console.log(`==================== ${pages} ===================`);
             if(!shopifyProducts) {
                 moreItems = false;
                 throw "Products is null"
@@ -129,16 +123,17 @@ const main = async function() {
             const { products } = shopifyProducts;
 
             if(products.length) {
-                extractZAutoGalTag(products);
+                await extractZAutoGalTag(products);
                 pages+=1;
             }
             else {
                 console.log("No products Found", products);
+                console.log("Completed");
                 moreItems = false;
                 break;
             }
 
-            console.log("success");
+            console.log(`==================== ${pages} ===================`);
         }
       return "Completed";
     } catch (error) {
