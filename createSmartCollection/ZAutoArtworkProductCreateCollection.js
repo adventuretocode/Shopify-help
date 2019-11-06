@@ -52,9 +52,9 @@ var fsWriteFile = function(fileName, jsonObj) {
 const recordTag = function(tag, id) {
     return new Promise(async function(resolve, reject) {
         try {
-            const json = require('./ZAutoProductColCreated.json');
+            const json = require(`./ZAutoProductColCreated${process.env.ENV}.json`);
             json[tag] = id;
-            await fsWriteFile(`./ZAutoProductColCreated.json`, json);
+            await fsWriteFile(`./ZAutoProductColCreated${process.env.ENV}.json`, json);
             resolve();
         } catch (error) {
             reject(error);
@@ -72,7 +72,7 @@ const recordTag = function(tag, id) {
 const checkTagExist = function(tag) {
     return new Promise(function(resolve, reject) {
         try {
-            const json = require('./ZAutoProductColCreated.json');
+            const json = require(`./ZAutoProductColCreated${process.env.ENV}.json`);
             resolve(json[tag]);
         } catch (error) {
             console.log("Error: checkTagExist - ", tag);
@@ -135,7 +135,7 @@ const createArtistByZTag = function(tag, title) {
         try {
             const createdSmartCollection  = await createSmartCollection(postBody);
             const { smart_collection: { handle, id } } = createdSmartCollection;
-            await fsWriteFile(`./artistProductCollection/${handle}.json`, createdSmartCollection);
+            await fsWriteFile(`./artistProductCollection${process.env.ENV}/${handle}.json`, createdSmartCollection);
             await recordTag(tag, id);
             resolve(id);
         } catch (error) {
@@ -185,12 +185,12 @@ const main = async function(tagsAndTitle) {
             console.log(message);
         } catch (error) {
             console.log("Error: main - ", error, tag);
-            const errorJson = require("./ErrorZAutoProductColCreated.json");
+            const errorJson = require(`./ErrorZAutoProductColCreated${process.env.ENV}.json`);
             errorJson[tag] = error;
-            await fsWriteFile(`./ErrorZAutoProductColCreated.json`, errorJson);
+            await fsWriteFile(`./ErrorZAutoProductColCreated${process.env.ENV}.json`, errorJson);
         }
     }
 }
 
-const tagsAndTitle = require("./ZAutoJson.json");
+const tagsAndTitle = require(`./ZAutoJson${process.env.ENV}.json`);
 main(tagsAndTitle);

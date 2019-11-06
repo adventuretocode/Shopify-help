@@ -2,7 +2,7 @@ require("dotenv").config();
 const request = require("request");
 const beautify = require("json-beautify");
 const fs = require("fs");
-const { vendors } = require("./vendors.json");
+const { vendors } = require(`./vendors${process.env.ENV}.json`);
 const cleanData = require("../helpers/cleanData.js");
 
 /**
@@ -114,7 +114,7 @@ const createUniqueArtWork = async function(artist) {
 
     try {
         const createdSmartCollection  = await createSmartCollection(postBody)
-        await fsWriteFile(`./artistUniqueArtWorkCollection/${artist}.json`,createdSmartCollection);
+        await fsWriteFile(`./artistUniqueArtWorkCollection${process.env.ENV}/${artist}.json`,createdSmartCollection);
         return "ok";
 
     } catch (error) {
@@ -126,7 +126,7 @@ const createUniqueArtWork = async function(artist) {
 
 const checkIfExist = async function(artist) {
     try {
-        if(fs.existsSync(`./artistUniqueArtWorkCollection/${artist}.json`)) {
+        if(fs.existsSync(`./artistUniqueArtWorkCollection${process.env.ENV}/${artist}.json`)) {
             console.log("Already Created: ", artist);
         }
         else {
