@@ -1,4 +1,4 @@
-{
+module.exports = {
     "vendors": [
         "1sicnoma",
         "2mzdesign",
