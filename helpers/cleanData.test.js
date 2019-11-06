@@ -1,3 +1,5 @@
+// $ npm run mocha ./cleanData.test.js 
+
 const expect = require("chai").expect;
 const cleanData = require("./cleanData.js");
 
