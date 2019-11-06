@@ -2,6 +2,7 @@ require("dotenv").config();
 const request = require("request");
 const beautify = require("json-beautify");
 const fs = require("fs");
+const path = require('path');
 
 /**
  * Post request to shopify
@@ -34,7 +35,7 @@ const postShopify = function(option) {
 
 var fsWriteFile = function(fileName, jsonObj) {
     return new Promise(function(resolve, reject) {
-        fs.writeFile(fileName, beautify(jsonObj, null, 2, 80), function(err) {
+        fs.writeFile(path.join(__dirname, fileName), beautify(jsonObj, null, 2, 80), function(err) {
             if (err) {
                 reject(err);
             }
@@ -52,7 +53,7 @@ var fsWriteFile = function(fileName, jsonObj) {
 const recordTag = function(tag, id) {
     return new Promise(async function(resolve, reject) {
         try {
-            const json = require(`./ZAutoProductColCreated${process.env.ENV}.json`);
+            const json = require(path.join(__dirname, `./ZAutoProductColCreated${process.env.ENV}.json`));
             json[tag] = id;
             await fsWriteFile(`./ZAutoProductColCreated${process.env.ENV}.json`, json);
             resolve();
@@ -72,7 +73,7 @@ const recordTag = function(tag, id) {
 const checkTagExist = function(tag) {
     return new Promise(function(resolve, reject) {
         try {
-            const json = require(`./ZAutoProductColCreated${process.env.ENV}.json`);
+            const json = require(path.join(__dirname, `./ZAutoProductColCreated${process.env.ENV}.json`));
             resolve(json[tag]);
         } catch (error) {
             console.log("Error: checkTagExist - ", tag);
@@ -135,7 +136,7 @@ const createArtistByZTag = function(tag, title) {
         try {
             const createdSmartCollection  = await createSmartCollection(postBody);
             const { smart_collection: { handle, id } } = createdSmartCollection;
-            await fsWriteFile(`./artistProductCollection${process.env.ENV}/${handle}.json`, createdSmartCollection);
+            await fsWriteFile(`./artistProductCollection/${handle}.json`, createdSmartCollection);
             await recordTag(tag, id);
             resolve(id);
         } catch (error) {
@@ -179,18 +180,19 @@ const main = async function(tagsAndTitle) {
 
     for(const tag in tagsAndTitle) {
         try {
-            const id = await checkIfExist(tag, tagsAndTitle[tag]);
+            const id = await checkIfExist(tag, tagsAndTitle[tag].handle);
             const message = id === "Already Created" 
                 ? id : `\u001b[38;5;${id % 255}mSuccess: ${tag}\u001b[0m`;
             console.log(message);
         } catch (error) {
             console.log("Error: main - ", error, tag);
-            const errorJson = require(`./ErrorZAutoProductColCreated${process.env.ENV}.json`);
+            const errorJson = require(path.join(__dirname, `./ErrorZAutoProductColCreated${process.env.ENV}.json`));
             errorJson[tag] = error;
             await fsWriteFile(`./ErrorZAutoProductColCreated${process.env.ENV}.json`, errorJson);
+            break;
         }
     }
 }
 
-const tagsAndTitle = require(`./ZAutoJson${process.env.ENV}.json`);
+const tagsAndTitle = require(path.join(__dirname, `./ZAutoJsonWithID${process.env.ENV}.json`));
 main(tagsAndTitle);
