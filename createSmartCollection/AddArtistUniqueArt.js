@@ -1,9 +1,9 @@
 require("dotenv").config();
 const request = require("request");
-const beautify = require("json-beautify");
 const fs = require("fs");
-const { vendors } = require(`./vendors${process.env.ENV}.json`);
 const cleanData = require("../helpers/cleanData.js");
+const fsWriteFile = require("../helpers/fsWriteFile.js");
+const path = require("path");
 
 /**
  * Post request to shopify
@@ -23,26 +23,6 @@ const postShopify = function(option) {
             setTimeout(() => {
                 resolve(body);
             }, 450);
-        });
-    });
-};
-
-/**
- * File system create a file with json object
- *
- * @param   {String} fileName     The name of the file is to be called
- * @param   {Object} jsonObj      The object to be printed on the disk
- * @returns {Promise}             Promise object represents the success or failure of writing to disk
- */
-
-var fsWriteFile = function(fileName, jsonObj) {
-
-    return new Promise(function(resolve, reject) {
-        fs.writeFile(fileName, beautify(jsonObj, null, 2, 80), function(err) {
-            if (err) {
-                reject(err);
-            }
-            resolve("Success: Writing File");
         });
     });
 };
@@ -79,7 +59,8 @@ const createSmartCollection = function(body) {
 
 /**
  * Build the body of the 
- * @param {String} artist artist 
+ * @param   {String} artist artist 
+ * @returns {Number}        ID# of the new smart collection
  */
 
 const createUniqueArtWork = async function(artist) {
@@ -114,8 +95,8 @@ const createUniqueArtWork = async function(artist) {
 
     try {
         const createdSmartCollection  = await createSmartCollection(postBody)
-        await fsWriteFile(`./artistUniqueArtWorkCollection${process.env.ENV}/${artist}.json`,createdSmartCollection);
-        return "ok";
+        await fsWriteFile(path.join(__dirname, `./artistUniqueArtWorkCollection${process.env.ENV}/${artistHandle}.json`), createdSmartCollection);
+        return createdSmartCollection.id;
 
     } catch (error) {
         console.log("createUniqueArtWork: Error - ", artist)
@@ -126,12 +107,13 @@ const createUniqueArtWork = async function(artist) {
 
 const checkIfExist = async function(artist) {
     try {
-        if(fs.existsSync(`./artistUniqueArtWorkCollection${process.env.ENV}/${artist}.json`)) {
-            console.log("Already Created: ", artist);
+        const cleanArtist = cleanData(artist)
+        if(fs.existsSync(path.join(__dirname, `./artistUniqueArtWorkCollection${process.env.ENV}/${cleanArtist}.json`))) {
+            console.log("Already Created: ", cleanArtist);
         }
         else {
-            await createUniqueArtWork(artist);
-            return "ok";
+            const id = await createUniqueArtWork(artist);
+            return id;
         }
     } catch (error) {
         console.log("checkIfExist: Error - ", artist);
@@ -139,17 +121,20 @@ const checkIfExist = async function(artist) {
     }
 }
 
-const main = async function() {
+const main = async function(vendorArr) {
 
-    for (let i = 0; i < vendors.length; i+=1) {
+    for (let i = 0; i < vendorArr.length; i+=1) {
         try {
-            await checkIfExist(vendors[i]);
-            console.log("Success: ", vendors[i]);
+            const id = await checkIfExist(vendorArr[i]);
+            console.log(`\u001b[38;5;${id % 255}mSuccess: ${vendorArr[i]}\u001b[0m`);
         } catch (error) {
-            console.log("Error: ", error, vendors[i]);
-            break;
+            console.log("Error: ", error, vendorArr[i]);
+            const errorJson = require(path.join(__dirname, `./ErrorArtistMensBasicTee${process.env.ENV}.json`));
+            errorJson[tag] = error;
+            await fsWriteFile(`./ErrorArtistMensBasicTee${process.env.ENV}.json`, errorJson);
         }
     }
 }
 
-main();
+const { vendors } = require(path.join(__dirname, `./vendors${process.env.ENV}.js`));
+main(vendors);
