@@ -1,8 +1,22 @@
+/**
+ * Must Run ZAutoJsonCreate.js first to to build the ZAuto tags
+ * 
+ * It will check from `ZAutoProductColCreated{process.env.ENV}.json` 
+ * to see if the collection has already been created
+ * 
+ * This fill will create the smart tags on shopify based on
+ * the file `ZAutoJsonWithID{process.env.ENV}.json`
+ * 
+ * On Success it will record down the return JSON 
+ * in the folder `./artistProductCollection${process.env.ENV}/`
+ * 
+ * And Also log into `ZAutoProductColCreated{process.env.ENV}.json`
+ * 
+ */
 require("dotenv").config();
 const request = require("request");
-const beautify = require("json-beautify");
-const fs = require("fs");
 const path = require('path');
+const fsWriteFile = require("../helpers/fsWriteFile.js");
 
 /**
  * Post request to shopify
@@ -26,26 +40,7 @@ const postShopify = function(option) {
 };
 
 /**
- * File system create a file with json object
- *
- * @param   {String} fileName     The name of the file is to be called
- * @param   {Object} jsonObj      The object to be printed on the disk
- * @returns {Promise}             Promise object represents the success or failure of writing to disk
- */
-
-var fsWriteFile = function(fileName, jsonObj) {
-    return new Promise(function(resolve, reject) {
-        fs.writeFile(path.join(__dirname, fileName), beautify(jsonObj, null, 2, 80), function(err) {
-            if (err) {
-                reject(err);
-            }
-            resolve("Success: Writing File");
-        });
-    });
-};
-
-/**
- * 
+ * Record 
  * @param {String} tag The tag that is already created on shopify
  * @param {Number} id  Shopify smart collection ID
  */
@@ -55,7 +50,7 @@ const recordTag = function(tag, id) {
         try {
             const json = require(path.join(__dirname, `./ZAutoProductColCreated${process.env.ENV}.json`));
             json[tag] = id;
-            await fsWriteFile(`./ZAutoProductColCreated${process.env.ENV}.json`, json);
+            await fsWriteFile(path.join(__dirname, `./ZAutoProductColCreated${process.env.ENV}.json`), json);
             resolve();
         } catch (error) {
             reject(error);
@@ -136,7 +131,7 @@ const createArtistByZTag = function(tag, title) {
         try {
             const createdSmartCollection  = await createSmartCollection(postBody);
             const { smart_collection: { handle, id } } = createdSmartCollection;
-            await fsWriteFile(`./artistProductCollection/${handle}.json`, createdSmartCollection);
+            await fsWriteFile(path.join(__dirname, `./artistProductCollection${process.env.ENV}/${handle}.json`), createdSmartCollection);
             await recordTag(tag, id);
             resolve(id);
         } catch (error) {
@@ -188,7 +183,7 @@ const main = async function(tagsAndTitle) {
             console.log("Error: main - ", error, tag);
             const errorJson = require(path.join(__dirname, `./ErrorZAutoProductColCreated${process.env.ENV}.json`));
             errorJson[tag] = error;
-            await fsWriteFile(`./ErrorZAutoProductColCreated${process.env.ENV}.json`, errorJson);
+            await fsWriteFile(path.join(__dirname, `./ErrorZAutoProductColCreated${process.env.ENV}.json`), errorJson);
             break;
         }
     }
