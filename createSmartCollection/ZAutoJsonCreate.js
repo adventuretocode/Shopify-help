@@ -1,30 +1,13 @@
-require("dotenv").config();
-const request = require("request");
-const beautify = require("json-beautify");
-const fs = require("fs");
-const cleanData = require("../helpers/cleanData.js");
-
 /**
- * Get request to shopify
- *
- * @param   {Object} option The request object for shopify
- * @returns {Promise}       Promise object represents the post body
+ * Prep the ZAuto gallery tags as a JSON
+ * to create smart collections
  */
 
-const getShopify = function (option) {
-
-    return new Promise(function (resolve, reject) {
-        request.get(option, function (err, res, body) {
-            if (err) {
-                reject(err);
-            }
-
-            setTimeout(() => {
-                resolve(body);
-            }, 250);
-        });
-    });
-};
+require("dotenv").config();
+const path = require("path");
+const cleanData = require("../helpers/cleanData.js");
+const getShopify = require("../helpers/getShopify.js");
+const fsWriteFile = require("../helpers/fsWriteFile.js");
 
 /**
  * Query the admin to get all products but limit amount received
@@ -39,8 +22,8 @@ const getProducts = function(limit = 10, page = 1) {
         const params = {
             url: `https://${process.env.SHOP}/admin/products.json?limit=${limit}&page=${page}`,
             headers: {
-            "X-Shopify-Access-Token": process.env.ACCESS_TOKEN,
-            "Content-Type": "application/json",
+              "X-Shopify-Access-Token": process.env.ACCESS_TOKEN,
+              "Content-Type": "application/json",
             },
             json: true,
         };
@@ -54,25 +37,6 @@ const getProducts = function(limit = 10, page = 1) {
     });
 };
 
-/**
- * File system create a file with json object
- * 
- * @param   {String} fileName     The name of the file is to be called
- * @param   {Object} jsonObj      The object to be printed on the disk
- * @returns {Promise}             Promise object represents the success or failure of writing to disk
- */
-
-var fsWriteFile = function (fileName, jsonObj) {
-    return new Promise(function (resolve, reject) {
-        fs.writeFile(fileName, beautify(jsonObj, null, 2, 80), function (err) {
-            if (err) {
-                reject(err);
-            }
-            resolve();
-        });
-    });
-};
-
 const recordTag = function(tag, handle, id) {
     return new Promise(async function(resolve, reject) {
         try {
@@ -82,7 +46,7 @@ const recordTag = function(tag, handle, id) {
                 "id": id,
                 "handle": handle
               };
-              await fsWriteFile(`./ZAutoJsonWithID${process.env.ENV}.json`, json);
+              await fsWriteFile(path.join(__dirname, `./ZAutoJsonWithID${process.env.ENV}.json`), json);
             }
             resolve();
         } catch (error) {
@@ -110,7 +74,6 @@ const extractZAutoGalTag = async function(shopifyProducts) {
 const main = async function() {
     try {
         let pages = 1;
-        // let pages = 302;
         let moreItems = true;
         
         while (moreItems) {
