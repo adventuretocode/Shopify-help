@@ -1,4 +1,7 @@
 /**
+ * Creating smart collection with Z tag with title and handle
+ * Naming convention artist_artwork
+ * 
  * Must Run ZAutoJsonCreate.js first to to build the ZAuto tags
  * 
  * It will check from `ZAutoProductColCreated{process.env.ENV}.json` 
