@@ -1,6 +1,7 @@
 require("dotenv").config();
 const axios = require("axios");
 const path = require("path");
+const fsWriteFile = require("../helpers/fsWriteFile");
 
 /**
  * Post request to shopify
@@ -25,7 +26,9 @@ const postShopifyGraphQL = function (query, variables) {
       },
     })
     .then(({ data }) => {
-      resolve(data);
+      setTimeout(() => {
+        resolve(data);
+      }, 250);
     }).catch(error => {
       reject(error)
     })
@@ -68,7 +71,7 @@ const getImagesFromShopify = function(cursor) {
       `;
       
       const variables = {
-        "numProducts": 3,
+        "numProducts": 1,
       }
 
       if(cursor) {
@@ -112,10 +115,13 @@ const processShopifyGraphQLImages = function(edges) {
         else {
           // TODO: Record the products that don't have images
           imageRow["id"] = id;
-          console.log(imageRow);
+          // console.log(imageRow);
         }
 
-        // console.log(imageRow);
+        await fsWriteFile(path.join(__dirname, `./images${process.env.ENV}/${handle}.json`), imageRow);
+        //TODO log objects into mongodb to export CSV
+        const colorCode = id.split("/");
+        console.log(`\u001b[38;5;${+colorCode[colorCode.length - 1] % 255}m${title}\u001b[0m`);
 
       }
       resolve(edges[edges.length -1].cursor);
@@ -138,9 +144,10 @@ const main = async function() {
       cursor = lastCursor;
 
       console.log("cursor", cursor);
+      await fsWriteFile(path.join(__dirname, `./cursor${process.env.ENV}.json`), { [count]: cursor});
 
       count+=1;
-      if(count > 1) {
+      if(count > 5) {
       // if(!hasNextPage) {
         keepLooping = false;
       }
