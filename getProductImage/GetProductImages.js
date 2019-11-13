@@ -2,6 +2,7 @@ require("dotenv").config();
 const axios = require("axios");
 const path = require("path");
 const fsWriteFile = require("../helpers/fsWriteFile");
+const appendToJson = require("../helpers/appendToJson");
 
 /**
  * Post request to shopify
@@ -118,8 +119,9 @@ const processShopifyGraphQLImages = function(edges) {
           // console.log(imageRow);
         }
 
+        //TODO log objects into mongodb to export CSV instead of writing to file
         await fsWriteFile(path.join(__dirname, `./images${process.env.ENV}/${handle}.json`), imageRow);
-        //TODO log objects into mongodb to export CSV
+
         const colorCode = id.split("/");
         console.log(`\u001b[38;5;${+colorCode[colorCode.length - 1] % 255}m${title}\u001b[0m`);
 
@@ -143,8 +145,7 @@ const main = async function() {
       const lastCursor = await processShopifyGraphQLImages(edges);
       cursor = lastCursor;
 
-      console.log("cursor", cursor);
-      await fsWriteFile(path.join(__dirname, `./cursor${process.env.ENV}.json`), { [count]: cursor});
+      await appendToJson(count, cursor, path.join(__dirname, `./cursor${process.env.ENV}.json`));
 
       count+=1;
       if(count > 5) {
