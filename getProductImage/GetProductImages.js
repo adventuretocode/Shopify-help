@@ -1,9 +1,11 @@
 require("dotenv").config();
 const axios = require("axios");
 const path = require("path");
-const fsWriteFile = require("../helpers/fsWriteFile");
 const appendToJson = require("../helpers/appendToJson");
+const cleanIDGraphql = require("../helpers/cleanIDGraphql");
 
+const mongojs = require("mongojs");
+var db = mongojs("teefury", ["product_images"]);
 /**
  * Post request to shopify
  *
@@ -103,30 +105,34 @@ const processShopifyGraphQLImages = function(edges) {
         const { node: { id, title, handle, images } } = edges[i];
         const imagesArray = images.edges;
         
+        const shopifyId = cleanIDGraphql(id);
+        
         const imageRow = {
           title: title,
           handle: handle,
+          shopify_id: shopifyId,
         }
 
         if(imagesArray.length > 1) {
+          imageRow["is_missing_image"] = false;
           imagesArray.forEach(function(image, i) {
             imageRow["image"+i] = image.node.originalSrc;
           });
         }
         else {
-          // TODO: Record the products that don't have images
-          imageRow["id"] = id;
-          // console.log(imageRow);
+          imageRow["is_missing_image"] = true;
         }
 
-        //TODO log objects into mongodb to export CSV instead of writing to file
-        await fsWriteFile(path.join(__dirname, `./images${process.env.ENV}/${handle}.json`), imageRow);
-
-        const colorCode = id.split("/");
-        console.log(`\u001b[38;5;${+colorCode[colorCode.length - 1] % 255}m${title}\u001b[0m`);
-
+        db.product_images.insert(imageRow, function(error, saved) {
+          if (error) {
+            reject(error);
+          }
+          else {
+            console.log(`\u001b[38;5;${shopifyId % 255}m${title}\u001b[0m`);
+            resolve(edges[edges.length -1].cursor);
+          }
+        });
       }
-      resolve(edges[edges.length -1].cursor);
     } 
     catch(error) {
       reject(error);
@@ -161,9 +167,45 @@ const main = async function() {
 };
 
 main()
-  .then(results => console.log(results))
+  .then(results => { 
+      console.log(results);
+      process.exit();
+  })
   .catch(error => console.log(error));
 
+var findAll = function() {
+
+  db.product_images.find({}, function(err, data) {
+    if (err) {
+      console.log(err);
+    }
+    else {
+      console.log(data);
+    }
+
+    process.exit();
+
+  });
+}
+
+// findAll();
+  
+var removeAll = function() {
+  db.product_images.remove({}, function(error, response) {
+    if (error) {
+      console.log(error);
+    }
+    else {
+      console.log(response);
+    }
+
+    process.exit();
+  });
+
+}
+
+// removeAll();
+  
 /**
  * getImagesFromShopify()
     .then(results => console.log(results))
