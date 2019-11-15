@@ -1,0 +1,1 @@
+$ npm run mocha ./cleanData.test.js 
