@@ -29,9 +29,14 @@ const postShopifyGraphQL = function (query, variables) {
       },
     })
     .then(({ data }) => {
-      setTimeout(() => {
-        resolve(data);
-      }, 250);
+      if(data.errors) {
+        reject(data);
+      } 
+      else {
+        setTimeout(() => {
+          resolve(data);
+        }, 1000);
+      }
     }).catch(error => {
       reject(error)
     })
@@ -60,6 +65,7 @@ const getImagesFromShopify = function(cursor) {
                 id
                 title
                 handle
+                templateSuffix
                 images(first: 50) {
                   edges {
                     node {
@@ -74,7 +80,7 @@ const getImagesFromShopify = function(cursor) {
       `;
       
       const variables = {
-        "numProducts": 1,
+        "numProducts": 18,
       }
 
       if(cursor) {
@@ -102,7 +108,14 @@ const processShopifyGraphQLImages = function(edges) {
   return new Promise(async function(resolve, reject) {
     try {
       for(let i = 0; i < edges.length; i+=1) {
-        const { node: { id, title, handle, images } } = edges[i];
+        // 2019-pdp
+        const { node: { id, title, handle, templateSuffix, images } } = edges[i];
+
+        if(templateSuffix !== "2019-pdp") {
+          console.log("Skip");
+          continue;
+        }
+
         const imagesArray = images.edges;
         
         const shopifyId = cleanIDGraphql(id);
@@ -143,8 +156,8 @@ const processShopifyGraphQLImages = function(edges) {
 const main = async function() {
   try {
     let keepLooping = true;
-    let count = 0;
-    let cursor = "";
+    let count = 871;
+    let cursor = "eyJsYXN0X2lkIjo0MzA0NDI2NzYyMzA2LCJsYXN0X3ZhbHVlIjoiNDMwNDQyNjc2MjMwNiJ9";
 
     while (keepLooping) {
       const { products: { edges, pageInfo: { hasNextPage } } }  = await getImagesFromShopify(cursor);
@@ -154,8 +167,8 @@ const main = async function() {
       await appendToJson(count, cursor, path.join(__dirname, `./cursor${process.env.ENV}.json`));
 
       count+=1;
-      if(count > 5) {
-      // if(!hasNextPage) {
+      // if(count > 5) {
+      if(!hasNextPage) {
         keepLooping = false;
       }
     }
@@ -166,12 +179,12 @@ const main = async function() {
   }
 };
 
-main()
-  .then(results => { 
-      console.log(results);
-      process.exit();
-  })
-  .catch(error => console.log(error));
+// main()
+//   .then(results => { 
+//       console.log(results);
+//       process.exit();
+//   })
+//   .catch(error => console.log("Error: Main - ",error));
 
 var findAll = function() {
 
