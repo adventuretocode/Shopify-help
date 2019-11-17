@@ -10,5 +10,6 @@ artistProductCollectionStage
 artistProductCollectionProd
 artistUniqueArtWorkCollectionProd
 .vscode
+.DS_Store
 imagesStage
 imagesProd
