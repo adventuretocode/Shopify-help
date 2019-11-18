@@ -1,0 +1,1155 @@
+{
+  "input": {
+    "handle": "odad-snowy-stocking-stuffer",
+    "images": [
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1869/0319/products/ART-snowy-stocking-stuffer_dooomcat_color-black.jpg?v=1573677997"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1869/0319/products/ART-snowy-stocking-stuffer_dooomcat_color-navy.jpg?v=1573677997"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1869/0319/products/ART-snowy-stocking-stuffer_dooomcat_color-red.jpg?v=1573677997"
+      }
+    ],
+    "metafields": [
+      {
+        "namespace": "global",
+        "key": "description_tag",
+        "value": "Snowy Stocking Stuffer - Tees - by DoOomcat",
+        "valueType": "STRING",
+        "description": null
+      },
+      {
+        "namespace": "global",
+        "key": "printfile_URL",
+        "value": "http://printfiles.teefury.com/PrintFiles/S-Artwork/production_snowy-stocking-stuffer_dooomcat.png",
+        "valueType": "STRING",
+        "description": null
+      },
+      {
+        "namespace": "global",
+        "key": "small_image",
+        "value": "https://storage.googleapis.com/torrid-inferno-3935.appspot.com/artwork%2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-jcB5KK3vpHtOaEUY9c8t-color-none.png?GoogleAccessId=torrid-inferno-3935%40appspot.gserviceaccount.com&Expires=16730323200&Signature=TFE25ijKUouVVv%2FyXuPen2uzL1WwoQCxN5Ci8QCv064UvvC5pzLrET7sP4aEbELLQVGJPkS0kOjHpX9lxPgXOZBhiipFHU8e6s9G0CSS%2FW6IVsXUzApCSyeztEJUrxLF6CLFMOk3YQCKP7dmj59rnbJEnozliD2CbjihuQLdJ05leS7hGR6Ts899s5cfzL2WPMQlDvOzQaKBFvt6Y1Y5pM2hUX0%2BPFUIEzKDiGmLtJ10lR%2FoTAvDaDD7NHVwxzQ9wdceMOuaEkT9lUtFAUn2YGPMv3K6gXoC5ZiK7wW%2F66iY1D7CqX4gn0QpsH7vgX9KO3T5H%2FJK7ro7rcroEevKdQ%3D%3D",
+        "valueType": "STRING",
+        "description": null
+      },
+      {
+        "namespace": "global",
+        "key": "title_tag",
+        "value": "Snowy Stocking Stuffer - Tees - by DoOomcat",
+        "valueType": "STRING",
+        "description": null
+      },
+      {
+        "namespace": "odad",
+        "key": "odadartfile",
+        "value": "https://firebasestorage.googleapis.com/v0/b/torrid-inferno-3935.appspot.com/o/artwork%2Ffinal_fohtnospc1brmkdni7ed-color-%23000000.png?alt=media&token=59a0f10e-9202-40b4-8ac6-02b66b1b04fb",
+        "valueType": "STRING",
+        "description": null
+      },
+      {
+        "namespace": "odad",
+        "key": "odadflat",
+        "value": "https://firebasestorage.googleapis.com/v0/b/torrid-inferno-3935.appspot.com/o/artwork%2Ffinal_d8modgjktfnsbvbrnu0b-color-%23000000.png?alt=media&token=4c229835-07ba-42b5-9322-8c84447ac956",
+        "valueType": "STRING",
+        "description": null
+      },
+      {
+        "namespace": "odad",
+        "key": "odadmodel",
+        "value": "https://firebasestorage.googleapis.com/v0/b/torrid-inferno-3935.appspot.com/o/artwork%2Ffinal_yn9vrb6f36a4zmp5qu6e-color-%23000000.png?alt=media&token=d21c48a9-32cb-46af-93b8-74a624761875",
+        "valueType": "STRING",
+        "description": null
+      },
+      {
+        "namespace": "teefuryapp",
+        "key": "artwork_id",
+        "value": "HGArRt0HiLeL93FyyvLL",
+        "valueType": "STRING",
+        "description": null
+      },
+      {
+        "namespace": "teefuryapp",
+        "key": "colors",
+        "value": "#1f2a44,#000000,none,none,#c8102e",
+        "valueType": "STRING",
+        "description": null
+      },
+      {
+        "namespace": "teefuryapp",
+        "key": "product_id",
+        "value": "TCftoxcnPGzNtD1QjNX5",
+        "valueType": "STRING",
+        "description": null
+      }
+    ],
+    "options": ["Gender", "Size", "Color"],
+    "productType": "ODAD",
+    "tags": [
+      "artist-DoOomcat",
+      "color-black",
+      "color-navy",
+      "color-red",
+      "DoOomcat",
+      "gender-men",
+      "gender-men-premium",
+      "gender-women",
+      "gender-womens-fitted",
+      "gender-youth",
+      "odad-2019-11-17",
+      "odad-design-d1",
+      "product-type-Tees",
+      "size-2xl",
+      "size-3xl",
+      "size-l",
+      "size-m",
+      "size-s",
+      "size-xl",
+      "size-xs",
+      "teefury",
+      "Tees"
+    ],
+    "title": "Snowy Stocking Stuffer",
+    "vendor": "DoOomcat",
+    "variants": [
+      {
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874",
+        "inventoryItem": {
+          "tracked": false
+        },
+        "inventoryPolicy": "DENY",
+        "options": ["Men", "S", "Black"],
+        "price": "12.00",
+        "requiresShipping": true,
+        "sku": "4354844885058-tee-men-bla-s",
+        "title": "Men / S / Black",
+        "weight": 0.3625,
+        "weightUnit": "POUNDS"
+      },
+      {
+        "title": "Men / M / Black",
+        "price": "12.00",
+        "sku": "4354844885058-tee-men-bla-m",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": {
+          "tracked": false
+        },
+        "options": ["Men", "M", "Black"],
+        "weight": 0.4125,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Men / L / Black",
+        "price": "12.00",
+        "sku": "4354844885058-tee-men-bla-l",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": {
+          "tracked": false
+        },
+        "options": ["Men", "L", "Black"],
+        "weight": 0.5125,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Men / XL / Black",
+        "price": "12.00",
+        "sku": "4354844885058-tee-men-bla-xl",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": {
+          "tracked": false
+        },
+        "options": ["Men", "XL", "Black"],
+        "weight": 0.5225,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Men / 2XL / Black",
+        "price": "13.00",
+        "sku": "4354844885058-tee-men-bla-2xl",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": {
+          "tracked": false
+        },
+        "options": ["Men", "2XL", "Black"],
+        "weight": 0.6125,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Men / 3XL / Black",
+        "price": "14.00",
+        "sku": "4354844885058-tee-men-bla-3xl",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": {
+          "tracked": false
+        },
+        "options": ["Men", "3XL", "Black"],
+        "weight": 0.6525,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Men / S / Navy",
+        "price": "12.00",
+        "sku": "4354844885058-tee-men-nav-s",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": {
+          "tracked": false
+        },
+        "options": ["Men", "S", "Navy" ],
+        "weight": 0.3625,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Men / M / Navy",
+        "price": "12.00",
+        "sku": "4354844885058-tee-men-nav-m",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": {
+          "tracked": false
+        },
+        "options": ["Men", "M", "Navy"],
+        "weight": 0.4125,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Men / L / Navy",
+        "price": "12.00",
+        "sku": "4354844885058-tee-men-nav-l",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": {
+          "tracked": false
+        },
+        "options": ["Men", "L", "Navy"],
+        "weight": 0.5125,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Men / XL / Navy",
+        "price": "12.00",
+        "sku": "4354844885058-tee-men-nav-xl",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": {
+          "tracked": false
+        },
+        "options": ["Men", "XL", "Navy"],
+        "weight": 0.5225,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Men / 2XL / Navy",
+        "price": "13.00",
+        "sku": "4354844885058-tee-men-nav-2xl",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": {
+          "tracked": false
+        },
+        "options": ["Men", "2XL", "Navy"],
+        "weight": 0.6125,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Men / 3XL / Navy",
+        "price": "14.00",
+        "sku": "4354844885058-tee-men-nav-3xl",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": {
+          "tracked": false
+        },
+        "options": ["Men", "3XL", "Navy"],
+        "weight": 0.6525,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Men / S / Red",
+        "price": "12.00",
+        "sku": "4354844885058-tee-men-red-s",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": {
+          "tracked": false
+        },
+        "options": [ "Men", "S", "Red"],
+        "weight": 0.3625,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Men / M / Red",
+        "price": "12.00",
+        "sku": "4354844885058-tee-men-red-m",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options":[ "Men", "M", "Red"],
+        "weight": 0.4125,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Men / L / Red",
+        "price": "12.00",
+        "sku": "4354844885058-tee-men-red-l",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Men", "L", "Red"],
+        "weight": 0.5125,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Men / XL / Red",
+        "price": "12.00",
+        "sku": "4354844885058-tee-men-red-xl",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Men", "XL", "Red"],
+        "weight": 0.5225,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Men / 2XL / Red",
+        "price": "13.00",
+        "sku": "4354844885058-tee-men-red-2xl",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Men", "2XL", "Red"],
+        "weight": 0.6125,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Men / 3XL / Red",
+        "price": "14.00",
+        "sku": "4354844885058-tee-men-red-3xl",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Men", "3XL", "Red"],
+        "weight": 0.6525,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Men Premium / S / Black",
+        "price": "16.00",
+        "sku": "4354844885058-tee-mepr-bla-s",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Men Premium", "S", "Black"],
+        "weight": 0.31,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Men Premium / M / Black",
+        "price": "16.00",
+        "sku": "4354844885058-tee-mepr-bla-m",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Men Premium", "M", "Black"],
+        "weight": 0.34,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Men Premium / L / Black",
+        "price": "16.00",
+        "sku": "4354844885058-tee-mepr-bla-l",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Men Premium", "L", "Black"],
+        "weight": 0.39,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Men Premium / XL / Black",
+        "price": "16.00",
+        "sku": "4354844885058-tee-mepr-bla-xl",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Men Premium", "XL", "Black"],
+        "weight": 0.42,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Men Premium / 2XL / Black",
+        "price": "17.00",
+        "sku": "4354844885058-tee-mepr-bla-2xl",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Men Premium", "2XL", "Black"],
+        "weight": 0.46,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Men Premium / 3XL / Black",
+        "price": "18.00",
+        "sku": "4354844885058-tee-mepr-bla-3xl",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Men Premium", "3XL", "Black"],
+        "weight": 0.49,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Men Premium / S / Navy",
+        "price": "16.00",
+        "sku": "4354844885058-tee-mepr-nav-s",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Men Premium", "S", "Navy"],
+        "weight": 0.31,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Men Premium / M / Navy",
+        "price": "16.00",
+        "sku": "4354844885058-tee-mepr-nav-m",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Men Premium", "M", "Navy"],
+        "weight": 0.34,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Men Premium / L / Navy",
+        "price": "16.00",
+        "sku": "4354844885058-tee-mepr-nav-l",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Men Premium", "L", "Navy"],
+        "weight": 0.39,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Men Premium / XL / Navy",
+        "price": "16.00",
+        "sku": "4354844885058-tee-mepr-nav-xl",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Men Premium", "XL", "Navy"],
+        "weight": 0.42,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Men Premium / 2XL / Navy",
+        "price": "17.00",
+        "sku": "4354844885058-tee-mepr-nav-2xl",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Men Premium", "2XL", "Navy"],
+        "weight": 0.46,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Men Premium / 3XL / Navy",
+        "price": "18.00",
+        "sku": "4354844885058-tee-mepr-nav-3xl",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Men Premium", "3XL", "Navy"],
+        "weight": 0.49,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Men Premium / S / Red",
+        "price": "16.00",
+        "sku": "4354844885058-tee-mepr-red-s",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Men Premium", "S", "Red"],
+        "weight": 0.31,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Men Premium / M / Red",
+        "price": "16.00",
+        "sku": "4354844885058-tee-mepr-red-m",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Men Premium", "M", "Red"],
+        "weight": 0.34,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Men Premium / L / Red",
+        "price": "16.00",
+        "sku": "4354844885058-tee-mepr-red-l",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Men Premium", "L", "Red"],
+        "weight": 0.39,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Men Premium / XL / Red",
+        "price": "16.00",
+        "sku": "4354844885058-tee-mepr-red-xl",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Men Premium", "XL", "Red"],
+        "weight": 0.42,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Men Premium / 2XL / Red",
+        "price": "17.00",
+        "sku": "4354844885058-tee-mepr-red-2xl",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Men Premium", "2XL", "Red"],
+        "weight": 0.46,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Men Premium / 3XL / Red",
+        "price": "18.00",
+        "sku": "4354844885058-tee-mepr-red-3xl",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Men Premium", "3XL", "Red"],
+        "weight": 0.49,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Women / S / Black",
+        "price": "12.00",
+        "sku": "4354844885058-tee-wom-bla-s",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Women", "S", "Black"],
+        "weight": 0.2525,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Women / M / Black",
+        "price": "12.00",
+        "sku": "4354844885058-tee-wom-bla-m",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Women", "M", "Black"],
+        "weight": 0.2725,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Women / L / Black",
+        "price": "12.00",
+        "sku": "4354844885058-tee-wom-bla-l",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Women", "L", "Black"],
+        "weight": 0.3125,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Women / XL / Black",
+        "price": "12.00",
+        "sku": "4354844885058-tee-wom-bla-xl",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Women", "XL", "Black"],
+        "weight": 0.3525,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Women / 2XL / Black",
+        "price": "13.00",
+        "sku": "4354844885058-tee-wom-bla-2xl",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Women", "2XL", "Black"],
+        "weight": 0.3725,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Women / 3XL / Black",
+        "price": "14.00",
+        "sku": "4354844885058-tee-wom-bla-3xl",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Women", "3XL", "Black"],
+        "weight": 0.4025,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Women / S / Navy",
+        "price": "12.00",
+        "sku": "4354844885058-tee-wom-nav-s",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Women", "S", "Navy"],
+        "weight": 0.2525,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Women / M / Navy",
+        "price": "12.00",
+        "sku": "4354844885058-tee-wom-nav-m",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Women", "M", "Navy"],
+        "weight": 0.2725,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Women / L / Navy",
+        "price": "12.00",
+        "sku": "4354844885058-tee-wom-nav-l",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Women", "L", "Navy"],
+        "weight": 0.3125,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Women / XL / Navy",
+        "price": "12.00",
+        "sku": "4354844885058-tee-wom-nav-xl",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Women", "XL", "Navy"],
+        "weight": 0.3525,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Women / 2XL / Navy",
+        "price": "13.00",
+        "sku": "4354844885058-tee-wom-nav-2xl",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Women", "2XL", "Navy"],
+        "weight": 0.3725,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Women / 3XL / Navy",
+        "price": "14.00",
+        "sku": "4354844885058-tee-wom-nav-3xl",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Women", "3XL", "Navy"],
+        "weight": 0.4025,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Women / S / Red",
+        "price": "12.00",
+        "sku": "4354844885058-tee-wom-red-s",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Women", "S", "Red"],
+        "weight": 0.2525,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Women / M / Red",
+        "price": "12.00",
+        "sku": "4354844885058-tee-wom-red-m",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Women", "M", "Red"],
+        "weight": 0.2725,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Women / L / Red",
+        "price": "12.00",
+        "sku": "4354844885058-tee-wom-red-l",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Women", "L", "Red"],
+        "weight": 0.3125,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Women / XL / Red",
+        "price": "12.00",
+        "sku": "4354844885058-tee-wom-red-xl",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Women", "XL", "Red"],
+        "weight": 0.3525,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Women / 2XL / Red",
+        "price": "13.00",
+        "sku": "4354844885058-tee-wom-red-2xl",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Women", "2XL", "Red"],
+        "weight": 0.3725,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Women / 3XL / Red",
+        "price": "14.00",
+        "sku": "4354844885058-tee-wom-red-3xl",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Women", "3XL", "Red"],
+        "weight": 0.4025,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Womens Fitted / S / Black",
+        "price": "12.00",
+        "sku": "4354844885058-tee-wofi-bla-s",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Womens Fitted", "S", "Black"],
+        "weight": 0.2525,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Womens Fitted / M / Black",
+        "price": "12.00",
+        "sku": "4354844885058-tee-wofi-bla-m",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Womens Fitted", "M", "Black"],
+        "weight": 0.2725,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Womens Fitted / L / Black",
+        "price": "12.00",
+        "sku": "4354844885058-tee-wofi-bla-l",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Womens Fitted", "L", "Black"],
+        "weight": 0.3125,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Womens Fitted / XL / Black",
+        "price": "12.00",
+        "sku": "4354844885058-tee-wofi-bla-xl",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Womens Fitted", "XL", "Black"],
+        "weight": 0.3525,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Womens Fitted / 2XL / Black",
+        "price": "13.00",
+        "sku": "4354844885058-tee-wofi-bla-2xl",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Womens Fitted", "2XL", "Black"],
+        "weight": 0.3725,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Womens Fitted / S / Navy",
+        "price": "12.00",
+        "sku": "4354844885058-tee-wofi-nav-s",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Womens Fitted", "S", "Navy"],
+        "weight": 0.2525,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Womens Fitted / M / Navy",
+        "price": "12.00",
+        "sku": "4354844885058-tee-wofi-nav-m",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Womens Fitted", "M", "Navy"],
+        "weight": 0.2725,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Womens Fitted / L / Navy",
+        "price": "12.00",
+        "sku": "4354844885058-tee-wofi-nav-l",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Womens Fitted", "L", "Navy"],
+        "weight": 0.3125,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Womens Fitted / XL / Navy",
+        "price": "12.00",
+        "sku": "4354844885058-tee-wofi-nav-xl",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Womens Fitted", "XL", "Navy"],
+        "weight": 0.3525,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Womens Fitted / 2XL / Navy",
+        "price": "13.00",
+        "sku": "4354844885058-tee-wofi-nav-2xl",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Womens Fitted", "2XL", "Navy"],
+        "weight": 0.3725,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Womens Fitted / S / Red",
+        "price": "12.00",
+        "sku": "4354844885058-tee-wofi-red-s",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Womens Fitted", "S", "Red"],
+        "weight": 0.2525,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Womens Fitted / M / Red",
+        "price": "12.00",
+        "sku": "4354844885058-tee-wofi-red-m",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Womens Fitted", "M", "Red"],
+        "weight": 0.2725,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Womens Fitted / L / Red",
+        "price": "12.00",
+        "sku": "4354844885058-tee-wofi-red-l",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Womens Fitted", "L", "Red"],
+        "weight": 0.3125,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Womens Fitted / XL / Red",
+        "price": "12.00",
+        "sku": "4354844885058-tee-wofi-red-xl",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Womens Fitted", "XL", "Red"],
+        "weight": 0.3525,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Womens Fitted / 2XL / Red",
+        "price": "13.00",
+        "sku": "4354844885058-tee-wofi-red-2xl",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Womens Fitted", "2XL", "Red"],
+        "weight": 0.3725,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Youth / XS / Black",
+        "price": "12.00",
+        "sku": "4354844885058-tee-you-bla-xs",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Youth", "XS", "Black"],
+        "weight": 0.2525,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Youth / S / Black",
+        "price": "12.00",
+        "sku": "4354844885058-tee-you-bla-s",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Youth", "S", "Black"],
+        "weight": 0.2725,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Youth / M / Black",
+        "price": "12.00",
+        "sku": "4354844885058-tee-you-bla-m",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Youth", "M", "Black"],
+        "weight": 0.3125,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Youth / L / Black",
+        "price": "12.00",
+        "sku": "4354844885058-tee-you-bla-l",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Youth", "L", "Black"],
+        "weight": 0.3625,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Youth / XL / Black",
+        "price": "12.00",
+        "sku": "4354844885058-tee-you-bla-xl",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Youth", "XL", "Black"],
+        "weight": 0.4063,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Youth / XS / Navy",
+        "price": "12.00",
+        "sku": "4354844885058-tee-you-nav-xs",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Youth", "XS", "Navy"],
+        "weight": 0.2525,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Youth / S / Navy",
+        "price": "12.00",
+        "sku": "4354844885058-tee-you-nav-s",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Youth", "S", "Navy"],
+        "weight": 0.2725,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Youth / M / Navy",
+        "price": "12.00",
+        "sku": "4354844885058-tee-you-nav-m",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Youth", "M", "Navy"],
+        "weight": 0.3125,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Youth / L / Navy",
+        "price": "12.00",
+        "sku": "4354844885058-tee-you-nav-l",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Youth", "L", "Navy"],
+        "weight": 0.3625,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Youth / XL / Navy",
+        "price": "12.00",
+        "sku": "4354844885058-tee-you-nav-xl",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Youth", "XL", "Navy"],
+        "weight": 0.4063,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Youth / XS / Red",
+        "price": "12.00",
+        "sku": "4354844885058-tee-you-red-xs",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Youth", "XS", "Red"],
+        "weight": 0.2525,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Youth / S / Red",
+        "price": "12.00",
+        "sku": "4354844885058-tee-you-red-s",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Youth", "S", "Red"],
+        "weight": 0.2725,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Youth / M / Red",
+        "price": "12.00",
+        "sku": "4354844885058-tee-you-red-m",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Youth", "M", "Red"],
+        "weight": 0.3125,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Youth / L / Red",
+        "price": "12.00",
+        "sku": "4354844885058-tee-you-red-l",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Youth", "L", "Red"],
+        "weight": 0.3625,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      },
+      {
+        "title": "Youth / XL / Red",
+        "price": "12.00",
+        "sku": "4354844885058-tee-you-red-xl",
+        "inventoryPolicy": "DENY",
+        "inventoryItem": { "tracked": false },
+        "options": [ "Youth", "XL", "Red"],
+        "weight": 0.4063,
+        "weightUnit": "POUNDS",
+        "requiresShipping": true,
+        "imageSrc": "https://cdn.shopify.com/s/files/1/1869/0319/products/artwork_2FHGArRt0HiLeL93FyyvLL-TCftoxcnPGzNtD1QjNX5-72Ap92vXRDeyFExmYuYi-color-none.png?v=1573677874"
+      }
+    ]
+  }
+}
