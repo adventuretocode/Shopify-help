@@ -79,8 +79,10 @@ const main = async function() {
         while (moreItems) {
             const shopifyProducts = await getProducts(250, pages);
             if(!shopifyProducts) {
-                moreItems = false;
-                throw "Products is null"
+                // moreItems = false;
+                // throw "Products is null"
+                console.log("Product is null");
+                continue;
             };
 
             const { products } = shopifyProducts;
