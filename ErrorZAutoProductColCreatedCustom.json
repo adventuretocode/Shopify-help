@@ -1,8 +1,0 @@
-{
-  "ZAuto_gallery_c-is-for-canceled_otisframpton": {
-    "errno": -2,
-    "code": "ENOENT",
-    "syscall": "open",
-    "path": "./artistProductCollectionCustom/otisframpton_c-is-for-canceled-1.json"
-  }
-}
