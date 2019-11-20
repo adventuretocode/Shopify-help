@@ -10,14 +10,19 @@ const request = require("request");
 const getShopify = function (option) {
 
   return new Promise(function (resolve, reject) {
+      option.json = true;
       request.get(option, function (err, res, body) {
           if (err) {
               reject(err);
           }
-
-          setTimeout(() => {
+          if(body.errors) {
+            reject(body);
+          }
+          else {
+            setTimeout(() => {
               resolve(body);
-          }, 250);
+            }, 250);
+          }
       });
   });
 };

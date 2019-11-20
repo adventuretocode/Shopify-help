@@ -1,7 +1,7 @@
 require("dotenv").config();
 const path = require("path");
 const cleanData = require("../helpers/cleanData.js");
-const getShopify = require("../helpers/getShopify.js");
+const apiGetRequest = require("../helpers/apiGetRequest.js");
 const fsWriteFile = require("../helpers/fsWriteFile.js");
 
 const mongojs = require("mongojs");
@@ -27,7 +27,7 @@ const getProducts = function(limit = 10, page = 1) {
       };
       
       try {
-          const products = await getShopify(params);
+          const products = await apiGetRequest(params);
           resolve(products);
       } catch (error) {
           reject(error);
