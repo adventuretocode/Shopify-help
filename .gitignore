@@ -13,3 +13,5 @@ artistUniqueArtWorkCollectionProd
 .DS_Store
 imagesStage
 imagesProd
+smartCollectionByTagProd
+smartCollectionByTagStage
