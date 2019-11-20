@@ -19,7 +19,7 @@
 require("dotenv").config();
 const request = require("request");
 const path = require('path');
-const fsWriteFile = require("../helpers/fsWriteFile.js");
+const fsWriteFile = require("../../helpers/fsWriteFile.js");
 
 /**
  * Post request to shopify

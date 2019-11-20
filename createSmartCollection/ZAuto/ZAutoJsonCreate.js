@@ -5,9 +5,9 @@
 
 require("dotenv").config();
 const path = require("path");
-const cleanData = require("../helpers/cleanData.js");
-const getShopify = require("../helpers/getShopify.js");
-const fsWriteFile = require("../helpers/fsWriteFile.js");
+const cleanData = require("../../helpers/cleanData.js");
+const getShopify = require("../../helpers/getShopify.js");
+const fsWriteFile = require("../../helpers/fsWriteFile.js");
 
 /**
  * Query the admin to get all products but limit amount received
