@@ -1,13 +1,13 @@
 const request = require("request");
 
 /**
- * Get request to shopify
+ * Get request 
  *
  * @param   {Object} option The request object for shopify
  * @returns {Promise}       Promise object represents the post body
  */
 
-const getShopify = function (option) {
+const getRequest = function (option) {
 
   return new Promise(function (resolve, reject) {
       option.json = true;
@@ -27,4 +27,4 @@ const getShopify = function (option) {
   });
 };
 
-module.exports = getShopify;
+module.exports = getRequest;
