@@ -2,10 +2,11 @@
  * Make One product live
  */
 
-require("dotenv").config();
+require("dotenv").config({
+  path: "./.env.stage",
+});
 const apiGetRequest = require("../../helpers/apiGetRequest.js");
 const apiPutRequest = require("../../helpers/apiPutRequest.js");
-const isoTimeNow = require("../../helpers/isoTimeNow.js");
 
 const { SHOP, ACCESS_TOKEN } = process.env;
 
@@ -38,9 +39,8 @@ const publishedProduct = function(id) {
         body: {
           product: {
             id: id,
-            //True or false is immediate
-            // published: true,
-            published: isoTimeNow(0, 0, 0, 0, 5),
+            // true to publish and false hide
+            published: true,
           }
         }
       };
@@ -70,7 +70,7 @@ const main = async function(id) {
   }
 };
 
-main("4348927246435")
+main(4348923478115)
   .then(data => console.log("Success: ", data))
   .catch(error => console.log("Errors: ", error));
 
