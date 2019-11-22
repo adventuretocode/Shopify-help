@@ -1,0 +1,17 @@
+{
+  "name": "publishallproducts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "restAPI.js",
+  "scripts": {
+    "stage": "NODE_ENV=stage node",
+    "prod": "NODE_ENV=prod node",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0"
+  }
+}
