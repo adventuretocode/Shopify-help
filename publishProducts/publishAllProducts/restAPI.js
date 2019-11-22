@@ -60,7 +60,8 @@ const processProductsToPublished = function(products) {
 
 const main = async function() {
   try {
-    let pages = 1;
+    const continuePage = require("./page.json");
+    let pages = continuePage.page || 1;
     let moreItems = true;
     let debug = false;
 
