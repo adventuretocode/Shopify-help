@@ -13,7 +13,7 @@ const apiGetRequest = require("./apiGetRequest.js");
 const getAllProducts = function(shop, token, limit = 10, page = 1) {
   return new Promise(async function(resolve, reject) {
     const params = {
-      url: `https://${shop}/admin/products.json?limit=${limit}&page=${page}`,
+      url: `https://${shop}.myshopify.com/admin/products.json?limit=${limit}&page=${page}`,
       headers: {
         "X-Shopify-Access-Token": token,
         "Content-Type": "application/json"
