@@ -16,3 +16,6 @@ while(j < 8) {
     console.log(`\u001b[3${j}m${message}"\u001b[0m`);
     j++;
 }
+const id = 324342;
+const title = "testing";
+console.log(`\u001b[38;5;${id % 255}m${title}\u001b[0m`);
