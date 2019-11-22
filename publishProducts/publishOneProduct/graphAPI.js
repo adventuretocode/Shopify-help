@@ -85,6 +85,6 @@ main(4348923445347)
   .then(success => console.log("Success: ", success))
   .catch(error => { 
     console.log("Error: ", error);
-    fsWriteFile(`./error${ENV}/${4348923445347}.json`, error);
+    fsWriteFile(path.join(__dirname, `./error${ENV}/${4348923445347}.json`), error);
   });
   // .catch(({ errors: [ error ] }) => console.log("Error: ", error.message));

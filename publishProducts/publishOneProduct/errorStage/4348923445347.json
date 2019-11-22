@@ -1,0 +1,21 @@
+{
+  "data": { "publishablePublishToCurrentChannel": null },
+  "errors": [
+    {
+      "message": "invalid id",
+      "locations": [ { "line": 3, "column": 9 } ],
+      "path": [ "publishablePublishToCurrentChannel" ]
+    }
+  ],
+  "extensions": {
+    "cost": {
+      "requestedQueryCost": 10,
+      "actualQueryCost": 10,
+      "throttleStatus": {
+        "maximumAvailable": 2000,
+        "currentlyAvailable": 1990,
+        "restoreRate": 100
+      }
+    }
+  }
+}
