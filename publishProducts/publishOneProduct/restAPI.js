@@ -5,12 +5,9 @@
 require("dotenv").config();
 const apiGetRequest = require("../../helpers/apiGetRequest.js");
 const apiPutRequest = require("../../helpers/apiPutRequest.js");
-const path = require("path");
-const cleanData = require("../../helpers/cleanData.js");
-const fsWriteFile = require("../../helpers/fsWriteFile.js");
+const isoTimeNow = require("../../helpers/isoTimeNow.js");
 
-const { SHOP, ACCESS_TOKEN, ENV } = process.env;
-const currentDate = new Date(Date.now()).toISOString();
+const { SHOP, ACCESS_TOKEN } = process.env;
 
 const getSingleProductInfo = function(id) {
   return new Promise(async function(resolve, reject) {
@@ -41,7 +38,9 @@ const publishedProduct = function(id) {
         body: {
           product: {
             id: id,
-            published: true
+            //True or false is immediate
+            // published: true,
+            published: isoTimeNow(0, 0, 0, 0, 5),
           }
         }
       };
