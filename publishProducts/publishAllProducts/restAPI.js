@@ -4,7 +4,7 @@
 
 require("../../config");
 const getAllProducts = require("../../helpers/getAllProducts.js");
-const apiGetRequest = require("../../helpers/apiGetRequest.js");
+const apiPutRequest = require("../../helpers/apiPutRequest.js");
 const fsWriteFile = require("../../helpers/fsWriteFile");
 const path = require("path");
 
@@ -17,7 +17,8 @@ const buildShopifyBody = function(id) {
       const options = {
         url: `https://${SHOP}.myshopify.com/admin/api/2019-10/products/${id}.json`,
         headers: {
-          "X-Shopify-Access-Token": ACCESS_TOKEN
+          "X-Shopify-Access-Token": ACCESS_TOKEN,
+          'Content-Type': 'application/json',
         },
         body: {
           product: {
@@ -28,8 +29,8 @@ const buildShopifyBody = function(id) {
         }
       };
 
-      const { product } = await apiGetRequest(options);
-      resolve(product);
+      const { product } = await apiPutRequest(options);
+        resolve(product);
     } catch (error) {
       reject(error);
     }
@@ -45,7 +46,9 @@ const processProductsToPublished = function(products) {
           const { id, title } = await buildShopifyBody(productId);
           console.log(`\u001b[38;5;${id % 255}m${title}\u001b[0m`);
         }
-        console.log("Already Published: ", `\u001b[38;5;${productId % 255}m${productTitle}\u001b[0m`);
+        else {
+          console.log("Already Published: ", `\u001b[38;5;${productId % 255}m${productTitle}\u001b[0m`);
+        }
       }
 
       resolve("next");
