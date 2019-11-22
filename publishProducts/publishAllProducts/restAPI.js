@@ -5,6 +5,8 @@
 require("../../config");
 const getAllProducts = require("../../helpers/getAllProducts.js");
 const apiGetRequest = require("../../helpers/apiGetRequest.js");
+const fsWriteFile = require("../../helpers/fsWriteFile");
+const path = require("path");
 
 const { SHOP, ACCESS_TOKEN } = process.env;
 
@@ -88,6 +90,8 @@ const main = async function() {
       }
 
       console.log(`==================== ${pages} ===================`);
+      fsWriteFile(path.join(__dirname, `./page.json`), { page: pages});
+
     }
     return "Completed";
   } catch (error) {
