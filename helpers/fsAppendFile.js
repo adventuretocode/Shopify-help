@@ -9,7 +9,7 @@ const fsWriteFile = require("./fsWriteFile");
  *                                  Example : path.join(__dirname, myFile)
  */
 
-const appendToJson = function(key, value, filePath) {
+const fsAppendFile = function(key, value, filePath) {
     return new Promise(async function(resolve, reject) {
         try {
             const json = require(filePath);
@@ -24,4 +24,4 @@ const appendToJson = function(key, value, filePath) {
     });
 };
 
-module.exports = appendToJson;
+module.exports = fsAppendFile;

@@ -1,7 +1,7 @@
 require("dotenv").config();
 const axios = require("axios");
 const path = require("path");
-const appendToJson = require("../helpers/appendToJson");
+const fsAppendFile = require("../helpers/fsAppendFile.js");
 const cleanIDGraphql = require("../helpers/cleanIDGraphql");
 
 const mongojs = require("mongojs");
@@ -164,7 +164,7 @@ const main = async function() {
       const lastCursor = await processShopifyGraphQLImages(edges);
       cursor = lastCursor;
 
-      await appendToJson(count, cursor, path.join(__dirname, `./cursor${process.env.ENV}.json`));
+      await fsAppendFile(count, cursor, path.join(__dirname, `./cursor${process.env.ENV}.json`));
 
       count+=1;
       // if(count > 5) {
