@@ -1,3 +1,7 @@
+/**
+ * Find shop publications to be published on shop
+ */
+
 const listAllPublication = `
 query listAllPublication {
   publications(first: 50) {
