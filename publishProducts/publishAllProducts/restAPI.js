@@ -2,8 +2,10 @@
  * Make One product live
  */
 
-const getAllProducts = require("../../helpers/getAllProducts.js");
 require("../../config");
+const getAllProducts = require("../../helpers/getAllProducts.js");
+const apiGetRequest = require("../../helpers/apiGetRequest.js");
+
 const { SHOP, ACCESS_TOKEN } = process.env;
 
 
@@ -24,7 +26,7 @@ const buildShopifyBody = function(id) {
         }
       };
 
-      const { product } = await getProducts(options);
+      const { product } = await apiGetRequest(options);
       resolve(product);
     } catch (error) {
       reject(error);
@@ -55,10 +57,10 @@ const main = async function() {
   try {
     let pages = 1;
     let moreItems = true;
-    let debug = true;
+    let debug = false;
 
     while (moreItems) {
-      const shopifyProducts = await getAllProducts(SHOP, ACCESS_TOKEN, 10, pages);
+      const shopifyProducts = await getAllProducts(SHOP, ACCESS_TOKEN, 250, pages);
 
       if(!shopifyProducts) {
         console.log("Product is null");
@@ -72,6 +74,7 @@ const main = async function() {
         pages += 1;
       } 
       else {
+        //Finished pagination of all products on shopify
         console.log("No products Found", products);
         moreItems = false;
         break;
@@ -80,7 +83,7 @@ const main = async function() {
       //Debug
       if(debug) {
         if(pages > 1) {
-          return;
+          return "Debug";
         }
       }
 
