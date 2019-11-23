@@ -15,7 +15,11 @@ const putRequest = function (option) {
           if (err) {
               reject(err);
           }
-          if(body.errors) {
+          if(res && res.statusCode >= 300) {
+            console.log(res.statusMessage);
+            reject(body);
+          }
+          if (body && body.hasOwnProperty("error")) {
             reject(body);
           }
           else {
