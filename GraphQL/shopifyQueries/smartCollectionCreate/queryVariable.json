@@ -1,0 +1,13 @@
+{
+  "input": {
+    "title": "glassstaff_cookiegawa-wave",
+    "ruleSet": {
+      "appliedDisjunctively": false,
+      "rules": {
+        "column": "TAG",
+        "relation": "EQUALS",
+        "condition": "ZAuto_gallery_cookiegawa-wave_glassstaff"
+      }
+    }
+  }
+}
