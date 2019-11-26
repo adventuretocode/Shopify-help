@@ -1,3 +1,11 @@
+/**
+ * Creating smart collection via graphQL
+ *
+ * Inputs an array of product names
+ * Checks shopify if a smart collection already been made
+ * Create smart collection not already been created
+ */
+
 require("../../config");
 const cleanData = require("../../helpers/cleanData.js");
 const buildAxiosQuery = require("../../helpers/buildAxiosQuery.js");
