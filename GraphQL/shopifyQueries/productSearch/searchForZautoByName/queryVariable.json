@@ -1,0 +1,4 @@
+{
+  "num": 50,
+  "query": "title:News Flash AND product_type:Tee AND tag:style-basic AND tag:gender-mens"
+}
