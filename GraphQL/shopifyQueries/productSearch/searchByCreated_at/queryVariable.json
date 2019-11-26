@@ -1,0 +1,4 @@
+{
+  "num": 50,
+  "query": "created_at:>2019-11-20 AND product_type:Tee AND tag:style-basic AND tag:gender-mens"
+}
