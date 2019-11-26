@@ -1,0 +1,14 @@
+{
+  "name": "ZAutoGraphQL",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "stage": "NODE_ENV=stage node createSmartCollectionWithGraph.js",
+    "prod": "NODE_ENV=prod node createSmartCollectionWithGraph.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
