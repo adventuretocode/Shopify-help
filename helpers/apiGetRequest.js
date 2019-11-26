@@ -15,7 +15,7 @@ const getRequest = function(option) {
         console.log("Request Error");
         reject(err);
       }
-      if(res.statusCode >= 300) {
+      if(res && res.statusCode >= 300) {
         console.log(res.statusMessage);
         reject(body);
       }
