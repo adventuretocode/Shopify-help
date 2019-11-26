@@ -3,11 +3,12 @@ const request = require("request");
 /**
  * Get request to shopify
  *
- * @param   {Object} option The request object for shopify
- * @returns {Promise}       Promise object represents the post body
+ * @param   {Object} option  The request object for shopify
+ * @param   {Number} timeOut Time before the next execution can start
+ * @returns {Promise}        Promise object represents the post body
  */
 
-const putRequest = function (option) {
+const putRequest = function (option, timeOut = 250) {
 
   return new Promise(function (resolve, reject) {
       option.json = true;
@@ -25,7 +26,7 @@ const putRequest = function (option) {
           else {
             setTimeout(() => {
               resolve(body);
-            }, 250);
+            }, timeOut);
           }
       });
   });
