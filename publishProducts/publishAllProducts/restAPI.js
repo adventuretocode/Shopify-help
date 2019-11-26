@@ -105,4 +105,14 @@ const main = async function() {
 
 main()
   .then(data => console.log("Success: ", data))
-  .catch(error => console.log("Errors: Main - ", error));
+  .catch(error => { 
+    console.log("Errors: Main - ", error);
+
+    // Timed out error code can still continue
+    if(error.code === "ETIMEDOUT") {
+      //code: 'ETIMEDOUT'
+      setTimeout(() => {
+        main();
+      }, 1000);
+    }
+  });
