@@ -1,5 +1,6 @@
 const axios = require("axios");
 
+/********************************
 const SHOP = "";
 const ACCESS_TOKEN = "";
 const exampleQuery = {
@@ -14,6 +15,7 @@ const exampleQuery = {
     variables: variables,
   },
 }
+*******************************/
 
 /**
  * Post request to shopify
