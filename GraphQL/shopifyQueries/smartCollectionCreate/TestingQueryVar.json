@@ -1,0 +1,14 @@
+{
+  "num": 50,
+  "input": {
+    "title": "TestingTesting",
+    "ruleSet": {
+      "appliedDisjunctively": false,
+      "rules": {
+        "column": "TAG",
+        "relation": "EQUALS",
+        "condition": "TESTINGTESTING"
+      }
+    }
+  }
+}
