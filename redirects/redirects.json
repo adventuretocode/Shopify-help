@@ -1,142 +1,144 @@
-[
-  {
-    "redirect": {
-      "id": 145606770787,
-      "path": "/product/odad-sweatshirt-unisex-crew-neck-bacon-bff",
-      "target": "/product/sweatshirt-unisex-crew-neck-bacon-bff"
+{
+  "create-redirects-old-odad-to-gallery": [
+    {
+      "redirect": {
+        "id": 145610997859,
+        "path": "/product/odad-sweatshirt-unisex-pullover-bacon-labor",
+        "target": "/product/sweatshirt-unisex-pullover-bacon-labor"
+      }
+    },
+    {
+      "redirect": {
+        "id": 145611030627,
+        "path": "/product/odad-sweatshirt-unisex-crew-neck-bacon-labor",
+        "target": "/product/sweatshirt-unisex-crew-neck-bacon-labor"
+      }
+    },
+    {
+      "redirect": {
+        "id": 145611063395,
+        "path": "/product/odad-sweatshirt-unisex-zip-up-bacon-labor",
+        "target": "/product/sweatshirt-unisex-zip-up-bacon-labor"
+      }
+    },
+    {
+      "redirect": {
+        "id": 145611096163,
+        "path": "/product/odad-tank-unisex-basic-bacon-labor",
+        "target": "/product/tank-unisex-basic-bacon-labor"
+      }
+    },
+    {
+      "redirect": {
+        "id": 145611128931,
+        "path": "/product/odad-tee-womens-fitted-bacon-labor",
+        "target": "/product/tee-womens-fitted-bacon-labor"
+      }
+    },
+    {
+      "redirect": {
+        "id": 145611161699,
+        "path": "/product/odad-tee-youth-basic-bacon-labor",
+        "target": "/product/tee-youth-basic-bacon-labor"
+      }
+    },
+    {
+      "redirect": {
+        "id": 145611194467,
+        "path": "/product/odad-tee-womens-basic-bacon-labor",
+        "target": "/product/tee-womens-basic-bacon-labor"
+      }
+    },
+    {
+      "redirect": {
+        "id": 145611227235,
+        "path": "/product/odad-tee-mens-long-sleeved-bacon-labor",
+        "target": "/product/tee-mens-long-sleeved-bacon-labor"
+      }
+    },
+    {
+      "redirect": {
+        "id": 145611260003,
+        "path": "/product/odad-tee-mens-premium-bacon-labor",
+        "target": "/product/tee-mens-premium-bacon-labor"
+      }
+    },
+    {
+      "redirect": {
+        "id": 145611292771,
+        "path": "/product/odad-tee-mens-basic-bacon-labor",
+        "target": "/product/tee-mens-basic-bacon-labor"
+      }
+    },
+    {
+      "redirect": {
+        "id": 145611325539,
+        "path": "/product/odad-sweatshirt-unisex-crew-neck-bacon-vacation",
+        "target": "/product/sweatshirt-unisex-crew-neck-bacon-vacation"
+      }
+    },
+    {
+      "redirect": {
+        "id": 145611358307,
+        "path": "/product/odad-sweatshirt-unisex-pullover-bacon-vacation",
+        "target": "/product/sweatshirt-unisex-pullover-bacon-vacation"
+      }
+    },
+    {
+      "redirect": {
+        "id": 145611391075,
+        "path": "/product/odad-sweatshirt-unisex-zip-up-bacon-vacation",
+        "target": "/product/sweatshirt-unisex-zip-up-bacon-vacation"
+      }
+    },
+    {
+      "redirect": {
+        "id": 145611423843,
+        "path": "/product/odad-tank-unisex-basic-bacon-vacation",
+        "target": "/product/tank-unisex-basic-bacon-vacation"
+      }
+    },
+    {
+      "redirect": {
+        "id": 145611456611,
+        "path": "/product/odad-tee-youth-basic-bacon-vacation",
+        "target": "/product/tee-youth-basic-bacon-vacation"
+      }
+    },
+    {
+      "redirect": {
+        "id": 145611489379,
+        "path": "/product/odad-tee-womens-fitted-bacon-vacation",
+        "target": "/product/tee-womens-fitted-bacon-vacation"
+      }
+    },
+    {
+      "redirect": {
+        "id": 145611522147,
+        "path": "/product/odad-tee-womens-basic-bacon-vacation",
+        "target": "/product/tee-womens-basic-bacon-vacation"
+      }
+    },
+    {
+      "redirect": {
+        "id": 145611554915,
+        "path": "/product/odad-tee-mens-long-sleeved-bacon-vacation",
+        "target": "/product/tee-mens-long-sleeved-bacon-vacation"
+      }
+    },
+    {
+      "redirect": {
+        "id": 145611587683,
+        "path": "/product/odad-tee-mens-premium-bacon-vacation",
+        "target": "/product/tee-mens-premium-bacon-vacation"
+      }
+    },
+    {
+      "redirect": {
+        "id": 145611620451,
+        "path": "/product/odad-tee-mens-basic-bacon-vacation",
+        "target": "/product/tee-mens-basic-bacon-vacation"
+      }
     }
-  },
-  {
-    "redirect": {
-      "id": 145606803555,
-      "path": "/product/odad-sweatshirt-unisex-pullover-bacon-bff",
-      "target": "/product/sweatshirt-unisex-pullover-bacon-bff"
-    }
-  },
-  {
-    "redirect": {
-      "id": 145606836323,
-      "path": "/product/odad-sweatshirt-unisex-zip-up-bacon-bff",
-      "target": "/product/sweatshirt-unisex-zip-up-bacon-bff"
-    }
-  },
-  {
-    "redirect": {
-      "id": 145606869091,
-      "path": "/product/odad-tee-youth-basic-bacon-bff",
-      "target": "/product/tee-youth-basic-bacon-bff"
-    }
-  },
-  {
-    "redirect": {
-      "id": 145606901859,
-      "path": "/product/odad-tank-unisex-basic-bacon-bff",
-      "target": "/product/tank-unisex-basic-bacon-bff"
-    }
-  },
-  {
-    "redirect": {
-      "id": 145606934627,
-      "path": "/product/odad-tee-womens-fitted-bacon-bff",
-      "target": "/product/tee-womens-fitted-bacon-bff"
-    }
-  },
-  {
-    "redirect": {
-      "id": 145606967395,
-      "path": "/product/odad-tee-womens-basic-bacon-bff",
-      "target": "/product/tee-womens-basic-bacon-bff"
-    }
-  },
-  {
-    "redirect": {
-      "id": 145607000163,
-      "path": "/product/odad-tee-mens-long-sleeved-bacon-bff",
-      "target": "/product/tee-mens-long-sleeved-bacon-bff"
-    }
-  },
-  {
-    "redirect": {
-      "id": 145607032931,
-      "path": "/product/odad-tee-mens-premium-bacon-bff",
-      "target": "/product/tee-mens-premium-bacon-bff"
-    }
-  },
-  {
-    "redirect": {
-      "id": 145607065699,
-      "path": "/product/odad-tee-mens-basic-bacon-bff",
-      "target": "/product/tee-mens-basic-bacon-bff"
-    }
-  },
-  {
-    "redirect": {
-      "id": 145607098467,
-      "path": "/product/odad-sweatshirt-unisex-crew-neck-bacon-burner",
-      "target": "/product/sweatshirt-unisex-crew-neck-bacon-burner"
-    }
-  },
-  {
-    "redirect": {
-      "id": 145607131235,
-      "path": "/product/odad-sweatshirt-unisex-pullover-bacon-burner",
-      "target": "/product/sweatshirt-unisex-pullover-bacon-burner"
-    }
-  },
-  {
-    "redirect": {
-      "id": 145607164003,
-      "path": "/product/odad-sweatshirt-unisex-zip-up-bacon-burner",
-      "target": "/product/sweatshirt-unisex-zip-up-bacon-burner"
-    }
-  },
-  {
-    "redirect": {
-      "id": 145607196771,
-      "path": "/product/odad-tank-unisex-basic-bacon-burner",
-      "target": "/product/tank-unisex-basic-bacon-burner"
-    }
-  },
-  {
-    "redirect": {
-      "id": 145607229539,
-      "path": "/product/odad-tee-youth-basic-bacon-burner",
-      "target": "/product/tee-youth-basic-bacon-burner"
-    }
-  },
-  {
-    "redirect": {
-      "id": 145607295075,
-      "path": "/product/odad-tee-womens-fitted-bacon-burner",
-      "target": "/product/tee-womens-fitted-bacon-burner"
-    }
-  },
-  {
-    "redirect": {
-      "id": 145607327843,
-      "path": "/product/odad-tee-womens-basic-bacon-burner",
-      "target": "/product/tee-womens-basic-bacon-burner"
-    }
-  },
-  {
-    "redirect": {
-      "id": 145607360611,
-      "path": "/product/odad-tee-mens-long-sleeved-bacon-burner",
-      "target": "/product/tee-mens-long-sleeved-bacon-burner"
-    }
-  },
-  {
-    "redirect": {
-      "id": 145607393379,
-      "path": "/product/odad-tee-mens-premium-bacon-burner",
-      "target": "/product/tee-mens-premium-bacon-burner"
-    }
-  },
-  {
-    "redirect": {
-      "id": 145607426147,
-      "path": "/product/odad-tee-mens-basic-bacon-burner",
-      "target": "/product/tee-mens-basic-bacon-burner"
-    }
-  }
-]
+  ]
+}
