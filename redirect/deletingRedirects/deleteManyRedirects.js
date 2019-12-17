@@ -1,7 +1,7 @@
 require("dotenv").config({
   path: "../.env.stage"
 });
-const restApiService = require("../helpers/restApiService.js");
+const restApiService = require("../../helpers/restApiService.js");
 const { SHOP, ACCESS_TOKEN } = process.env;
 /**
  * Deleting redirected
