@@ -1,13 +1,15 @@
+require("../config.js");
+const { SHOP, ACCESS_TOKEN } = process.env; 
 const axiosRequest = require("./axiosRequest.js");
 
-const buildGraphqlQuery = function(query, variables, shop, access_token, delay) {
+const buildGraphqlQuery = function(query, variables, delay) {
   return new Promise(async function(resolve, reject) {
     try {
       const options = {
-        url: `https://${shop}.myshopify.com/admin/api/2019-10/graphql.json`,
+        url: `https://${SHOP}.myshopify.com/admin/api/2019-10/graphql.json`,
         headers: {
           "Content-Type": "application/json",
-          "X-Shopify-Access-Token": access_token
+          "X-Shopify-Access-Token": ACCESS_TOKEN
         },
         method: "post",
         data: {
