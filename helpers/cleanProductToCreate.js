@@ -78,7 +78,7 @@ exports.cleanProductToCreateRest = ({
         product: {
           title,
           body_html,
-          vendor,
+          vendor: "bt-test",
           product_type,
           handle,
           published: true,
@@ -127,7 +127,8 @@ exports.cleanProductToCreateGraphql = ({
     variants,
     options,
     images,
-    image
+    image,
+    metafields
   }
 }) => {
   return new Promise(async (resolve, reject) => {
@@ -174,7 +175,7 @@ exports.cleanProductToCreateGraphql = ({
           return {
             key,
             value,
-            valueType: value_type,
+            valueType: value_type.toUpperCase(),
             namespace,
             description: null
           };
@@ -191,7 +192,7 @@ exports.cleanProductToCreateGraphql = ({
           tags: cleanTags,
           templateSuffix: "2019-pdp",
           title,
-          vendor,
+          vendor: "bt-test",
           variants: cleanVariant,
           metafields: cleanMetafields
         }
