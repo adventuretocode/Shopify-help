@@ -2,7 +2,7 @@ const buildRestBody = require("../../helpers/buildRestBody");
 const {
   cleanProductToCreateRest,
   cleanProductToCreateGraphql
-} = require("./cleanProductToCreate.js");
+} = require("../../helpers/cleanProductToCreate.js");
 const buildGraphqlQuery = require("../../helpers/buildGraphqlQuery.js");
 const fsWriteFile = require("../../helpers/fsWriteFile.js");
 const path = require("path");
@@ -125,6 +125,6 @@ const main = function(id, apiType = "rest") {
   });
 };
 
-main(1866167910466)
+main(1866167910466, "graphql")
   .then(console.log)
   .catch(error => console.log("Error", error));

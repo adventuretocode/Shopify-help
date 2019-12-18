@@ -78,7 +78,7 @@ exports.cleanProductToCreateRest = ({
         product: {
           title,
           body_html,
-          vendor: "bt-test",
+          vendor,
           product_type,
           handle,
           published: true,
@@ -192,7 +192,7 @@ exports.cleanProductToCreateGraphql = ({
           tags: cleanTags,
           templateSuffix: "2019-pdp",
           title,
-          vendor: "bt-test",
+          vendor,
           variants: cleanVariant,
           metafields: cleanMetafields
         }
