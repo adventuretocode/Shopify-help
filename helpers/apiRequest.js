@@ -9,7 +9,6 @@ const request = require("request");
 
 const getRequest = function(option) {
   return new Promise(function(resolve, reject) {
-    option.json = true;
     request(option, function(err, res, body) {
       if (err) {
         console.log("Request Error");
