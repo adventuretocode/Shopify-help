@@ -1,0 +1,139 @@
+{
+  "product": {
+    "id": 1866167910466,
+    "title": "All The Fox",
+    "body_html": "<style type=\"text/css\"><!--\np.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'Helvetica Neue'}\n--></style>\n<p class=\"p1\"><strong>32\" x 64\"</strong></p>\n<p class=\"p1\"> </p>\n<p class=\"p1\"><strong>TeeFury towels are printed and sewn after you order is placed - custom made just for you! <em>For this reason, we do require 10 days for your order to be completed before shipping</em>.</strong></p>\n<p class=\"p1\"> </p>\n<p class=\"p1\"><strong>TeeFury towels are made with a spun polyester face and a soft cotton interior. <em>Due to the custom nature of our all-over print products, please be aware that they are final sale and we do not offer refunds or exchanges.</em></strong></p>",
+    "vendor": "Licunatt",
+    "product_type": "Towel",
+    "created_at": "2019-05-06T21:03:20-04:00",
+    "handle": "towel-all-the-fox",
+    "updated_at": "2019-12-05T18:14:08-05:00",
+    "published_at": "2019-05-08T19:50:34-04:00",
+    "template_suffix": "",
+    "tags": "artist-Licunatt, Beach, fox, Funny, size-32x64, summer, Towel, Wordplay",
+    "published_scope": "web",
+    "admin_graphql_api_id": "gid://shopify/Product/1866167910466",
+    "variants": [
+      {
+        "id": 15442958778434,
+        "product_id": 1866167910466,
+        "title": "32x64",
+        "price": "38.00",
+        "sku": "T88-AllTheFox-NA",
+        "position": 1,
+        "inventory_policy": "deny",
+        "compare_at_price": null,
+        "fulfillment_service": "t6",
+        "inventory_management": null,
+        "option1": "32x64",
+        "option2": null,
+        "option3": null,
+        "created_at": "2019-05-06T21:03:20-04:00",
+        "updated_at": "2019-10-08T08:20:01-04:00",
+        "taxable": true,
+        "barcode": null,
+        "grams": 600,
+        "image_id": 5296690200642,
+        "weight": 1.3228,
+        "weight_unit": "lb",
+        "inventory_item_id": 16070389596226,
+        "inventory_quantity": -1,
+        "old_inventory_quantity": -1,
+        "tax_code": "",
+        "requires_shipping": true,
+        "admin_graphql_api_id": "gid://shopify/ProductVariant/15442958778434"
+      }
+    ],
+    "options": [
+      {
+        "id": 2498193162306,
+        "product_id": 1866167910466,
+        "name": "Size",
+        "position": 1,
+        "values": [ "32x64" ]
+      }
+    ],
+    "images": [
+      {
+        "id": 5296690200642,
+        "product_id": 1866167910466,
+        "position": 1,
+        "created_at": "2019-05-06T21:05:08-04:00",
+        "updated_at": "2019-10-20T18:38:22-04:00",
+        "alt": null,
+        "width": 960,
+        "height": 960,
+        "src": "https://cdn.shopify.com/s/files/1/1869/0319/products/All-The-Fox_Towel.jpg?v=1571611102",
+        "variant_ids": [ 15442958778434 ],
+        "admin_graphql_api_id": "gid://shopify/ProductImage/5296690200642"
+      },
+      {
+        "id": 5296690102338,
+        "product_id": 1866167910466,
+        "position": 2,
+        "created_at": "2019-05-06T21:05:07-04:00",
+        "updated_at": "2019-10-20T18:38:22-04:00",
+        "alt": null,
+        "width": 960,
+        "height": 960,
+        "src": "https://cdn.shopify.com/s/files/1/1869/0319/products/All-The-Fox_Folded-Towel.jpg?v=1571611102",
+        "variant_ids": [],
+        "admin_graphql_api_id": "gid://shopify/ProductImage/5296690102338"
+      },
+      {
+        "id": 5296689971266,
+        "product_id": 1866167910466,
+        "position": 3,
+        "created_at": "2019-05-06T21:05:05-04:00",
+        "updated_at": "2019-10-20T18:38:22-04:00",
+        "alt": null,
+        "width": 960,
+        "height": 960,
+        "src": "https://cdn.shopify.com/s/files/1/1869/0319/products/All-The-Fox_Art_0a51c7ca-7b7d-4b2e-89d8-22b03c774860.jpg?v=1571611102",
+        "variant_ids": [],
+        "admin_graphql_api_id": "gid://shopify/ProductImage/5296689971266"
+      }
+    ],
+    "image": {
+      "id": 5296690200642,
+      "product_id": 1866167910466,
+      "position": 1,
+      "created_at": "2019-05-06T21:05:08-04:00",
+      "updated_at": "2019-10-20T18:38:22-04:00",
+      "alt": null,
+      "width": 960,
+      "height": 960,
+      "src": "https://cdn.shopify.com/s/files/1/1869/0319/products/All-The-Fox_Towel.jpg?v=1571611102",
+      "variant_ids": [ 15442958778434 ],
+      "admin_graphql_api_id": "gid://shopify/ProductImage/5296690200642"
+    },
+    "metafields": [
+      {
+        "id": 5340422897730,
+        "namespace": "global",
+        "key": "collection_image",
+        "value": "https://cdn.shopify.com/s/files/1/1869/0319/files/All-The-Fox_Towel-Gallery.jpg?644",
+        "value_type": "string",
+        "description": null,
+        "owner_id": 1866167910466,
+        "created_at": "2019-05-06T21:04:04-04:00",
+        "updated_at": "2019-05-06T21:04:04-04:00",
+        "owner_resource": "product",
+        "admin_graphql_api_id": "gid://shopify/Metafield/5340422897730"
+      },
+      {
+        "id": 5340425912386,
+        "namespace": "global",
+        "key": "title_tag",
+        "value": "All The Fox - Towels - by Licunatt",
+        "value_type": "string",
+        "description": null,
+        "owner_id": 1866167910466,
+        "created_at": "2019-05-06T21:04:53-04:00",
+        "updated_at": "2019-05-06T21:04:53-04:00",
+        "owner_resource": "product",
+        "admin_graphql_api_id": "gid://shopify/Metafield/5340425912386"
+      }
+    ]
+  }
+}
