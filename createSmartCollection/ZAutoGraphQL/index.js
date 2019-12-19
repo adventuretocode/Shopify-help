@@ -6,3 +6,9 @@
 // Build a query graphql query to create smart collections. 
 
 
+const arrayOfTitle = require("./titlesOfNewProducts.json");
+const createSmartCollectionWithGraph = require("./createSmartCollectionWithGraph.js");
+
+createSmartCollectionWithGraph(arrayOfTitle)
+  .then(success => console.log("Success", success))
+  .catch(error => console.log("Error: Main - ", error));

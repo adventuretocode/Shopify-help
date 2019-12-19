@@ -177,7 +177,4 @@ const main = async function(arr) {
   return "completed";
 };
 
-const arrayOfTitle = require("./titlesOfNewProducts.json");
-main(arrayOfTitle)
-  .then(success => console.log("Success", success))
-  .catch(error => console.log("Error: Main - ", error));
+module.exports = main;
