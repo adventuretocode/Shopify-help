@@ -10,7 +10,6 @@ require("../../config");
 const cleanData = require("../../helpers/cleanData.js");
 const buildAxiosQuery = require("../../helpers/buildAxiosQuery.js");
 const apiPostRequest = require("../../helpers/apiPostRequest.js");
-
 const { SHOP, ACCESS_TOKEN } = process.env;
 
 const searchProductByTitle = function(title) {
@@ -33,15 +32,10 @@ const searchProductByTitle = function(title) {
       `;
       const variables = {
         num: 50,
-        query: `title:${title} AND product_type:Tee AND tag:style-basic AND tag:gender-mens AND created_at:>2019-11-20`
+        query: `title:${title} AND product_type:Tee AND tag:style-basic AND tag:gender-mens`
       };
 
-      const { products } = await buildAxiosQuery(
-        query,
-        variables,
-        SHOP,
-        ACCESS_TOKEN
-      );
+      const { products } = await buildAxiosQuery(query, variables);
       resolve(products);
     } catch (error) {
       reject(error);
@@ -72,7 +66,7 @@ const hasCollectionBeenCreated = function(collectionTitle) {
 
       const {
         collections: { edges }
-      } = await buildAxiosQuery(query, variables, SHOP, ACCESS_TOKEN);
+      } = await buildAxiosQuery(query, variables);
 
       if (edges.length) {
         resolve(true);
@@ -95,29 +89,8 @@ const createSmartCollection = function(collectionTitle, ZAutoTag) {
           handle: `Already Created: ${collectionTitle}`
         });
       } else {
-        const postBody = {
-          smart_collection: {
-            title: collectionTitle,
-            rules: [
-              {
-                column: "tag",
-                relation: "equals",
-                condition: ZAutoTag
-              }
-            ]
-          }
-        };
 
-        const params = {
-          url: `https://${SHOP}.myshopify.com/admin/api/2019-10/smart_collections.json`,
-          headers: {
-            "X-Shopify-Access-Token": ACCESS_TOKEN,
-            "Content-Type": "application/json"
-          },
-          body: postBody
-        };
-
-        const { smart_collection } = await apiPostRequest(params);
+        const { smart_collection } = await createSmartCollectionZAuto(collectionTitle, ZAutoTag);
         resolve(smart_collection);
       }
     } catch (error) {
