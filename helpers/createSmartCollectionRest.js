@@ -29,6 +29,7 @@ const createSmartCollectionZAuto = function(title, ZAutoTag) {
           "X-Shopify-Access-Token": ACCESS_TOKEN,
           "Content-Type": "application/json"
         },
+        method: "POST",
         body: postBody
       };
       

@@ -11,7 +11,6 @@ const cleanData = require("../../helpers/cleanData.js");
 const buildAxiosQuery = require("../../helpers/buildAxiosQuery.js");
 const searchMensBasicTeeByTitleGraph = require("../../helpers/searchMensBasicTeeByTitleGraph.js");
 
-
 const hasCollectionBeenCreated = function(collectionTitle) {
   return new Promise(async function(resolve, reject) {
     try {
