@@ -9,39 +9,8 @@
 require("../../config");
 const cleanData = require("../../helpers/cleanData.js");
 const buildAxiosQuery = require("../../helpers/buildAxiosQuery.js");
-const apiPostRequest = require("../../helpers/apiPostRequest.js");
-const { SHOP, ACCESS_TOKEN } = process.env;
+const searchMensBasicTeeByTitleGraph = require("../../helpers/searchMensBasicTeeByTitleGraph.js");
 
-const searchProductByTitle = function(title) {
-  return new Promise(async function(resolve, reject) {
-    try {
-      const query = `
-        query mensBasicTeeByTitle($num: Int!, $query: String!) {
-          products(first: $num, query: $query) {
-            edges {
-              node {
-                id
-                handle
-                title
-                vendor
-                tags
-              }
-            }
-          }
-        }
-      `;
-      const variables = {
-        num: 50,
-        query: `title:${title} AND product_type:Tee AND tag:style-basic AND tag:gender-mens`
-      };
-
-      const { products } = await buildAxiosQuery(query, variables);
-      resolve(products);
-    } catch (error) {
-      reject(error);
-    }
-  });
-};
 
 const hasCollectionBeenCreated = function(collectionTitle) {
   return new Promise(async function(resolve, reject) {
@@ -89,8 +58,10 @@ const createSmartCollection = function(collectionTitle, ZAutoTag) {
           handle: `Already Created: ${collectionTitle}`
         });
       } else {
-
-        const { smart_collection } = await createSmartCollectionZAuto(collectionTitle, ZAutoTag);
+        const { smart_collection } = await createSmartCollectionZAuto(
+          collectionTitle,
+          ZAutoTag
+        );
         resolve(smart_collection);
       }
     } catch (error) {
@@ -103,8 +74,10 @@ const extractZAutoTag = function(title) {
   return new Promise(async function(resolve, reject) {
     try {
       const {
-        edges: [item]
-      } = await searchProductByTitle(title);
+        products: {
+          edges: [item]
+        }
+      } = await searchMensBasicTeeByTitleGraph(title);
       const {
         node: { vendor, tags }
       } = item;
