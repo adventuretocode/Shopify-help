@@ -9,7 +9,7 @@ const exampleQuery = {
     'Content-Type': 'application/json',
     'X-Shopify-Access-Token': ACCESS_TOKEN,
   },
-  method: 'post',
+  method: 'POST',
   data: {
     query: query,
     variables: variables,
