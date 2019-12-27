@@ -1,3 +1,11 @@
+/**
+ * Take down products productions and then
+ * Run a second CMD to post product to staging store
+ *
+ * TODO: Remove the services to its own folder
+ * Controller should be able to push and pull from any store.
+ */
+
 const getSmartCollectionsProductsIdGraph = require("../../helpers/getSmartCollectionsProductsIdGraph.js");
 const cleanIDGraphql = require("../../helpers/cleanIDGraphql.js");
 const getProductDetailByIdRest = require("../../helpers/getProductDetailByIdRest.js");
@@ -57,10 +65,15 @@ const createProductGraphQLArray = function(arr) {
           results
         );
         const {
-          productCreate: { product: { id, handle} }
+          data: {
+            productCreate: {
+              product: { id, handle }
+            }
+          }
         } = results;
         console.log(
-          `\u001b[38;5;${cleanIDGraphql(id) % 255}m createProductGraphQLArray ${handle}\u001b[0m`
+          `\u001b[38;5;${cleanIDGraphql(id) %
+            255}m createProductGraphQLArray ${handle}\u001b[0m`
         );
       }
 
