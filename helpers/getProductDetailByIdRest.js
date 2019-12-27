@@ -1,4 +1,4 @@
-const buildRestBody = require("../../helpers/buildRestBody");
+const buildRestBody = require("./buildRestBody");
 
 /**
  * Get all the product detail by id, including metafields
