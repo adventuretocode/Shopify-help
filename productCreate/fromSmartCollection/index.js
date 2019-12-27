@@ -27,7 +27,9 @@ const logProductsToDesk = function(arr) {
         const {
           product: { id, title }
         } = completeProductDetail;
-        console.log(`\u001b[38;5;${id % 255}m logProductsToDesk ${title}\u001b[0m`);
+        console.log(
+          `\u001b[38;5;${id % 255}m logProductsToDesk ${title}\u001b[0m`
+        );
       }
       resolve("success");
     } catch (error) {
@@ -54,8 +56,12 @@ const createProductGraphQLArray = function(arr) {
           path.join(__dirname, `./graphqlResults/${arr[i]}.json`),
           results
         );
-        const { input: { handle } } = cleanProduct;
-        console.log("createProductGraphQLArray: ", handle);
+        const {
+          productCreate: { product: { id, handle} }
+        } = results;
+        console.log(
+          `\u001b[38;5;${cleanIDGraphql(id) % 255}m createProductGraphQLArray ${handle}\u001b[0m`
+        );
       }
 
       resolve(createdProduct);
@@ -73,7 +79,7 @@ const createProductGraphQLArray = function(arr) {
 const main = function(smartHandle) {
   return new Promise(async function(resolve, reject) {
     try {
-      if (process.env.ENV === "Prod") {
+      if (process.env.NODE_ENV === "prod") {
         const graphColProducts = await getSmartCollectionsProductsIdGraph(
           smartHandle
         );
