@@ -7,7 +7,7 @@ const request = require("request");
  * @returns {Promise}       Promise object represents the post body
  */
 
-const getRequest = function(option) {
+const apiRequest = function(option) {
   return new Promise(function(resolve, reject) {
     request(option, function(err, res, body) {
       if (err) {
@@ -30,4 +30,4 @@ const getRequest = function(option) {
   });
 };
 
-module.exports = getRequest;
+module.exports = apiRequest;
