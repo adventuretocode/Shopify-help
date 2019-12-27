@@ -17,12 +17,12 @@ if (STORE === "teefury") {
 else if (STORE === "rivaltees") {
   if (NODE_ENV === "prod") {
     keys = require("dotenv").config({
-      path: path.join(__dirname, "./.env.prod-rivalTees")
+      path: path.join(__dirname, "./.env.prod-rivaltees")
     });
   }
   else if (NODE_ENV === "stage") {
     keys = require("dotenv").config({
-      path: path.join(__dirname, "./.env.stage-rivalTees")
+      path: path.join(__dirname, "./.env.stage-rivaltees")
     });
   }
 }
