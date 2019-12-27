@@ -113,7 +113,7 @@ exports.cleanProductToCreateRest = ({
  * @param  {Array<Object>}  param.images        Images attached to product
  * @param  {Array<Object>}  param.image         Image variant attaches itself too
  * @param  {Array<Object>}  param.metafields    metafields of the product
- * @return {Promise<Object>}
+ * @return {Promise<{Object}>}
  */
 
 exports.cleanProductToCreateGraphql = ({
