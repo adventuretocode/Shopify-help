@@ -27,7 +27,7 @@ const logProductsToDesk = function(arr) {
         const {
           product: { id, title }
         } = completeProductDetail;
-        console.log(`\u001b[38;5;${id % 255}m${title}\u001b[0m`);
+        console.log(`\u001b[38;5;${id % 255}m logProductsToDesk ${title}\u001b[0m`);
       }
       resolve("success");
     } catch (error) {
@@ -50,7 +50,12 @@ const createProductGraphQLArray = function(arr) {
         const productFromProd = require(`./productsFromProd/${arr[i]}.json`);
         const cleanProduct = await cleanProductToCreateGraphql(productFromProd);
         const results = await createProductGraphql(cleanProduct);
-        console.log(results);
+        await fsWriteFile(
+          path.join(__dirname, `./graphqlResults/${arr[i]}.json`),
+          results
+        );
+        const { input: { handle } } = cleanProduct;
+        console.log("createProductGraphQLArray: ", handle);
       }
 
       resolve(createdProduct);
