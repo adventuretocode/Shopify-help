@@ -1,3 +1,4 @@
+const buildAxiosQuery = require("./buildAxiosQuery");
 /**
  * @param  {String} title Title of the product
  * @return {Object}       The product
