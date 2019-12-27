@@ -7,7 +7,7 @@ const { SHOP, ACCESS_TOKEN } = process.env;
  * @param  {String} title    Title of the collection
  */
 
-const createSmartCollectionZAuto = function(title, ZAutoTag) {
+const createSmartCollectionRest = function(title, ZAutoTag) {
   return new Promise(async function(resolve, reject) {
     try {
       const postBody = {
@@ -30,6 +30,7 @@ const createSmartCollectionZAuto = function(title, ZAutoTag) {
           "Content-Type": "application/json"
         },
         method: "POST",
+        json: true,
         body: postBody
       };
       
@@ -42,4 +43,4 @@ const createSmartCollectionZAuto = function(title, ZAutoTag) {
   });
 }
 
-module.exports = createSmartCollectionZAuto;
+module.exports = createSmartCollectionRest;
