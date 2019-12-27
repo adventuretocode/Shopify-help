@@ -1,0 +1,14 @@
+{
+  "name": "from-smart-collection",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "prod": "NODE_ENV=prod STORE=teefury node index.js",
+    "stage": "NODE_ENV=stage STORE=rivaltees node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
