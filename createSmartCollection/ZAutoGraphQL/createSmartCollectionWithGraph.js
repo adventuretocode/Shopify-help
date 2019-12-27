@@ -6,10 +6,12 @@
  * Create smart collection not already been created
  */
 
-require("../../config");
 const cleanData = require("../../helpers/cleanData.js");
 const buildAxiosQuery = require("../../helpers/buildAxiosQuery.js");
 const searchMensBasicTeeByTitleGraph = require("../../helpers/searchMensBasicTeeByTitleGraph.js");
+const fsWriteFile = require("../../helpers/fsWriteFile");
+const createSmartCollectionRest = require("../../helpers/createSmartCollectionRest");
+const path = require("path");
 
 const hasCollectionBeenCreated = function(collectionTitle) {
   return new Promise(async function(resolve, reject) {
@@ -57,7 +59,7 @@ const createSmartCollection = function(collectionTitle, ZAutoTag) {
           handle: `Already Created: ${collectionTitle}`
         });
       } else {
-        const { smart_collection } = await createSmartCollectionZAuto(
+        const { smart_collection } = await createSmartCollectionRest(
           collectionTitle,
           ZAutoTag
         );
