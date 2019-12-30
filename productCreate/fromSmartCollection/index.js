@@ -10,10 +10,10 @@ const getSmartCollectionsProductsIdGraph = require("../../helpers/getSmartCollec
 const cleanIDGraphql = require("../../helpers/cleanIDGraphql.js");
 const getProductDetailByIdRest = require("../../helpers/getProductDetailByIdRest.js");
 const fsWriteFile = require("../../helpers/fsWriteFile.js");
-const createProductGraphql = require("../../helpers/createProductGraphql.js");
+const createProductRest = require("../../helpers/createProductRest.js");
 const path = require("path");
 const {
-  cleanProductToCreateGraphql
+  cleanProductToCreateRest
 } = require("../../helpers/cleanProductToCreate.js");
 
 /**
@@ -53,31 +53,26 @@ const logProductsToDesk = function(arr) {
  * @return Void
  */
 
-const createProductGraphQLArray = function(arr) {
+const createProductRestArray = function(arr) {
   return new Promise(async function(resolve, reject) {
     try {
       for (let i = 0; i < arr.length; i++) {
         const productFromProd = require(`./productsFromProd/${arr[i]}.json`);
-        const cleanProduct = await cleanProductToCreateGraphql(productFromProd);
-        const results = await createProductGraphql(cleanProduct);
+        const cleanProduct = await cleanProductToCreateRest(productFromProd);
+        const results = await createProductRest(cleanProduct);
         await fsWriteFile(
-          path.join(__dirname, `./graphqlResults/${arr[i]}.json`),
+          path.join(__dirname, `./restResults/${arr[i]}.json`),
           results
         );
         const {
-          data: {
-            productCreate: {
-              product: { id, handle }
-            }
-          }
+          product: { id, handle }
         } = results;
         console.log(
-          `\u001b[38;5;${cleanIDGraphql(id) %
-            255}m createProductGraphQLArray ${handle}\u001b[0m`
+          `\u001b[38;5;${id % 255}m createProductRestArray ${handle}\u001b[0m`
         );
       }
 
-      resolve(createdProduct);
+      resolve("Success");
     } catch (error) {
       reject(error);
     }
@@ -108,7 +103,7 @@ const main = function(smartHandle) {
         );
       } else {
         const productIds = require(`./productsFromProd/${smartHandle}.json`);
-        await createProductGraphQLArray(productIds);
+        await createProductRestArray(productIds);
       }
 
       resolve("Finished");
@@ -118,6 +113,6 @@ const main = function(smartHandle) {
   });
 };
 
-main("teriakos_great-hunter")
+main("dracortis_metal-wish_odad")
   .then(success => console.log("Success: ", success))
   .catch(error => console.log("Error: ", error));
