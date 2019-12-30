@@ -1,5 +1,7 @@
-const cleanProductToCreateRest = require("./cleanProductToCreateRest.js");
-const 
+const cleanProductToCreateRest = require("./cleanProductToCreate.js");
+const cleanIDGraphql = require("./cleanIDGraphql.js");
+const fsWriteFile = require("./fsWriteFile.js");
+const createProductGraphql = require("./createProductGraphql.js");
 
 /**
  * Create products in staging from id
@@ -15,7 +17,7 @@ const createProductGraphQLArray = function(recordFile, arr) {
       for (let i = 0; i < arr.length; i++) {
         const productFromProd = require(`./productsFromProd/${arr[i]}.json`);
         const cleanProduct = await cleanProductToCreateRest(productFromProd);
-        const results = await createProductRest(cleanProduct);
+        const results = await createProductGraphql(cleanProduct);
         await fsWriteFile(recordFile, results);
         const {
           data: {
