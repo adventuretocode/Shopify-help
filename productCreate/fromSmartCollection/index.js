@@ -12,6 +12,7 @@ const getProductDetailByIdRest = require("../../helpers/getProductDetailByIdRest
 const fsWriteFile = require("../../helpers/fsWriteFile.js");
 const createProductRest = require("../../helpers/createProductRest.js");
 const path = require("path");
+const fs = require("fs");
 const {
   cleanProductToCreateRest
 } = require("../../helpers/cleanProductToCreate.js");
@@ -87,7 +88,13 @@ const createProductRestArray = function(arr) {
 const main = function(smartHandle) {
   return new Promise(async function(resolve, reject) {
     try {
+      const hasProdRan = fs.existsSync(`./productsFromProd/${smartHandle}.json`);
       if (process.env.NODE_ENV === "prod") {
+        
+        if (hasProdRan) {
+          reject("Prod Already Ran");
+          return;
+        }
         const graphColProducts = await getSmartCollectionsProductsIdGraph(
           smartHandle
         );
@@ -102,6 +109,10 @@ const main = function(smartHandle) {
           productIds
         );
       } else {
+        if (!hasProdRan) {
+          reject("Need to run prod");
+          return;
+        }
         const productIds = require(`./productsFromProd/${smartHandle}.json`);
         await createProductRestArray(productIds);
       }
@@ -113,6 +124,6 @@ const main = function(smartHandle) {
   });
 };
 
-main("dracortis_metal-wish_odad")
+main("palmstreet_psychic-blast-protection_odad")
   .then(success => console.log("Success: ", success))
   .catch(error => console.log("Error: ", error));
