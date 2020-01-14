@@ -2,6 +2,7 @@
 const cleanData = function(string) {
     let tempStr = string
         // Remove all special characters
+        .replace(/\*\*/gi, "-")
         .replace(/!/gi, "")
         .replace(/\[/g, "")
         .replace(/\]/g, "")

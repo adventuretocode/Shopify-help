@@ -1,3 +1,4 @@
+// $ cd helpers
 // $ npm run mocha ./cleanData.test.js 
 
 const expect = require("chai").expect;
@@ -106,6 +107,10 @@ describe("cleanData", function () {
 
     it("M. B. Brown", function() {
       expect(cleanData("M. B. Brown")).to.equal('m-b-brown');
+    });
+
+    it("F**k Robin", function() {
+      expect(cleanData("F**k Robin")).to.equal('f-k-robin');
     });
 
 });
