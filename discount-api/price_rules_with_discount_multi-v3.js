@@ -85,7 +85,7 @@ var priceRules = function (promotionCode) {
     return new Promise(async function (resolve, reject) {
 
         var params = {
-            url: `https://${process.env.SHOP}/admin/price_rules.json`,
+            url: `https://${process.env.SHOP}.myshopify.com/admin/price_rules.json`,
             headers: {
                 "X-Shopify-Access-Token": process.env.ACCESS_TOKEN,
                 "Content-Type": "application/json",
@@ -132,7 +132,7 @@ var discounts = function (promotionCode) {
             var priceRuleId = await fsReadFile(`./${promotionCode}_price_rule.json`, "price_rule");
 
             var params = {
-                url: `https://${process.env.SHOP}/admin/price_rules/${priceRuleId}/discount_codes.json`,
+                url: `https://${process.env.SHOP}.myshopify.com/admin/price_rules/${priceRuleId}/discount_codes.json`,
                 headers: {
                     "X-Shopify-Access-Token": process.env.ACCESS_TOKEN,
                     "Content-Type": "application/json",

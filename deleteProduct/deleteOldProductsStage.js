@@ -96,7 +96,7 @@ const filterShopifyProducts = function(products, key, value) {
 const deleteProducts = function(productId) {
     return new Promise(async function (resolve, reject){
         const params = {
-            url: `https://${process.env.SHOP}/admin/api/2019-10/products/${productId}.json`,
+            url: `https://${process.env.SHOP}.myshopify.com/admin/api/2019-10/products/${productId}.json`,
             headers: {
                 "X-Shopify-Access-Token": process.env.ACCESS_TOKEN,
                 "Content-Type": "application/json",
@@ -124,7 +124,7 @@ const deleteProducts = function(productId) {
 const getProducts = async function(limit = 10, page = 1) {
 
     const params = {
-        url: `https://${process.env.SHOP}/admin/products.json?limit=${limit}&page=${page}`,
+        url: `https://${process.env.SHOP}.myshopify.com/admin/products.json?limit=${limit}&page=${page}`,
         headers: {
             "X-Shopify-Access-Token": process.env.ACCESS_TOKEN,
             "Content-Type": "application/json",

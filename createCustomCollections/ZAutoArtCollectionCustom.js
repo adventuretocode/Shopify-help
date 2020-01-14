@@ -52,7 +52,7 @@ const postShopifyGraphQL = function (query) {
 
   return new Promise(function (resolve, reject) {
     axios({
-      url: `https://${process.env.SHOP}/admin/api/2019-10/graphql.json`,
+      url: `https://${process.env.SHOP}.myshopify.com/admin/api/2019-10/graphql.json`,
       headers: {
         'X-Shopify-Access-Token': process.env.ACCESS_TOKEN,
         'Content-Type': 'application/json',
@@ -173,7 +173,7 @@ const checkTagExist = function(tag) {
 const createCustomCollection = function(body) {
     return new Promise(async function(resolve, reject) {
         const params = {
-            url: `https://${process.env.SHOP}/admin/api/2019-10/custom_collections.json`,
+            url: `https://${process.env.SHOP}.myshopify.com/admin/api/2019-10/custom_collections.json`,
             headers: {
                 "X-Shopify-Access-Token": process.env.ACCESS_TOKEN,
                 "Content-Type": "application/json"

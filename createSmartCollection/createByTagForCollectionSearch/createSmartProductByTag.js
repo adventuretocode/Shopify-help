@@ -77,7 +77,7 @@ const checkTagExist = function(tag) {
 const createSmartCollection = function(body) {
     return new Promise(async function(resolve, reject) {
         const params = {
-            url: `https://${process.env.SHOP}/admin/api/2019-10/smart_collections.json`,
+            url: `https://${process.env.SHOP}.myshopify.com/admin/api/2019-10/smart_collections.json`,
             headers: {
                 "X-Shopify-Access-Token": process.env.ACCESS_TOKEN,
                 "Content-Type": "application/json"

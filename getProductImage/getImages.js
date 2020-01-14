@@ -18,7 +18,7 @@ var db = mongojs("teefury", ["product_images"]);
 const getProducts = function(limit = 10, page = 1) {
   return new Promise(async function(resolve, reject) {
       const params = {
-          url: `https://${process.env.SHOP}/admin/products.json?limit=${limit}&page=${page}`,
+          url: `https://${process.env.SHOP}.myshopify.com/admin/products.json?limit=${limit}&page=${page}`,
           headers: {
             "X-Shopify-Access-Token": process.env.ACCESS_TOKEN,
             "Content-Type": "application/json",
