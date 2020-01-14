@@ -3,11 +3,12 @@
  * to create smart collections
  */
 
-require("dotenv").config();
+require("../../config.js");
 const path = require("path");
 const cleanData = require("../../helpers/cleanData.js");
 const apiGetRequest = require("../../helpers/apiGetRequest.js");
 const fsWriteFile = require("../../helpers/fsWriteFile.js");
+const { ACCESS_TOKEN, SHOP, NODE_ENV, STORE  } = process.env;
 
 /**
  * Query the admin to get all products but limit amount received
@@ -20,9 +21,9 @@ const fsWriteFile = require("../../helpers/fsWriteFile.js");
 const getProducts = function(limit = 10, page = 1) {
     return new Promise(async function(resolve, reject) {
         const params = {
-            url: `https://${process.env.SHOP}.myshopify.com/admin/products.json?limit=${limit}&page=${page}`,
+            url: `https://${SHOP}.myshopify.com/admin/products.json?limit=${limit}&page=${page}`,
             headers: {
-              "X-Shopify-Access-Token": process.env.ACCESS_TOKEN,
+              "X-Shopify-Access-Token": ACCESS_TOKEN,
               "Content-Type": "application/json",
             },
             json: true,
@@ -40,13 +41,13 @@ const getProducts = function(limit = 10, page = 1) {
 const recordTag = function(tag, handle, id) {
     return new Promise(async function(resolve, reject) {
         try {
-            const json = require(`./ZAutoJsonWithID${process.env.ENV}.json`);
+            const json = require(`./prepJsonCreate/ZAutoJsonWithID-${NODE_ENV}-${STORE}.json`);
             if(!json[tag]) {
               json[tag] = {
                 "id": id,
                 "handle": handle
               };
-              await fsWriteFile(path.join(__dirname, `./ZAutoJsonWithID${process.env.ENV}.json`), json);
+              await fsWriteFile(path.join(__dirname, `./prepJsonCreate/ZAutoJsonWithID-${NODE_ENV}-${STORE}.json`), json);
             }
             resolve();
         } catch (error) {
@@ -75,7 +76,7 @@ const main = async function() {
     try {
         let pages = 1;
         let moreItems = true;
-        
+
         while (moreItems) {
             const shopifyProducts = await getProducts(250, pages);
             if(!shopifyProducts) {

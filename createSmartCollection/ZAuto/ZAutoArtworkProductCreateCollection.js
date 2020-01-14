@@ -4,7 +4,7 @@
  * 
  * Must Run ZAutoJsonCreate.js first to to build the ZAuto tags
  * 
- * It will check from `ZAutoProductColCreated{process.env.ENV}.json` 
+ * It will check from `./createdCollection/ZAutoProduct-${NODE_ENV}-${STORE}.json` 
  * to see if the collection has already been created
  * 
  * This fill will create the smart tags on shopify based on
@@ -13,13 +13,15 @@
  * On Success it will record down the return JSON 
  * in the folder `./artistProductCollection${process.env.ENV}/`
  * 
- * And Also log into `ZAutoProductColCreated{process.env.ENV}.json`
+ * And Also log into `./createdCollection/ZAutoProduct-${NODE_ENV}-${STORE}.json`
  * 
  */
-require("dotenv").config();
+
+require("../../config.js");
 const request = require("request");
 const path = require('path');
 const fsWriteFile = require("../../helpers/fsWriteFile.js");
+const { ACCESS_TOKEN, SHOP, NODE_ENV, STORE  } = process.env;
 
 /**
  * Post request to shopify
@@ -51,9 +53,9 @@ const postShopify = function(option) {
 const recordTag = function(tag, id) {
     return new Promise(async function(resolve, reject) {
         try {
-            const json = require(path.join(__dirname, `./ZAutoProductColCreated${process.env.ENV}.json`));
+            const json = require(path.join(__dirname, `./createdCollection/ZAutoProduct-${NODE_ENV}-${STORE}.json`));
             json[tag] = id;
-            await fsWriteFile(path.join(__dirname, `./ZAutoProductColCreated${process.env.ENV}.json`), json);
+            await fsWriteFile(path.join(__dirname, `./createdCollection/ZAutoProduct-${NODE_ENV}-${STORE}.json`), json);
             resolve();
         } catch (error) {
             reject(error);
@@ -71,7 +73,7 @@ const recordTag = function(tag, id) {
 const checkTagExist = function(tag) {
     return new Promise(function(resolve, reject) {
         try {
-            const json = require(path.join(__dirname, `./ZAutoProductColCreated${process.env.ENV}.json`));
+            const json = require(path.join(__dirname, `./createdCollection/ZAutoProduct-${NODE_ENV}-${STORE}.json`));
             resolve(json[tag]);
         } catch (error) {
             console.log("Error: checkTagExist - ", tag);
@@ -90,9 +92,9 @@ const checkTagExist = function(tag) {
 const createSmartCollection = function(body) {
     return new Promise(async function(resolve, reject) {
         const params = {
-            url: `https://${process.env.SHOP}.myshopify.com/admin/api/2019-10/smart_collections.json`,
+            url: `https://${SHOP}.myshopify.com/admin/api/2019-10/smart_collections.json`,
             headers: {
-                "X-Shopify-Access-Token": process.env.ACCESS_TOKEN,
+                "X-Shopify-Access-Token": ACCESS_TOKEN,
                 "Content-Type": "application/json"
             },
             body: body,
@@ -134,7 +136,7 @@ const createArtistByZTag = function(tag, title) {
         try {
             const createdSmartCollection  = await createSmartCollection(postBody);
             const { smart_collection: { handle, id } } = createdSmartCollection;
-            await fsWriteFile(path.join(__dirname, `./artistProductCollection${process.env.ENV}/${handle}.json`), createdSmartCollection);
+            await fsWriteFile(path.join(__dirname, `./individual-${NODE_ENV}-${STORE}/${handle}.json`), createdSmartCollection);
             await recordTag(tag, id);
             resolve(id);
         } catch (error) {
@@ -184,13 +186,13 @@ const main = async function(tagsAndTitle) {
             console.log(message);
         } catch (error) {
             console.log("Error: main - ", error, tag);
-            const errorJson = require(path.join(__dirname, `./ErrorZAutoProductColCreated${process.env.ENV}.json`));
+            const errorJson = require(path.join(__dirname, `./createdCollection/ErrorZAutoProduct-${NODE_ENV}-${STORE}${process.env.ENV}.json`));
             errorJson[tag] = error;
-            await fsWriteFile(path.join(__dirname, `./ErrorZAutoProductColCreated${process.env.ENV}.json`), errorJson);
+            await fsWriteFile(path.join(__dirname, `./createdCollection/ErrorZAutoProduct-${NODE_ENV}-${STORE}${process.env.ENV}.json`), errorJson);
             break;
         }
     }
 }
 
-const tagsAndTitle = require(path.join(__dirname, `./ZAutoJsonWithID${process.env.ENV}.json`));
+const tagsAndTitle = require(path.join(__dirname, `./prepJsonCreate/ZAutoJsonWithID-${NODE_ENV}-${STORE}.json`));
 main(tagsAndTitle);
