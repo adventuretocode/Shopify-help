@@ -124,6 +124,7 @@ const main = function(smartHandle) {
   });
 };
 
-main("palmstreet_psychic-blast-protection_odad")
+const collectionTitleInput = process.argv[2];
+main(collectionTitleInput)
   .then(success => console.log("Success: ", success))
   .catch(error => console.log("Error: ", error));
