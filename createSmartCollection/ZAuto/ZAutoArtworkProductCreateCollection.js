@@ -176,23 +176,37 @@ const checkIfExist = function(tag, title) {
  * @param {Object} tagsAndTitle One big object with key value pair with tag and title
  */
 
-const main = async function(tagsAndTitle) {
-
-    for(const tag in tagsAndTitle) {
-        try {
-            const id = await checkIfExist(tag, tagsAndTitle[tag].handle);
-            const message = id === "Already Created" 
-                ? id : `\u001b[38;5;${id % 255}mSuccess: ${tag}\u001b[0m`;
-            console.log(message);
-        } catch (error) {
-            console.log("Error: main - ", error, tag);
-            const errorJson = require(path.join(__dirname, `./createdCollection/ErrorZAutoProduct-${NODE_ENV}-${STORE}${process.env.ENV}.json`));
-            errorJson[tag] = error;
-            await fsWriteFile(path.join(__dirname, `./createdCollection/ErrorZAutoProduct-${NODE_ENV}-${STORE}${process.env.ENV}.json`), errorJson);
-            break;
+const controller = async function(tagsAndTitle) {
+    return new Promise(async function(resolve, reject) {
+        for(const tag in tagsAndTitle) {
+            try {
+                const id = await checkIfExist(tag, tagsAndTitle[tag].handle);
+                const message = id === "Already Created" 
+                    ? id : `\u001b[38;5;${id % 255}mSuccess: ${tag}\u001b[0m`;
+                console.log(message);
+            } catch (error) {
+                console.log("Error: main - ", error, tag);
+                const errorJson = require(path.join(__dirname, `./createdCollection/ErrorZAutoProduct-${NODE_ENV}-${STORE}${process.env.ENV}.json`));
+                errorJson[tag] = error;
+                await fsWriteFile(path.join(__dirname, `./createdCollection/ErrorZAutoProduct-${NODE_ENV}-${STORE}${process.env.ENV}.json`), errorJson);
+                reject("ZAutoArtworkProductCreateCollection: Reject");
+                break;
+            }
         }
-    }
+        resolve("ZAutoArtworkProductCreateCollection: success");
+    });
 }
 
-const tagsAndTitle = require(path.join(__dirname, `./prepJsonCreate/ZAutoJsonWithID-${NODE_ENV}-${STORE}.json`));
-main(tagsAndTitle);
+const main = function() {
+    return new Promise(async function(resolve, reject) {
+        try {
+            const tagsAndTitle = require(path.join(__dirname, `./prepJsonCreate/ZAutoJsonWithID-${NODE_ENV}-${STORE}.json`));
+            const result = await controller(tagsAndTitle)
+            resolve(result);
+        } catch (error) {
+            reject(error);
+        }
+    });
+}
+
+module.exports = main;
