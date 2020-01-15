@@ -3,26 +3,30 @@ const apiRequest = require("./apiRequest.js");
 const { SHOP, ACCESS_TOKEN } = process.env;
 
 /**
- * @param  {String} ZAutoTag zAuto tag from the product
- * @param  {String} title    Title of the collection
+ *  Post body example
+ * 
+    const postBody = {
+      smart_collection: {
+        title: title,
+        rules: [
+          {
+            column: "tag",
+            relation: "equals",
+            condition: ZAutoTag
+          }
+        ]
+      }
+    };
+  */
+
+/**
+ * @param  {{smart_collection:{title:String, rules:[{column:String, relation:String, condition:String}}} postBody zAuto tag from the product
+ * @returns {Promise<{Object}>} 
  */
 
-const createSmartCollectionRest = function(title, ZAutoTag) {
+const createSmartCollectionRest = function(postBody) {
   return new Promise(async function(resolve, reject) {
     try {
-      const postBody = {
-        smart_collection: {
-          title: title,
-          rules: [
-            {
-              column: "tag",
-              relation: "equals",
-              condition: ZAutoTag
-            }
-          ]
-        }
-      };
-
       const params = {
         url: `https://${SHOP}.myshopify.com/admin/api/2019-10/smart_collections.json`,
         headers: {
