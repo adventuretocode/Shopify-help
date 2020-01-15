@@ -107,6 +107,4 @@ const main = async function() {
     }
 };
 
-main()
-    .then(success => console.log(success))
-    .catch(error => console.log(error));
+module.exports = main;
