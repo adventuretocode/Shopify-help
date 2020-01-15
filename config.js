@@ -5,24 +5,24 @@ let keys = "";
 if (STORE === "teefury") {
   if (NODE_ENV === "prod") {
     keys = require("dotenv").config({
-      path: path.join(__dirname, "./.env.prod-teefury")
+      path: path.join(__dirname, "./.env.teefury-production")
     });
   }
   else if (NODE_ENV === "stage") {
     keys = require("dotenv").config({
-      path: path.join(__dirname, "./.env.stage-teefury")
+      path: path.join(__dirname, "./.env.teefury-stage")
     });
   }
 }
 else if (STORE === "rivaltees") {
   if (NODE_ENV === "prod") {
     keys = require("dotenv").config({
-      path: path.join(__dirname, "./.env.prod-rivaltees")
+      path: path.join(__dirname, "./.env.rivaltees-production")
     });
   }
   else if (NODE_ENV === "stage") {
     keys = require("dotenv").config({
-      path: path.join(__dirname, "./.env.stage-rivaltees")
+      path: path.join(__dirname, "./.env.rivaltees-stage")
     });
   }
 }
