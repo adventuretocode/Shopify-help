@@ -1,5 +1,7 @@
 # ZAuto
 
+Creating collections out of gallery products.
+
 Creating smart collections to group artwork together.
 Artworks are split into 10 or more separate products.
 To group them together there must a smart collections grouping them
