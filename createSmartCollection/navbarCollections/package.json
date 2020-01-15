@@ -1,0 +1,13 @@
+{
+  "name": "navbar-collections",
+  "version": "1.0.0",
+  "description": "Required smart collections for the nav bar.",
+  "main": "index.js",
+  "scripts": {
+    "start-stage-rt": "NODE_ENV=stage STORE=rivaltees node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

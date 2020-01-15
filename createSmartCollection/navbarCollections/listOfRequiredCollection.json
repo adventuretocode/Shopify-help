@@ -1,0 +1,22 @@
+[
+  {
+    "title": "Mens Basic Tees",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Tee"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "gender-mens"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "style-basic"
+      }
+   ]
+  }
+]
