@@ -14,10 +14,10 @@ const main = function(list) {
       for (let i = 0; i < list.length; i++) {
         const { title, rules } = list[i];
         const cleanTitle = cleanData(title);
-        const isCollection = await hasCollectionBeenCreated(cleanTitle);
+        const isCollection = await hasCollectionBeenCreated(title);
         if (!isCollection) {
-          const smartId = await createSmartCollectionRules(cleanTitle, rules);
-          console.log(`\u001b[38;5;${smartId % 255}m${title}\u001b[0m`);
+          const smartId = await createSmartCollectionRules(title, rules);
+          console.log(`\u001b[38;5;${smartId % 255}mCreated: ${title}\u001b[0m`);
         }
       }
 
