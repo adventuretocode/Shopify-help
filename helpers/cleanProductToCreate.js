@@ -15,20 +15,23 @@
  * @return {Promise<Object>}
  */
 
-exports.cleanProductToCreateRest = ({
-  product: {
-    title,
-    body_html,
-    vendor,
-    product_type,
-    handle,
-    tags,
-    variants,
-    options,
-    images,
-    metafields
-  }
-}) => {
+exports.cleanProductToCreateRest = (
+  {
+    product: {
+      title,
+      body_html,
+      vendor,
+      product_type,
+      handle,
+      tags,
+      variants,
+      options,
+      images,
+      metafields
+    }
+  },
+  template_suffix = ""
+) => {
   return new Promise(async (resolve, reject) => {
     try {
       const cleanVariant = variants.map(
@@ -63,17 +66,6 @@ exports.cleanProductToCreateRest = ({
         return { src };
       });
 
-      const cleanMetafields = metafields.map(
-        ({ key, value, value_type, namespace }) => {
-          return {
-            key,
-            value,
-            value_type,
-            namespace
-          };
-        }
-      );
-
       const cleanProduct = {
         product: {
           title,
@@ -82,14 +74,26 @@ exports.cleanProductToCreateRest = ({
           product_type,
           handle,
           published: true,
-          template_suffix: "2019-pdp",
+          template_suffix,
           tags,
           variants: cleanVariant,
           options: cleanOption,
-          images: cleanImages,
-          metafields: cleanMetafields
+          images: cleanImages
         }
       };
+
+      if (metafields.length) {
+        cleanProduct.metafields = metafields.map(
+          ({ key, value, value_type, namespace }) => {
+            return {
+              key,
+              value,
+              value_type,
+              namespace
+            };
+          }
+        );
+      }
 
       resolve(cleanProduct);
     } catch (error) {
@@ -116,21 +120,24 @@ exports.cleanProductToCreateRest = ({
  * @return {Promise<{Object}>}
  */
 
-exports.cleanProductToCreateGraphql = ({
-  product: {
-    title,
-    body_html,
-    vendor,
-    product_type,
-    handle,
-    tags,
-    variants,
-    options,
-    images,
-    image,
-    metafields
-  }
-}) => {
+exports.cleanProductToCreateGraphql = (
+  {
+    product: {
+      title,
+      body_html,
+      vendor,
+      product_type,
+      handle,
+      tags,
+      variants,
+      options,
+      images,
+      image,
+      metafields
+    }
+  },
+  template_suffix = ""
+) => {
   return new Promise(async (resolve, reject) => {
     try {
       const cleanTags = tags.split(", ");
@@ -170,18 +177,6 @@ exports.cleanProductToCreateGraphql = ({
         }
       );
 
-      const cleanMetafields = metafields.map(
-        ({ key, value, value_type, namespace }) => {
-          return {
-            key,
-            value,
-            valueType: value_type.toUpperCase(),
-            namespace,
-            description: null
-          };
-        }
-      );
-
       const cleanProduct = {
         input: {
           handle,
@@ -190,13 +185,26 @@ exports.cleanProductToCreateGraphql = ({
           options: cleanOption,
           productType: product_type,
           tags: cleanTags,
-          templateSuffix: "2019-pdp",
+          template_suffix,
           title,
           vendor,
-          variants: cleanVariant,
-          metafields: cleanMetafields
+          variants: cleanVariant
         }
       };
+
+      if (metafields.length) {
+        cleanProduct.metafields = metafields.map(
+          ({ key, value, value_type, namespace }) => {
+            return {
+              key,
+              value,
+              value_type,
+              namespace
+            };
+          }
+        );
+      }
+
       resolve(cleanProduct);
     } catch (error) {
       reject(error);
