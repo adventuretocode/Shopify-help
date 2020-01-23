@@ -113,4 +113,8 @@ describe("cleanData", function () {
       expect(cleanData("F**k Robin")).to.equal('f-k-robin');
     });
 
+    it("F@CK YEAH", function() {
+      expect(cleanData("F@CK YEAH")).to.equal('f-ck-yeah');
+    });
+
 });
