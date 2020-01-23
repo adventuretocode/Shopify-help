@@ -31,5 +31,10 @@ else if (STORE === "rivaltees") {
     });
   }
 }
+else if (STORE === "perfectsculpt") {
+  keys = require("dotenv").config({
+    path: path.join(__dirname, "./.env.perfectsculpt-production")
+  });
+}
 
 module.exports = keys;
