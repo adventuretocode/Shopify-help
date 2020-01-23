@@ -13,6 +13,11 @@ if (STORE === "teefury") {
       path: path.join(__dirname, "./.env.teefury-stage")
     });
   }
+  else if (NODE_ENV === "dev") {
+    keys = require("dotenv").config({
+      path: path.join(__dirname, "./.env.teefury-dev")
+    });
+  }
 }
 else if (STORE === "rivaltees") {
   if (NODE_ENV === "prod") {
