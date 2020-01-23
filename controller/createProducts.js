@@ -1,9 +1,9 @@
 const {
   cleanProductToCreateRest,
   cleanProductToCreateGraphql
-} = require("../../helpers/cleanProductToCreate.js");
-const buildRestBody = require("../../helpers/buildRestBody");
-const buildGraphqlQuery = require("../../helpers/buildGraphqlQuery.js");
+} = require("../helpers/cleanProductToCreate.js");
+const buildRestBody = require("../helpers/buildRestBody");
+const buildGraphqlQuery = require("../helpers/buildGraphqlQuery.js");
 
 /**
  * Sending Product object to be created via rest

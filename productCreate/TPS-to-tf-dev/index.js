@@ -1,7 +1,7 @@
 const {
   createRestController,
   createGraphController
-} = require("./createProducts.js");
+} = require("../../controller/createProducts.js");
 const buildRestBody = require("../../helpers/buildRestBody");
 const fsWriteFile = require("../../helpers/fsWriteFile.js");
 
