@@ -1,0 +1,202 @@
+[
+  {
+    "title": "Mens Basic Tees",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Tee"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "gender-mens"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "style-basic"
+      }
+   ]
+  },
+  {
+    "title": "Womens Fitted Tees",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Tee"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "style-fitted"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "gender-womens"
+      }
+    ]
+  },
+  {
+    "title": "Mens Long Sleeved Tees",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Tee"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "gender-mens"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "style-long sleeved"
+      }
+    ]
+  },
+  {
+    "title": "Tanks",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Tank"
+      }
+    ]
+  },
+  {
+    "title": "All Over Print Tees",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Tee"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "all over print"
+      }
+    ]
+  },
+  {
+    "title": "Pullover Sweatshirts",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Sweatshirt"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "style-pullover"
+      }
+    ]
+  },
+  {
+    "title": "Zip Up Sweatshirts",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Sweatshirt"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "style-zip-up"
+      }
+    ]
+  },
+  {
+    "title": "Crew Neck Sweatshirts",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Sweatshirt"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "style-crew neck"
+      }
+    ]
+  },
+  {
+    "title": "All Over Print Pullover Hoodies",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "All Over Print Pullover Hoodie"
+      }
+    ]
+  },
+  {
+    "title": "Pins",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Pin"
+      }
+    ]
+  },
+  {
+    "title": "Leggings",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Leggings"
+      }
+    ]
+  },
+  {
+    "title": "Blankets",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Blankets"
+      }
+    ]
+  },
+  {
+    "title": "Towels",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Towel"
+      }
+    ]
+  },
+  {
+    "title": "Mens Premium Tees",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Tee"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "gender-mens"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "style-premium"
+      }
+    ]
+  }
+]

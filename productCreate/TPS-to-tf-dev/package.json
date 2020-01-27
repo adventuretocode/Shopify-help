@@ -1,0 +1,15 @@
+{
+  "name": "product-create-tps-to-tf-dev",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start-stage": "NODE_ENV=stage node index.js",
+    "start-dev": "NODE_ENV=dev STORE=teefury node index.js",
+    "start-prod": "NODE_ENV=prod STORE=perfectsculpt node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
