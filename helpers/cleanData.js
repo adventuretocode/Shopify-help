@@ -15,7 +15,6 @@ const cleanData = function(string) {
         .replace(/\?/g, "")
         .replace(/\)/g, "")
         .replace(/\(/g, "")
-        .replace(/\*/g, "")
         .replace(/\+/g, "")
         .replace(/\//g, "")
         .replace(/\,/g, "")
@@ -26,6 +25,7 @@ const cleanData = function(string) {
         .replace(/\}/g, "")
         .replace(/\\/g, "")
         .replace(/\:/g, "")
+        .replace(/\*/g, "-")
         .replace(/\@/g, "-")
         // .replace(//g, "")
         // Remove all double spaces
