@@ -31,9 +31,9 @@ else if (STORE === "rivaltees") {
     });
   }
 }
-else if (STORE === "perfectsculpt") {
+else if (STORE === "cloudapparel") {
   keys = require("dotenv").config({
-    path: path.join(__dirname, "./.env.perfectsculpt-production")
+    path: path.join(__dirname, "./.env.cloudapparel-production")
   });
 }
 
