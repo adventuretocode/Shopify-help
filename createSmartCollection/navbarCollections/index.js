@@ -1,6 +1,6 @@
 const cleanData = require("../../helpers/cleanData.js");
-const hasCollectionBeenCreated = require("../../controller/hasCollectionBeenCreated.js");
-const createSmartCollectionRules = require("../../controller/createSmartCollectionRules.js");
+const hasCollectionBeenCreated = require("../../services/hasCollectionBeenCreated.js");
+const createSmartCollectionRules = require("../../services/createSmartCollectionRules.js");
 
 /**
  * {Promise<Array<{node:{id:String, handle:String}>}
@@ -28,7 +28,7 @@ const main = function(list) {
   });
 };
 
-const listOfRequiredCollection = require("./listOfRequiredCollection.json");
+const listOfRequiredCollection = require("./listOfRequiredCollectionTPS.json");
 
 main(listOfRequiredCollection)
   .then(console.log)
