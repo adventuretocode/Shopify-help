@@ -58,14 +58,31 @@ const recordTag = function(tag, handle, id) {
   });
 };
 
-const extractZAutoGalTag = async function(shopifyProducts) {
+// const extractZAutoGalTag = async function(shopifyProducts) {
+//   for (let i = 0; i < shopifyProducts.length; i += 1) {
+//     let tags = shopifyProducts[i].tags.split(", ");
+//     for (let j = tags.length - 1; j > 0; j -= 1) {
+//       if (~tags[j].indexOf("Zauto-")) {
+//         let title = cleanData(shopifyProducts[i].title);
+//         let artist = cleanData(shopifyProducts[i].vendor);
+//         await recordTag(tags[j], `${artist}_${title}`, shopifyProducts[i].id);
+//         console.log(
+//           `\u001b[38;5;${shopifyProducts[i].id % 255}m${
+//             shopifyProducts[i].title
+//           }\u001b[0m`
+//         );
+//         break;
+//       }
+//     }
+//   }
+// };
+
+const extractZAutoGalTagTPS = async function(shopifyProducts) {
   for (let i = 0; i < shopifyProducts.length; i += 1) {
     let tags = shopifyProducts[i].tags.split(", ");
     for (let j = tags.length - 1; j > 0; j -= 1) {
       if (~tags[j].indexOf("Zauto-")) {
-        let title = cleanData(shopifyProducts[i].title);
-        let artist = cleanData(shopifyProducts[i].vendor);
-        await recordTag(tags[j], `${artist}_${title}`, shopifyProducts[i].id);
+        await recordTag(tags[j], tags[j], shopifyProducts[i].id);
         console.log(
           `\u001b[38;5;${shopifyProducts[i].id % 255}m${
             shopifyProducts[i].title
@@ -95,7 +112,8 @@ const main = async function() {
       const { products } = shopifyProducts;
 
       if (products.length) {
-        await extractZAutoGalTag(products);
+        // await extractZAutoGalTag(products);
+        await extractZAutoGalTagTPS(products);
         pages += 1;
       } else {
         console.log("No products Found", products);
