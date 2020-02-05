@@ -23,7 +23,7 @@ const path = require('path');
 const fsWriteFile = require("../../helpers/fsWriteFile.js");
 const createFileIfNotExist = require("../../helpers/createFileIfNotExist.js");
 const { ACCESS_TOKEN, SHOP, NODE_ENV, STORE  } = process.env;
-const createErrorJsonFileName = `./createdCollection/ErrorZAutoProduct-${NODE_ENV}-${STORE}${process.env.ENV}.json`;
+const createErrorJsonFileName = `./createdCollection/ErrorZAutoProduct-${NODE_ENV}-${STORE}.json`;
 const createSuccessJsonFileName = `./createdCollection/ZAutoProduct-${NODE_ENV}-${STORE}.json`;
 const prepJsonCreate = `./prepJsonCreate/ZAutoJsonWithID-${NODE_ENV}-${STORE}.json`;
 
