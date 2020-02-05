@@ -1,8 +1,0 @@
-{
-  "Zauto-90101": {
-    "errno": -2,
-    "code": "ENOENT",
-    "syscall": "open",
-    "path": "/Users/btran/Documents/Code/myCode/Shopify-help/createSmartCollection/ZAuto/individual-dev-teefury/perfect-sculpt_1-sweat-vest-2-sweat-cream-bundle.json"
-  }
-}
