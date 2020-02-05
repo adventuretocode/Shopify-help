@@ -21,7 +21,11 @@ require("../../config.js");
 const request = require("request");
 const path = require('path');
 const fsWriteFile = require("../../helpers/fsWriteFile.js");
+const createFileIfNotExist = require("../../helpers/createFileIfNotExist.js");
 const { ACCESS_TOKEN, SHOP, NODE_ENV, STORE  } = process.env;
+const createErrorJsonFileName = `./createdCollection/ErrorZAutoProduct-${NODE_ENV}-${STORE}${process.env.ENV}.json`;
+const createSuccessJsonFileName = `./createdCollection/ZAutoProduct-${NODE_ENV}-${STORE}.json`;
+const prepJsonCreate = `./prepJsonCreate/ZAutoJsonWithID-${NODE_ENV}-${STORE}.json`;
 
 /**
  * Post request to shopify
@@ -53,9 +57,9 @@ const postShopify = function(option) {
 const recordTag = function(tag, id) {
     return new Promise(async function(resolve, reject) {
         try {
-            const json = require(path.join(__dirname, `./createdCollection/ZAutoProduct-${NODE_ENV}-${STORE}.json`));
+            const json = require(path.join(__dirname, createSuccessJsonFileName));
             json[tag] = id;
-            await fsWriteFile(path.join(__dirname, `./createdCollection/ZAutoProduct-${NODE_ENV}-${STORE}.json`), json);
+            await fsWriteFile(path.join(__dirname, createSuccessJsonFileName), json);
             resolve();
         } catch (error) {
             reject(error);
@@ -73,7 +77,7 @@ const recordTag = function(tag, id) {
 const checkTagExist = function(tag) {
     return new Promise(function(resolve, reject) {
         try {
-            const json = require(path.join(__dirname, `./createdCollection/ZAutoProduct-${NODE_ENV}-${STORE}.json`));
+            const json = require(path.join(__dirname, createSuccessJsonFileName));
             resolve(json[tag]);
         } catch (error) {
             console.log("Error: checkTagExist - ", tag);
@@ -186,9 +190,9 @@ const controller = async function(tagsAndTitle) {
                 console.log(message);
             } catch (error) {
                 console.log("Error: main - ", error, tag);
-                const errorJson = require(path.join(__dirname, `./createdCollection/ErrorZAutoProduct-${NODE_ENV}-${STORE}${process.env.ENV}.json`));
+                const errorJson = require(path.join(__dirname, createErrorJsonFileName));
                 errorJson[tag] = error;
-                await fsWriteFile(path.join(__dirname, `./createdCollection/ErrorZAutoProduct-${NODE_ENV}-${STORE}${process.env.ENV}.json`), errorJson);
+                await fsWriteFile(path.join(__dirname, createErrorJsonFileName), errorJson);
                 reject("ZAutoArtworkProductCreateCollection: Reject");
                 break;
             }
@@ -200,7 +204,9 @@ const controller = async function(tagsAndTitle) {
 const main = function() {
     return new Promise(async function(resolve, reject) {
         try {
-            const tagsAndTitle = require(path.join(__dirname, `./prepJsonCreate/ZAutoJsonWithID-${NODE_ENV}-${STORE}.json`));
+            await createFileIfNotExist(path.join(__dirname, createErrorJsonFileName));
+            await createFileIfNotExist(path.join(__dirname, createSuccessJsonFileName));
+            const tagsAndTitle = require(path.join(__dirname, prepJsonCreate));
             const result = await controller(tagsAndTitle)
             resolve(result);
         } catch (error) {
