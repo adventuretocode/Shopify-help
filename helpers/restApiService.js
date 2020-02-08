@@ -8,7 +8,7 @@ const request = require("request");
  * @param   {String} option.headers  Header containing access token "X-Shopify-Access-Token"
  * @param   {String} option.method   HTTP request GET POST DELETE PUT
  * @param   {Number} timeOut         Time before the next execution can start
- * @returns {Promise<{Object}>}      Promise object represents the post body
+ * @returns {Promise<{}>}      Promise object represents the post body
  */
 
 const restApiService = function (option, timeOut = 250) {
