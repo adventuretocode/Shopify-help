@@ -1,0 +1,19 @@
+{
+  "application_id": "YOUR_APP_ID",
+  "v": 1.21,
+  "src": "http://printfiles.teefury.com/PrintFiles/Other-Artwork/production_selfie_bootsboots.png",
+  "functions": [
+    {
+      "name": "pad_resize_to_fit",
+      "params": {
+        "color": "#000000",
+        "width": 200,
+        "height": 200,
+        "autosharpen": false
+      },
+      "save": {
+        "image_identifier": "MY_CLIENT_ID"
+      }
+    }
+  ]
+}
