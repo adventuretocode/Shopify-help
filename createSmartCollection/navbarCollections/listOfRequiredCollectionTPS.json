@@ -60,16 +60,6 @@
     ]
   },
   {
-    "title": "Beauty",
-    "rules": [ 
-      {
-        "column": "tag",
-        "relation": "equals",
-        "condition": "Beauty"
-      }
-    ]
-  },
-  {
     "title": "Bra Bundles",
     "rules": [ 
       {
@@ -326,6 +316,56 @@
         "column": "tag",
         "relation": "equals",
         "condition": "Accessories"
+      }
+    ]
+  },
+  {
+    "title": "Shapewear",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Shapewear"
+      }
+    ]
+  },
+  {
+    "title": "Fitness",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Fitness"
+      }
+    ]
+  },
+  {
+    "title": "Activewear",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Activewear"
+      }
+    ]
+  },
+  {
+    "title": "Sports Bras",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Sports Bras"
+      }
+    ]
+  },
+  {
+    "title": "Skirts",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Skirts"
       }
     ]
   }
