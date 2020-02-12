@@ -1,8 +1,8 @@
 require("dotenv").config();
 const axios = require("axios");
 const path = require("path");
-const fsAppendFile = require("../helpers/fsAppendFile.js");
-const cleanIDGraphql = require("../helpers/cleanIDGraphql");
+const fsAppendFile = require("../../helpers/fsAppendFile.js");
+const cleanIDGraphql = require("../../helpers/cleanIDGraphql");
 
 const mongojs = require("mongojs");
 var db = mongojs("teefury", ["product_images"]);
