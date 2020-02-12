@@ -2,8 +2,8 @@ const {
   createRestController,
   createGraphController
 } = require("../../controller/createProducts.js");
-const buildRestBody = require("../../helpers/buildRestBody");
-const fsWriteFile = require("../../helpers/fsWriteFile.js");
+const buildRestBody = require("../../../helpers/buildRestBody");
+const fsWriteFile = require("../../../helpers/fsWriteFile.js");
 
 const path = require("path");
 
