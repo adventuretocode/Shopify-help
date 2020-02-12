@@ -3,7 +3,7 @@ const request = require("request");
 const beautify = require("json-beautify");
 const fs = require("fs");
 const axios = require("axios");
-const cleanData = require("../helpers/cleanData.js");
+const cleanData = require("../../helpers/cleanData.js");
 
 /**
  * Post request to shopify
@@ -134,7 +134,7 @@ var fsWriteFile = function(fileName, jsonObj) {
 const recordTag = function(tag, id) {
     return new Promise(async function(resolve, reject) {
         try {
-            const json = require('./ZAutoProductColCreatedCustom.json');
+            const json = require('./ZAutoProductColCreatedCustom.json.js');
             json[tag] = id;
             await fsWriteFile(`./ZAutoProductColCreatedCustom.json`, json);
             resolve();
@@ -154,7 +154,7 @@ const recordTag = function(tag, id) {
 const checkTagExist = function(tag) {
     return new Promise(function(resolve, reject) {
         try {
-            const json = require('./ZAutoProductColCreatedCustom.json');
+            const json = require('./ZAutoProductColCreatedCustom.json.js');
             resolve(json[tag]);
         } catch (error) {
             console.log("Error: checkTagExist - ", tag);
@@ -267,12 +267,12 @@ const main = async function(tagsAndTitle) {
           console.log(message);
       } catch (error) {
           console.log("Error: main - ", error, tag);
-          const errorJson = require("./ErrorZAutoProductColCreatedCustom.json");
+          const errorJson = require("./ErrorZAutoProductColCreatedCustom.json.js");
           errorJson[tag] = error;
           await fsWriteFile(`./ErrorZAutoProductColCreatedCustom.json`, errorJson);
       }
   }
 }
 
-const tagsAndTitle = require("./ZAutoJson.json");
+const tagsAndTitle = require("./ZAutoJson.json.js");
 main(tagsAndTitle);
