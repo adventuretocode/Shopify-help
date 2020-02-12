@@ -1,6 +1,6 @@
 require("dotenv").config();
-const axiosRequest = require("../../helpers/axiosRequest.js");
-const fsWriteFile = require("../../helpers/fsWriteFile");
+const axiosRequest = require("../../../helpers/axiosRequest.js");
+const fsWriteFile = require("../../../helpers/fsWriteFile");
 const path = require("path");
 
 const { SHOP, ACCESS_TOKEN, ENV } = process.env;
