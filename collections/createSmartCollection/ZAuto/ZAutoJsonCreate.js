@@ -62,7 +62,7 @@ const recordTag = function(tag, handle, id) {
 //   for (let i = 0; i < shopifyProducts.length; i += 1) {
 //     let tags = shopifyProducts[i].tags.split(", ");
 //     for (let j = tags.length - 1; j > 0; j -= 1) {
-//       if (~tags[j].indexOf("Zauto-")) {
+//       if (~tags[j].toLowerCase().indexOf("zauto-")) {
 //         let title = cleanData(shopifyProducts[i].title);
 //         let artist = cleanData(shopifyProducts[i].vendor);
 //         await recordTag(tags[j], `${artist}_${title}`, shopifyProducts[i].id);
@@ -81,7 +81,7 @@ const extractZAutoGalTagTPS = async function(shopifyProducts) {
   for (let i = 0; i < shopifyProducts.length; i += 1) {
     let tags = shopifyProducts[i].tags.split(", ");
     for (let j = tags.length - 1; j > 0; j -= 1) {
-      if (~tags[j].indexOf("ZAuto-")) {
+      if (~tags[j].toLowerCase().indexOf("zauto-")) {
         await recordTag(tags[j], tags[j], shopifyProducts[i].id);
         console.log(
           `\u001b[38;5;${shopifyProducts[i].id % 255}m${
