@@ -3,12 +3,12 @@
  * to create smart collections
  */
 
-require("../../config.js");
+require("../../../config");
 const path = require("path");
-const cleanData = require("../../helpers/cleanData.js");
-const apiGetRequest = require("../../helpers/apiGetRequest.js");
-const fsWriteFile = require("../../helpers/fsWriteFile.js");
-const createFileIfNotExist = require("../../helpers/createFileIfNotExist.js");
+const cleanData = require("../../../helpers/cleanData.js");
+const apiGetRequest = require("../../../helpers/apiGetRequest.js");
+const fsWriteFile = require("../../../helpers/fsWriteFile.js");
+const createFileIfNotExist = require("../../../helpers/createFileIfNotExist.js");
 const { ACCESS_TOKEN, SHOP, NODE_ENV, STORE } = process.env;
 const fileName = `./prepJsonCreate/ZAutoJsonWithID-${NODE_ENV}-${STORE}.json`;
 
@@ -81,7 +81,7 @@ const extractZAutoGalTagTPS = async function(shopifyProducts) {
   for (let i = 0; i < shopifyProducts.length; i += 1) {
     let tags = shopifyProducts[i].tags.split(", ");
     for (let j = tags.length - 1; j > 0; j -= 1) {
-      if (~tags[j].indexOf("Zauto-")) {
+      if (~tags[j].indexOf("ZAuto-")) {
         await recordTag(tags[j], tags[j], shopifyProducts[i].id);
         console.log(
           `\u001b[38;5;${shopifyProducts[i].id % 255}m${
