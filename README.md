@@ -101,6 +101,27 @@ const main: (list: {
 
 ```javascript
 /**
+ * @param  {{smart_collection:{title:String, rules:[{column:String, relation:String, condition:String}}} postBody zAuto tag from the product
+ * @returns {Promise<{Object}>}
+ */
+
+const createSmartCollectionRest: (postBody: {
+  smart_collection: {
+    title: string;
+    rules: [{
+      column: string;
+      relation: string;
+      condition: string;
+    }];
+  };
+}) => Promise<{
+  Object: any;
+}>
+
+```
+
+```javascript
+/**
  *
  * @param  {<Object>}       param
  * @param  {String}         paramString
