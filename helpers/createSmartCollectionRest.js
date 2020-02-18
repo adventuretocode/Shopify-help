@@ -3,25 +3,22 @@ const apiRequest = require("./apiRequest.js");
 const { SHOP, ACCESS_TOKEN } = process.env;
 
 /**
- *  Post body example
- * 
-    const postBody = {
-      smart_collection: {
-        title: title,
-        rules: [
-          {
-            column: "tag",
-            relation: "equals",
-            condition: ZAutoTag
-          }
-        ]
-      }
-    };
-  */
-
-/**
  * @param  {{smart_collection:{title:String, rules:[{column:String, relation:String, condition:String}}} postBody zAuto tag from the product
  * @returns {Promise<{Object}>} 
+ * 
+ * @example
+ * const postBody = {
+ *   smart_collection: {
+ *     title: title,
+ *     rules: [
+ *        {
+ *          column: "tag",
+ *          relation: "equals",
+ *          condition: ZAutoTag
+ *        }
+ *     ]
+ *   }
+ * };
  */
 
 const createSmartCollectionRest = function(postBody) {
