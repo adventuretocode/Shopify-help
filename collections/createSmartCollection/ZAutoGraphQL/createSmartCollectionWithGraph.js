@@ -6,12 +6,16 @@
  * Create smart collection not already been created
  */
 
-const cleanData = require("../../helpers/cleanData.js");
-const buildAxiosQuery = require("../../helpers/buildAxiosQuery.js");
-const searchMensBasicTeeByTitleGraph = require("../../helpers/searchMensBasicTeeByTitleGraph.js");
-const fsWriteFile = require("../../helpers/fsWriteFile");
-const createSmartCollectionRest = require("../../helpers/createSmartCollectionRest");
+require("../../../config");
+const cleanData = require("../../../helpers/cleanData.js");
+const buildAxiosQuery = require("../../../helpers/buildAxiosQuery.js");
+const searchMensBasicTeeByTitleGraph = require("../../../helpers/searchMensBasicTeeByTitleGraph.js");
+const fsWriteFile = require("../../../helpers/fsWriteFile");
+const createSmartCollectionRest = require("../../../helpers/createSmartCollectionRest.js");
+const createFileIfNotExist = require("../../../helpers/createFileIfNotExist.js");
 const path = require("path");
+const { NODE_ENV, STORE } = process.env;
+const errorFileName = `./Error/Error-${NODE_ENV}-${STORE}.json`;
 
 const hasCollectionBeenCreated = function(collectionTitle) {
   return new Promise(async function(resolve, reject) {
@@ -59,10 +63,17 @@ const createSmartCollection = function(collectionTitle, ZAutoTag) {
           handle: `Already Created: ${collectionTitle}`
         });
       } else {
-        const { smart_collection } = await createSmartCollectionRest(
-          collectionTitle,
-          ZAutoTag
-        );
+        const postBody = {
+          smart_collection: {
+            title: collectionTitle,
+            rules: [{
+                column: "tag",
+                relation: "equals",
+                condition: ZAutoTag
+            }]
+          }
+        };
+        const { smart_collection } = await createSmartCollectionRest(postBody);
         resolve(smart_collection);
       }
     } catch (error) {
@@ -107,16 +118,11 @@ const main = async function(arr) {
       const { id, handle } = await extractZAutoTag(arr[i]);
       console.log(`\u001b[38;5;${id % 255}mSuccess: ${handle}\u001b[0m`);
     } catch (error) {
-      const errorJson = require(path.join(
-        __dirname,
-        `./Error${process.env.ENV}.json`
-      ));
+      await createFileIfNotExist(path.join(__dirname, errorFileName));
+      const errorJson = require(path.join(__dirname, errorFileName));
 
       errorJson[arr[i]] = error;
-      await fsWriteFile(
-        path.join(__dirname, `./Error${process.env.ENV}.json`),
-        errorJson
-      );
+      await fsWriteFile(path.join(__dirname, errorFileName), errorJson);
 
       throw error;
     }
