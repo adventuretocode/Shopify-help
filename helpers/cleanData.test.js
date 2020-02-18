@@ -121,4 +121,8 @@ describe("cleanData", function () {
       expect(cleanData("F@CK YEAH")).to.equal('f-ck-yeah');
     });
 
+    it("I'm A F*cking Unicorn", function() {
+      expect(cleanData("I'm A F*cking Unicorn")).to.equal('im-a-f-cking-unicorn');
+    });
+
 });
