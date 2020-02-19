@@ -1,6 +1,6 @@
-require("../config.js");
-const cleanDataOdadHandle = require("../helpers/cleanDataOdadHandle.js");
-const apiPostRequest = require("../helpers/apiPostRequest.js");
+require("../../config.js");
+const cleanDataOdadHandle = require("../../helpers/cleanDataOdadHandle.js");
+const apiPostRequest = require("../../helpers/apiPostRequest.js");
 const { SHOP, ACCESS_TOKEN } = process.env;
 console.log(SHOP, ACCESS_TOKEN);
 /**
