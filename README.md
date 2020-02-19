@@ -121,6 +121,64 @@ const createSmartCollectionRest: (postBody: {
 ```
 
 ```javascript
+/*
+ * @param  {String} cursor Shopify's graphQLs cursor
+ * @returns {Promise<{data: { products: { pageInfo: { hasNextPage:Boolean}, edges: [{cursor:String, node: { handle:String, publishedAt:String, collections: { edges: [{ node: { id:String, handle:String }}]}}}]}}, }>}
+ */
+
+const productsGetCollection: (cursor?: string) => Promise<{
+  data: {
+    products: {
+      pageInfo: {
+        hasNextPage: boolean;
+      };
+      edges: [{
+        cursor: string;
+        node: {
+          handle: string;
+          publishedAt: string;
+          collections: {
+            edges: [{
+              node: {
+                id: string;
+                handle: string;
+              };
+            }];
+          };
+        };
+      }];
+    };
+  };
+}>
+
+```
+
+```javascript
+/*
+ * @param  {String} cursor Shopify's graphQLs cursor
+ * @returns {Promise<{data: { products: }, extensions: { cost: { requestedQueryCost:Number, actualQueryCost:Number, throttleStatus: { maximumAvailable:Number, currentlyAvailable:Number, restoreRate:Number}}}}>}
+ */
+
+const productsGetCollection: (cursor?: string) => Promise<{
+  data: {
+    products: any;
+  };
+  extensions: {
+    cost: {
+      requestedQueryCost: number;
+      actualQueryCost: number;
+      throttleStatus: {
+        maximumAvailable: number;
+        currentlyAvailable: number;
+        restoreRate: number;
+      };
+    };
+  };
+}>
+
+```
+
+```javascript
 /**
  *
  * @param  {<Object>}       param
