@@ -66,11 +66,13 @@ const createSmartCollection = function(collectionTitle, ZAutoTag) {
         const postBody = {
           smart_collection: {
             title: collectionTitle,
-            rules: [{
+            rules: [
+              {
                 column: "tag",
                 relation: "equals",
                 condition: ZAutoTag
-            }]
+              }
+            ]
           }
         };
         const { smart_collection } = await createSmartCollectionRest(postBody);
@@ -86,24 +88,25 @@ const extractZAutoTag = function(title) {
   return new Promise(async function(resolve, reject) {
     try {
       const {
-        products: {
-          edges: [item]
-        }
+        products: { edges }
       } = await searchMensBasicTeeByTitleGraph(title);
-      const {
-        node: { vendor, tags }
-      } = item;
 
-      for (let i = tags.length - 1; i > 0; i -= 1) {
-        if (~tags[i].indexOf("ZAuto_gallery")) {
-          const cleanVendor = cleanData(vendor);
-          const cleanTitle = cleanData(title);
-          const { id, handle } = await createSmartCollection(
-            `${cleanVendor}_${cleanTitle}`,
-            tags[i]
-          );
-          resolve({ id, handle });
-          break;
+      for (let z = 0; z < edges.length; z+=1) {
+        const {
+          node: { vendor, tags }
+        } = edges[z];
+
+        for (let i = tags.length - 1; i > 0; i -= 1) {
+          if (~tags[i].indexOf("ZAuto_gallery")) {
+            const cleanVendor = cleanData(vendor);
+            const cleanTitle = cleanData(title);
+            const { id, handle } = await createSmartCollection(
+              `${cleanVendor}_${cleanTitle}`,
+              tags[i]
+            );
+            resolve({ id, handle });
+            break;
+          }
         }
       }
     } catch (error) {
