@@ -20,7 +20,7 @@ const errorFileName = `./Error/Error-${NODE_ENV}-${STORE}.json`;
 /**
  * @summary Check if collection has been created or not
  * @param   {String} collectionTitle Title of the collection
- * @returns {Boolean}                True or false if the collection already been created
+ * @returns {Promise<Boolean>}       True or false if the collection already been created
  */
 
 const hasCollectionBeenCreated = function(collectionTitle) {
@@ -64,7 +64,7 @@ const hasCollectionBeenCreated = function(collectionTitle) {
  * 
  * @param   {String} collectionTitle The title of the collection
  * @param   {String} ZAutoTag        The tag used to group the products together
- * @returns {Promise<>}
+ * @returns {Promise<{admin_graphql_api_id:String, body_html:String, handle:String, id:Number, published_at:String, rules:String[], title:String, sort_order:String, template_suffix:String, updated_at:String, published_scope:String }>}
  */
 
 const createSmartCollection = function(collectionTitle, ZAutoTag) {
@@ -110,7 +110,7 @@ const extractZAutoTag = function(edges) {
     try {
       for (let z = 0; z < edges.length; z += 1) {
         const {
-          node: { vendor, tags }
+          node: { vendor, tags, title }
         } = edges[z];
 
         for (let i = tags.length - 1; i > 0; i -= 1) {
@@ -135,7 +135,8 @@ const extractZAutoTag = function(edges) {
 /**
  * Create Smart Collection with graphql controller
  * 
- * @param {String[]} arr Array of product titles that need to be group together. 
+ * @param  {String[]} arr Array of product titles that need to be group together.
+ * @return {String}
  */
 
 const main = async function(arr) {
@@ -143,7 +144,7 @@ const main = async function(arr) {
     try {
       const {
         products: { edges }
-      } = await searchMensBasicTeeByTitleGraph(title);
+      } = await searchMensBasicTeeByTitleGraph(arr[i]);
       const { id, handle } = await extractZAutoTag(edges);
       console.log(`\u001b[38;5;${id % 255}mSuccess: ${handle}\u001b[0m`);
     } catch (error) {
