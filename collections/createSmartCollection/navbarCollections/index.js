@@ -1,4 +1,3 @@
-const cleanData = require("../../../helpers/cleanData.js");
 const hasCollectionBeenCreated = require("../../../services/hasCollectionBeenCreated.js");
 const createSmartCollectionRules = require("../../../services/createSmartCollectionRules.js");
 
