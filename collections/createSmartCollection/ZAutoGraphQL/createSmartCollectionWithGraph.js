@@ -17,6 +17,12 @@ const path = require("path");
 const { NODE_ENV, STORE } = process.env;
 const errorFileName = `./Error/Error-${NODE_ENV}-${STORE}.json`;
 
+/**
+ * @summary Check if collection has been created or not
+ * @param   {String} collectionTitle Title of the collection
+ * @returns {Boolean}                True or false if the collection already been created
+ */
+
 const hasCollectionBeenCreated = function(collectionTitle) {
   return new Promise(async function(resolve, reject) {
     try {
@@ -53,6 +59,14 @@ const hasCollectionBeenCreated = function(collectionTitle) {
   });
 };
 
+/**
+ * Create new smart collection by tags
+ * 
+ * @param   {String} collectionTitle The title of the collection
+ * @param   {String} ZAutoTag        The tag used to group the products together
+ * @returns {Promise<>}
+ */
+
 const createSmartCollection = function(collectionTitle, ZAutoTag) {
   return new Promise(async function(resolve, reject) {
     try {
@@ -84,14 +98,17 @@ const createSmartCollection = function(collectionTitle, ZAutoTag) {
   });
 };
 
-const extractZAutoTag = function(title) {
+/**
+ * Extract and create smart collection form ZAuto tag
+ * 
+ * @param   {Array<{node: { vendor:String, tags:[String]}}>} edges All the products found on shopify
+ * @returns {Promise<{id:Number, handle:String}>}
+ */
+
+const extractZAutoTag = function(edges) {
   return new Promise(async function(resolve, reject) {
     try {
-      const {
-        products: { edges }
-      } = await searchMensBasicTeeByTitleGraph(title);
-
-      for (let z = 0; z < edges.length; z+=1) {
+      for (let z = 0; z < edges.length; z += 1) {
         const {
           node: { vendor, tags }
         } = edges[z];
@@ -115,10 +132,19 @@ const extractZAutoTag = function(title) {
   });
 };
 
+/**
+ * Create Smart Collection with graphql controller
+ * 
+ * @param {String[]} arr Array of product titles that need to be group together. 
+ */
+
 const main = async function(arr) {
   for (let i = 0; i < arr.length; i += 1) {
     try {
-      const { id, handle } = await extractZAutoTag(arr[i]);
+      const {
+        products: { edges }
+      } = await searchMensBasicTeeByTitleGraph(title);
+      const { id, handle } = await extractZAutoTag(edges);
       console.log(`\u001b[38;5;${id % 255}mSuccess: ${handle}\u001b[0m`);
     } catch (error) {
       await createFileIfNotExist(path.join(__dirname, errorFileName));
