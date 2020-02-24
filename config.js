@@ -41,5 +41,10 @@ else if (STORE === "sculptsweat") {
     path: path.join(__dirname, "./.env.sculptsweat-production")
   });
 }
+else if (STORE === "miraclebrow") {
+  keys = require("dotenv").config({
+    path: path.join(__dirname, "./.env.miraclebrow-production")
+  });
+}
 
 module.exports = keys;
