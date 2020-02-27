@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start-prod-ca": "NODE_ENV=prod STORE=cloudapparel node index.js"
+    "start-prod-ca": "NODE_ENV=prod STORE=cloudapparel node index.js",
+    "start-prod-ss": "NODE_ENV=prod STORE=sculptsweat node index.js",
+    "start-prod-ft": "NODE_ENV=prod STORE=miraclebrow node index.js"
   },
   "keywords": [],
   "author": "",

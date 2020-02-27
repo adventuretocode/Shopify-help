@@ -2,6 +2,7 @@ const productsGetCollection = require("../../GraphQL/productsGetCollection.js");
 const createFileIfNotExist = require("../../helpers/createFileIfNotExist.js");
 const fsWriteFile = require("../../helpers/fsWriteFile.js");
 const cleanIDGraphql = require("../../helpers/cleanIDGraphql.js");
+const slitRedirect = require("./slitRedirect.js");
 const path = require("path");
 const { NODE_ENV, SHOP } = process.env;
 const fileName = `./redirect-${NODE_ENV}-${SHOP}.json`;
@@ -63,7 +64,8 @@ const main = function() {
         cursor = await parseProductForCollectionHandle(productEdges);
         hasNextPage = pageInfo.hasNextPage;
       }
-
+      
+      slitRedirect();
       resolve("Completed Successfully");
     } catch (error) {
       await createFileIfNotExist(path.join(__dirname, errorFileName));
