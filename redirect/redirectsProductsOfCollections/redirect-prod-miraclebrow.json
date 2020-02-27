@@ -1,0 +1,327 @@
+{
+  "product/tummy-tuck-leggings": [ "/collections/all-products", "/collections/non-route" ],
+  "product/the-perfect-sculpt-sports-bra": [ "/collections/all-products", "/collections/non-route" ],
+  "product/sweat-sculpt-vest": [
+    "/collections/all-products",
+    "/collections/non-route",
+    "/collections/sweat-vests-belts",
+    "/collections/waist-trainer"
+  ],
+  "product/butt-lift": [
+    "/collections/okendo-shapewear",
+    "/collections/all-products",
+    "/collections/non-route",
+    "/collections/butt-lifter"
+  ],
+  "product/waist-trainer": [
+    "/collections/okendo-shapewear",
+    "/collections/all-products",
+    "/collections/non-route",
+    "/collections/waist-trainer"
+  ],
+  "product/sculpt-sweat-workout-enhancing-sweat-cream": [
+    "/collections/all-products",
+    "/collections/non-route",
+    "/collections/sweat-vests-belts"
+  ],
+  "product/high-quality-latex-waist-trainer": [
+    "/collections/okendo-shapewear",
+    "/collections/all-products",
+    "/collections/non-route",
+    "/collections/waist-trainer"
+  ],
+  "product/ebook": [ "/collections/all-products", "/collections/non-route" ],
+  "product/fidget-spinner": [ "/collections/all-products", "/collections/non-route" ],
+  "product/okendo-sports-bra": [ "/collections/all-products", "/collections/non-route" ],
+  "product/sculpt-sweat-bundle-of-2": [
+    "/collections/bundle-save",
+    "/collections/all-products",
+    "/collections/non-route",
+    "/collections/workout-bundles",
+    "/collections/mens-bundles"
+  ],
+  "product/sculpt-sweat-cream-bundle-of-3": [
+    "/collections/bundle-save",
+    "/collections/all-products",
+    "/collections/non-route",
+    "/collections/workout-bundles",
+    "/collections/mens-bundles"
+  ],
+  "product/sweat-boost": [
+    "/collections/bundle-save",
+    "/collections/all-products",
+    "/collections/non-route",
+    "/collections/our-top-5-bundles",
+    "/collections/workout-bundles"
+  ],
+  "product/hot-body-shaper-waist-belt": [ "/collections/all-products", "/collections/non-route" ],
+  "product/2-sweat-creams-free-sculpt-sweat-belt": [ "/collections/all-products", "/collections/non-route" ],
+  "product/3-sweat-creams-free-belt": [ "/collections/all-products", "/collections/non-route" ],
+  "product/booty-lift-leggings": [
+    "/collections/all-products",
+    "/collections/non-route",
+    "/collections/butt-lifter"
+  ],
+  "product/loop-gift-card": [ "/collections/all-products", "/collections/non-route" ],
+  "product/2-sculpt-sweat-vests": [
+    "/collections/all-products",
+    "/collections/non-route",
+    "/collections/workout-bundles",
+    "/collections/sweat-vests-belts"
+  ],
+  "product/copy-of-2-sculpt-sweat-vests": [
+    "/collections/all-products",
+    "/collections/non-route",
+    "/collections/sweat-vests-belts"
+  ],
+  "product/2-sweat-creams-1-sweat": [
+    "/collections/all-products",
+    "/collections/non-route",
+    "/collections/workout-bundles"
+  ],
+  "product/copy-of-2-sweat-creams-1-sweat-vest": [ "/collections/all-products", "/collections/non-route" ],
+  "product/breast-lift-silicon-bra": [ "/collections/all-products", "/collections/non-route" ],
+  "product/the-perfect-sculpt-bra-bundle-of-3": [
+    "/collections/bundle-save",
+    "/collections/non-route",
+    "/collections/night-out-bundle"
+  ],
+  "product/strapless-push-up-bra-bundle": [ "/collections/all-products", "/collections/non-route" ],
+  "product/the-perfect-bikini-one-piece": [ "/collections/all-products", "/collections/non-route" ],
+  "product/mermaid-bikini-top-bottom": [ "/collections/all-products", "/collections/non-route" ],
+  "product/floral-ocean-bikini-top-bottom": [ "/collections/all-products", "/collections/non-route" ],
+  "product/the-perfect-sculpt-bra-bundle-of-4-2": [ "/collections/non-route" ],
+  "product/instant-double-sided-sticky-tape": [ "/collections/all-products", "/collections/non-route" ],
+  "product/breast-lift-silicon-bra-with-tape": [ "/collections/all-products", "/collections/non-route" ],
+  "product/the-perfect-sculpt-seamless-full-body": [ "/collections/all-products", "/collections/non-route" ],
+  "product/buttlift-2pack": [ "/collections/non-route", "/collections/night-out-bundle" ],
+  "product/waisttrainer-buttlifter-bundle": [ "/collections/non-route", "/collections/night-out-bundle" ],
+  "product/sculpt-swim-bundle": [ "/collections/non-route" ],
+  "product/all-in-one-cellulite-bundle": [ "/collections/cellulite-products", "/collections/non-route" ],
+  "product/girl-next-door-bra-set": [ "/collections/non-route" ],
+  "product/cupping-strapless-pushup-bra": [ "/collections/all-products", "/collections/non-route" ],
+  "product/booty-booster-shorts": [ "/collections/non-route" ],
+  "product/booster-athletic-shorts": [ "/collections/non-route" ],
+  "product/wing-adhesive-bra": [ "/collections/all-products", "/collections/non-route" ],
+  "product/seamless-cami-shaper": [ "/collections/all-products", "/collections/non-route" ],
+  "product/lace-push-up-bra": [ "/collections/all-products", "/collections/non-route" ],
+  "product/u-line-adhesive-push-up-bra": [ "/collections/all-products", "/collections/non-route" ],
+  "product/2-sculpt-sweat-vests-sweat-cream": [ "/collections/non-route", "/collections/workout-bundles" ],
+  "product/pink-cellulite-brush": [ "/collections/cellulite-products", "/collections/non-route" ],
+  "product/blue-cellulite-roller": [ "/collections/cellulite-products", "/collections/non-route" ],
+  "product/silicone-cups-anti-cellulite-suction-cup-therapy": [ "/collections/cellulite-products", "/collections/non-route" ],
+  "product/blue-cellulite-roller-1": [ "/collections/cellulite-products", "/collections/non-route" ],
+  "product/email-exclusive-50-gift-card-offer": [ "/collections/all-products", "/collections/non-route" ],
+  "product/the-perfect-sculpt": [ "/collections/non-route" ],
+  "product/50-gift-card": [ "/collections/non-route" ],
+  "product/wing-adhesive-bra-1": [ "/collections/non-route" ],
+  "product/total-push-up-bundle": [ "/collections/non-route" ],
+  "product/the-perfect-sculpt-bra-bundle-of-2": [ "/collections/non-route", "/collections/night-out-bundle" ],
+  "product/loop-giftcard": [ "/collections/non-route" ],
+  "product/the-perfect-sculpt-strapless-push-up-bra": [ "/collections/non-route" ],
+  "product/sweat-vest-firm-high-waist-legging-bundle": [ "/collections/non-route" ],
+  "product/extreme-sweat-set": [ "/collections/non-route" ],
+  "product/awareness-bras-bundle": [ "/collections/non-route" ],
+  "product/the-perfect-sculpt-high-quality-latex-waist-trainer": [ "/collections/non-route", "/collections/waist-trainer" ],
+  "product/black-palm-bikini-top-bottom": [ "/collections/non-route" ],
+  "product/aztec-reversible-bikini-top-bottom": [ "/collections/non-route" ],
+  "product/aztec-print-bikini-top-bottom": [ "/collections/non-route" ],
+  "product/the-perfect-clip-strapless-backless-push-up-bra": [ "/collections/non-route" ],
+  "product/tank-top": [ "/collections/non-route" ],
+  "product/regular-leggings": [ "/collections/non-route" ],
+  "product/bandeau-bra": [ "/collections/non-route" ],
+  "product/the-perfect-sculpt-painless-wax-beans-bundle-of-5": [ "/collections/non-route" ],
+  "product/the-perfect-sculpt-breast-lift-adhesives-invisible-bra-tape": [ "/collections/non-route" ],
+  "product/the-perfect-sculpt-underwire-strapless-bra": [ "/collections/non-route" ],
+  "product/limited-edition-the-perfect-sculpt-bra-recovery-awareness": [ "/collections/non-route" ],
+  "product/limited-edition-the-perfect-sculpt-breast-cancer-awareness": [ "/collections/non-route" ],
+  "product/the-perfect-sculpt-pasty-cover": [ "/collections/non-route" ],
+  "product/the-perfect-sculpt-wax-spatula": [ "/collections/non-route" ],
+  "product/the-perfect-sculpt-wax-bean-warmer-bundle": [ "/collections/non-route" ],
+  "product/the-perfect-sculpt-wax-warmer": [ "/collections/non-route" ],
+  "product/the-perfect-sculpt-wax": [ "/collections/non-route" ],
+  "product/the-perfect-sculpt-bundle-package-1": [ "/collections/non-route" ],
+  "product/pushupbra-buttlifter-bundle": [ "/collections/non-route" ],
+  "product/the-perfect-sculpt-underwire-strapless-bra-2pck": [ "/collections/non-route" ],
+  "product/the-perfect-sculpt-underwire-strapless-bra-3pck": [ "/collections/non-route" ],
+  "product/pushupbra-waisttrainer-bundle": [ "/collections/non-route", "/collections/night-out-bundle" ],
+  "product/sweatvest-buttlifter-bundle": [ "/collections/non-route" ],
+  "product/sculpt-sweat-cream-buy-one-get-one-free": [ "/collections/non-route" ],
+  "product/sculpt-sweat-vest-buy-one-get-one-free": [ "/collections/non-route" ],
+  "product/anti-cellulite-compression-leggings-bundle-of-2": [
+    "/collections/bundle-save",
+    "/collections/cellulite-products",
+    "/collections/non-route",
+    "/collections/workout-bundles"
+  ],
+  "product/sweet-sweat-belt": [ "/collections/non-route", "/collections/sweat-vests-belts" ],
+  "product/body-revamp-bundle": [
+    "/collections/bundle-save",
+    "/collections/cellulite-products",
+    "/collections/non-route",
+    "/collections/our-top-5-bundles",
+    "/collections/workout-bundles"
+  ],
+  "product/sculpt-sweat-sweat-extreme": [
+    "/collections/bundle-save",
+    "/collections/all-products",
+    "/collections/non-route",
+    "/collections/our-top-5-bundles",
+    "/collections/workout-bundles",
+    "/collections/sweat-vests-belts"
+  ],
+  "product/waist-trainer-bundle-of-3": [ "/collections/non-route" ],
+  "product/push-up-bra-breast-lift": [ "/collections/non-route" ],
+  "product/routeins": [],
+  "product/sculpt-sweat-belt-buy-one-get-one-free": [ "/collections/non-route" ],
+  "product/the-perfect-sculpt-strapless-push-up-bra-buy-one-get-one-free": [ "/collections/non-route" ],
+  "product/anti-cellulite-compression-leggings-buy-one-get-one-free": [ "/collections/non-route" ],
+  "product/sculpt-waist-trainer-buy-one-get-one-free": [ "/collections/non-route" ],
+  "product/perfect-push-up-bikini": [ "/collections/non-route" ],
+  "product/bra-shape-tape-black-beige-bundle-of-6": [
+    "/collections/bundle-save",
+    "/collections/non-route",
+    "/collections/night-out-bundle"
+  ],
+  "product/bra-shape-tape-black-beige-bundle-of-4": [
+    "/collections/bundle-save",
+    "/collections/non-route",
+    "/collections/night-out-bundle"
+  ],
+  "product/bra-shape-tape-black-beige-bundle-of-2": [
+    "/collections/bundle-save",
+    "/collections/non-route",
+    "/collections/night-out-bundle"
+  ],
+  "product/routeins-1": [],
+  "product/copy-of-2-sweat-creams-1-sculpt-sweat-vest": [ "/collections/non-route", "/collections/workout-bundles" ],
+  "product/copy-of-2-sweat-creams-free-sculpt-sweat-belt": [ "/collections/non-route" ],
+  "product/new-waist-belt": [ "/collections/non-route" ],
+  "product/scrunch-push-up-leggings": [
+    "/collections/non-route",
+    "/collections/butt-lifter",
+    "/collections/leggings"
+  ],
+  "product/the-ultimate-weight-loss-guide": [ "/collections/non-route" ],
+  "product/sculpt-sweat-cream": [ "/collections/non-route" ],
+  "product/breast-lift-tape": [ "/collections/non-route" ],
+  "product/waist-trainer-bundle-of-2": [ "/collections/non-route", "/collections/night-out-bundle" ],
+  "product/bra-shape-tape-bundle-of-10": [
+    "/collections/bundle-save",
+    "/collections/non-route",
+    "/collections/night-out-bundle"
+  ],
+  "product/pasty-cover-3-pack": [ "/collections/non-route", "/collections/night-out-bundle" ],
+  "product/sculpt-sweat-belt-for-men": [
+    "/collections/non-route",
+    "/collections/mens-bundles",
+    "/collections/sweat-vests-belts"
+  ],
+  "product/genie-bra": [ "/collections/all-products", "/collections/non-route" ],
+  "product/high-waist-sweat-leggings": [ "/collections/non-route" ],
+  "product/waisttrainer-leggings-bundle": [
+    "/collections/bundle-save",
+    "/collections/cellulite-products",
+    "/collections/non-route",
+    "/collections/workout-bundles"
+  ],
+  "product/sculpt-sweat-belt-for-men-2-pack": [
+    "/collections/non-route",
+    "/collections/mens-bundles",
+    "/collections/sweat-vests-belts"
+  ],
+  "product/sculpt-sweat-belt-for-men-3-pack": [
+    "/collections/non-route",
+    "/collections/mens-bundles",
+    "/collections/sweat-vests-belts"
+  ],
+  "product/mens-sweat-extreme": [
+    "/collections/non-route",
+    "/collections/mens-bundles",
+    "/collections/sweat-vests-belts"
+  ],
+  "product/mens-sweat-belt-2-sculpt-sweat-creams": [
+    "/collections/non-route",
+    "/collections/mens-bundles",
+    "/collections/sweat-vests-belts"
+  ],
+  "product/mens-sweat-belt-3-sculpt-sweat-creams": [
+    "/collections/non-route",
+    "/collections/mens-bundles",
+    "/collections/sweat-vests-belts"
+  ],
+  "product/sweatvest-leggings-bundle": [
+    "/collections/bundle-save",
+    "/collections/non-route",
+    "/collections/workout-bundles",
+    "/collections/sweat-vests-belts"
+  ],
+  "product/his-and-hers-sculpt-sweat-belt-bundle": [ "/collections/non-route" ],
+  "product/bra-shape-tape": [ "/collections/non-route" ],
+  "product/butt-lifter-buy-one-get-one-free": [ "/collections/non-route" ],
+  "product/anti-cellulite-compression-leggings-sculpt-sweat-cream": [
+    "/collections/bundle-save",
+    "/collections/non-route",
+    "/collections/workout-bundles"
+  ],
+  "product/bra-shape-tape-pasty-cover-combo-pack": [ "/collections/non-route" ],
+  "product/sculpt-sweat-belt-cellulite-leggings": [
+    "/collections/non-route",
+    "/collections/our-top-5-bundles",
+    "/collections/workout-bundles",
+    "/collections/sweat-vests-belts"
+  ],
+  "product/sculpt-push-up-bra-shape-tape-bundle": [ "/collections/non-route", "/collections/night-out-bundle" ],
+  "product/booty-elastic-resistance-bands": [ "/collections/non-route", "/collections/sweat-vests-belts" ],
+  "product/mens-sweat-vest": [
+    "/collections/non-route",
+    "/collections/mens-bundles",
+    "/collections/sweat-vests-belts"
+  ],
+  "product/sculpt-boob-tape": [ "/collections/non-route" ],
+  "product/sculpt-boob-tape-bundle-of-2": [ "/collections/non-route", "/collections/night-out-bundle" ],
+  "product/sculpt-boob-tape-bundle-of-3": [ "/collections/non-route", "/collections/night-out-bundle" ],
+  "product/sculpt-boob-tape-bundle-of-4": [ "/collections/non-route", "/collections/night-out-bundle" ],
+  "product/high-waisted-honey-buttlifter-anti-cellulite-legging": [
+    "/collections/all-products",
+    "/collections/non-route",
+    "/collections/leggings"
+  ],
+  "product/high-waisted-shaping-legging-pant": [ "/collections/non-route", "/collections/leggings" ],
+  "product/high-waisted-shaping-midi-skirt": [ "/collections/non-route" ],
+  "product/strapless-push-up-adhesive-plunge-front-bra": [ "/collections/non-route" ],
+  "product/waist-shaper-sweat-tank-zip-up": [ "/collections/non-route", "/collections/sweat-vests-belts" ],
+  "product/sculpt-sweat-muscle-recovery-gel": [ "/collections/non-route" ],
+  "product/sculpt-sweat-anti-cellulite-firming-lotion": [ "/collections/cellulite-products", "/collections/non-route" ],
+  "product/the-perfect-boob-lift-pasty-covers": [ "/collections/non-route" ],
+  "product/sculpt-sweat-enhancing-shaper-tank": [ "/collections/non-route", "/collections/sweat-vests-belts" ],
+  "product/corset-waist-and-thigh-slimmer": [ "/collections/non-route" ],
+  "product/corset-waist-cincher-booty-booster": [ "/collections/non-route" ],
+  "product/sculpt-sweat-mens-enhancing-sweat-tank": [
+    "/collections/non-route",
+    "/collections/mens-bundles",
+    "/collections/sweat-vests-belts"
+  ],
+  "product/mens-compression-workout-tank": [ "/collections/non-route", "/collections/mens-bundles" ],
+  "product/mens-weightloss-sauna-vest-zip-front": [
+    "/collections/non-route",
+    "/collections/mens-bundles",
+    "/collections/sweat-vests-belts"
+  ],
+  "product/mens-workout-compression-tank": [ "/collections/non-route", "/collections/mens-bundles" ],
+  "product/brazilian-boost-leggings": [ "/collections/cellulite-products", "/collections/non-route" ],
+  "product/sculpt-sweat-triolgy-bundle": [
+    "/collections/bundle-save",
+    "/collections/cellulite-products",
+    "/collections/all-products",
+    "/collections/non-route",
+    "/collections/our-top-5-bundles",
+    "/collections/workout-bundles",
+    "/collections/mens-bundles"
+  ],
+  "product/sweat-vest-anti-cellulite-lotion-bundle": [ "/collections/all-products", "/collections/non-route" ],
+  "product/sweat-belt-anti-cellulite-lotion-bundle": [ "/collections/all-products", "/collections/non-route" ],
+  "product/the-ultimate-workout-bundle": [ "/collections/all-products", "/collections/non-route" ],
+  "product/sweat-belt-muscle-recovery-gel-bundle": [ "/collections/all-products", "/collections/non-route" ],
+  "product/the-perfect-sculpt-work-out-starter-kit": [ "/collections/all-products", "/collections/non-route" ]
+}
