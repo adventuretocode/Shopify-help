@@ -1,0 +1,372 @@
+[
+  {
+    "title": "Mens",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Mens"
+      }
+   ]
+  },
+  {
+    "title": "Clearance",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Clearance"
+      }
+    ]
+  },
+  {
+    "title": "Best Sellers",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Best Sellers"
+      }
+    ]
+  },
+  {
+    "title": "New Arrivals",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "New Arrivals"
+      }
+    ]
+  },
+  {
+    "title": "Fitness Bundles",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Fitness Bundles"
+      }
+    ]
+  },
+  {
+    "title": "Beauty",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Beauty"
+      }
+    ]
+  },
+  {
+    "title": "Bra Bundles",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Bra Bundles"
+      }
+    ]
+  },
+  {
+    "title": "Bundles",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Bundles"
+      }
+    ]
+  },
+  {
+    "title": "Weight Loss",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Weight Loss"
+      }
+    ]
+  },
+  {
+    "title": "Waist Trainer",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Waist Trainer"
+      }
+    ]
+  },
+  {
+    "title": "Lotions",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Lotions"
+      }
+    ]
+  },
+  {
+    "title": "Tummy Control",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Tummy Control"
+      }
+    ]
+  },
+  {
+    "title": "Waist Cincher",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Waist Cincher"
+      }
+    ]
+  },
+  {
+    "title": "Panties",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Panties"
+      }
+    ]
+  },
+  {
+    "title": "Pushup Bras",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Pushup Bras"
+      }
+    ]
+  },
+  {
+    "title": "Breast Enhancer",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Breast Enhancer"
+      }
+    ]
+  },
+  {
+    "title": "Bras",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Bras"
+      }
+    ]
+  },
+  {
+    "title": "Belts",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Belts"
+      }
+    ]
+  },
+  {
+    "title": "Shapewear Tops",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Shapewear Tops"
+      }
+    ]
+  },
+  {
+    "title": "Support Bras",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Support Bras"
+      }
+    ]
+  },
+  {
+    "title": "Adhesives",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Adhesives"
+      }
+    ]
+  },
+  {
+    "title": "Fitness Tops",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Fitness Tops"
+      }
+    ]
+  },
+  {
+    "title": "Sweat Vests",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Sweat Vests"
+      }
+    ]
+  },
+  {
+    "title": "Butt Lifter",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Butt Lifter"
+      }
+    ]
+  },
+  {
+    "title": "Bodysuits",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Bodysuits"
+      }
+    ]
+  },
+  {
+    "title": "Swimwear",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Swimwear"
+      }
+    ]
+  },
+  {
+    "title": "Leggings",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Leggings"
+      }
+    ]
+  },
+  {
+    "title": "Tank Tops",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Tank Tops"
+      }
+    ]
+  },
+  {
+    "title": "Shorts",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Shorts"
+      }
+    ]
+  },
+  {
+    "title": "Fitness Bottoms",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Fitness Bottoms"
+      }
+    ]
+  },
+  {
+    "title": "Skirts",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Skirts"
+      }
+    ]
+  },
+  {
+    "title": "Accessories",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Accessories"
+      }
+    ]
+  },
+  {
+    "title": "Shapewear",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Shapewear"
+      }
+    ]
+  },
+  {
+    "title": "Fitness",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Fitness"
+      }
+    ]
+  },
+  {
+    "title": "Activewear",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Activewear"
+      }
+    ]
+  },
+  {
+    "title": "Sports Bras",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Sports Bras"
+      }
+    ]
+  },
+  {
+    "title": "Skirts",
+    "rules": [ 
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Skirts"
+      }
+    ]
+  }
+]

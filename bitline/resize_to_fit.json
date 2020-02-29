@@ -1,0 +1,17 @@
+{
+  "application_id": "YOUR_APP_ID",
+  "v": 1.21,
+  "src": "http://cdn.blitline.com/filters/boys.jpeg",
+  "functions": [
+    {
+      "name": "resize_to_fit",
+      "params": {
+        "width": 100,
+        "autosharpen": true
+      },
+      "save": {
+        "image_identifier": "MY_CLIENT_ID"
+      }
+    }
+  ]
+}
