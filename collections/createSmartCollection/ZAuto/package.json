@@ -7,9 +7,9 @@
     "start-stage-rt": "NODE_ENV=stage STORE=rivaltees node index.js",
     "start-prod-rt": "NODE_ENV=prod STORE=rivaltees node index.js",
     "start-dev-tf": "NODE_ENV=dev STORE=teefury node index.js",
-    "start-prod-cp": "NODE_ENV=prod STORE=cloudapparel node index.js",
+    "start-prod-ps": "NODE_ENV=prod STORE=cloudapparel node index.js",
     "start-prod-ss": "NODE_ENV=prod STORE=sculptsweat node index.js",
-    "start-dev-mb": "NODE_ENV=prod STORE=miraclebrow node index.js",
+    "start-dev-fc": "NODE_ENV=prod STORE=miraclebrow node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
