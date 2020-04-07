@@ -6,6 +6,7 @@
   "scripts": {
     "start-prod-rt": "NODE_ENV=prod STORE=rivaltees node index.js",
     "start-prod-tf": "NODE_ENV=prod STORE=teefury node index.js",
+    "start-stage-tf": "NODE_ENV=stage STORE=teefury node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
