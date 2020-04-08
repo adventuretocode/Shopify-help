@@ -6,6 +6,11 @@ $ node -r dotenv/config your_script.js dotenv_config_path=./.env
 $ ls -1 | wc -l
 ```
 
+### Running dotenv from terminal
+```bash
+$ node -r dotenv/config index.js dotenv_config_path=./.env.prod
+```
+
 If shopify graphQL times out for no reason
 
 ```javascript
