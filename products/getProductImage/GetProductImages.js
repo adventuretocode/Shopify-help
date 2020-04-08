@@ -123,17 +123,19 @@ const processShopifyGraphQLImages = function (edges) {
 /**
  * Execute main function
  *
- * @param  {Number}  [stopLoopAtNum] If value exit then the while loop will exit on that iteration.
+ * @param  {Number}  [loopStartAt]   Start iteration at where program died before
+ * @param  {Number}  [loopStopAt]    If value exit then the while loop will exit on that iteration.
  *                                   If value does not exist then hasNextPage will determine when loop will exit.
- * @param  {String}  [currentCurser] Start off point where the program last exit
+ * @param  {String}  [cursorStartAt] Start off point where the program last exit
  * @return {Promise}
  */
 
-const main = async (cursorToStart = undefined, stopLoopAt) => {
+const main = async (cursorStartAt = undefined, loopStartAt = 0, loopStopAt) => {
+  
   try {
     let keepLooping = true,
-      iteration = 0,
-      currentCurser = cursorToStart;
+      iteration = loopStartAt,
+      currentCurser = cursorStartAt;
 
     while (keepLooping) {
       const {
@@ -153,8 +155,10 @@ const main = async (cursorToStart = undefined, stopLoopAt) => {
         path.join(__dirname, `./cursor${NODE_ENV.capitalize()}.json`)
       );
 
+      console.log(`\u001b[38;5;${Math.floor(Math.random() * 255)}m iteration: ${iteration}\u001b[0m`);
+
       // Exit the loop
-      if (!hasNextPage || (stopLoopAt ? iteration >= stopLoopAt : false)) {
+      if (!hasNextPage || (loopStopAt ? iteration >= loopStopAt : false)) {
         keepLooping = false;
         break;
       }

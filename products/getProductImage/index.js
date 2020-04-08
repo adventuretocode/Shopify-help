@@ -7,8 +7,16 @@
  */
 
 const saveProductImageToMongo = require("./GetProductImages.js");
+const { getImagesFromShopify } = require("./GetProductImages.js");
 
-saveProductImageToMongo(undefined, 3)
+const { cursorStartAt, loopStartAt } = {
+  cursorStartAt:
+    "eyJsYXN0X2lkIjoxMDMzNDUzMjQwNDQsImxhc3RfdmFsdWUiOiIxMDMzNDUzMjQwNDQifQ==",
+  loopStartAt: 279,
+  loopStopAt: undefined,
+};
+
+saveProductImageToMongo(cursorStartAt, loopStartAt)
   .then((results) => {
     console.log(results);
     process.exit();
@@ -16,7 +24,7 @@ saveProductImageToMongo(undefined, 3)
   .catch((error) => console.log("Error: Main - ", error));
 
 // Test just a few products
-// main(undefined, 3)
+// saveProductImageToMongo(undefined, 3)
 //   .then((results) => {
 //     console.log(results);
 //     process.exit();
@@ -24,6 +32,12 @@ saveProductImageToMongo(undefined, 3)
 //   .catch((error) => console.log("Error: Main - ", error));
 
 // Test query if products are received
-// main.getImagesFromShopify()
-//   .then((results) => console.log(results))
+// getImagesFromShopify(cursor = "eyJsYXN0X2lkIjoxMDMzNDUzMjQwNDQsImxhc3RfdmFsdWUiOiIxMDMzNDUzMjQwNDQifQ==")
+//   .then(({ products }) => {
+//     const { pageInfo, edges } = products;
+//     edges.forEach(({ node }) => {
+//       console.log(node);
+//     });
+//     console.log({ pageInfo });
+//   })
 //   .catch((error) => console.log(error));
