@@ -4,6 +4,7 @@ const mongojs = require("mongojs");
 const buildGraphqlQuery = require("../../helpers/buildAxiosQuery");
 const fsAppendFile = require("../../helpers/fsAppendFile.js");
 const cleanIDGraphql = require("../../helpers/cleanIDGraphql");
+const consoleColor = require("../../helpers/consoleColor.js");
 
 const { NODE_ENV } = process.env;
 var db = mongojs("teefury", ["product_images"]);
@@ -155,7 +156,7 @@ const main = async (cursorStartAt = undefined, loopStartAt = 0, loopStopAt) => {
         path.join(__dirname, `./cursor${NODE_ENV.capitalize()}.json`)
       );
 
-      console.log(`\u001b[38;5;${Math.floor(Math.random() * 255)}m iteration: ${iteration}\u001b[0m`);
+      consoleColor(iteration, `iteration: ${iteration}`);
 
       // Exit the loop
       if (!hasNextPage || (loopStopAt ? iteration >= loopStopAt : false)) {
