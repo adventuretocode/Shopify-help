@@ -4,11 +4,7 @@ const axiosRequest = require("./axiosRequest.js");
 
 /**
  * Post request to shopify
- *
- * @param   {String}  query     The request object for shopify
- * @param   {Object}  variables variables to pass into the query params
- * @param   {Number}  delay     Amount of time in milliseconds before resolving
- * @returns {Promise}           Promise object represents the post body
+ * DEPRECIATING Moving to buildAxiosQuery
  */
 
 const buildGraphqlQuery = function(query, variables, delay) {

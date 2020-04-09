@@ -2,6 +2,15 @@ require("../config");
 const axiosRequest = require("./axiosRequest.js");
 const { SHOP, ACCESS_TOKEN } = process.env;
 
+/**
+ * Post request to shopify
+ *
+ * @param   {String}  query     The request object for shopify
+ * @param   {Object}  variables variables to pass into the query params
+ * @param   {Number}  delay     Amount of time in milliseconds before resolving
+ * @returns {Promise}           Promise object represents the post body
+ */
+
 const buildAxiosQuery = function(query, variables, delay) {
   return new Promise(async function(resolve, reject) {
     try {
