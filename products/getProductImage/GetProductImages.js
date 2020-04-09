@@ -1,7 +1,7 @@
 require("../../config");
 const path = require("path");
 const mongojs = require("mongojs");
-const buildGraphqlQuery = require("../../helpers/buildAxiosQuery");
+const buildAxiosQuery = require("../../helpers/buildAxiosQuery");
 const fsAppendFile = require("../../helpers/fsAppendFile.js");
 const cleanIDGraphql = require("../../helpers/cleanIDGraphql");
 const consoleColor = require("../../helpers/consoleColor.js");
@@ -57,7 +57,7 @@ const getImagesFromShopify = async (cursor) => {
   }
 
   try {
-    const products = await buildGraphqlQuery(query, variables, 1000);
+    const products = await buildAxiosQuery(query, variables, 1000);
     return products;
   } catch (error) {
     throw error;
