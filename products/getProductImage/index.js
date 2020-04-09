@@ -1,3 +1,7 @@
+String.prototype.capitalize = function () {
+  return this.charAt(0).toUpperCase() + this.slice(1);
+};
+
 /**
  * Get product images and exports to mongo.
  * Mongo then exports out to proper formatted xlsx file
@@ -5,16 +9,15 @@
  * getImagesFromShopify is a test function to get images
  *
  */
-
+const { NODE_ENV } = process.env;
+const jsonLastKeyAndValue = require("../../helpers/jsonLastKeyAndValue");
 const saveProductImageToMongo = require("./GetProductImages.js");
 const { getImagesFromShopify } = require("./GetProductImages.js");
+const cursorJson = require(`./cursor${NODE_ENV.capitalize()}.json`);
 
-const { cursorStartAt, loopStartAt } = {
-  cursorStartAt:
-    "eyJsYXN0X2lkIjoxMDMzNDUzMjQwNDQsImxhc3RfdmFsdWUiOiIxMDMzNDUzMjQwNDQifQ==",
-  loopStartAt: 279,
-  loopStopAt: undefined,
-};
+const { lastKey: loopStartAt, lastValue: cursorStartAt } = jsonLastKeyAndValue(
+  cursorJson
+);
 
 saveProductImageToMongo(cursorStartAt, loopStartAt)
   .then((results) => {
