@@ -1,12 +1,12 @@
 const path = require("path");
-const createFileIfNotExist = require("../../helpers/createFileIfNotExist");
-const buildAxiosQuery = require("../../helpers/buildAxiosQuery");
-const fsAppendFile = require("../../helpers/fsAppendFile");
-const fsWriteFile = require("../../helpers/fsWriteFile");
-const cleanIDGraphql = require("../../helpers/cleanIDGraphql");
-const cleanDataDate = require("../../helpers/cleanDataDate");
-const pool = require("../../libs/connection");
-const consoleColor = require("../../helpers/consoleColor.js");
+const createFileIfNotExist = require("../../../helpers/createFileIfNotExist");
+const buildAxiosQuery = require("../../../helpers/buildAxiosQuery");
+const fsAppendFile = require("../../../helpers/fsAppendFile");
+const fsWriteFile = require("../../../helpers/fsWriteFile");
+const cleanIDGraphql = require("../../../helpers/cleanIDGraphql");
+const cleanDataDate = require("../../../helpers/cleanDataDate");
+const pool = require("../../../libs/connection");
+const consoleColor = require("../../../helpers/consoleColor.js");
 
 const { NODE_ENV, SHOP } = process.env;
 const errorFileName = `./error-${NODE_ENV}-${SHOP}.json`;
@@ -60,7 +60,7 @@ const getOrdersFromShopify = function (cursor = "") {
       if (cursor) {
         variables.curser = cursor;
       } else {
-        variables.query = "created_at:>'2020-01-01'";
+        // variables.query = "created_at:>'2020-01-01'";
       }
 
       const response = await buildAxiosQuery(query, variables);
