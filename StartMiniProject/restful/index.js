@@ -9,7 +9,7 @@ const nextPageFileName = `./next-${NODE_ENV}-${SHOP}.json`;
 
 const main = async () => {
   await createFileIfNotExist(path.join(__dirname, nextPageFileName));
-  const cursorJson = require(`./cursor-${NODE_ENV}-${SHOP}.json`);
+  const cursorJson = require(nextPageFileName);
 
   const {
     lastKey: loopStartAt,
