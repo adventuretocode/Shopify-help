@@ -8,7 +8,7 @@ const { lastKey: loopStartAt, lastValue: cursorStartAt } = jsonLastKeyAndValue(
   cursorJson
 );
 
-productsGetCollection(cursorStartAt, loopStartAt, 10)
+productsGetCollection(cursorStartAt, loopStartAt)
   .then((results) => {
     console.log(results);
     process.exit();
