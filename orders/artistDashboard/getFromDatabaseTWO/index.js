@@ -16,7 +16,7 @@ const main = async () => {
     lastValue: cursorStartAt,
   } = jsonLastKeyAndValue(cursorJson);
 
-  program(cursorStartAt, loopStartAt, 5)
+  program(cursorStartAt, loopStartAt)
     .then((results) => {
       console.log(results);
       process.exit();

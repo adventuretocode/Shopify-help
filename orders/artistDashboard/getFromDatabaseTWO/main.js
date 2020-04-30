@@ -9,7 +9,7 @@ const consoleColor = require("../../../helpers/consoleColor.js");
 const { NODE_ENV, SHOP } = process.env;
 const errorFileName = `./error-${NODE_ENV}-${SHOP}.json`;
 const nextPageFileName = `./next-${NODE_ENV}-${SHOP}.json`;
-const tableName = "`order_exports_two`";
+const tableName = "`orders`";
 
 /**
  * @summary  Get product type by id
@@ -21,21 +21,23 @@ const getProductTypeByOrderId = function (variantSku) {
   return new Promise(async function (resolve, reject) {
     try {
       const query = `
-        query searchProductBySku($query: String!) {
-          productVariants(query: $query, first: 1) {
-            pageInfo {
-              hasNextPage
-            }
-            edges {
-              node {
-                product {
-                  productType
-                  title
-                }
+      query searchProductBySku($query: String!) {
+        productVariants(query: $query, first: 10) {
+          pageInfo {
+            hasNextPage
+          }
+          edges {
+            node {
+              product {
+                productType
+                title
+                vendor
+                id
               }
             }
           }
         }
+      }
       `;
 
       const variables = {
@@ -51,7 +53,7 @@ const getProductTypeByOrderId = function (variantSku) {
 };
 
 /**
- * @param  {{variantSku:String, orderId:Number, orderName:String}} lineItem
+ * @param  {{variantSku:String, productTitle:String, productVendor }} lineItem
  * @return {Promise<Number>} The next insertID that should be fired
  */
 const processLineItems = function (lineItem, databaseId) {
@@ -60,14 +62,28 @@ const processLineItems = function (lineItem, databaseId) {
     try {
       conn = await pool.getConnection();
 
-      const { variantSku } = lineItem;
+      const { variantSku, productTitle, productVendor } = lineItem;
 
       const { productVariants } = await getProductTypeByOrderId(variantSku);
       const { pageInfo, edges } = productVariants;
 
       if (pageInfo.hasNextPage) {
         console.error({ edges });
-        reject("More than 1 variants was found");
+        reject("More than 10 variants was found");
+        return;
+      }
+
+      const [edge, edge2] = edges.filter(({ node }) => {
+        const { product } = node;
+        const { title, vendor } = product;
+        if (productTitle.includes(title) && vendor === productVendor) {
+          return node;
+        }
+      });
+
+      if (!edge || edge2) {
+        console.error({ edge, edge2 }, { edges });
+        reject("Vendor and/or product title didn't match");
         return;
       }
 
@@ -75,25 +91,30 @@ const processLineItems = function (lineItem, databaseId) {
         node: {
           product: { productType, title, vendor },
         },
-      } = edges;
+      } = edge;
 
       const findQuery = "SELECT `vendor` FROM " + tableName + " WHERE `id`=?";
       const [order] = await pool.query(findQuery, [databaseId]);
 
-      if (order.vendor !== vendor) {
+      if (order.vendor.toUpperCase() !== vendor.toUpperCase()) {
         console.error({ edges }, { order });
         reject("Vendors Do Not Match");
         return;
       }
 
       const updateQuery =
-        "UPDATE INTO " +
+        "UPDATE " +
         tableName +
-        " SET `product_type`=?, `title`=? WHERE `id`=?";
+        " SET `product_type`=?, `product_title`=? WHERE `id`=?";
 
       const updateValue = [productType, title, databaseId];
 
       const { insertId } = await pool.query(updateQuery, updateValue);
+
+      consoleColor(
+        Math.floor(Math.random() * 255),
+        `${databaseId} - ${variantSku}, ${productTitle}, ${productVendor}, ${productType}`
+      );
 
       conn.end();
       resolve(insertId);
@@ -107,7 +128,7 @@ const processLineItems = function (lineItem, databaseId) {
 /**
  * @summary query database for row by ID
  * @param  {Number} databaseId Database primary key Id
- * @return {Promise<{variantSku:String, orderName:String}>} LineItem
+ * @return {Promise<{variantSku:String, productTitle:String, productVendor:String}>} LineItem
  */
 
 const getInfoFromRow = (databaseId) => {
@@ -116,10 +137,10 @@ const getInfoFromRow = (databaseId) => {
     try {
       conn = await pool.getConnection();
 
-      const [
-        data,
-      ] = await pool.query(
-        "SELECT `variant_sku` as `variantSku` FROM " +
+      const [data] = await pool.query(
+        "SELECT `variant_sku` as `variantSku`, " +
+          "`product_title` as `productTitle`, " +
+          "`vendor` as `productVendor` FROM " +
           tableName +
           " WHERE `id`=?",
         [databaseId]
@@ -153,7 +174,7 @@ const main = async (nextIdAt = 1, loopStartAt = 0, loopStopAt) => {
     while (keepLooping) {
       const rowInfo = await getInfoFromRow(currentDatabaseId);
 
-      if (!rowInfo.variantSku) {
+      if (!rowInfo) {
         console.log("NO MORE DATABASE ROWS");
         keepLooping = false;
         break;
@@ -185,7 +206,7 @@ const main = async (nextIdAt = 1, loopStartAt = 0, loopStopAt) => {
     await createFileIfNotExist(path.join(__dirname, errorFileName));
 
     const errorJson = require(path.join(__dirname, errorFileName));
-    errorJson[`${Date.now()}`] = error;
+    errorJson[`${new Date().toLocaleString("en-US")}`] = error;
 
     await fsWriteFile(path.join(__dirname, errorFileName), errorJson);
 
