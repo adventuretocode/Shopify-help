@@ -185,11 +185,9 @@ const main = async (nextIdAt = 1, loopStartAt = 0, loopStopAt) => {
       // Log curser to file just incase program dies.
       // If program dies pass cursor into function to start at the same spot again
       currentDatabaseId += 1;
-      await fsAppendFile(
-        iteration,
-        currentDatabaseId,
-        path.join(__dirname, nextPageFileName)
-      );
+      await fsWriteFile(path.join(__dirname, nextPageFileName), {
+        [iteration]: currentDatabaseId,
+      });
 
       consoleColor(iteration, `iteration: ${iteration}`);
 
