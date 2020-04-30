@@ -83,7 +83,9 @@ const processLineItems = function (lineItem, databaseId) {
 
       if (!edge || edge2) {
         console.error({ edge, edge2 }, { edges });
-        reject("Vendor and/or product title didn't match");
+        console.log("Skipped");
+        resolve();
+        // reject("Vendor and/or product title didn't match");
         return;
       }
 
@@ -189,7 +191,7 @@ const main = async (nextIdAt = 1, loopStartAt = 0, loopStopAt) => {
         [iteration]: currentDatabaseId,
       });
 
-      consoleColor(iteration, `iteration: ${iteration}`);
+      consoleColor(iteration, `iteration: ${iteration} - DatabaseId ${currentDatabaseId}`);
 
       // Exit the loop
       if (loopStopAt ? iteration >= loopStopAt : false) {
