@@ -205,7 +205,7 @@ const main = async (pageStartAt = undefined, loopStartAt = 0, loopStopAt) => {
         path.join(__dirname, `./cursor-${NODE_ENV}-${SHOP}.json`)
       );
 
-      consoleColor(iteration, `iteration: ${iteration}`);
+      consoleColor(iteration, `+++++++++++++++ iteration: ${iteration} +++++++++++++++`);
 
       // Exit the loop
       if (!nextPage || (loopStopAt ? iteration >= loopStopAt : false)) {
