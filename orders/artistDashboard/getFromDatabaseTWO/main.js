@@ -64,11 +64,19 @@ const processLineItems = function (lineItem, databaseId) {
 
       const { variantSku, productTitle, productVendor } = lineItem;
 
+      if(!variantSku) {
+        console.log("Skipped: Item was deleted");
+        conn.end();
+        resolve();
+        return;
+      }
+
       const { productVariants } = await getProductTypeByOrderId(variantSku);
       const { pageInfo, edges } = productVariants;
 
       if (pageInfo.hasNextPage) {
         console.error({ edges });
+        conn.end();
         reject("More than 10 variants was found");
         return;
       }
@@ -83,7 +91,8 @@ const processLineItems = function (lineItem, databaseId) {
 
       if (!edge || edge2) {
         console.error({ edge, edge2 }, { edges });
-        console.log("Skipped");
+        console.log("Skipped: Sku was most likely ");
+        conn.end();
         resolve();
         // reject("Vendor and/or product title didn't match");
         return;
