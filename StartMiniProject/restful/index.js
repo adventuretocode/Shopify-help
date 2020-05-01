@@ -21,7 +21,10 @@ const main = async () => {
       console.log(results);
       process.exit();
     })
-    .catch((error) => console.log("Error: Main - ", error));
+    .catch((error) => {
+      console.log("Error: Main - ", error);
+      process.exit();
+    });
 };
 
 main();
