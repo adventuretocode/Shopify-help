@@ -4,5 +4,28 @@
     "errno": 1054,
     "sqlState": "42S22",
     "code": "ER_BAD_FIELD_ERROR"
+  },
+  "5/3/2020, 2:19:06 PM": {
+    "message": "Request failed with status code 520",
+    "name": "Error",
+    "stack": "Error: Request failed with status code 520\n    at createError (/Users/btran/Documents/Code/myCode/Shopify-help/helpers/node_modules/axios/lib/core/createError.js:16:15)\n    at settle (/Users/btran/Documents/Code/myCode/Shopify-help/helpers/node_modules/axios/lib/core/settle.js:17:12)\n    at IncomingMessage.handleStreamEnd (/Users/btran/Documents/Code/myCode/Shopify-help/helpers/node_modules/axios/lib/adapters/http.js:237:11)\n    at IncomingMessage.emit (events.js:323:22)\n    at endReadableNT (_stream_readable.js:1204:12)\n    at processTicksAndRejections (internal/process/task_queues.js:84:21)",
+    "config": {
+      "url": "https://teefury-com.myshopify.com/admin/api/2019-10/graphql.json",
+      "method": "post",
+      "data": "{\"query\":\"\\n      query searchProductBySku($query: String!) {\\n        productVariants(query: $query, first: 10) {\\n          pageInfo {\\n            hasNextPage\\n          }\\n          edges {\\n            node {\\n              product {\\n                productType\\n                title\\n                vendor\\n                id\\n              }\\n            }\\n          }\\n        }\\n      }\\n      \",\"variables\":{\"query\":\"sku:'21279-tee-men-bas-nav-2xl'\"}}",
+      "headers": {
+        "Accept": "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+        "X-Shopify-Access-Token": "8a45354d82458f111ef77c4fb3920f77",
+        "User-Agent": "axios/0.19.0",
+        "Content-Length": 465
+      },
+      "transformRequest": [ null ],
+      "transformResponse": [ null ],
+      "timeout": 0,
+      "xsrfCookieName": "XSRF-TOKEN",
+      "xsrfHeaderName": "X-XSRF-TOKEN",
+      "maxContentLength": -1
+    }
   }
 }
