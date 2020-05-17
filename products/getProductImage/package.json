@@ -1,17 +1,20 @@
 {
-  "name": "getProductImage",
+  "name": "get-product-image",
   "version": "1.0.0",
-  "description": "",
+  "description": "Get product images from shopify. And prep them in Mongodb to upload onto amazon",
   "main": "GetProductImages.js",
   "scripts": {
+    "start-prod-tf": "NODE_ENV=prod STORE=teefury node index.js",
+    "start-stage-tf": "NODE_ENV=stage STORE=teefury node index.js",
+    "mongo-find-all": "node mongoFindAll.js",
+    "mongo-count": "node mongoCount.js",
+    "mongo-delete-all": "node mongoDeleteAll.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.19.0",
-    "dotenv": "^8.2.0",
     "mongojs": "^3.1.0"
   }
 }

@@ -14,12 +14,12 @@ const request = require("request");
 const restApiService = function (option, timeOut = 250) {
   return new Promise(function (resolve, reject) {
       option.json = true;
-      request(option, function (err, res, body) {
+      request(option, function (err, resp, body) {
           if (err) {
               reject(err);
           }
-          if(res && res.statusCode >= 300) {
-            console.log(res.statusMessage);
+          if(resp && resp.statusCode >= 300) {
+            console.log(resp.statusMessage);
             reject(body);
           }
           if (body && body.hasOwnProperty("error")) {
@@ -27,7 +27,7 @@ const restApiService = function (option, timeOut = 250) {
           }
           else {
             setTimeout(() => {
-              resolve(body);
+              resolve(resp);
             }, timeOut);
           }
       });

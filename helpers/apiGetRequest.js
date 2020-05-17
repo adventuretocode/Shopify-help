@@ -10,13 +10,13 @@ const request = require("request");
 const getRequest = function(option) {
   return new Promise(function(resolve, reject) {
     option.json = true;
-    request.get(option, function(err, res, body) {
+    request.get(option, function(err, resp, body) {
       if (err) {
         console.log("Request Error");
         reject(err);
       }
-      if(res && res.statusCode >= 300) {
-        console.log(res.statusMessage);
+      if(resp && resp.statusCode >= 300) {
+        console.log(resp.statusMessage);
         reject(body);
       }
       if (body && body.hasOwnProperty("error")) {
@@ -24,7 +24,7 @@ const getRequest = function(option) {
       }
       else {
         setTimeout(() => {
-          resolve(body);
+          resolve(resp);
         }, 250);
       }
     });

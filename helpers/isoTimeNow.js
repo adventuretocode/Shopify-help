@@ -47,7 +47,7 @@ const isoTimeNow = function(year = 0, month = 0, day = 0, hour = 0, min = 0) {
 
   const currentSecond = pad(localTime.getSeconds());
   let currentMinute = pad(adjustMinute(localTime.getMinutes() + min));
-  let currentHour = pad((localTime.getHours() + hour));
+  let currentHour = pad(localTime.getHours() + hour);
   let currentDate = pad(localTime.getDate() + day);
   let currentMonth = pad(localTime.getMonth() + 1 + month);
   let currentYear = localTime.getFullYear() + year;
@@ -58,3 +58,15 @@ const isoTimeNow = function(year = 0, month = 0, day = 0, hour = 0, min = 0) {
 module.exports = isoTimeNow;
 
 console.log(isoTimeNow(0, 0, 0, 0, 10));
+
+const newYork = new Date().toLocaleString("en-US", {
+  timeZone: "America/New_York"
+}); // "3/19/2020, 12:24:41 PM"
+
+const newYorkTime = new Date().toLocaleTimeString("en-US", {
+  timeZone: "America/New_York"
+}); // '12:24:41 PM'
+
+const losAngelsTime = new Date().toLocaleTimeString("en-US", {
+  timeZone: "America/Los_Angeles"
+}); // '9:36:36 AM'
