@@ -70,3 +70,24 @@ const newYorkTime = new Date().toLocaleTimeString("en-US", {
 const losAngelsTime = new Date().toLocaleTimeString("en-US", {
   timeZone: "America/Los_Angeles"
 }); // '9:36:36 AM'
+
+let date = new Date("2020-05-13T04:10:02Z");
+
+// request a weekday along with a long date
+let options = {
+  weekday: "long",
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+  hour: "numeric",
+  minute: "numeric",
+  second: "numeric",
+  hour12: false,
+  timeZone: "America/New_York"
+};
+
+console.log(date.toLocaleString("en-US", options)); 
+// Wednesday, May 13, 2020, 00:10:02
+
+console.log(date.toLocaleString("en-US", { hour12: false, timeZone: "America/New_York" }));
+// 5/13/2020, 00:10:02
