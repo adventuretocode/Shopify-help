@@ -46,6 +46,16 @@ if (STORE === "teefury") {
   keys = require("dotenv").config({
     path: path.join(__dirname, "./.env.moobilo-production"),
   });
+} else if (STORE === "odacite") {
+  if (NODE_ENV === "prod") {
+    keys = require("dotenv").config({
+      path: path.join(__dirname, "./.env.odacite-production"),
+    });
+  } else if (NODE_ENV === "dev") {
+    keys = require("dotenv").config({
+      path: path.join(__dirname, "./.env.odacite-dev"),
+    });
+  }
 }
 
 module.exports = keys;
