@@ -136,10 +136,10 @@ const postToNewStore = (id, apiType) => {
   });
 };
 
-// getFromFirstStore(639310331950)
+// getFromFirstStore(11662446997)
 //   .then(console.log)
 //   .catch((error) => console.log("Error", error));
 
-postToNewStore(639310331950, "rest")
+postToNewStore(1333140717639, "graphql")
   .then(console.log)
   .catch((error) => console.log("Error", error));
