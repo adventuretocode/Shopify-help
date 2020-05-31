@@ -82,7 +82,7 @@ exports.cleanProductToCreateRest = (
         }
       };
 
-      if (metafields.length) {
+      if (metafields && metafields.length) {
         cleanProduct.metafields = metafields.map(
           ({ key, value, value_type, namespace }) => {
             return {
@@ -192,7 +192,7 @@ exports.cleanProductToCreateGraphql = (
         }
       };
 
-      if (metafields.length) {
+      if (metafields && metafields.length) {
         cleanProduct.metafields = metafields.map(
           ({ key, value, value_type, namespace }) => {
             return {
