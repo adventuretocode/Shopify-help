@@ -117,6 +117,7 @@ exports.cleanProductToCreateRest = (
  * @param  {Array<Object>}  param.images        Images attached to product
  * @param  {Array<Object>}  param.image         Image variant attaches itself too
  * @param  {Array<Object>}  param.metafields    metafields of the product
+ * @param  {String}         template_suffix     Template product to be used
  * @return {Promise<{Object}>}
  */
 
@@ -185,12 +186,15 @@ exports.cleanProductToCreateGraphql = (
           options: cleanOption,
           productType: product_type,
           tags: cleanTags,
-          template_suffix,
           title,
           vendor,
           variants: cleanVariant
         }
       };
+
+      if(template_suffix) {
+        cleanProduct.input.template_suffix = template_suffix;
+      }
 
       if (metafields && metafields.length) {
         cleanProduct.metafields = metafields.map(
