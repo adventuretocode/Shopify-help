@@ -1,0 +1,164 @@
+{
+  "product": {
+    "id": 1687234248775,
+    "title": "Blue Aura Cleansing Water • Neem + Holy Basil + Turmeric • Ayurvedic Anti-Pollution Formula",
+    "body_html": "<p>120 ml | 4 oz</p>\n<p><strong>Purpose:</strong> Remove Pollution, impurities &amp; toughest makeup in one easy step.<br><strong>Results:</strong> Skin vibrates with a newfound feeling of purity, freshness and comfort.<br><strong>Skin Type:</strong> Fabulous for All Skin Types <br><br>No time to cleanse your face? This cleanser is for you! <br>BLUE AURA CLEANSING WATER is a powerful, <strong>no-rinse cleanser</strong>, formulated to make cleansing <strong>quick</strong>,<strong> effective</strong> and <strong>delicious</strong>.<br><br>Simply moisten cotton pad and <strong>sweep over face</strong>, et voila! <strong>No rinse necessary</strong>.<br><br>NATURALIZING THE FRENCH MICELLAR WATER<br>We use the power of <strong>Micelles</strong> –– the cleansing ingredient in French Micellar Water, to swipe away impurities without drying out the skin. Micelles are tiny balls of cleansing oil that attract to dirt and oil, helping to<strong> cleanse away impurities without drying out the skin</strong>.<br><br>COCOONING YOUR SKIN IN ALOE VERA<br>Instead of water, we opted for <strong>fresh organic Aloe Vera juice</strong>, harvesting its skin-goddess virtues. Rich in minerals, vitamins and antioxidants, its wealth of nutrients makes it the <strong>fairy of good-looking skin</strong>. <br><br>ANTI-POLLUTION AYURVEDIC HERBS<br><strong>Turmeric</strong> combines with <strong>Neem</strong> and <strong>Holy Basil</strong> to create an almighty Ayurvedic potion to help <strong>combat skin-damaging pollutants</strong> that may cause the appearance of breakouts, blackheads and premature signs of aging.<br><br>Relieved from dirt and impurities,<strong> skin feels clean</strong> &amp; <strong>vibrant</strong>, beaming with good aura vibes, in <strong>one quick easy step</strong>.</p>\n<p><br>100% NATURAL • CRUELTY FREE • GMO FREE • VEGAN</p>\n<p> </p>\n<p><span>[Ingredients]</span> </p>\n<meta charset=\"utf-8\">\n<div class=\"gmail_default\">Aloe Barbadensis [Aloe*] Leaf Juice, Hamamelis Virginiana [Witch Hazel] Water,  Gluconolactone, Decyl Glucoside, Caprylic/Capric Triglycerides , Glycerin*, Ricinus Communis [Castor] Oil, Citrus Paradisi [Grapefruit*] Essential Oil, Lauryl Glucoside, Melia Azadirachta [Neem] Extract, Coccinia Indica [Ivy Gourd] Extract, Solanum Melongena [Eggplant] Extract, Aloe Barbadensis [Aloe] Extract, Ocimum Sanctum [Holy Basil] Extract, Curcuma Longa [Turmeric], Ocimum Basilicum [Basil] Fower/Leaf Extract, Corallina Officinalis </div>\n<div class=\"gmail_default\">[Red Seaweed] Extract, Aqua, Benzyl Alcohol,  Ethanol, Salicylic Acid, Sorbic Acid, Natural components in essential oils Limonene | *Organic</div>\n<p> </p>\n<p><span>[Application]</span></p>\n<meta charset=\"utf-8\">\n<p><span style=\"font-weight: 400;\">Use morning and/or night. Moisten cotton pad and gently sweep over face - avoiding eye area. Repeat as needed. No rinse necessary. </span></p>",
+    "vendor": "Odacite",
+    "product_type": "Cleanser",
+    "created_at": "2019-03-29T14:07:11-07:00",
+    "handle": "blue-aura-cleansing-water-neem-holy-basil-tumeric",
+    "updated_at": "2020-05-31T12:55:15-07:00",
+    "published_at": "2018-09-04T22:50:04-07:00",
+    "template_suffix": "",
+    "published_scope": "global",
+    "tags": "aloe vera, ayurvedic, blue, blue aura, blue sodalite, cleanser, cleansing water, grapefruit, herbs, holy basil, micellar water, micelles, neem, no rinse, salicylic, turmeric",
+    "variants": [
+      {
+        "id": 16687429746759,
+        "product_id": 1687234248775,
+        "title": "Default Title",
+        "price": "39.00",
+        "sku": "234.1U",
+        "position": 1,
+        "inventory_policy": "continue",
+        "compare_at_price": "",
+        "fulfillment_service": "manual",
+        "inventory_management": "shopify",
+        "option1": "Default Title",
+        "option2": null,
+        "option3": null,
+        "created_at": "2019-03-29T14:07:11-07:00",
+        "updated_at": "2020-05-31T12:50:32-07:00",
+        "taxable": true,
+        "barcode": "",
+        "grams": 113,
+        "image_id": null,
+        "weight": 4,
+        "weight_unit": "oz",
+        "inventory_quantity": -1086,
+        "old_inventory_quantity": -1086,
+        "tax_code": "",
+        "requires_shipping": true
+      }
+    ],
+    "options": [
+      {
+        "id": 2315753586759,
+        "product_id": 1687234248775,
+        "name": "Title",
+        "position": 1,
+        "values": ["Default Title"]
+      }
+    ],
+    "images": [
+      {
+        "id": 13845580611722,
+        "product_id": 1687234248775,
+        "position": 1,
+        "created_at": "2020-01-06T01:31:39-08:00",
+        "updated_at": "2020-01-06T15:10:25-08:00",
+        "alt": "Blue Aura Cleansing Water • Neem + Holy Basil + Turmeric • Ayurvedic Anti-Pollution Formula Cleanser Odacite",
+        "width": 1024,
+        "height": 1024,
+        "src": "https://cdn.shopify.com/s/files/1/0671/5641/products/bacw_9.5_eComm.jpg?v=1578352225",
+        "variant_ids": []
+      },
+      {
+        "id": 5058813820999,
+        "product_id": 1687234248775,
+        "position": 2,
+        "created_at": "2019-04-04T11:46:36-07:00",
+        "updated_at": "2020-01-06T01:32:01-08:00",
+        "alt": "Blue Aura Cleansing Water • Neem + Holy Basil + Turmeric • Ayurvedic Anti-Pollution Formula Cleanser Odacite",
+        "width": 1024,
+        "height": 1024,
+        "src": "https://cdn.shopify.com/s/files/1/0671/5641/products/AyruvedicINCI_USE.jpg?v=1578303121",
+        "variant_ids": []
+      },
+      {
+        "id": 5027700080711,
+        "product_id": 1687234248775,
+        "position": 3,
+        "created_at": "2019-03-29T15:10:13-07:00",
+        "updated_at": "2020-01-06T01:32:01-08:00",
+        "alt": "Blue Aura Cleansing Water • Neem + Holy Basil + Turmeric • Ayurvedic Anti-Pollution Formula Cleanser Odacite",
+        "width": 1024,
+        "height": 1024,
+        "src": "https://cdn.shopify.com/s/files/1/0671/5641/products/cleanface3_web.jpg?v=1578303121",
+        "variant_ids": []
+      },
+      {
+        "id": 13845580578954,
+        "product_id": 1687234248775,
+        "position": 4,
+        "created_at": "2020-01-06T01:31:39-08:00",
+        "updated_at": "2020-01-06T15:10:30-08:00",
+        "alt": "Blue Aura Cleansing Water • Neem + Holy Basil + Turmeric • Ayurvedic Anti-Pollution Formula Cleanser Odacite",
+        "width": 1024,
+        "height": 1024,
+        "src": "https://cdn.shopify.com/s/files/1/0671/5641/products/Hands-ColorCorrected_eComm.jpg?v=1578352230",
+        "variant_ids": []
+      },
+      {
+        "id": 5080629018695,
+        "product_id": 1687234248775,
+        "position": 5,
+        "created_at": "2019-04-08T16:01:21-07:00",
+        "updated_at": "2020-01-06T01:32:01-08:00",
+        "alt": "Blue Aura Cleansing Water • Neem + Holy Basil + Turmeric • Ayurvedic Anti-Pollution Formula Cleanser Odacite",
+        "width": 1024,
+        "height": 1024,
+        "src": "https://cdn.shopify.com/s/files/1/0671/5641/products/cleanface2_web.jpg?v=1578303121",
+        "variant_ids": []
+      },
+      {
+        "id": 5058813886535,
+        "product_id": 1687234248775,
+        "position": 6,
+        "created_at": "2019-04-04T11:46:40-07:00",
+        "updated_at": "2020-01-06T01:31:54-08:00",
+        "alt": "Blue Aura Cleansing Water • Neem + Holy Basil + Turmeric • Ayurvedic Anti-Pollution Formula Cleanser Odacite",
+        "width": 1024,
+        "height": 1024,
+        "src": "https://cdn.shopify.com/s/files/1/0671/5641/products/BACW-Texture_USE.jpg?v=1578303114",
+        "variant_ids": []
+      },
+      {
+        "id": 5058877751367,
+        "product_id": 1687234248775,
+        "position": 7,
+        "created_at": "2019-04-04T12:06:11-07:00",
+        "updated_at": "2020-01-06T01:31:54-08:00",
+        "alt": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/eebc-vROnkw\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>",
+        "width": 1024,
+        "height": 1024,
+        "src": "https://cdn.shopify.com/s/files/1/0671/5641/products/IMG_0248_USE.jpg?v=1578303114",
+        "variant_ids": []
+      },
+      {
+        "id": 5058814083143,
+        "product_id": 1687234248775,
+        "position": 8,
+        "created_at": "2019-04-04T11:46:49-07:00",
+        "updated_at": "2020-01-06T01:31:54-08:00",
+        "alt": "Blue Aura Cleansing Water • Neem + Holy Basil + Turmeric • Ayurvedic Anti-Pollution Formula Cleanser Odacite",
+        "width": 1024,
+        "height": 1024,
+        "src": "https://cdn.shopify.com/s/files/1/0671/5641/products/Ingredients-ColorCorrected_USE.jpg?v=1578303114",
+        "variant_ids": []
+      }
+    ],
+    "image": {
+      "id": 13845580611722,
+      "product_id": 1687234248775,
+      "position": 1,
+      "created_at": "2020-01-06T01:31:39-08:00",
+      "updated_at": "2020-01-06T15:10:25-08:00",
+      "alt": "Blue Aura Cleansing Water • Neem + Holy Basil + Turmeric • Ayurvedic Anti-Pollution Formula Cleanser Odacite",
+      "width": 1024,
+      "height": 1024,
+      "src": "https://cdn.shopify.com/s/files/1/0671/5641/products/bacw_9.5_eComm.jpg?v=1578352225",
+      "variant_ids": []
+    }
+  }
+}

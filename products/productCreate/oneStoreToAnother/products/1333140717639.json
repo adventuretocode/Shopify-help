@@ -1,0 +1,164 @@
+{
+  "product": {
+    "id": 1333140717639,
+    "title": "All-Embracing Serum • Watermelon + Hibiscus",
+    "body_html": "<p>50ml | 1.69 oz</p>\n<p><strong>Purpose:</strong> ​Restore and hydrate all skin types<br><strong>Results: </strong>Fresh, radiant complexion</p>\n<p><span style=\"font-weight: 400;\">Wrap your skin in a </span><b>sublime veil of hydration</b><span style=\"font-weight: 400;\">, while the divine aroma of orange blossoms relaxes the mind, and the infusion of Amethyst crystal helps to </span><b>ward off negative energy.</b></p>\n<p>Formulated to embrace all complexions, this light, penetrating formula imparts a feeling of newfound suppleness and long-lasting hydration to the skin.</p>\n<p dir=\"ltr\">PERFECT FOR:</p>\n<p><span>• Dehydrated skin<br>• Signs of aging<br>• Blemish-prone skin, to counteract drying treatments<br>• Irritation after shaving<br>• Restoring glow to dull/tired skin <br>• Red, itchy skin<br>• Head-to-toe dryness</span></p>\n<span></span>\n<p><span style=\"font-weight: 400;\">Luxurious and lightweight </span><b>Watermelon Seed Oil</b><span style=\"font-weight: 400;\"> leaves skin moisturized, but never greasy, while its concentration of Vitamins A, B, and E help reduce the appearance of the first signs of aging.</span></p>\n<p><b>Hibiscus</b><span style=\"font-weight: 400;\"> flowers are packed with antioxidants and mild natural acids, promoting a fresh, radiant complexion. The addition of </span><b>Oatmeal</b><span style=\"font-weight: 400;\"> makes this formula deliciously velvety and ultra-soothing.</span></p>\n<p><span style=\"font-weight: 400;\">This Serum is infused with the protective crystal energy of </span><b>Amethyst</b><span style=\"font-weight: 400;\">, known for its ability to </span><b>calm mind and body, rid negative energy</b><span style=\"font-weight: 400;\"> and</span><b> instill inner peace</b><span style=\"font-weight: 400;\">.</span></p>\n<meta charset=\"utf-8\">\n<p><span>Fabulous for all skin types. </span> </p>\n<p>100% NATURAL <span>•</span> CRUELTY FREE<span> </span><span>•</span><span> </span>GMO FREE<span> </span><span>•</span><span> </span>VEGAN</p>\n<p><span>[Ingredients]</span> </p>\n<p>Citrullus Lanatus [Watermelon] Seed Oil, Prunus Armeniaca [Apricot*] Kernel Oil, Butyrospermum Parkii [Shea*] Butter Extract, Salvia Hispanica [Chia] Seed Oil, Tocopherols [Vitamin E], Hippophae Rhamnoides [Sea buckthorn] Fruit Extract, Rosmarinus Officinalis [Rosemary] Leaf Extract, Avena Sativa [Oatmeal*] Powder, Citrus Aurantium Amara [Neroli*] Flower Oil, Cupressus Sempervirens [Cypress] Leaf Oil, Bisabolol, Cananga Odorata [Ylang Ylang*] Flower Oil, Citrus Paradisi [Pink Grapefruit] Peel Oil, Lavandula Angustifolia [Lavender*] Flower Oil, Backhousia Citriodora [Lemon Myrtle] Leaf Oil, Citrus Aurantium [Petitgrain Bigarade] Leaf/Bud Oil, Rosa Damascena [Rose*] Flower Oil, Hibiscus Rosa Sinensis [Hibiscus] Flower, Helichrysum Angustifolium [Immortelle] Flower, Calendula Officinalis [Calendula] Flower Extract *<strong>Organic Origin</strong></p>\n<p> </p>\n<p><span>[Application]</span></p>\n<meta charset=\"utf-8\">\n<p>• Massage wherever skin needs hydration support<br>• Layer over an Odacité <strong><a href=\"https://odacite.com/collections/facial-mists\" target=\"_blank\" rel=\"noopener noreferrer\">Treatment Mist</a></strong> for enhanced absorption<br>• Customize by mixing in 1-2 drops of your Odacité <strong><a href=\"https://odacite.com/pages/supercharge-your-skincare-routine\" target=\"_blank\" rel=\"noopener noreferrer\">Serum Concentrate</a></strong><br>• Pair with our <strong><a href=\"https://odacite.com/products/crystal-contour-gua-sha-tool\" target=\"_blank\" rel=\"noopener noreferrer\">Crystal Contour Gua Sha tool</a></strong> for a transformational facial massage</p>",
+    "vendor": "Odacite",
+    "product_type": "Serum",
+    "created_at": "2018-08-28T14:26:13-07:00",
+    "handle": "all-embracing-serum",
+    "updated_at": "2020-05-31T09:55:08-07:00",
+    "published_at": "2018-09-04T22:50:04-07:00",
+    "template_suffix": "",
+    "published_scope": "global",
+    "tags": "amethyst, anti aging, crystal, embracing, energy, essential oil, flower, glow, hibiscus, hydration, oatmeal, radiance, sensitive, serum, shea, watermelon",
+    "variants": [
+      {
+        "id": 12563001999431,
+        "product_id": 1333140717639,
+        "title": "Default Title",
+        "price": "98.00",
+        "sku": "219.1U",
+        "position": 1,
+        "inventory_policy": "continue",
+        "compare_at_price": "",
+        "fulfillment_service": "manual",
+        "inventory_management": "shopify",
+        "option1": "Default Title",
+        "option2": null,
+        "option3": null,
+        "created_at": "2018-08-28T14:26:13-07:00",
+        "updated_at": "2020-05-31T09:51:36-07:00",
+        "taxable": true,
+        "barcode": "",
+        "grams": 43,
+        "image_id": null,
+        "weight": 1.5,
+        "weight_unit": "oz",
+        "inventory_quantity": -1250,
+        "old_inventory_quantity": -1250,
+        "tax_code": "",
+        "requires_shipping": true
+      }
+    ],
+    "options": [
+      {
+        "id": 1785113935943,
+        "product_id": 1333140717639,
+        "name": "Title",
+        "position": 1,
+        "values": ["Default Title"]
+      }
+    ],
+    "images": [
+      {
+        "id": 3788065603655,
+        "product_id": 1333140717639,
+        "position": 1,
+        "created_at": "2018-08-29T13:04:43-07:00",
+        "updated_at": "2019-10-10T11:33:06-07:00",
+        "alt": "All-Embracing Serum • Watermelon + Hibiscus Serum Odacite",
+        "width": 1024,
+        "height": 1024,
+        "src": "https://cdn.shopify.com/s/files/1/0671/5641/products/AESBottleBox_Web.jpg?v=1570732386",
+        "variant_ids": []
+      },
+      {
+        "id": 3788065636423,
+        "product_id": 1333140717639,
+        "position": 2,
+        "created_at": "2018-08-29T13:04:47-07:00",
+        "updated_at": "2019-10-10T11:33:51-07:00",
+        "alt": "All-Embracing Serum • Watermelon + Hibiscus Serum Odacite",
+        "width": 1024,
+        "height": 1024,
+        "src": "https://cdn.shopify.com/s/files/1/0671/5641/products/AESBottleDrop_Web.jpg?v=1570732431",
+        "variant_ids": []
+      },
+      {
+        "id": 3788065767495,
+        "product_id": 1333140717639,
+        "position": 3,
+        "created_at": "2018-08-29T13:04:53-07:00",
+        "updated_at": "2019-10-10T11:52:17-07:00",
+        "alt": "All-Embracing Serum • Watermelon + Hibiscus Serum Odacite",
+        "width": 1024,
+        "height": 1024,
+        "src": "https://cdn.shopify.com/s/files/1/0671/5641/products/AESLifestyle_Web.jpg?v=1570733537",
+        "variant_ids": []
+      },
+      {
+        "id": 3831607689287,
+        "product_id": 1333140717639,
+        "position": 4,
+        "created_at": "2018-09-18T14:01:19-07:00",
+        "updated_at": "2019-10-10T11:30:53-07:00",
+        "alt": "All-Embracing Serum • Watermelon + Hibiscus Serum Odacite",
+        "width": 1024,
+        "height": 1024,
+        "src": "https://cdn.shopify.com/s/files/1/0671/5641/products/ModelWSerum_Web_1.jpg?v=1570732253",
+        "variant_ids": []
+      },
+      {
+        "id": 4572197912647,
+        "product_id": 1333140717639,
+        "position": 5,
+        "created_at": "2018-12-03T10:35:32-08:00",
+        "updated_at": "2019-10-10T11:30:10-07:00",
+        "alt": "All-Embracing Serum • Watermelon + Hibiscus Serum Odacite",
+        "width": 1024,
+        "height": 1024,
+        "src": "https://cdn.shopify.com/s/files/1/0671/5641/products/SerumDrip_WEB.jpg?v=1570732210",
+        "variant_ids": []
+      },
+      {
+        "id": 3831608639559,
+        "product_id": 1333140717639,
+        "position": 6,
+        "created_at": "2018-09-18T14:01:41-07:00",
+        "updated_at": "2019-10-10T11:31:06-07:00",
+        "alt": "All-Embracing Serum • Watermelon + Hibiscus Serum Odacite",
+        "width": 1024,
+        "height": 1024,
+        "src": "https://cdn.shopify.com/s/files/1/0671/5641/products/ModelWBottle_Web_1.jpg?v=1570732266",
+        "variant_ids": []
+      },
+      {
+        "id": 3788065701959,
+        "product_id": 1333140717639,
+        "position": 7,
+        "created_at": "2018-08-29T13:04:51-07:00",
+        "updated_at": "2019-10-10T12:24:49-07:00",
+        "alt": "All-Embracing Serum • Watermelon + Hibiscus Serum Odacite",
+        "width": 1024,
+        "height": 1024,
+        "src": "https://cdn.shopify.com/s/files/1/0671/5641/products/AESFlat_Web.jpg?v=1570735489",
+        "variant_ids": []
+      },
+      {
+        "id": 13069920010378,
+        "product_id": 1333140717639,
+        "position": 8,
+        "created_at": "2019-10-10T11:29:31-07:00",
+        "updated_at": "2019-10-10T11:29:31-07:00",
+        "alt": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/hkLOub7vLGQ\" frameborder=\"0\" allow=\"autoplay; encrypted-media\" allowfullscreen></iframe>",
+        "width": 1000,
+        "height": 1000,
+        "src": "https://cdn.shopify.com/s/files/1/0671/5641/products/aesvideowebsite.jpg?v=1570732171",
+        "variant_ids": []
+      }
+    ],
+    "image": {
+      "id": 3788065603655,
+      "product_id": 1333140717639,
+      "position": 1,
+      "created_at": "2018-08-29T13:04:43-07:00",
+      "updated_at": "2019-10-10T11:33:06-07:00",
+      "alt": "All-Embracing Serum • Watermelon + Hibiscus Serum Odacite",
+      "width": 1024,
+      "height": 1024,
+      "src": "https://cdn.shopify.com/s/files/1/0671/5641/products/AESBottleBox_Web.jpg?v=1570732386",
+      "variant_ids": []
+    }
+  }
+}
