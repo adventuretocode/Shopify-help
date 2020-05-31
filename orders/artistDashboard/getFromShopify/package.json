@@ -1,0 +1,12 @@
+{
+  "name": "getfromshopify",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start-prod-tf": "NODE_ENV=prod STORE=teefury node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
