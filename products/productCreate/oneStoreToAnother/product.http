@@ -1,0 +1,7 @@
+GET https://odacite.myshopify.com/admin/products/1302657859655.json
+X-Shopify-Access-Token: 
+
+###
+GET https://dev-odacite.myshopify.com/admin/api/2020-04/shop.json
+X-Shopify-Access-Token: 
+

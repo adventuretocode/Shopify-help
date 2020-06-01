@@ -1,0 +1,128 @@
+{
+  "product": {
+    "id": 1302657859655,
+    "title": "Aventurine Kiss Lip Serum • Vitamin C + CoQ10",
+    "body_html": "<p>2ml | 0.07 oz</p>\n<p><strong>Purpose: ​Treat, plump and hydrate the lips</strong><br><strong>Results: Lips appear smooth, full, and youthful<br></strong></p>\n<p dir=\"ltr\"><span><span style=\"font-weight: 400;\">This </span><b>triple-action serum</b><span style=\"font-weight: 400;\"> is formulated for the vertical lines of the lip area, to prevent dryness and help plump the look of lips. </span><br></span></p>\n<p dir=\"ltr\"><span><span style=\"font-weight: 400;\">Super-antioxidant CoQ10 is known for its ability to invigorate skin for a </span><b>plumper</b><span style=\"font-weight: 400;\"> and </span><b>firmer look</b><span style=\"font-weight: 400;\">.</span><br></span></p>\n<p><span><span style=\"font-weight: 400;\">Luxurious botanical oils help to </span><b>prevent drying</b><span style=\"font-weight: 400;\">.</span><br></span></p>\n<p><span><span style=\"font-weight: 400;\">Vitamins C &amp; E work in synergy to </span><b>improve</b><span style=\"font-weight: 400;\"> and </span><b>prevent</b><span style=\"font-weight: 400;\"> the appearance of wrinkles.</span></span></p>\n<p><span><span style=\"font-weight: 400;\">The </span><b>Aventurine crystal applicator</b><span style=\"font-weight: 400;\"> imparts the energy of this precious stone, known for bringing </span><b>good luck</b><span style=\"font-weight: 400;\"> and </span><b>prosperity</b><span style=\"font-weight: 400;\">.</span></span></p>\n<p>100% NATURAL <span>•</span> CRUELTY FREE<span> </span><span>•</span><span> </span>GMO FREE<span> </span><span>•</span><span> </span>VEGAN</p>\n<p>Fabulous for all skin types. Not intended for persons with sensitive skin. </p>\n<p><span>[Ingredients]</span> </p>\n<meta charset=\"utf-8\">\n<p><span>Adansonia Digitata [Baobab*] Seed Oil, Moringa Oleifera [Moringa*] Seed Oil, Simmondsia Chinensis [Jojoba*] Seed Oil, Butyrospermum Parkii [Shea Nut Oil] Extract, Helianthus Annuus Seed Oil, Limnanthes Alba [Meadowfoam*] Seed Oil, Butyrospermum Parkii [Shea] Butter, Cocos Nucifera [Coconut*] Oil, Theobroma Cacao [Cocoa*] Seed Butter, Glycine Soja Seed Extract, Tetrahexyldecyl Ascorbate [Vitamin C], Punica Granatum [Pomegranate*] Seed Oil, Sclerocarya Birrea [Marula*] Kernel Oil, Vaccinium Corymbosum [Blueberry*] Seed Oil, Lactobacillus/Capsicum Frutescens Fruit Ferment Extract, Hordeum Distichon [Barley] Extract, Tocopherols [Vitamin E] Oil, Ubiquinone [Coenzyme Q10], Alcohol, Lecithin, Aqua [Water], Aroma, Phellodendron, Santalum Album [Sandalwood] Extract, Yeast Extract, Cucurbita Pepo [Pumpkin] Seed Oil &amp; Papain, Rosmarinus Officinalis [Rosemary] Leaf Extract |<strong> *Organic Origin</strong></span></p>\n<p> </p>\n<p><span>[Application]</span></p>\nRoll the Green Aventurine applicator over lips and lip contour.\n<p> </p>",
+    "vendor": "Odacite",
+    "product_type": "Serum",
+    "created_at": "2018-06-07T11:30:00-07:00",
+    "handle": "aventurine-kiss-lip-serum",
+    "updated_at": "2020-05-29T19:20:07-07:00",
+    "published_at": "2018-06-12T22:57:39-07:00",
+    "template_suffix": "",
+    "published_scope": "global",
+    "tags": "adventurine, anti aging, aventure, aventurine, baobab, co q 10, co-q10, cocoa, coenzyme q10, coq10, essential oil, hydration, kiss, lip, lip balm, lip serum, mint, plump, rollerball, serum, shea, vitamin c",
+    "variants": [
+      {
+        "id": 12224729120839,
+        "product_id": 1302657859655,
+        "title": "Default Title",
+        "price": "48.00",
+        "sku": "232.1U",
+        "position": 1,
+        "inventory_policy": "continue",
+        "compare_at_price": "",
+        "fulfillment_service": "manual",
+        "inventory_management": "shopify",
+        "option1": "Default Title",
+        "option2": null,
+        "option3": null,
+        "created_at": "2018-06-07T11:30:00-07:00",
+        "updated_at": "2020-05-29T19:17:05-07:00",
+        "taxable": true,
+        "barcode": "",
+        "grams": 43,
+        "image_id": null,
+        "weight": 1.5,
+        "weight_unit": "oz",
+        "inventory_quantity": -487,
+        "old_inventory_quantity": -487,
+        "tax_code": "",
+        "requires_shipping": true
+      }
+    ],
+    "options": [
+      {
+        "id": 1744179822663,
+        "product_id": 1302657859655,
+        "name": "Title",
+        "position": 1,
+        "values": ["Default Title"]
+      }
+    ],
+    "images": [
+      {
+        "id": 13069964968074,
+        "product_id": 1302657859655,
+        "position": 1,
+        "created_at": "2019-10-10T12:32:22-07:00",
+        "updated_at": "2019-10-10T12:32:22-07:00",
+        "alt": "Aventurine Kiss Lip Serum • Vitamin C + CoQ10 Serum Odacite",
+        "width": 1500,
+        "height": 1500,
+        "src": "https://cdn.shopify.com/s/files/1/0671/5641/products/AventurineKissBoxBottle.jpg?v=1570735942",
+        "variant_ids": []
+      },
+      {
+        "id": 3643330723911,
+        "product_id": 1302657859655,
+        "position": 2,
+        "created_at": "2018-06-12T22:21:43-07:00",
+        "updated_at": "2019-10-10T12:35:25-07:00",
+        "alt": "Aventurine Kiss Lip Serum • Vitamin C + CoQ10 Serum Odacite",
+        "width": 2500,
+        "height": 2500,
+        "src": "https://cdn.shopify.com/s/files/1/0671/5641/products/BottleBox_Flat_square.jpg?v=1570736125",
+        "variant_ids": []
+      },
+      {
+        "id": 13069927383178,
+        "product_id": 1302657859655,
+        "position": 3,
+        "created_at": "2019-10-10T11:46:04-07:00",
+        "updated_at": "2019-10-10T11:46:04-07:00",
+        "alt": "Aventurine Kiss Lip Serum • Vitamin C + CoQ10 Serum Odacite",
+        "width": 480,
+        "height": 480,
+        "src": "https://cdn.shopify.com/s/files/1/0671/5641/products/AventurineKissLipSerum_BottleShadow_web.jpg?v=1570733164",
+        "variant_ids": []
+      },
+      {
+        "id": 13069926858890,
+        "product_id": 1302657859655,
+        "position": 4,
+        "created_at": "2019-10-10T11:44:31-07:00",
+        "updated_at": "2019-10-10T11:44:32-07:00",
+        "alt": "Aventurine Kiss Lip Serum • Vitamin C + CoQ10 Serum Odacite",
+        "width": 480,
+        "height": 480,
+        "src": "https://cdn.shopify.com/s/files/1/0671/5641/products/LipBottle-NailNude_web.jpg?v=1570733072",
+        "variant_ids": []
+      },
+      {
+        "id": 13069952712842,
+        "product_id": 1302657859655,
+        "position": 5,
+        "created_at": "2019-10-10T12:25:02-07:00",
+        "updated_at": "2019-10-10T12:25:02-07:00",
+        "alt": "Aventurine Kiss Lip Serum • Vitamin C + CoQ10 Serum Odacite",
+        "width": 480,
+        "height": 480,
+        "src": "https://cdn.shopify.com/s/files/1/0671/5641/products/AKLS_Row_web.jpg?v=1570735502",
+        "variant_ids": []
+      }
+    ],
+    "image": {
+      "id": 13069964968074,
+      "product_id": 1302657859655,
+      "position": 1,
+      "created_at": "2019-10-10T12:32:22-07:00",
+      "updated_at": "2019-10-10T12:32:22-07:00",
+      "alt": "Aventurine Kiss Lip Serum • Vitamin C + CoQ10 Serum Odacite",
+      "width": 1500,
+      "height": 1500,
+      "src": "https://cdn.shopify.com/s/files/1/0671/5641/products/AventurineKissBoxBottle.jpg?v=1570735942",
+      "variant_ids": []
+    }
+  }
+}

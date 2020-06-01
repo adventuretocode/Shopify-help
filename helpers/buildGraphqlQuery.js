@@ -11,7 +11,7 @@ const buildGraphqlQuery = function(query, variables, delay) {
   return new Promise(async function(resolve, reject) {
     try {
       const options = {
-        url: `https://${SHOP}.myshopify.com/admin/api/2019-10/graphql.json`,
+        url: `https://${SHOP}.myshopify.com/admin/api/2020-04/graphql.json`,
         headers: {
           "Content-Type": "application/json",
           "X-Shopify-Access-Token": ACCESS_TOKEN

@@ -80,6 +80,25 @@ main()
 ```
 
 ```javascript
+
+/**
+ * @param  {Array<{node: {handle:String, publishedAt:String|Null, collections: {edges:Array<{id:String, handle:String}> }}}>} edges Array of shopify object
+ * @return {Promise}
+ */
+
+const nestedObject: (edges: {
+    node: {
+        handle: string;
+        publishedAt: string;
+        collections: {
+            edges: {
+                id: string;
+                handle: string;
+            }[];
+        };
+    };
+}[]) => Promise<any>
+
 /**
  * A nested array of object
  * With a promised return with array of object
