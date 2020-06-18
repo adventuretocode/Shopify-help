@@ -1,0 +1,842 @@
+[
+  {
+    "title": "Anime Tees",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Tee"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "gender-mens"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "style-basic"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "anime"
+      }
+   ]
+  },
+  {
+    "title": "Anime Face Masks",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Face Mask"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "anime"
+      }
+    ]
+  },
+  {
+    "title": "Anime Tanks",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Tank"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "style-basic"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "anime"
+      }
+    ]
+  },
+  {
+    "title": "Anime Sweatshirts",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Sweatshirt"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "style-pullover"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "anime"
+      }
+    ]
+  },
+  {
+    "title": "Anime Leggings",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Leggings"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "anime"
+      }
+    ]
+  },
+  {
+    "title": "Anime Pins",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Pin"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "anime"
+      }
+    ]
+  },
+  {
+    "title": "Anime Blankets",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Blanket"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "anime"
+      }
+    ]
+  },
+  {
+    "title": "Anime Towels",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Towel"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "anime"
+      }
+    ]
+  },
+  {
+    "title": "Gaming Tees",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Tee"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "gender-mens"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "style-basic"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Ultimate Gaming"
+      }
+   ]
+  },
+  {
+    "title": "Gaming Face Masks",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Face Mask"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Ultimate Gaming"
+      }
+    ]
+  },
+  {
+    "title": "Gaming Tanks",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Tank"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "style-basic"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Ultimate Gaming"
+      }
+    ]
+  },
+  {
+    "title": "Gaming Sweatshirts",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Sweatshirt"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "style-pullover"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Ultimate Gaming"
+      }
+    ]
+  },
+  {
+    "title": "Gaming Leggings",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Leggings"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Ultimate Gaming"
+      }
+    ]
+  },
+  {
+    "title": "Gaming Pins",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Pin"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Ultimate Gaming"
+      }
+    ]
+  },
+  {
+    "title": "Gaming Blankets",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Blanket"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Ultimate Gaming"
+      }
+    ]
+  },
+  {
+    "title": "Gaming Towels",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Towel"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "Ultimate Gaming"
+      }
+    ]
+  },
+  {
+    "title": "Movie Tees",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Tee"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "gender-mens"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "style-basic"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "movie"
+      }
+   ]
+  },
+  {
+    "title": "Movie Face Masks",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Face Mask"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "movie"
+      }
+    ]
+  },
+  {
+    "title": "Movie Tanks",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Tank"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "style-basic"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "movie"
+      }
+    ]
+  },
+  {
+    "title": "Movie Sweatshirts",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Sweatshirt"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "style-pullover"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "movie"
+      }
+    ]
+  },
+  {
+    "title": "Movie Leggings",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Leggings"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "movie"
+      }
+    ]
+  },
+  {
+    "title": "Movie Pins",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Pin"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "movie"
+      }
+    ]
+  },
+  {
+    "title": "Movie Blankets",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Blanket"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "movie"
+      }
+    ]
+  },
+  {
+    "title": "Movie Towels",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Towel"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "movie"
+      }
+    ]
+  },
+  {
+    "title": "TV Show Tees",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Tee"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "gender-mens"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "style-basic"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "tv show"
+      }
+   ]
+  },
+  {
+    "title": "TV Show Face Masks",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Face Mask"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "tv show"
+      }
+    ]
+  },
+  {
+    "title": "TV Show Tanks",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Tank"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "style-basic"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "tv show"
+      }
+    ]
+  },
+  {
+    "title": "TV Show Sweatshirts",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Sweatshirt"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "style-pullover"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "tv show"
+      }
+    ]
+  },
+  {
+    "title": "TV Show Leggings",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Leggings"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "tv show"
+      }
+    ]
+  },
+  {
+    "title": "TV Show Pins",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Pin"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "tv show"
+      }
+    ]
+  },
+  {
+    "title": "TV Show Blankets",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Blanket"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "tv show"
+      }
+    ]
+  },
+  {
+    "title": "TV Show Towels",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Towel"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "tv show"
+      }
+    ]
+  },
+  {
+    "title": "Horror Tees",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Tee"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "gender-mens"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "style-basic"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "horror"
+      }
+   ]
+  },
+  {
+    "title": "Horror Face Masks",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Face Mask"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "horror"
+      }
+    ]
+  },
+  {
+    "title": "Horror Tanks",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Tank"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "style-basic"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "horror"
+      }
+    ]
+  },
+  {
+    "title": "Horror Sweatshirts",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Sweatshirt"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "style-pullover"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "horror"
+      }
+    ]
+  },
+  {
+    "title": "Horror Leggings",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Leggings"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "horror"
+      }
+    ]
+  },
+  {
+    "title": "Horror Pins",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Pin"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "horror"
+      }
+    ]
+  },
+  {
+    "title": "Horror Blankets",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Blanket"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "horror"
+      }
+    ]
+  },
+  {
+    "title": "Horror Towels",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Towel"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "horror"
+      }
+    ]
+  },
+  {
+    "title": "Book Tees",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Tee"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "gender-mens"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "style-basic"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "book"
+      }
+   ]
+  },
+  {
+    "title": "Book Face Masks",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Face Mask"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "book"
+      }
+    ]
+  },
+  {
+    "title": "Book Tanks",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Tank"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "style-basic"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "book"
+      }
+    ]
+  },
+  {
+    "title": "Book Sweatshirts",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Sweatshirt"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "style-pullover"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "book"
+      }
+    ]
+  },
+  {
+    "title": "Book Leggings",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Leggings"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "book"
+      }
+    ]
+  },
+  {
+    "title": "Book Pins",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Pin"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "book"
+      }
+    ]
+  },
+  {
+    "title": "Book Blankets",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Blanket"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "book"
+      }
+    ]
+  },
+  {
+    "title": "Book Towels",
+    "rules": [ 
+      {
+        "column": "type",
+        "relation": "equals",
+        "condition": "Towel"
+      },
+      {
+        "column": "tag",
+        "relation": "equals",
+        "condition": "book"
+      }
+    ]
+  }
+]

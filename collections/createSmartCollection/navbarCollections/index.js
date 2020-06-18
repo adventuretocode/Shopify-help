@@ -26,7 +26,7 @@ const main = function(list) {
   });
 };
 
-const listOfRequiredCollection = require("./listOfRequiredCollectionTPS.json");
+const listOfRequiredCollection = require("./listOfRequiredCollectionTeefury.json");
 
 main(listOfRequiredCollection)
   .then(console.log)
