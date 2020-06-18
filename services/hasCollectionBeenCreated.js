@@ -9,8 +9,8 @@ const cleanIDGraphql = require("../helpers/cleanIDGraphql.js");
  * @returns {Promise<Boolean>}
  */
 
-const hasCollectionBeenCreatedGraph = function(title) {
-  return new Promise(async function(resolve, reject) {
+const hasCollectionBeenCreatedGraph = (title) => {
+  return new Promise(async (resolve, reject) => {
     try {
       const postBody = `
         query searchCollectionByTitle($num: Int!, $query: String!) {
@@ -19,6 +19,7 @@ const hasCollectionBeenCreatedGraph = function(title) {
               node {
                 id
                 handle
+                title
               }
             }
           }
@@ -26,21 +27,31 @@ const hasCollectionBeenCreatedGraph = function(title) {
       `;
 
       const query = {
-        num: 1,
-        query: `title:${title}`
+        num: 5,
+        query: `title:${title}`,
       };
 
       const {
         data: {
-          collections: { edges }
-        }
+          collections: { edges },
+        },
       } = await buildGraphqlQuery(postBody, query);
       if (edges.length) {
-        console.log(
-          `\u001b[38;5;${cleanIDGraphql(edges[0].node.id) %
-            255}mAlready created: ${edges[0].node.handle}\u001b[0m`
-        );
-        resolve(true);
+        const isFound = edges.some(({ node }) => {
+          const { title: collectionTitle } = node;
+          if (collectionTitle === title) {
+            return true;
+          }
+        });
+
+        if (isFound) {
+          console.log(
+            `\u001b[38;5;${
+              cleanIDGraphql(edges[0].node.id) % 255
+            }mAlready created: ${edges[0].node.handle}\u001b[0m`
+          );
+        }
+        resolve(isFound);
       } else {
         resolve(false);
       }
