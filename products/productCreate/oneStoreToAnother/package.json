@@ -10,6 +10,8 @@
     "fantasticheadbands": "STORE=fantasticheadbands node index.js",
     "odacite": "STORE=odacite NODE_ENV=prod node index.js",
     "dev-odacite" : "STORE=odacite NODE_ENV=dev node index.js",
+    "blueland-production": "STORE=blueland NODE_ENV=prod node index.js",
+    "blueland-development": "STORE=blueland NODE_ENV=dev node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
