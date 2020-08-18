@@ -56,6 +56,16 @@ if (STORE === "teefury") {
       path: path.join(__dirname, "./.env.odacite-dev"),
     });
   }
+} else if (STORE === "blueland") {
+  if (NODE_ENV === "prod") {
+    keys = require("dotenv").config({
+      path: path.join(__dirname, "./.env.blueland-production"),
+    });
+  } else if (NODE_ENV === "dev") {
+    keys = require("dotenv").config({
+      path: path.join(__dirname, "./.env.blueland-development"),
+    });
+  }
 }
 
 module.exports = keys;
