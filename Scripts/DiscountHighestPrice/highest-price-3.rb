@@ -26,7 +26,7 @@ class DiscountOneLineItemWithCodes
     if !cart.discount_code.nil? && @discount_code && @discount_code.include?(cart.discount_code.code)
       highest_price_item = FindHighestPriceLineItem.new().run(cart);
 
-      if @is_limit_one && highest_price_item.quantity >= 1
+      if @is_limit_one && highest_price_item.quantity > 1
         partial_line_item = highest_price_item.split(take: 1)
         partial_line_item.change_line_price(partial_line_item.line_price * @discount_amount, message: @success_message)
         position = cart.line_items.find_index(highest_price_item)
@@ -39,6 +39,6 @@ class DiscountOneLineItemWithCodes
 end
 
 # DiscountOneLineItemWithCodes.new(['DISCOUNT_CODES'], DISCOUNT_AMOUNT, "SUCCESS_MESSAGE",     LIMIT).run(Input.cart)
-DiscountOneLineItemWithCodes.new(  ["test_code"],      0.90,            "Promotion Unlocked!", false).run(Input.cart)
+DiscountOneLineItemWithCodes.new(  ["test_code"],      0.90,            "Promotion Unlocked!", true).run(Input.cart)
 
 Output.cart = Input.cart
