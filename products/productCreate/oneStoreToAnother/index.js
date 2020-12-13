@@ -136,10 +136,18 @@ const postToNewStore = (id, apiType) => {
   });
 };
 
-// getFromFirstStore(11662446997)
-//   .then(console.log)
-//   .catch((error) => console.log("Error", error));
+// npm run blueland-production && npm run blueland-development
 
-postToNewStore(1333140717639, "graphql")
-  .then(console.log)
-  .catch((error) => console.log("Error", error));
+const productId = 4624811655223;
+const { NODE_ENV } = process.env;
+
+if(NODE_ENV === "prod") {
+  getFromFirstStore(productId)
+    .then((result) => console.log("result", result), process.exit())
+    .catch((error) => console.log("Error", error));
+}
+else if(NODE_ENV === "dev") {
+  postToNewStore(productId, "graphql")
+    .then((result) => console.log("result", result), process.exit())
+    .catch((error) => console.log("Error", error));
+}
