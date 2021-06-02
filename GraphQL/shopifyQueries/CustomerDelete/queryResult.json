@@ -1,0 +1,19 @@
+{
+  "data": {
+    "customerDelete": {
+      "deletedCustomerId": "gid://shopify/Customer/5191395541162",
+      "userErrors": []
+    }
+  },
+  "extensions": {
+    "cost": {
+      "requestedQueryCost": 10,
+      "actualQueryCost": 10,
+      "throttleStatus": {
+        "maximumAvailable": 2000,
+        "currentlyAvailable": 1990,
+        "restoreRate": 100
+      }
+    }
+  }
+}

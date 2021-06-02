@@ -1,0 +1,26 @@
+{
+  "data": {
+    "customerDelete": {
+      "deletedCustomerId": null,
+      "userErrors": [
+        {
+          "field": [
+            "id"
+          ],
+          "message": "Customer can't be found"
+        }
+      ]
+    }
+  },
+  "extensions": {
+    "cost": {
+      "requestedQueryCost": 10,
+      "actualQueryCost": 10,
+      "throttleStatus": {
+        "maximumAvailable": 2000,
+        "currentlyAvailable": 1990,
+        "restoreRate": 100
+      }
+    }
+  }
+}
