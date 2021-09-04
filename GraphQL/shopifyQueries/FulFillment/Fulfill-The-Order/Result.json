@@ -1,0 +1,29 @@
+{
+  "data": {
+    "fulfillmentCreateV2": {
+      "fulfillment": {
+        "id": "gid://shopify/Fulfillment/3544194613303",
+        "status": "SUCCESS",
+        "trackingInfo": [
+          {
+            "company": "my-shipping-company",
+            "number": "1562678",
+            "url": "https://www.my-shipping-company.com"
+          }
+        ]
+      },
+      "userErrors": []
+    }
+  },
+  "extensions": {
+    "cost": {
+      "requestedQueryCost": 11,
+      "actualQueryCost": 11,
+      "throttleStatus": {
+        "maximumAvailable": 1000,
+        "currentlyAvailable": 989,
+        "restoreRate": 50
+      }
+    }
+  }
+}

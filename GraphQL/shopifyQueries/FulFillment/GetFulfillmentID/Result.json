@@ -1,0 +1,47 @@
+{
+  "data": {
+    "order": {
+      "id": "gid://shopify/Order/3961279709239",
+      "name": "#1002",
+      "fulfillmentOrders": {
+        "edges": [
+          {
+            "node": {
+              "id": "gid://shopify/FulfillmentOrder/4950176104503",
+              "status": "OPEN",
+              "requestStatus": "UNSUBMITTED",
+              "supportedActions": [
+                {
+                  "action": "CREATE_FULFILLMENT"
+                },
+                {
+                  "action": "MOVE"
+                }
+              ],
+              "lineItems": {
+                "edges": [
+                  {
+                    "node": {
+                      "id": "gid://shopify/FulfillmentOrderLineItem/10348630048823"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "extensions": {
+    "cost": {
+      "requestedQueryCost": 143,
+      "actualQueryCost": 8,
+      "throttleStatus": {
+        "maximumAvailable": 1000,
+        "currentlyAvailable": 992,
+        "restoreRate": 50
+      }
+    }
+  }
+}

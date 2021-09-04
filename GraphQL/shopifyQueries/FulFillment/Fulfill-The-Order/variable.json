@@ -1,0 +1,19 @@
+{
+  "fulfillment": {
+    "notifyCustomer": true,
+    "trackingInfo": {
+      "company": "my-shipping-company",
+      "number": "1562678",
+      "url": "https://www.my-shipping-company.com"
+    },
+    "lineItemsByFulfillmentOrder": [
+      {
+        "fulfillmentOrderId": "gid://shopify/FulfillmentOrder/4950176104503",
+        "fulfillmentOrderLineItems": {
+          "id": "gid://shopify/FulfillmentOrderLineItem/10348630048823",
+          "quantity": 1
+        }
+      }
+    ]
+  }
+}

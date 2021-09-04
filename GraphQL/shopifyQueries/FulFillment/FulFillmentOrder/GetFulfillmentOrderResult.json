@@ -1,0 +1,71 @@
+{
+  "data": {
+    "order": {
+      "id": "gid://shopify/Order/3961279709239",
+      "name": "#1002",
+      "fulfillmentOrders": {
+        "edges": [
+          {
+            "node": {
+              "id": "gid://shopify/FulfillmentOrder/4950176104503",
+              "status": "OPEN",
+              "requestStatus": "UNSUBMITTED",
+              "supportedActions": [
+                {
+                  "action": "CREATE_FULFILLMENT"
+                },
+                {
+                  "action": "MOVE"
+                }
+              ],
+              "destination": null,
+              "lineItems": {
+                "edges": [
+                  {
+                    "node": {
+                      "id": "gid://shopify/FulfillmentOrderLineItem/10348630048823",
+                      "totalQuantity": 1,
+                      "remainingQuantity": 1,
+                      "lineItem": {
+                        "variant": null
+                      }
+                    }
+                  }
+                ]
+              },
+              "assignedLocation": {
+                "name": "15581 Primrose",
+                "location": {
+                  "address": {
+                    "address1": "15581 Primrose",
+                    "address2": null,
+                    "city": "westminster",
+                    "countryCode": "US",
+                    "phone": "",
+                    "province": "California",
+                    "zip": "92683"
+                  },
+                  "id": "gid://shopify/Location/34782642231"
+                }
+              },
+              "merchantRequests": {
+                "edges": []
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "extensions": {
+    "cost": {
+      "requestedQueryCost": 153,
+      "actualQueryCost": 16,
+      "throttleStatus": {
+        "maximumAvailable": 1000,
+        "currentlyAvailable": 984,
+        "restoreRate": 50
+      }
+    }
+  }
+}
