@@ -1,5 +1,5 @@
 require("../config.js");
-const { axiosRequest } = require("./axiosRequest.js");
+const axiosRequest = require("./axiosRequest.js");
 const { SHOP, ACCESS_TOKEN } = process.env;
 
 /**
@@ -21,7 +21,7 @@ const buildRestBody = async (url, method, body) => {
       method: method,
     };
     const result = await axiosRequest(params);
-    return result;
+    return result.data;
   } catch (error) {
     console.log("buildRestBody Error: ", error);
     throw error;

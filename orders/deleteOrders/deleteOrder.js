@@ -1,5 +1,5 @@
 const restApiService = require("../../helpers/restApiService.js");
-const { ACCESS_TOKEN, SHOP, SHOP_API_V } = process.env;
+const { ACCESS_TOKEN, SHOP, API_VERSION } = process.env;
 /**
  * Delete one order from shopify
  * 
@@ -11,7 +11,7 @@ const deleteOrder = function(id) {
   return new Promise(async function(resolve, reject) {
     try {
       const options = {
-        url: `https://${SHOP}.myshopify.com/admin/api/${SHOP_API_V}/orders/${id}.json`,
+        url: `https://${SHOP}.myshopify.com/admin/api/${API_VERSION}/orders/${id}.json`,
         headers: {
           "X-Shopify-Access-Token": ACCESS_TOKEN
         },

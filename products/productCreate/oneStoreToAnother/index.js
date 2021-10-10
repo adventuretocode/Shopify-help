@@ -47,29 +47,26 @@ const createProductRest = function (product) {
   });
 };
 
-const createProductGraphql = function (input) {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const query = `
-        mutation productCreate($input: ProductInput!) {
-          productCreate(input: $input) {
-            product {
-              id
-            }
-            userErrors {
-              field
-              message
-            }
+const createProductGraphql = async (input) => {
+  try {
+    const query = `
+      mutation productCreate($input: ProductInput!) {
+        productCreate(input: $input) {
+          product {
+            id
+          }
+          userErrors {
+            field
+            message
           }
         }
-      `;
-
-      const result = buildGraphqlQuery(query, input);
-      resolve(result);
-    } catch (error) {
-      reject(error);
-    }
-  });
+      }
+    `;
+    const result = await buildGraphqlQuery(query, input);
+    return result;
+  } catch (error) {
+    throw error;
+  }
 };
 
 const createRest = function (id) {
@@ -137,7 +134,7 @@ const postToNewStore = (id, apiType) => {
 
 // npm run blueland-production && npm run blueland-development
 
-const productId = 4617471787123;
+const productId = 310505275421;
 const { NODE_ENV } = process.env;
 
 const main = async () => {

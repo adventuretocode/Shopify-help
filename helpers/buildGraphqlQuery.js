@@ -1,33 +1,65 @@
 require("../config.js");
-const { SHOP, ACCESS_TOKEN, SHOP_API_V } = process.env; 
-const axiosRequest = require("./axiosRequest.js");
+const axios = require("axios");
+const { SHOP, ACCESS_TOKEN, API_VERSION } = process.env;
 
-/**
- * Post request to shopify
- * DEPRECIATING Moving to buildAxiosQuery
- */
+/********************************
+const SHOP = "";
+const ACCESS_TOKEN = "";
+const exampleQuery = {
+  url: `https://${SHOP}.myshopify.com/admin/api/2019-10/graphql.json`,
+  headers: {
+    'Content-Type': 'application/json',
+    'X-Shopify-Access-Token': ACCESS_TOKEN,
+  },
+  method: 'POST',
+  data: {
+    query: query,
+    variables: variables,
+  },
+}
+*******************************/
 
-const buildGraphqlQuery = function(query, variables, delay) {
-  return new Promise(async function(resolve, reject) {
-    try {
-      const options = {
-        url: `https://${SHOP}.myshopify.com/admin/api/${SHOP_API_V}/graphql.json`,
-        headers: {
-          "Content-Type": "application/json",
-          "X-Shopify-Access-Token": ACCESS_TOKEN
-        },
-        method: "POST",
-        data: {
-          query: query,
-          variables: variables
-        }
-      };
-      const response = await axiosRequest(options, delay);
-      resolve(response);
-    } catch (error) {
-      reject(error);
-    }
+const sleep = (time) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, time);
   });
+};
+
+const buildGraphqlQuery = async (query, variables) => {
+  try {
+    const options = {
+      url: `https://${SHOP}.myshopify.com/admin/api/${API_VERSION}/graphql.json`,
+      headers: {
+        "Content-Type": "application/json",
+        "X-Shopify-Access-Token": ACCESS_TOKEN,
+      },
+      method: "POST",
+      data: {
+        query: query,
+        variables: variables,
+      },
+    };
+
+    const result = await axios(options);
+    const {
+      data,
+      extensions: { cost },
+    } = result.data;
+
+    const {
+      throttleStatus: { currentlyAvailable },
+    } = cost;
+
+    if (currentlyAvailable < 1000) {
+      console.log("currentlyAvailable: ", currentlyAvailable);
+      await sleep(2000);
+    }
+    return data;
+  } catch (error) {
+    throw error;
+  }
 };
 
 module.exports = buildGraphqlQuery;
