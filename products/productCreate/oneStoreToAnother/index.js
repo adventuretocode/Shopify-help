@@ -6,35 +6,37 @@ const {
 const buildGraphqlQuery = require("../../../helpers/buildGraphqlQuery.js");
 const fsWriteFile = require("../../../helpers/fsWriteFile.js");
 const path = require("path");
+const { API_VERSION } = process.env;
 
-const getProductionProductById = function (id) {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const { metafields } = await buildRestBody(
-        `/admin/api/2020-04/products/${id}/metafields.json`,
-        "GET"
-      );
-      const { product } = await buildRestBody(
-        `/admin/api/2020-04/products/${id}.json`,
-        "GET"
-      );
-      const completeProduct = { product: { ...product, metafields } };
-      await fsWriteFile(
-        path.join(__dirname, `./products/${product.id}.json`),
-        completeProduct
-      );
-      resolve(completeProduct);
-    } catch (error) {
-      reject(error);
-    }
-  });
+const getProductionProductById = async (id) => {
+  try {
+    const { product } = await buildRestBody(
+      `/admin/api/${API_VERSION}/products/${id}.json`,
+      "get"
+    );
+
+    const { metafields } = await buildRestBody(
+      `/admin/api/${API_VERSION}/products/${id}/metafields.json`,
+      "GET"
+    );
+
+    const completeProduct = { product: { ...product, metafields } };
+    await fsWriteFile(
+      path.join(__dirname, `./products/${product.id}.json`),
+      completeProduct
+    );
+    return completeProduct;
+  } catch (error) {
+    console.log("fails");
+    throw error;
+  }
 };
 
 const createProductRest = function (product) {
   return new Promise(async function (resolve, reject) {
     try {
       const result = buildRestBody(
-        "/admin/api/2020-04/products.json",
+        `/admin/api/${API_VERSION}/products.json`,
         "POST",
         product
       );
@@ -101,16 +103,13 @@ const createGraph = function (id) {
  * @param  {Number} id       shopify id
  */
 
-const getFromFirstStore = function (id) {
-  return new Promise(async function (resolve, reject) {
-    try {
-      const result = await getProductionProductById(id);
-      resolve(result);
-      return;
-    } catch (error) {
-      reject(error);
-    }
-  });
+const getFromFirstStore = async (id) => {
+  try {
+    const result = await getProductionProductById(id);
+    return result;
+  } catch (error) {
+    throw error;
+  }
 };
 
 /**
@@ -138,16 +137,27 @@ const postToNewStore = (id, apiType) => {
 
 // npm run blueland-production && npm run blueland-development
 
-const productId = 4624811655223;
+const productId = 4617471787123;
 const { NODE_ENV } = process.env;
 
-if(NODE_ENV === "prod") {
-  getFromFirstStore(productId)
-    .then((result) => console.log("result", result), process.exit())
-    .catch((error) => console.log("Error", error));
-}
-else if(NODE_ENV === "dev") {
-  postToNewStore(productId, "graphql")
-    .then((result) => console.log("result", result), process.exit())
-    .catch((error) => console.log("Error", error));
-}
+const main = async () => {
+  if (NODE_ENV === "prod") {
+    try {
+      const result = await getFromFirstStore(productId);
+      console.log(result);
+    } catch (error) {
+      console.log("Error:", error);
+      throw error;
+    }
+  } else if (NODE_ENV === "dev") {
+    try {
+      const result = await postToNewStore(productId, "graphql");
+      console.log(result);
+    } catch (error) {
+      console.log("Error:", error);
+      throw error;
+    }
+  }
+};
+
+main();

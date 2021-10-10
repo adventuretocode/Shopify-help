@@ -1,4 +1,4 @@
-const axios = require("axios");
+const axios = require("axios").default;
 
 /********************************
 const SHOP = "";
@@ -25,22 +25,24 @@ const exampleQuery = {
  * @returns {Promise}       Promise object represents the post body
  */
 
-const postShopifyGraphQL = function (query, delay = 500) {
-  return new Promise(function (resolve, reject) {
-    axios(query)
-      .then(({ data }) => {
-        if(data.errors) {
-          reject(data);
-        } 
-        else {
-          setTimeout(() => {
-            resolve(data);
-          }, delay);
-        }
-      }).catch(error => {
-        reject(error)
-      });
-  });
+ const sleep = (time) => {
+	return new Promise((resolve) => {
+		setTimeout(() => {
+			resolve();
+		}, time);
+	});
+}
+
+
+const axiosRequest = async (query, delay = 500) => {
+  try {
+    const result = await axios(query);
+		sleep(delay);
+    return result.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
 };
 
-module.exports = postShopifyGraphQL;
+module.exports = axiosRequest;

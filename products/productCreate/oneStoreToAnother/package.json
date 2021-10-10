@@ -9,12 +9,18 @@
     "mooblio": "STORE=mooblio node index.js",
     "fantasticheadbands": "STORE=fantasticheadbands node index.js",
     "odacite": "STORE=odacite NODE_ENV=prod node index.js",
-    "dev-odacite" : "STORE=odacite NODE_ENV=dev node index.js",
+    "dev-odacite": "STORE=odacite NODE_ENV=dev node index.js",
     "blueland-production": "STORE=blueland NODE_ENV=prod node index.js",
     "blueland-development": "STORE=blueland NODE_ENV=dev node index.js",
+    "paliwineco-prod": "STORE=paliwine NODE_ENV=prod node index.js",
+    "primalkitchen": "STORE=primalKitchen NODE_ENV=prod node index.js",
+    "btrain-dev": "STORE=btrain NODE_ENV=dev node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "request": "^2.88.2"
+  }
 }
