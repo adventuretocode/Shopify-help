@@ -21,7 +21,7 @@ const buildRestBody = async (url, method, body) => {
       method: method,
     };
     const result = await axiosRequest(params);
-    return result.data;
+    return result;
   } catch (error) {
     console.log("buildRestBody Error: ", error);
     throw error;
