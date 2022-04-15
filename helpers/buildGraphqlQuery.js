@@ -43,10 +43,11 @@ const buildGraphqlQuery = async (query, variables) => {
     };
 
     const result = await axios(options);
-    const {
-      data,
-      extensions: { cost },
-    } = result.data;
+    const { data, extensions, errors } = result.data;
+
+    if (errors) { throw errors; }
+
+    const { cost } = extensions;
 
     const {
       throttleStatus: { currentlyAvailable },

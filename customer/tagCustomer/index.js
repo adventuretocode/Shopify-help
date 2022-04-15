@@ -29,7 +29,7 @@ const main = (start = 0) => {
       } = data;
       if (!customers.length) {
         console.log(`==============`);
-        console.log("No customer found", Email);
+        console.log("No customer found", Email, i);
         continue;
       } else if (customers.length > 1) {
         console.log(Email);
@@ -51,4 +51,4 @@ const main = (start = 0) => {
   });
 };
 
-main();
+main(1919);
