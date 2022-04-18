@@ -22,7 +22,7 @@ const trackFile = `./data/track.txt`;
 
   for (let i = startNum; i < endNum; i++) {
     const rowCSV = csvArr[i];
-    await processRow(rowCSV);
+    await processRow(rowCSV, i);
     await writeFile(new URL(trackFile, import.meta.url), (i + 1).toString());
   }
 })();

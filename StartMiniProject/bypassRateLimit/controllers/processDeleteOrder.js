@@ -10,13 +10,13 @@ import consoleColor from "../helpers/consoleColor.js";
  * @return  {Promise}        If return object is empty then delete was successful
  */
 
-const processDeleteOrder = async (rowData) => {
+const processDeleteOrder = async (rowData, index) => {
   const { Name: orderName } = rowData;
   try {
     const { id } = await findOrderIdByName(orderName);
     const orderId = cleanIDGraphql(id);
     await deleteOrderById(orderId);
-    consoleColor(orderId, orderId);
+    consoleColor(orderId, `${orderId} row #${index}`);
     return "success";
   } catch (error) {
     throw error;
