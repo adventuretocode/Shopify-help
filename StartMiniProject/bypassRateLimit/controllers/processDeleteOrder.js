@@ -19,6 +19,9 @@ const processDeleteOrder = async (rowData, index) => {
     consoleColor(orderId, `${orderId} row #${index}`);
     return "success";
   } catch (error) {
+		console.log(error?.response?.status);
+		console.log(error?.response?.statusText);
+		if(error?.response?.status >= 500) { /* restart*/ }
     throw error;
   }
 };
