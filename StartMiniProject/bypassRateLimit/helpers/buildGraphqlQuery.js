@@ -1,6 +1,5 @@
 import axios from "axios";
 const { SHOP, ACCESS_TOKEN, API_VERSION } = process.env;
-const shopifyAccessToken = JSON.parse(ACCESS_TOKEN)[0];
 
 const sleep = (time) => {
   return new Promise((resolve) => {
@@ -11,6 +10,7 @@ const sleep = (time) => {
 };
 
 const buildGraphqlQuery = async (query, variables) => {
+  const shopifyAccessToken = JSON.parse(ACCESS_TOKEN)[0];
   try {
     const options = {
       url: `https://${SHOP}.myshopify.com/admin/api/${API_VERSION}/graphql.json`,

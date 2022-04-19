@@ -1,7 +1,6 @@
 import axios from "axios";
 
 const { ACCESS_TOKEN } = process.env;
-const shopifyAccessToken = JSON.parse(ACCESS_TOKEN)[0];
 
 /********************************
 const SHOP = "";
@@ -29,6 +28,17 @@ const sleep = (time) => {
 }
 
 /**
+ * Get request to shopify
+ *
+ * @param   {Object} option          The request object for shopify
+ * @param   {String} option.url      The url of endpoint
+ * @param   {String} option.headers  Header containing access token "X-Shopify-Access-Token"
+ * @param   {String} option.method   HTTP request GET POST DELETE PUT
+ * @param   {Number} timeOut         Time before the next execution can start
+ * @returns {Promise<{}>}      Promise object represents the post body
+ */
+
+/**
  * Post request to shopify
  *
  * @param   {Object}  query Request body
@@ -37,6 +47,7 @@ const sleep = (time) => {
  */
 
 const axiosRequest = async (query, delay = 500) => {
+	const shopifyAccessToken = JSON.parse(ACCESS_TOKEN)[0];
   try {
     query.headers["X-Shopify-Access-Token"] = shopifyAccessToken;
     const result = await axios(query);
