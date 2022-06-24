@@ -1,0 +1,57 @@
+HTTP/1.1 200 OK
+Date: Fri, 24 Jun 2022 04:31:33 GMT
+Content-Type: application/json; charset=utf-8
+Transfer-Encoding: chunked
+Connection: close
+X-Sorting-Hat-PodId: 70
+X-Sorting-Hat-ShopId: 1206059079
+Vary: Accept-Encoding
+Referrer-Policy: origin-when-cross-origin
+X-Frame-Options: DENY
+X-ShopId: 1206059079
+X-ShardId: 70
+X-Stats-UserId: 
+X-Stats-ApiClientId: 3744877
+X-Stats-ApiPermissionId: 205255573575
+X-Shopify-API-Terms: By accessing or using the Shopify API you agree to the Shopify API License and Terms of Use at https://www.shopify.com/legal/api-terms
+X-Shopify-API-Version: 2021-07
+X-Shopify-API-Version-Warning: https://shopify.dev/concepts/about-apis/versioning
+Content-Language: en
+Strict-Transport-Security: max-age=7889238
+X-Shopify-Stage: production
+Content-Security-Policy: default-src 'self' data: blob: 'unsafe-inline' 'unsafe-eval' https://* shopify-pos://*; block-all-mixed-content; child-src 'self' https://* shopify-pos://*; connect-src 'self' wss://* https://*; frame-ancestors 'none'; img-src 'self' data: blob: https:; script-src https://cdn.shopify.com https://cdn.shopifycdn.net https://checkout.shopifycs.com https://api.stripe.com https://mpsnare.iesnare.com https://appcenter.intuit.com https://www.paypal.com https://js.braintreegateway.com https://c.paypal.com https://maps.googleapis.com https://www.google-analytics.com https://v.shopify.com 'self' 'unsafe-inline' 'unsafe-eval'; upgrade-insecure-requests; report-uri /csp-report?source%5Baction%5D=query&source%5Bapp%5D=Shopify&source%5Bcontroller%5D=admin%2Fgraphql&source%5Bsection%5D=admin_api&source%5Buuid%5D=7e4b63a8-3b9d-40f1-94b7-f83c6512a792
+X-Content-Type-Options: nosniff
+X-Download-Options: noopen
+X-Permitted-Cross-Domain-Policies: none
+X-XSS-Protection: 1; mode=block; report=/xss-report?source%5Baction%5D=query&source%5Bapp%5D=Shopify&source%5Bcontroller%5D=admin%2Fgraphql&source%5Bsection%5D=admin_api&source%5Buuid%5D=7e4b63a8-3b9d-40f1-94b7-f83c6512a792
+X-Dc: gcp-us-central1,gcp-us-east1,gcp-us-east1
+Content-Encoding: gzip
+X-Request-ID: 7e4b63a8-3b9d-40f1-94b7-f83c6512a792
+CF-Cache-Status: DYNAMIC
+Expect-CT: max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+Server: cloudflare
+CF-RAY: 7202bbfd7b3d7c3d-LAX
+alt-svc: h3=":443"; ma=86400, h3-29=":443"; ma=86400
+
+{
+  "data": {
+    "orderEditCommit": {
+      "order": {
+        "name": "DTC-20692",
+        "id": "gid:\/\/shopify\/Order\/4459172036679"
+      },
+      "userErrors": []
+    }
+  },
+  "extensions": {
+    "cost": {
+      "requestedQueryCost": 10,
+      "actualQueryCost": 10,
+      "throttleStatus": {
+        "maximumAvailable": 2000.0,
+        "currentlyAvailable": 1990,
+        "restoreRate": 100.0
+      }
+    }
+  }
+}

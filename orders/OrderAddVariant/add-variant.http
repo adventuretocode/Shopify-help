@@ -1,0 +1,32 @@
+# SHOPIFY_STORE=
+# SHOPIFY_API_KEY=
+# ORDER_ID=
+# VARIANT_ID=
+
+###
+POST https://{{$dotenv SHOPIFY_STORE}}.myshopify.com/admin/api/2021-07/graphql.json
+Content-Type: application/json
+X-Shopify-Access-Token: {{$dotenv SHOPIFY_API_KEY}}
+X-REQUEST-TYPE: GraphQL
+
+mutation orderEditAddVariant($id: ID!, $quantity: Int!, $variantId: ID!) {
+  orderEditAddVariant(id: $id, quantity: $quantity, variantId: $variantId) {
+    calculatedLineItem {
+      id
+    }
+    calculatedOrder {
+      id
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}
+
+
+{
+  "id": "gid://shopify/CalculatedOrder/{{$dotenv CALCULATED_ORDER}}",
+  "quantity": 1,
+  "variantId": "gid://shopify/ProductVariant/{{$dotenv VARIANT_ID}}"
+}

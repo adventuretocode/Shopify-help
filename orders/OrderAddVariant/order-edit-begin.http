@@ -1,0 +1,28 @@
+# SHOPIFY_STORE=
+# SHOPIFY_API_KEY=
+# ORDER_ID=
+# VARIANT_ID=
+# CALCULATED_ORDER=
+
+###
+POST https://{{$dotenv SHOPIFY_STORE}}.myshopify.com/admin/api/2021-07/graphql.json
+Content-Type: application/json
+X-Shopify-Access-Token: {{$dotenv SHOPIFY_API_KEY}}
+X-REQUEST-TYPE: GraphQL
+
+mutation orderEditBegin($id: ID!) {
+  orderEditBegin(id: $id) {
+    calculatedOrder {
+      id
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}
+
+
+{
+  "id": "gid://shopify/Order/{{$dotenv ORDER_ID}}"
+}
