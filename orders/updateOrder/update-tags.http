@@ -8,3 +8,26 @@ Content-Type: application/json
     "tags":"External, Inbound, Outbound"
   }
 }
+
+###
+POST https://{{$dotenv SHOPIFY_STORE}}.myshopify.com/admin/api/2021-07/graphql.json
+Content-Type: application/json
+X-Shopify-Access-Token: {{$dotenv SHOPIFY_API_KEY}}
+X-REQUEST-TYPE: GraphQL
+
+mutation tagOrder ($id: ID!, $tags: [String!]!) {
+  tagsAdd(id: $id, tags: $tags) {
+    userErrors{
+      field
+      message
+    }
+    node {
+      id
+    }
+  }
+}
+
+{
+  "id": "gid://shopify/Order/{{$dotenv ORDER_ID}}",
+  "tags": "External, Inbound, Outbound"
+}
