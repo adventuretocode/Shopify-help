@@ -1,0 +1,36 @@
+# SHOPIFY_STORE=
+# SHOPIFY_API_KEY=
+# CALCULATED_ORDER=
+# LINE_ITEM_ID=
+
+###
+POST https://{{$dotenv SHOPIFY_STORE}}.myshopify.com/admin/api/2021-07/graphql.json
+Content-Type: application/json
+X-Shopify-Access-Token: {{$dotenv SHOPIFY_API_KEY}}
+X-REQUEST-TYPE: GraphQL
+
+mutation orderEditSetQuantity($id: ID!, $lineItemId: ID!, $quantity: Int!) {
+  orderEditSetQuantity(id: $id, lineItemId: $lineItemId, quantity: $quantity) {
+    calculatedOrder {
+      id
+      addedLineItems(first: 5) {
+        edges {
+          node {
+            id
+            quantity
+          }
+        }
+      }
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}
+
+{
+  "id": "gid://shopify/CalculatedOrder/{{$dotenv CALCULATED_ORDER}}",
+  "quantity": 2,
+  "lineItemId": "gid://shopify/CalculatedLineItem/{{$dotenv LINE_ITEM_ID}}"
+}
