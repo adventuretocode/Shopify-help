@@ -25,3 +25,21 @@ https://{{$dotenv SHOPIFY_STORE}}.myshopify.com/admin/api/2021-07/graphql.json \
 -d '{
 "query": "{ order(id: \"gid://shopify/Order/{{$dotenv ORDER_ID}}\") { name } }"
 }'
+
+###
+POST https://{{$dotenv SHOPIFY_STORE}}.myshopify.com/admin/api/2021-07/graphql.json
+Content-Type: application/json
+X-Shopify-Access-Token: {{$dotenv SHOPIFY_API_KEY}}
+X-REQUEST-TYPE: GraphQL
+
+query findOrderByName($gql_id: ID!) {
+  order(id: $gql_id) {
+    id
+  }
+}
+
+{
+  "gql_id": "gid://shopify/Order/{{$dotenv ORDER_ID}}"
+}
+
+####
