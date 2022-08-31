@@ -1,0 +1,29 @@
+POST https://{{$dotenv SHOP}}.myshopify.com/admin/api/{{$dotenv API_VERSION}}/graphql.json HTTP/1.1
+Content-Type: application/json
+X-Shopify-Access-Token: {{$dotenv SHOPIFY_TOKEN}}
+X-Request-Type: GraphQL
+
+query findProductBySku($query: String) {
+  products(first: 5, query: $query) {
+    edges {
+      node {
+        id
+        title
+        variants(first: 20) {
+          edges {
+            node {
+              sku
+              price
+              displayName
+              id
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+{
+	"query": "sku:DIABETIC-5-BLD"
+}

@@ -19,20 +19,24 @@ const ORM = {
       cb(data);
     });
   },
-  updateOne: function (table, cols, value, condition, cb) {
-    var query = "UPDATE ?? SET " + cols.toString() + "=?  WHERE " + condition;
-    var mode = [table, value];
-    connection.query(query, mode, function (err, data) {
-      if (err) throw err;
-      cb(data);
+  updateOne: (table, cols, value, condition) => {
+    return new Promise((resolve, reject) => {
+      var query = "UPDATE ?? SET " + cols.toString() + "=? WHERE " + condition;
+      var mode = [table, value];
+      connection.query(query, mode, (err, data) => {
+        if (err) reject(err);
+        resolve(data);
+      });
     });
   },
-  findOne: function (table, condition, cb) {
-    var query = "SELECT * FROM ?? WHERE " + condition;
-    var mode = [table];
-    connection.query(query, mode, function (err, data) {
-      if (err) throw err;
-      cb(data);
+  findOne: (table, condition) => {
+    return new Promise((resolve, reject) => {
+      var query = "SELECT * FROM ?? WHERE " + condition;
+      var mode = [table];
+      connection.query(query, mode, (err, data) => {
+        if (err) reject(err);
+        resolve(data);
+      });
     });
   },
 };
