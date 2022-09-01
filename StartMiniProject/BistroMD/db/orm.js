@@ -11,6 +11,16 @@ const ORM = {
       });
     });
   },
+  insertOneObj: (table, colAndValObj) => {
+    return new Promise((resolve, reject) => {
+      var query = "INSERT INTO ?? SET ?";
+      var mode = [table, colAndValObj];
+      connection.query(query, mode, (err, data) => {
+        if (err) reject(err);
+        resolve(data);
+      });
+    });
+  },
   insertOne: function (table, cols, value, cb) {
     var query = "INSERT INTO ??  (" + cols.toString() + ") VALUES (?)";
     var mode = [table, value];
