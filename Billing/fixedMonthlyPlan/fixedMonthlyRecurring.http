@@ -11,8 +11,8 @@ mutation {
       plan: {
         appRecurringPricingDetails: {
           price: { 
-						amount: 10.00, currencyCode: USD 
-					}
+            amount: 10.00, currencyCode: USD 
+          }
           interval: EVERY_30_DAYS
         }
       }
