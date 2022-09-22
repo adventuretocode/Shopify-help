@@ -1,6 +1,11 @@
-Fulfillment isn't a whole order. 
+Fulfillment isn't a whole order. But rather groups of items in an order. 
 
-There are 2 levels to an order fulfillment
+There are 3 levels to consider
+Order => FulfillmentOrder => FulfillmentOrderLineItem
+
+The order is used to get the other 2 information FulfillmentOrder and FulfillmentOrderLineItem
+
+The 2 other levels:
 - `gid://shopify/FulfillmentOrder/<NUMBER>`
 - `gid://shopify/FulfillmentOrderLineItem/<NUMBER>`
 
@@ -17,8 +22,9 @@ Notes:
 
 - Usually if the `status` of `FulfillmentOrder` is `CLOSED` then most likely there will be no `supportedActions` and nothing to fulfill
 -  `supportedActions` should list `"CREATE_FULFILLMENT"` as one of the actions. Or else the `FulfillmentOrder` group is not fulfillable.
--  Use `remainingQuantity` to determine how the `quantity` to fulfill per line item
+-  Use `remainingQuantity` to determine the `quantity` to fulfill per line item
 
+There are 3 things to check to see if a line item is ready for fulfillment
 `status` => `supportedActions` => `remainingQuantity`
 1. `status` is not `"CLOSED"`
 2. `supportedActions` contain `"CREATE_FULFILLMENT"`
