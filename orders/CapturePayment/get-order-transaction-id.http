@@ -15,7 +15,7 @@ query getOrderByID($id: ID!) {
     transactions (capturable: true) {
       id
       status
-			kind
+      kind
       authorizationCode
       authorizationExpiresAt
       totalUnsettledSet {
