@@ -3,10 +3,10 @@
 To capture payment on an order that is `authorized`, a `OrderTransaction` id is required. `OrderTransaction` is property that can be found on the order object via graphQL
 [`get-order-transaction-id.http`](./get-order-transaction-id.http)
 
-After getting the id successfully, we can capture payment. `capture-payment.http`
+After getting the id successfully, we can capture payment. [`capture-payment.http`](./capture-payment.http)
 
 Payment failure:
-`capture-payment_failed.http` is an example of a payment failure.
+[`capture-payment_failed.http`](./capture-payment_failed.http) is an example of a payment failure.
 Where `userErrors` will be an array with a length, containing reason(s) of the failure.
 
 Notes:
