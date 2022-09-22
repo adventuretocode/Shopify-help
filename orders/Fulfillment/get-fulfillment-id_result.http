@@ -1,0 +1,282 @@
+{
+  "data": {
+    "order": {
+      "id": "gid://shopify/Order/4955976499452",
+      "name": "#1044",
+      "fulfillmentOrders": {
+        "edges": [
+          {
+            "node": {
+              "id": "gid://shopify/FulfillmentOrder/6021864554748",
+              "status": "CLOSED",
+              "requestStatus": "UNSUBMITTED",
+              "supportedActions": [],
+              "lineItems": {
+                "edges": [
+                  {
+                    "node": {
+                      "id": "gid://shopify/FulfillmentOrderLineItem/12786880151804",
+                      "remainingQuantity": 1
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "node": {
+              "id": "gid://shopify/FulfillmentOrder/6021865275644",
+              "status": "IN_PROGRESS",
+              "requestStatus": "UNSUBMITTED",
+              "supportedActions": [
+                {
+                  "action": "CREATE_FULFILLMENT"
+                },
+                {
+                  "action": "MOVE"
+                }
+              ],
+              "lineItems": {
+                "edges": [
+                  {
+                    "node": {
+                      "id": "gid://shopify/FulfillmentOrderLineItem/12786881429756",
+                      "remainingQuantity": 0
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "gid://shopify/FulfillmentOrderLineItem/12786881462524",
+                      "remainingQuantity": 0
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "gid://shopify/FulfillmentOrderLineItem/12786881495292",
+                      "remainingQuantity": 0
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "gid://shopify/FulfillmentOrderLineItem/12786881528060",
+                      "remainingQuantity": 0
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "gid://shopify/FulfillmentOrderLineItem/12786881560828",
+                      "remainingQuantity": 0
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "gid://shopify/FulfillmentOrderLineItem/12786881593596",
+                      "remainingQuantity": 0
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "gid://shopify/FulfillmentOrderLineItem/12786881626364",
+                      "remainingQuantity": 0
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "gid://shopify/FulfillmentOrderLineItem/12786881659132",
+                      "remainingQuantity": 0
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "gid://shopify/FulfillmentOrderLineItem/12786881691900",
+                      "remainingQuantity": 0
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "gid://shopify/FulfillmentOrderLineItem/12786881724668",
+                      "remainingQuantity": 0
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "gid://shopify/FulfillmentOrderLineItem/12786881757436",
+                      "remainingQuantity": 1
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "gid://shopify/FulfillmentOrderLineItem/12786881790204",
+                      "remainingQuantity": 1
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "gid://shopify/FulfillmentOrderLineItem/12786881822972",
+                      "remainingQuantity": 1
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "gid://shopify/FulfillmentOrderLineItem/12786881855740",
+                      "remainingQuantity": 1
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "gid://shopify/FulfillmentOrderLineItem/12786881888508",
+                      "remainingQuantity": 1
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "gid://shopify/FulfillmentOrderLineItem/12786881921276",
+                      "remainingQuantity": 1
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "gid://shopify/FulfillmentOrderLineItem/12786881954044",
+                      "remainingQuantity": 1
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "gid://shopify/FulfillmentOrderLineItem/12786881986812",
+                      "remainingQuantity": 1
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "gid://shopify/FulfillmentOrderLineItem/12786882019580",
+                      "remainingQuantity": 1
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "gid://shopify/FulfillmentOrderLineItem/12786882052348",
+                      "remainingQuantity": 1
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "gid://shopify/FulfillmentOrderLineItem/12786882085116",
+                      "remainingQuantity": 1
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "gid://shopify/FulfillmentOrderLineItem/12786882117884",
+                      "remainingQuantity": 1
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "gid://shopify/FulfillmentOrderLineItem/12786882150652",
+                      "remainingQuantity": 1
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "gid://shopify/FulfillmentOrderLineItem/12786882183420",
+                      "remainingQuantity": 1
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "gid://shopify/FulfillmentOrderLineItem/12786882216188",
+                      "remainingQuantity": 1
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "gid://shopify/FulfillmentOrderLineItem/12786882248956",
+                      "remainingQuantity": 1
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "gid://shopify/FulfillmentOrderLineItem/12786882281724",
+                      "remainingQuantity": 1
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "gid://shopify/FulfillmentOrderLineItem/12786882314492",
+                      "remainingQuantity": 1
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "gid://shopify/FulfillmentOrderLineItem/12786882347260",
+                      "remainingQuantity": 1
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "gid://shopify/FulfillmentOrderLineItem/12786882380028",
+                      "remainingQuantity": 1
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "gid://shopify/FulfillmentOrderLineItem/12786882412796",
+                      "remainingQuantity": 1
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "gid://shopify/FulfillmentOrderLineItem/12786882445564",
+                      "remainingQuantity": 1
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "gid://shopify/FulfillmentOrderLineItem/12786882478332",
+                      "remainingQuantity": 1
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "gid://shopify/FulfillmentOrderLineItem/12786882511100",
+                      "remainingQuantity": 1
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "node": {
+              "id": "gid://shopify/FulfillmentOrder/6024136950012",
+              "status": "CLOSED",
+              "requestStatus": "UNSUBMITTED",
+              "supportedActions": [],
+              "lineItems": {
+                "edges": [
+                  {
+                    "node": {
+                      "id": "gid://shopify/FulfillmentOrderLineItem/12791362322684",
+                      "remainingQuantity": 0
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "extensions": {
+    "cost": {
+      "requestedQueryCost": 543,
+      "actualQueryCost": 51,
+      "throttleStatus": {
+        "maximumAvailable": 2000,
+        "currentlyAvailable": 1949,
+        "restoreRate": 100
+      }
+    }
+  }
+}
