@@ -1,0 +1,33 @@
+# SHOPIFY_STORE=
+# SHOPIFY_API_KEY=
+# ORDER_ID=
+
+###
+POST https://{{$dotenv SHOPIFY_STORE}}.myshopify.com/admin/api/2021-07/graphql.json
+Content-Type: application/json
+X-Shopify-Access-Token: {{$dotenv SHOPIFY_API_KEY}}
+X-REQUEST-TYPE: GraphQL
+
+query getOrderByID($id: ID!) {
+  order(id: $id) {
+    id
+    name
+    transactions (capturable: true) {
+      id
+      status
+			kind
+      authorizationCode
+      authorizationExpiresAt
+      totalUnsettledSet {
+        presentmentMoney {
+          amount
+        }
+      }
+     errorCode
+    }    
+  }
+}
+
+{
+  "id": "gid://shopify/Order/{{$dotenv ORDER_ID}}"
+}

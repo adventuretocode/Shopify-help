@@ -1,0 +1,69 @@
+HTTP/1.1 200 OK
+Date: Thu, 22 Sep 2022 23:27:38 GMT
+Content-Type: application/json; charset=utf-8
+Transfer-Encoding: chunked
+Connection: close
+X-Sorting-Hat-PodId: 251
+X-Sorting-Hat-ShopId: 60139831548
+Vary: Accept-Encoding
+Referrer-Policy: origin-when-cross-origin
+X-Frame-Options: DENY
+X-ShopId: 60139831548
+X-ShardId: 251
+X-Stats-UserId: 
+X-Stats-ApiClientId: 7946436609
+X-Stats-ApiPermissionId: 387384541436
+X-Shopify-API-Terms: By accessing or using the Shopify API you agree to the Shopify API License and Terms of Use at https://www.shopify.com/legal/api-terms
+X-Shopify-API-Version: 2021-10
+X-Shopify-API-Version-Warning: https://shopify.dev/concepts/about-apis/versioning
+Content-Language: en
+Strict-Transport-Security: max-age=7889238
+X-Shopify-Stage: production
+Content-Security-Policy: default-src 'self' data: blob: 'unsafe-inline' 'unsafe-eval' https://* shopify-pos://*; block-all-mixed-content; child-src 'self' https://* shopify-pos://*; connect-src 'self' wss://* https://*; frame-ancestors 'none'; img-src 'self' data: blob: https:; script-src https://cdn.shopify.com https://cdn.shopifycdn.net https://checkout.shopifycs.com https://api.stripe.com https://mpsnare.iesnare.com https://appcenter.intuit.com https://www.paypal.com https://js.braintreegateway.com https://c.paypal.com https://maps.googleapis.com https://www.google-analytics.com https://v.shopify.com 'self' 'unsafe-inline' 'unsafe-eval'; upgrade-insecure-requests; report-uri /csp-report?source%5Baction%5D=query&source%5Bapp%5D=Shopify&source%5Bcontroller%5D=admin%2Fgraphql&source%5Bsection%5D=admin_api&source%5Buuid%5D=12ac7173-e866-4772-8ecc-6ae05bdddedd
+X-Content-Type-Options: nosniff
+X-Download-Options: noopen
+X-Permitted-Cross-Domain-Policies: none
+X-XSS-Protection: 1; mode=block; report=/xss-report?source%5Baction%5D=query&source%5Bapp%5D=Shopify&source%5Bcontroller%5D=admin%2Fgraphql&source%5Bsection%5D=admin_api&source%5Buuid%5D=12ac7173-e866-4772-8ecc-6ae05bdddedd
+X-Dc: gcp-us-west2,gcp-us-east1,gcp-us-east1
+Content-Encoding: gzip
+X-Request-ID: 12ac7173-e866-4772-8ecc-6ae05bdddedd
+CF-Cache-Status: DYNAMIC
+Report-To: {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=j62%2BUmNDWfJinrWJi8C79nLNhHB6od6PZIlJvlgWPdnMspbLW66%2FxaUjC1keoRSkQXPGIJwrFgXwDrkj2psiNbNJNPwadi7aHNHracOGh9Q0SRoEqJG%2BRHvIRQOyqjqmoEI%2Fs0R4oSGM"}],"group":"cf-nel","max_age":604800}
+NEL: {"success_fraction":0.01,"report_to":"cf-nel","max_age":604800}
+Server: cloudflare
+CF-RAY: 74eecfe72d8752e9-LAX
+alt-svc: h3=":443"; ma=86400, h3-29=":443"; ma=86400
+
+{
+  "data": {
+    "orderCapture": {
+      "transaction": {
+        "id": "gid:\/\/shopify\/OrderTransaction\/5739002921212",
+        "kind": "CAPTURE",
+        "test": true,
+        "totalUnsettledSet": {
+          "presentmentMoney": {
+            "amount": "0.0"
+          }
+        },
+        "amountSet": {
+          "presentmentMoney": {
+            "amount": "131.18"
+          }
+        }
+      },
+      "userErrors": []
+    }
+  },
+  "extensions": {
+    "cost": {
+      "requestedQueryCost": 22,
+      "actualQueryCost": 22,
+      "throttleStatus": {
+        "maximumAvailable": 2000.0,
+        "currentlyAvailable": 1978,
+        "restoreRate": 100.0
+      }
+    }
+  }
+}
