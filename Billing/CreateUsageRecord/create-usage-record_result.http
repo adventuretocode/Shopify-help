@@ -1,0 +1,55 @@
+HTTP/1.1 200 OK
+Date: Mon, 26 Sep 2022 06:35:16 GMT
+Content-Type: application/json; charset=utf-8
+Transfer-Encoding: chunked
+Connection: close
+X-Sorting-Hat-PodId: 174
+X-Sorting-Hat-ShopId: 61944496303
+Vary: Accept-Encoding
+Referrer-Policy: origin-when-cross-origin
+X-Frame-Options: DENY
+X-ShopId: 61944496303
+X-ShardId: 174
+X-Stats-UserId: 
+X-Stats-ApiClientId: 7962656769
+X-Stats-ApiPermissionId: 376841961647
+X-Shopify-API-Version: 2022-07
+Content-Language: en
+Strict-Transport-Security: max-age=7889238
+X-Shopify-Stage: production
+Content-Security-Policy: default-src 'self' data: blob: 'unsafe-inline' 'unsafe-eval' https://* shopify-pos://*; block-all-mixed-content; child-src 'self' https://* shopify-pos://*; connect-src 'self' wss://* https://*; frame-ancestors 'none'; img-src 'self' data: blob: https:; script-src https://cdn.shopify.com https://cdn.shopifycdn.net https://checkout.shopifycs.com https://api.stripe.com https://mpsnare.iesnare.com https://appcenter.intuit.com https://www.paypal.com https://js.braintreegateway.com https://c.paypal.com https://maps.googleapis.com https://www.google-analytics.com https://v.shopify.com 'self' 'unsafe-inline' 'unsafe-eval'; upgrade-insecure-requests; report-uri /csp-report?source%5Baction%5D=query&source%5Bapp%5D=Shopify&source%5Bcontroller%5D=admin%2Fgraphql&source%5Bsection%5D=admin_api&source%5Buuid%5D=6d22e76b-5952-442c-9f08-ec69a2157a67
+X-Content-Type-Options: nosniff
+X-Download-Options: noopen
+X-Permitted-Cross-Domain-Policies: none
+X-XSS-Protection: 1; mode=block; report=/xss-report?source%5Baction%5D=query&source%5Bapp%5D=Shopify&source%5Bcontroller%5D=admin%2Fgraphql&source%5Bsection%5D=admin_api&source%5Buuid%5D=6d22e76b-5952-442c-9f08-ec69a2157a67
+X-Dc: gcp-us-west2,gcp-us-central1,gcp-us-central1
+Content-Encoding: gzip
+X-Request-ID: 6d22e76b-5952-442c-9f08-ec69a2157a67
+CF-Cache-Status: DYNAMIC
+Report-To: {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=zBdQGXx1N3Tu5HCXp2MEYcomNWEESIiaMRHflDRjLWMRjO4mA58X0uGJpPNRtXtP9lIPLN%2BNOKMJiDIOEJvH0zF3UyuwyUSkQ9Zpi%2FPRhXysoMuo%2FxkOQ79Thx9bZWIiOfmTDrZWxyOjfRuZvr%2FjtOoZyQ%3D%3D"}],"group":"cf-nel","max_age":604800}
+NEL: {"success_fraction":0.01,"report_to":"cf-nel","max_age":604800}
+Server: cloudflare
+CF-RAY: 7509fa7e0a817eba-LAX
+alt-svc: h3=":443"; ma=86400, h3-29=":443"; ma=86400
+
+{
+  "data": {
+    "appUsageRecordCreate": {
+      "userErrors": [],
+      "appUsageRecord": {
+        "id": "gid:\/\/shopify\/AppUsageRecord\/465125114031"
+      }
+    }
+  },
+  "extensions": {
+    "cost": {
+      "requestedQueryCost": 10,
+      "actualQueryCost": 10,
+      "throttleStatus": {
+        "maximumAvailable": 1000.0,
+        "currentlyAvailable": 990,
+        "restoreRate": 50.0
+      }
+    }
+  }
+}

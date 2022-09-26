@@ -1,0 +1,67 @@
+HTTP/1.1 200 OK
+Date: Mon, 26 Sep 2022 06:06:03 GMT
+Content-Type: application/json; charset=utf-8
+Transfer-Encoding: chunked
+Connection: close
+X-Sorting-Hat-PodId: 174
+X-Sorting-Hat-ShopId: 61944496303
+Vary: Accept-Encoding
+Referrer-Policy: origin-when-cross-origin
+X-Frame-Options: DENY
+X-ShopId: 61944496303
+X-ShardId: 174
+X-Stats-UserId: 
+X-Stats-ApiClientId: 7962656769
+X-Stats-ApiPermissionId: 376783110319
+X-Shopify-API-Version: 2021-10
+X-Shopify-API-Version-Warning: https://shopify.dev/concepts/about-apis/versioning
+Content-Language: en
+Strict-Transport-Security: max-age=7889238
+X-Shopify-Stage: production
+Content-Security-Policy: default-src 'self' data: blob: 'unsafe-inline' 'unsafe-eval' https://* shopify-pos://*; block-all-mixed-content; child-src 'self' https://* shopify-pos://*; connect-src 'self' wss://* https://*; frame-ancestors 'none'; img-src 'self' data: blob: https:; script-src https://cdn.shopify.com https://cdn.shopifycdn.net https://checkout.shopifycs.com https://api.stripe.com https://mpsnare.iesnare.com https://appcenter.intuit.com https://www.paypal.com https://js.braintreegateway.com https://c.paypal.com https://maps.googleapis.com https://www.google-analytics.com https://v.shopify.com 'self' 'unsafe-inline' 'unsafe-eval'; upgrade-insecure-requests; report-uri /csp-report?source%5Baction%5D=query&source%5Bapp%5D=Shopify&source%5Bcontroller%5D=admin%2Fgraphql&source%5Bsection%5D=admin_api&source%5Buuid%5D=69cf0d5c-b0e3-4f40-a6de-e6a6f226e09b
+X-Content-Type-Options: nosniff
+X-Download-Options: noopen
+X-Permitted-Cross-Domain-Policies: none
+X-XSS-Protection: 1; mode=block; report=/xss-report?source%5Baction%5D=query&source%5Bapp%5D=Shopify&source%5Bcontroller%5D=admin%2Fgraphql&source%5Bsection%5D=admin_api&source%5Buuid%5D=69cf0d5c-b0e3-4f40-a6de-e6a6f226e09b
+X-Dc: gcp-us-west2,gcp-us-central1,gcp-us-central1
+Content-Encoding: gzip
+X-Request-ID: 69cf0d5c-b0e3-4f40-a6de-e6a6f226e09b
+CF-Cache-Status: DYNAMIC
+Report-To: {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=LuGmWv6kObWINlkIPbCV14gx%2BIbtXqaqh0rfG055YAJxfvpdaumMKWz5RKjsflgNRoNyggmlT9z8hvO29bb9AxX1X2TD30rIeFA34aDxxQxPc4Y4IYGQrH3ogWV%2FrsNv8JuM7oJxEE501WGckVMHnJiVEA%3D%3D"}],"group":"cf-nel","max_age":604800}
+NEL: {"success_fraction":0.01,"report_to":"cf-nel","max_age":604800}
+Server: cloudflare
+CF-RAY: 7509cfb29ae77c2f-LAX
+alt-svc: h3=":443"; ma=86400, h3-29=":443"; ma=86400
+
+{
+  "data": {
+    "appSubscriptionCreate": {
+      "userErrors": [],
+      "confirmationUrl": "https:\/\/btrain-recharge-dev.myshopify.com\/admin\/charges\/7962656769\/25259147439\/RecurringApplicationCharge\/confirm_recurring_application_charge?signature=BAh7BzoHaWRsKwivAJDhBQA6EmF1dG9fYWN0aXZhdGVU--3538806233e226017a0c45e7b1e94747735e07ad",
+      "appSubscription": {
+        "id": "gid:\/\/shopify\/AppSubscription\/25259147439",
+        "lineItems": [
+          {
+            "id": "gid:\/\/shopify\/AppSubscriptionLineItem\/25259147439?v=1\u0026index=0",
+            "plan": {
+              "pricingDetails": {
+                "__typename": "AppUsagePricing"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "extensions": {
+    "cost": {
+      "requestedQueryCost": 13,
+      "actualQueryCost": 13,
+      "throttleStatus": {
+        "maximumAvailable": 1000.0,
+        "currentlyAvailable": 987,
+        "restoreRate": 50.0
+      }
+    }
+  }
+}
