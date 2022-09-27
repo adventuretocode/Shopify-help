@@ -22,10 +22,10 @@ mutation appUsageRecordCreate($lineItemId: ID!, $price: MoneyInput!, $descrition
 {
   "lineItemId": "gid://shopify/AppSubscriptionLineItem/{{$dotenv SUBSCRIPTION_LINE_ITEM_ID}}?v=1&index=0",
   "price": {
-    "amount": 11.00,
+    "amount": 0.50,
     "currencyCode": "USD"
   },
-  "descrition": "First Invoice"
+  "descrition": "Monthly Invoice"
 }
 
 

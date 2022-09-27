@@ -4,7 +4,7 @@ X-Shopify-Access-Token: {{$dotenv SHOPIFY_API_KEY}}
 X-REQUEST-TYPE: GraphQL
 
 mutation createUsagePlan($name: String!, $returnUrl: URL!, $lineItems: [AppSubscriptionLineItemInput!]!) {
-  appSubscriptionCreate(test: true, name: $name, returnUrl: $returnUrl, lineItems: $lineItems) {
+  appSubscriptionCreate(name: $name, returnUrl: $returnUrl, lineItems: $lineItems) {
     userErrors {
       field
       message
@@ -31,20 +31,10 @@ mutation createUsagePlan($name: String!, $returnUrl: URL!, $lineItems: [AppSubsc
     "plan": {
       "appUsagePricingDetails": {
         "terms": "$1.00 per 1,000 requests/mo +1,000 records",
-        "cappedAmount": { 
-          "amount": 100000.00, 
+        "cappedAmount": {
+          "amount": 10000.00, 
           "currencyCode": "USD" 
         }
-      }
-    }
-  },
-	{
-    "plan": {
-      "appRecurringPricingDetails": {
-        "price": { 
-					"amount": "1.00", 
-					"currencyCode": "USD" 
-			  }
       }
     }
   }]
