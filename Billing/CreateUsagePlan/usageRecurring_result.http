@@ -1,0 +1,74 @@
+HTTP/1.1 200 OK
+Date: Mon, 26 Sep 2022 21:52:55 GMT
+Content-Type: application/json; charset=utf-8
+Transfer-Encoding: chunked
+Connection: close
+X-Sorting-Hat-PodId: 56
+X-Sorting-Hat-ShopId: 11690606649
+Vary: Accept-Encoding
+Referrer-Policy: origin-when-cross-origin
+X-Frame-Options: DENY
+X-ShopId: 11690606649
+X-ShardId: 56
+X-Stats-UserId: 
+X-Stats-ApiClientId: 807832
+X-Stats-ApiPermissionId: 375369465913
+X-Shopify-API-Version: 2022-07
+Content-Language: en
+Strict-Transport-Security: max-age=7889238
+X-Shopify-Stage: production
+Content-Security-Policy: default-src 'self' data: blob: 'unsafe-inline' 'unsafe-eval' https://* shopify-pos://*; block-all-mixed-content; child-src 'self' https://* shopify-pos://*; connect-src 'self' wss://* https://*; frame-ancestors 'none'; img-src 'self' data: blob: https:; script-src https://cdn.shopify.com https://cdn.shopifycdn.net https://checkout.shopifycs.com https://api.stripe.com https://mpsnare.iesnare.com https://appcenter.intuit.com https://www.paypal.com https://js.braintreegateway.com https://c.paypal.com https://maps.googleapis.com https://www.google-analytics.com https://v.shopify.com 'self' 'unsafe-inline' 'unsafe-eval'; upgrade-insecure-requests; report-uri /csp-report?source%5Baction%5D=query&source%5Bapp%5D=Shopify&source%5Bcontroller%5D=admin%2Fgraphql&source%5Bsection%5D=admin_api&source%5Buuid%5D=3ef7640b-24e3-485d-bb58-d8a3f9316afe
+X-Content-Type-Options: nosniff
+X-Download-Options: noopen
+X-Permitted-Cross-Domain-Policies: none
+X-XSS-Protection: 1; mode=block; report=/xss-report?source%5Baction%5D=query&source%5Bapp%5D=Shopify&source%5Bcontroller%5D=admin%2Fgraphql&source%5Bsection%5D=admin_api&source%5Buuid%5D=3ef7640b-24e3-485d-bb58-d8a3f9316afe
+X-Dc: gcp-us-west2,gcp-us-east1,gcp-us-east1
+Content-Encoding: gzip
+X-Request-ID: 3ef7640b-24e3-485d-bb58-d8a3f9316afe
+CF-Cache-Status: DYNAMIC
+Report-To: {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=fZ528Bj6%2F5%2FxQd3Cd7cQM9Oyi3J1TGt4XZlnZ1jekQjQJBSGkAg%2FRzXCyRTG1PYLQ5uMXrrRsFqspTLz4XcktBoFISJ7KprTmslqMqpyvozX9URBvU8MpOijx%2B7IHX2uAqWoqxhFMe4ryuTfojyaLIa1"}],"group":"cf-nel","max_age":604800}
+NEL: {"success_fraction":0.01,"report_to":"cf-nel","max_age":604800}
+Server: cloudflare
+CF-RAY: 750f3ab7be587aba-LAX
+alt-svc: h3=":443"; ma=86400, h3-29=":443"; ma=86400
+
+{
+  "data": {
+    "appSubscriptionCreate": {
+      "userErrors": [],
+      "confirmationUrl": "https:\/\/fantasticheadbands.myshopify.com\/admin\/charges\/807832\/23578837049\/RecurringApplicationCharge\/confirm_recurring_application_charge?signature=BAh7BzoHaWRsKwg5gGh9BQA6EmF1dG9fYWN0aXZhdGVU--8412db2bcbdb5090047d5288054a7c385186f0e7",
+      "appSubscription": {
+        "id": "gid:\/\/shopify\/AppSubscription\/23578837049",
+        "lineItems": [
+          {
+            "id": "gid:\/\/shopify\/AppSubscriptionLineItem\/23578837049?v=1\u0026index=0",
+            "plan": {
+              "pricingDetails": {
+                "__typename": "AppRecurringPricing"
+              }
+            }
+          },
+          {
+            "id": "gid:\/\/shopify\/AppSubscriptionLineItem\/23578837049?v=1\u0026index=1",
+            "plan": {
+              "pricingDetails": {
+                "__typename": "AppUsagePricing"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "extensions": {
+    "cost": {
+      "requestedQueryCost": 13,
+      "actualQueryCost": 13,
+      "throttleStatus": {
+        "maximumAvailable": 2000.0,
+        "currentlyAvailable": 1987,
+        "restoreRate": 100.0
+      }
+    }
+  }
+}

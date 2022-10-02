@@ -1,0 +1,162 @@
+HTTP/1.1 200 OK
+Date: Thu, 22 Sep 2022 01:01:00 GMT
+Content-Type: application/json; charset=utf-8
+Transfer-Encoding: chunked
+Connection: close
+X-Sorting-Hat-PodId: 251
+X-Sorting-Hat-ShopId: 60139831548
+Vary: Accept-Encoding
+Referrer-Policy: origin-when-cross-origin
+X-Frame-Options: DENY
+X-ShopId: 60139831548
+X-ShardId: 251
+X-Stats-UserId: 
+X-Stats-ApiClientId: 7946436609
+X-Stats-ApiPermissionId: 387384541436
+X-Shopify-API-Terms: By accessing or using the Shopify API you agree to the Shopify API License and Terms of Use at https://www.shopify.com/legal/api-terms
+X-Shopify-API-Version: 2021-10
+X-Shopify-API-Version-Warning: https://shopify.dev/concepts/about-apis/versioning
+Content-Language: en
+Strict-Transport-Security: max-age=7889238
+X-Shopify-Stage: production
+Content-Security-Policy: default-src 'self' data: blob: 'unsafe-inline' 'unsafe-eval' https://* shopify-pos://*; block-all-mixed-content; child-src 'self' https://* shopify-pos://*; connect-src 'self' wss://* https://*; frame-ancestors 'none'; img-src 'self' data: blob: https:; script-src https://cdn.shopify.com https://cdn.shopifycdn.net https://checkout.shopifycs.com https://api.stripe.com https://mpsnare.iesnare.com https://appcenter.intuit.com https://www.paypal.com https://js.braintreegateway.com https://c.paypal.com https://maps.googleapis.com https://www.google-analytics.com https://v.shopify.com 'self' 'unsafe-inline' 'unsafe-eval'; upgrade-insecure-requests; report-uri /csp-report?source%5Baction%5D=query&source%5Bapp%5D=Shopify&source%5Bcontroller%5D=admin%2Fgraphql&source%5Bsection%5D=admin_api&source%5Buuid%5D=ebe6224b-839a-494e-aadc-1aee7a26ec45
+X-Content-Type-Options: nosniff
+X-Download-Options: noopen
+X-Permitted-Cross-Domain-Policies: none
+X-XSS-Protection: 1; mode=block; report=/xss-report?source%5Baction%5D=query&source%5Bapp%5D=Shopify&source%5Bcontroller%5D=admin%2Fgraphql&source%5Bsection%5D=admin_api&source%5Buuid%5D=ebe6224b-839a-494e-aadc-1aee7a26ec45
+X-Dc: gcp-us-west2,gcp-us-east1,gcp-us-east1
+Content-Encoding: gzip
+X-Request-ID: ebe6224b-839a-494e-aadc-1aee7a26ec45
+CF-Cache-Status: DYNAMIC
+Report-To: {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=Uuu6ZDgJ9Q7u4Wy4Ac6IJzk%2By3lElff9nhqB88MKXJDz1hh7pKV3%2Bsj7JGO7zDD74YAmmT7ni4xm%2FMz46oy4kZGxqJH1tYAOO6P5W92PtSqJOtvFCtbhehP2Td6Wo2%2BoRLKduQSi586I"}],"group":"cf-nel","max_age":604800}
+NEL: {"success_fraction":0.01,"report_to":"cf-nel","max_age":604800}
+Server: cloudflare
+CF-RAY: 74e71b4d581052a7-LAX
+alt-svc: h3=":443"; ma=86400, h3-29=":443"; ma=86400
+
+{
+  "data": {
+    "order": {
+      "id": "gid:\/\/shopify\/Order\/4955976499452",
+      "name": "#1044",
+      "fulfillmentOrders": {
+        "edges": [
+          {
+            "node": {
+              "id": "gid:\/\/shopify\/FulfillmentOrder\/6021864554748",
+              "status": "CLOSED",
+              "requestStatus": "UNSUBMITTED",
+              "supportedActions": [],
+              "lineItems": {
+                "edges": [
+                  {
+                    "node": {
+                      "id": "gid:\/\/shopify\/FulfillmentOrderLineItem\/12786880151804"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "node": {
+              "id": "gid:\/\/shopify\/FulfillmentOrder\/6021865275644",
+              "status": "IN_PROGRESS",
+              "requestStatus": "UNSUBMITTED",
+              "supportedActions": [
+                {
+                  "action": "CREATE_FULFILLMENT"
+                },
+                {
+                  "action": "MOVE"
+                }
+              ],
+              "lineItems": {
+                "edges": [
+                  {
+                    "node": {
+                      "id": "gid:\/\/shopify\/FulfillmentOrderLineItem\/12786881429756"
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "gid:\/\/shopify\/FulfillmentOrderLineItem\/12786881462524"
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "gid:\/\/shopify\/FulfillmentOrderLineItem\/12786881495292"
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "gid:\/\/shopify\/FulfillmentOrderLineItem\/12786881528060"
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "gid:\/\/shopify\/FulfillmentOrderLineItem\/12786881560828"
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "gid:\/\/shopify\/FulfillmentOrderLineItem\/12786881593596"
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "gid:\/\/shopify\/FulfillmentOrderLineItem\/12786881626364"
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "gid:\/\/shopify\/FulfillmentOrderLineItem\/12786881659132"
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "gid:\/\/shopify\/FulfillmentOrderLineItem\/12786881691900"
+                    }
+                  },
+                  {
+                    "node": {
+                      "id": "gid:\/\/shopify\/FulfillmentOrderLineItem\/12786881724668"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "node": {
+              "id": "gid:\/\/shopify\/FulfillmentOrder\/6024136950012",
+              "status": "CLOSED",
+              "requestStatus": "UNSUBMITTED",
+              "supportedActions": [],
+              "lineItems": {
+                "edges": [
+                  {
+                    "node": {
+                      "id": "gid:\/\/shopify\/FulfillmentOrderLineItem\/12791362322684"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "extensions": {
+    "cost": {
+      "requestedQueryCost": 143,
+      "actualQueryCost": 27,
+      "throttleStatus": {
+        "maximumAvailable": 2000.0,
+        "currentlyAvailable": 1973,
+        "restoreRate": 100.0
+      }
+    }
+  }
+}

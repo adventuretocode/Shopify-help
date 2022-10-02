@@ -1,0 +1,169 @@
+# SHOPIFY_STORE=
+# SHOPIFY_API_KEY=
+# FULFILLMENT_ORDER=
+# FULFILLMENT_ORDER_LINEITEM=
+# FULFILLMENT_ORDER_LINEITEM_1=
+# FULFILLMENT_ORDER_LINEITEM_2=
+# FULFILLMENT_ORDER_LINEITEM_3=
+# FULFILLMENT_ORDER_LINEITEM_4=
+# FULFILLMENT_ORDER_LINEITEM_5=
+# FULFILLMENT_ORDER_LINEITEM_6=
+# FULFILLMENT_ORDER_LINEITEM_7=
+# FULFILLMENT_ORDER_LINEITEM_8=
+# FULFILLMENT_ORDER_LINEITEM_9=
+# FULFILLMENT_ORDER_LINEITEM_10=
+
+###
+# Fulfill one item
+# Result is `fulfill-line-item_result.http`
+POST https://{{$dotenv SHOPIFY_STORE}}.myshopify.com/admin/api/2021-07/graphql.json
+Content-Type: application/json
+X-Shopify-Access-Token: {{$dotenv SHOPIFY_API_KEY}}
+X-REQUEST-TYPE: GraphQL
+
+mutation fulfillmentLineItem($fulfillment: FulfillmentV2Input!) {
+  fulfillmentCreateV2(fulfillment: $fulfillment) {
+    fulfillment {
+      id
+      status
+      trackingInfo {
+        company
+        number
+        url
+      }
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}
+
+{
+  "fulfillment": {
+    "notifyCustomer": true,
+    "trackingInfo": {
+      "company": "Fedex",
+      "number": "9999 9999 9999 9999 9999",
+      "url": "https://www.fedex.com/fedextrack/?trknbr="
+    },
+    "lineItemsByFulfillmentOrder": [
+      {
+        "fulfillmentOrderId": "gid://shopify/FulfillmentOrder/{{$dotenv FULFILLMENT_ORDER}}",
+        "fulfillmentOrderLineItems": {
+          "id": "gid://shopify/FulfillmentOrderLineItem/{{$dotenv FULFILLMENT_ORDER_LINEITEM}}",
+          "quantity": 1
+        }
+      }
+    ]
+  }
+}
+
+###
+# Fulfill Many
+# Result is `fulfill-line-item_result.http`
+POST https://{{$dotenv SHOPIFY_STORE}}.myshopify.com/admin/api/2021-07/graphql.json
+Content-Type: application/json
+X-Shopify-Access-Token: {{$dotenv SHOPIFY_API_KEY}}
+X-REQUEST-TYPE: GraphQL
+
+mutation fulfillmentLineItem($fulfillment: FulfillmentV2Input!) {
+  fulfillmentCreateV2(fulfillment: $fulfillment) {
+    fulfillment {
+      id
+      status
+      trackingInfo {
+        company
+        number
+        url
+      }
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}
+
+{
+  "fulfillment": {
+    "notifyCustomer": true,
+    "trackingInfo": {
+      "company": "Fedex",
+      "number": "9999 9999 9999 9999 9999",
+      "url": "https://www.fedex.com/fedextrack/?trknbr="
+    },
+    "lineItemsByFulfillmentOrder": [
+      {
+        "fulfillmentOrderId": "gid://shopify/FulfillmentOrder/{{$dotenv FULFILLMENT_ORDER}}",
+        "fulfillmentOrderLineItems": {
+          "id": "gid://shopify/FulfillmentOrderLineItem/{{$dotenv FULFILLMENT_ORDER_LINEITEM_1}}",
+          "quantity": 1
+        }
+      },
+			{
+        "fulfillmentOrderId": "gid://shopify/FulfillmentOrder/{{$dotenv FULFILLMENT_ORDER}}",
+        "fulfillmentOrderLineItems": {
+          "id": "gid://shopify/FulfillmentOrderLineItem/{{$dotenv FULFILLMENT_ORDER_LINEITEM_2}}",
+          "quantity": 1
+        }
+      },
+			{
+        "fulfillmentOrderId": "gid://shopify/FulfillmentOrder/{{$dotenv FULFILLMENT_ORDER}}",
+        "fulfillmentOrderLineItems": {
+          "id": "gid://shopify/FulfillmentOrderLineItem/{{$dotenv FULFILLMENT_ORDER_LINEITEM_3}}",
+          "quantity": 1
+        }
+      },
+			{
+        "fulfillmentOrderId": "gid://shopify/FulfillmentOrder/{{$dotenv FULFILLMENT_ORDER}}",
+        "fulfillmentOrderLineItems": {
+          "id": "gid://shopify/FulfillmentOrderLineItem/{{$dotenv FULFILLMENT_ORDER_LINEITEM_4}}",
+          "quantity": 1
+        }
+      },
+			{
+        "fulfillmentOrderId": "gid://shopify/FulfillmentOrder/{{$dotenv FULFILLMENT_ORDER}}",
+        "fulfillmentOrderLineItems": {
+          "id": "gid://shopify/FulfillmentOrderLineItem/{{$dotenv FULFILLMENT_ORDER_LINEITEM_5}}",
+          "quantity": 1
+        }
+      },
+			{
+        "fulfillmentOrderId": "gid://shopify/FulfillmentOrder/{{$dotenv FULFILLMENT_ORDER}}",
+        "fulfillmentOrderLineItems": {
+          "id": "gid://shopify/FulfillmentOrderLineItem/{{$dotenv FULFILLMENT_ORDER_LINEITEM_6}}",
+          "quantity": 1
+        }
+      },
+			{
+        "fulfillmentOrderId": "gid://shopify/FulfillmentOrder/{{$dotenv FULFILLMENT_ORDER}}",
+        "fulfillmentOrderLineItems": {
+          "id": "gid://shopify/FulfillmentOrderLineItem/{{$dotenv FULFILLMENT_ORDER_LINEITEM_7}}",
+          "quantity": 1
+        }
+      },
+			{
+        "fulfillmentOrderId": "gid://shopify/FulfillmentOrder/{{$dotenv FULFILLMENT_ORDER}}",
+        "fulfillmentOrderLineItems": {
+          "id": "gid://shopify/FulfillmentOrderLineItem/{{$dotenv FULFILLMENT_ORDER_LINEITEM_8}}",
+          "quantity": 1
+        }
+      },
+			{
+        "fulfillmentOrderId": "gid://shopify/FulfillmentOrder/{{$dotenv FULFILLMENT_ORDER}}",
+        "fulfillmentOrderLineItems": {
+          "id": "gid://shopify/FulfillmentOrderLineItem/{{$dotenv FULFILLMENT_ORDER_LINEITEM_9}}",
+          "quantity": 1
+        }
+      },
+			{
+        "fulfillmentOrderId": "gid://shopify/FulfillmentOrder/{{$dotenv FULFILLMENT_ORDER}}",
+        "fulfillmentOrderLineItems": {
+          "id": "gid://shopify/FulfillmentOrderLineItem/{{$dotenv FULFILLMENT_ORDER_LINEITEM_10}}",
+          "quantity": 1
+        }
+      }
+    ]
+  }
+}

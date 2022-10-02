@@ -1,12 +1,15 @@
 # Shopify-help
 Shopify API in plain JS
 
+### Requirement
+`.http` files requires [rest-client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) plug in on VScode to execute.
+
+### Running dotenv from terminal
 ```bash
 $ node -r dotenv/config your_script.js dotenv_config_path=./.env
 $ ls -1 | wc -l
 ```
 
-### Running dotenv from terminal
 ```bash
 $ node -r dotenv/config index.js dotenv_config_path=./.env.prod
 ```

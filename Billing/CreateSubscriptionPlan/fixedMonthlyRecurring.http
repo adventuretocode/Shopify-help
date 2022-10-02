@@ -5,17 +5,19 @@ X-REQUEST-TYPE: GraphQL
 
 mutation {
   appSubscriptionCreate(
-    name: "Pay As you go recurring plan"
+    name: "Super Duper Recurring Plan"
     returnUrl: "https://{{$dotenv SHOPIFY_NAME}}.myshopify.com/admin/apps/{{$dotenv SHOPIFY_APP_NAME}}"
     lineItems: [{
       plan: {
-        appUsagePricingDetails: {
-          terms: "$1.00 per 1,000 requests/mo +1,000 records"
-          cappedAmount: { amount: 100000.00, currencyCode: USD }
+        appRecurringPricingDetails: {
+          price: { 
+            amount: 10.00, currencyCode: USD 
+          }
+          interval: EVERY_30_DAYS
         }
       }
     }]
-  ){
+  ) {
     userErrors {
       field
       message
@@ -23,14 +25,6 @@ mutation {
     confirmationUrl
     appSubscription {
       id
-      lineItems {
-        id
-        plan {
-          pricingDetails {
-            __typename
-          }
-        }
-      }
     }
   }
 }

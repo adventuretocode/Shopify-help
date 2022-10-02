@@ -1,0 +1,81 @@
+POST https://{{$dotenv SHOPIFY_STORE}}.myshopify.com/admin/api/2022-07/graphql.json
+Content-Type: application/json
+X-Shopify-Access-Token: {{$dotenv SHOPIFY_API_KEY}}
+X-REQUEST-TYPE: GraphQL
+
+mutation createUsagePlan($name: String!, $returnUrl: URL!, $lineItems: [AppSubscriptionLineItemInput!]!) {
+  appSubscriptionCreate(name: $name, returnUrl: $returnUrl, lineItems: $lineItems) {
+    userErrors {
+      field
+      message
+    }
+    confirmationUrl
+    appSubscription {
+      id
+      lineItems {
+        id
+        plan {
+          pricingDetails {
+            __typename
+          }
+        }
+      }
+    }
+  }
+}
+
+{
+  "name": "Pay As you go recurring plan",
+  "returnUrl": "https://{{$dotenv SHOPIFY_STORE}}.myshopify.com/admin/apps/{{$dotenv SHOPIFY_APP_NAME}}",
+  "lineItems": [{
+    "plan": {
+      "appUsagePricingDetails": {
+        "terms": "$1.00 per 1,000 requests/mo +1,000 records",
+        "cappedAmount": {
+          "amount": 10000.00, 
+          "currencyCode": "USD" 
+        }
+      }
+    }
+  }]
+}
+
+
+###
+POST https://{{$dotenv SHOPIFY_STORE}}.myshopify.com/admin/api/2022-07/graphql.json
+Content-Type: application/json
+X-Shopify-Access-Token: {{$dotenv SHOPIFY_API_KEY}}
+X-REQUEST-TYPE: GraphQL
+
+mutation {
+  appSubscriptionCreate(
+    name: "11:19:40"
+    returnUrl: "https://{{$dotenv SHOPIFY_STORE}}.myshopify.com/admin/apps/{{$dotenv SHOPIFY_APP_NAME}}"
+		test: true
+    lineItems: [{
+      plan: {
+        appUsagePricingDetails: {
+          terms: "$1 for 100 emails"
+          cappedAmount: { amount: 20.00, currencyCode: USD }
+        }
+      }
+    }]
+  ){
+    userErrors {
+      field
+      message
+    }
+    confirmationUrl
+    appSubscription {
+      id
+      lineItems {
+        id
+        plan {
+          pricingDetails {
+            __typename
+          }
+        }
+      }
+    }
+  }
+}

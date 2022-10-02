@@ -1,0 +1,65 @@
+HTTP/1.1 200 OK
+Date: Thu, 22 Sep 2022 00:58:57 GMT
+Content-Type: application/json; charset=utf-8
+Transfer-Encoding: chunked
+Connection: close
+X-Sorting-Hat-PodId: 251
+X-Sorting-Hat-ShopId: 60139831548
+Vary: Accept-Encoding
+Referrer-Policy: origin-when-cross-origin
+X-Frame-Options: DENY
+X-ShopId: 60139831548
+X-ShardId: 251
+X-Stats-UserId: 
+X-Stats-ApiClientId: 7946436609
+X-Stats-ApiPermissionId: 387384541436
+X-Shopify-API-Terms: By accessing or using the Shopify API you agree to the Shopify API License and Terms of Use at https://www.shopify.com/legal/api-terms
+X-Shopify-API-Version: 2021-10
+X-Shopify-API-Version-Warning: https://shopify.dev/concepts/about-apis/versioning
+Content-Language: en
+Strict-Transport-Security: max-age=7889238
+X-Shopify-Stage: production
+Content-Security-Policy: default-src 'self' data: blob: 'unsafe-inline' 'unsafe-eval' https://* shopify-pos://*; block-all-mixed-content; child-src 'self' https://* shopify-pos://*; connect-src 'self' wss://* https://*; frame-ancestors 'none'; img-src 'self' data: blob: https:; script-src https://cdn.shopify.com https://cdn.shopifycdn.net https://checkout.shopifycs.com https://api.stripe.com https://mpsnare.iesnare.com https://appcenter.intuit.com https://www.paypal.com https://js.braintreegateway.com https://c.paypal.com https://maps.googleapis.com https://www.google-analytics.com https://v.shopify.com 'self' 'unsafe-inline' 'unsafe-eval'; upgrade-insecure-requests; report-uri /csp-report?source%5Baction%5D=query&source%5Bapp%5D=Shopify&source%5Bcontroller%5D=admin%2Fgraphql&source%5Bsection%5D=admin_api&source%5Buuid%5D=7e850e33-0f61-4e71-9721-e14992de825c
+X-Content-Type-Options: nosniff
+X-Download-Options: noopen
+X-Permitted-Cross-Domain-Policies: none
+X-XSS-Protection: 1; mode=block; report=/xss-report?source%5Baction%5D=query&source%5Bapp%5D=Shopify&source%5Bcontroller%5D=admin%2Fgraphql&source%5Bsection%5D=admin_api&source%5Buuid%5D=7e850e33-0f61-4e71-9721-e14992de825c
+X-Dc: gcp-us-west2,gcp-us-east1,gcp-us-east1
+Content-Encoding: gzip
+X-Request-ID: 7e850e33-0f61-4e71-9721-e14992de825c
+CF-Cache-Status: DYNAMIC
+Report-To: {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=jGbYxltpu7vdSkXkH1qewvhotoYSEK%2FUF3dQ1qGvO2sCPkCH7rf9sNHuGveuYoh1%2FcskYSKq%2BA6ANB9rS07qpxuUB7brs1kqVyQ0Fg4kxHI8sqedXIdogl%2BPcvduCzpms%2FnM5VVmNp4F"}],"group":"cf-nel","max_age":604800}
+NEL: {"success_fraction":0.01,"report_to":"cf-nel","max_age":604800}
+Server: cloudflare
+CF-RAY: 74e71853486c7dac-LAX
+alt-svc: h3=":443"; ma=86400, h3-29=":443"; ma=86400
+
+{
+  "data": {
+    "fulfillmentCreateV2": {
+      "fulfillment": {
+        "id": "gid:\/\/shopify\/Fulfillment\/4422163595516",
+        "status": "SUCCESS",
+        "trackingInfo": [
+          {
+            "company": "Fedex",
+            "number": "99999999999999999999",
+            "url": "https:\/\/www.fedex.com\/fedextrack\/?trknbr="
+          }
+        ]
+      },
+      "userErrors": []
+    }
+  },
+  "extensions": {
+    "cost": {
+      "requestedQueryCost": 11,
+      "actualQueryCost": 11,
+      "throttleStatus": {
+        "maximumAvailable": 2000.0,
+        "currentlyAvailable": 1989,
+        "restoreRate": 100.0
+      }
+    }
+  }
+}
