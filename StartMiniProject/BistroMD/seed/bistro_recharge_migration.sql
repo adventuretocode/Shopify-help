@@ -1,5 +1,8 @@
+CREATE DATABASE IF NOT EXISTS `bistromd`;
+USE `bistromd`;
 DROP TABLE IF EXISTS `bistro_recharge_migration`;
 CREATE TABLE `bistro_recharge_migration` (
+  `customer_id` INT NOT NULL,
   `external_product_name` varchar(100) DEFAULT NULL,
   `external_variant_name` varchar(100) DEFAULT NULL,
   `external_product_id` bigint DEFAULT NULL,
@@ -37,5 +40,5 @@ CREATE TABLE `bistro_recharge_migration` (
   `billing_province_state` varchar(30) DEFAULT NULL,
   `billing_country` varchar(30) DEFAULT NULL,
   `billing_phone` varchar(30) DEFAULT NULL,
-  PRIMARY KEY (`shipping_email`)
+  PRIMARY KEY (`customer_id`)
 ) 
