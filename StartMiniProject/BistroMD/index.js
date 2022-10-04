@@ -3,9 +3,15 @@ import neatCsv from "neat-csv";
 import { readFile, writeFile } from "fs/promises";
 import momentJS from "./helpers/moment.js";
 
-dotenv.config();
+const BISTRO_ENV = "dev"; 
+dotenv.config({ path: `/.env.${BISTRO_ENV}` });
+
+const CUSTOMER_TABLE = `${BISTRO_ENV}_bistro_recharge_migration`;
+const PRODUCT_TABLE = `${BISTRO_ENV}_price_from_cart`;
+const TRACK_CUSTOMER_UPDATE = `${BISTRO_ENV}_monday_track_customer`
 
 import ORM from "./db/orm.js";
+import compareObjects from "./helpers/compareObjects.js";
 
 const sleep = async (timeInMillieSec) => {
   return new Promise((resolve) => {
@@ -55,13 +61,16 @@ const processRowData = async (rowData) => {
   let productData = {};
 
   try {
-    let snackQuery = `= '${Program_Snack_Type}'`;
+    let snackQuery;
     if (!Program_Snack_Type) {
-      snackQuery = `IS NULL`;
+      snackQuery = `(snack_type IS NULL OR snack_type = '')`;
+    }
+    else {
+      snackQuery = `snack_type = '${Program_Snack_Type}'`;
     }
     const product = await ORM.findOne(
-      "price_from_cart",
-      `product_type = '${Program_Type}' AND snack_type ${snackQuery}`
+      PRODUCT_TABLE,
+      `product_type = '${Program_Type}' AND ${snackQuery}`
     );
 
     if (product.length > 1) throw new Error("More than 1 product");
@@ -80,6 +89,7 @@ const processRowData = async (rowData) => {
       recurring_price,
     };
   } catch (error) {
+    console.log(error);
     console.log(new Error("Unable to get product"));
     throw error;
   }
@@ -90,21 +100,21 @@ const processRowData = async (rowData) => {
     Program_Status == "On Program" ||
     Program_Status == "New Customer" ||
     Program_Status == "Returning Customer" ||
-	  // 
+    // 
     Program_Status == "Card Declined" ||
     Program_Status == "Fraud" ||
     Program_Status == "Verify Address"
   ) {
-    nextChargeDate = momentJS.getNextDayOfWeek("2022-10-01", Shipping_Day.replace("-MUST SHIP", ""));
+    nextChargeDate = momentJS.getNextDayOfWeek("2022-10-21", Shipping_Day.replace("-MUST SHIP", ""));
   } else if (Program_Status == "Hold with Resume Date") {
-		// Issue is unskipping
-    nextChargeDate = momentJS.getNextDayOfWeek("2022-10-08", Shipping_Day.replace("-MUST SHIP", ""));
+    // Issue is unskipping
+    nextChargeDate = momentJS.getNextDayOfWeek("2022-10-28", Shipping_Day.replace("-MUST SHIP", ""));
   } else if (
     Program_Status == "Finished" ||
     Program_Status == "On Hold"
   ) {
     // Add but in the past
-    nextChargeDate = momentJS.getNextDayOfWeek("2022-09-10", Shipping_Day.replace("-MUST SHIP", ""));
+    nextChargeDate = momentJS.getNextDayOfWeek("2022-10-01", Shipping_Day.replace("-MUST SHIP", ""));
   } else if (Program_Status == "Never Started" || Program_Status == "Gift Certificate Verify") {
     console.log("skipped!!!!!!, Never Started, Gift Certificate Verify");
     return;
@@ -114,6 +124,10 @@ const processRowData = async (rowData) => {
   }
 
   const data = {
+    customer_id: Customer_ID,
+    // program_week: Program_Week_Updated,
+    // gender: Gender,
+
     external_product_name: productData.external_product_name,
     external_product_id: productData.external_product_id,
     external_variant_id: productData.external_variant_id,
@@ -151,8 +165,33 @@ const processRowData = async (rowData) => {
   };
 
   try {
-    const result = await ORM.insertOneObj("bistro_recharge_migration", data);
-    console.log(result);
+    let action = "Nothing";
+    const [findOne] = await ORM.findOne(CUSTOMER_TABLE, `customer_id = ${Customer_ID}`);
+    if(findOne) {
+      const isTheSame = compareObjects(findOne, data);
+      if(!isTheSame) {
+        // If not the same then update and log that it has been updated
+        const resultUpdatedOne = await ORM.updateOneObj(CUSTOMER_TABLE, data, `customer_id = ${Customer_ID}`);
+
+        const addItemIntoList = await ORM.insertOneObj(TRACK_CUSTOMER_UPDATE, {
+          customer_id: Customer_ID, 
+          new_email: Email,
+          old_email: findOne.email,
+          type: "UPDATED",
+        });
+        action = "UPDATED";
+      }
+    }
+    else {
+      const resultAddedOne = await ORM.insertOneObj(CUSTOMER_TABLE, data);
+      const addItemIntoList = await ORM.insertOneObj(TRACK_CUSTOMER_UPDATE, {
+        customer_id: Customer_ID, 
+        new_email: Email,
+        type: "CREATED",
+      });
+      action = "CREATED";
+    }
+    // console.log(`\u001b[38;5;${Customer_ID % 255}m${Email} -- action: ${action}\u001b[0m`);
     await sleep(100);
   } catch (error) {
     if (error.code == "ER_DUP_ENTRY") {
@@ -176,7 +215,7 @@ const main = async () => {
         `${fileNumber}:0`
       );
 
-      let fileLocation = `/Users/bryantran/Documents/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/splitcsv-6176e074-0acd-4ea0-8571-17b26e6473f5-results/customers_salesforce-${fileNumber}.csv`;
+      let fileLocation = `/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge/splitcsv-6176e074-0acd-4ea0-8571-17b26e6473f5-results/customers_salesforce-${fileNumber}.csv`;
       const data = await readFile(new URL(fileLocation, import.meta.url), {
         encoding: "utf8",
       });
