@@ -39,6 +39,16 @@ const ORM = {
       });
     });
   },
+  updateOneObj: (table, colAndValObj, condition) => {
+    return new Promise((resolve, reject) => {
+      var query = "UPDATE ?? SET ? WHERE " + condition;
+      var mode = [table, colAndValObj];
+      connection.query(query, mode, (err, data) => {
+        if (err) reject(err);
+        resolve(data);
+      });
+    });
+  },
   findOne: (table, condition) => {
     return new Promise((resolve, reject) => {
       var query = "SELECT * FROM ?? WHERE " + condition;
