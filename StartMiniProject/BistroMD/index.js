@@ -166,7 +166,7 @@ const processRowData = async (rowData) => {
 
   try {
     let action = "Nothing";
-    const [findOne] = await ORM.findOne(CUSTOMER_TABLE, `customer_id = ${Customer_ID}`);
+    const [findOne] = await ORM.findOne(CUSTOMER_TABLE, `customer_id = ${Customer_ID || "''"} AND shipping_email = '${Email}'`);
     if(findOne) {
       const isTheSame = compareObjects(findOne, data);
       if(!isTheSame) {
@@ -203,17 +203,30 @@ const processRowData = async (rowData) => {
   }
 };
 
+// If no track file
+// await writeFile(
+//   new URL(trackFileLocation, import.meta.url),
+//   `0:0`
+// )
+
 const main = async () => {
   try {
     let fileExist = true;
-    let fileNumber = 1;
-    const trackFileLocation = `./data/track.txt`;
+    // let fileNumber = 2;
+    const trackFileLocation = `./seed/track.txt`;
 
     while (fileExist) {
-      await writeFile(
+      // Write function to see if file exist or not
+      // If it doesn't then create one
+
+      let trackFile = await readFile(
         new URL(trackFileLocation, import.meta.url),
-        `${fileNumber}:0`
+        {
+          encoding: "utf8",
+        }
       );
+      let fileNumber = parseInt(trackFile.split(":")[0]);
+      let startNum = parseInt(trackFile.split(":")[1]);
 
       let fileLocation = `/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge/splitcsv-6176e074-0acd-4ea0-8571-17b26e6473f5-results/customers_salesforce-${fileNumber}.csv`;
       const data = await readFile(new URL(fileLocation, import.meta.url), {
@@ -221,13 +234,7 @@ const main = async () => {
       });
       const csvArr = await neatCsv(data);
       let endNum = csvArr.length;
-      let trackFile = await readFile(
-        new URL(trackFileLocation, import.meta.url),
-        {
-          encoding: "utf8",
-        }
-      );
-      let startNum = parseInt(trackFile.split(":")[1]);
+      
 
       for (let i = startNum; i < endNum; i++) {
         const rowCSV = csvArr[i];
@@ -240,6 +247,11 @@ const main = async () => {
         );
       }
       fileNumber += 1;
+
+      await writeFile(
+        new URL(trackFileLocation, import.meta.url),
+        `${fileNumber}:0`
+      );
     }
   } catch (error) {
     debugger;
