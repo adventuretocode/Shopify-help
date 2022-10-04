@@ -1,7 +1,7 @@
 CREATE DATABASE IF NOT EXISTS `bistromd`;
 USE `bistromd`;
-DROP TABLE IF EXISTS `bistro_recharge_migration`;
-CREATE TABLE `bistro_recharge_migration` (
+DROP TABLE IF EXISTS `_bistro_recharge_migration`;
+CREATE TABLE `_bistro_recharge_migration` (
   `customer_id` INT NOT NULL,
   `external_product_name` varchar(100) DEFAULT NULL,
   `external_variant_name` varchar(100) DEFAULT NULL,
