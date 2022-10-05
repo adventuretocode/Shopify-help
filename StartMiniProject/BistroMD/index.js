@@ -58,6 +58,10 @@ const processRowData = async (rowData) => {
     return "No Program Type";
   }
 
+  if(!Customer_ID) {
+    return "No Customer ID"
+  }
+
   let productData = {};
 
   try {
@@ -166,12 +170,13 @@ const processRowData = async (rowData) => {
 
   try {
     let action = "Nothing";
-    const [findOne] = await ORM.findOne(CUSTOMER_TABLE, `customer_id = ${Customer_ID || "''"} AND shipping_email = '${Email}'`);
+    let query = Customer_ID ? `customer_id = ${Customer_ID}` :  `shipping_email = '${Email}'`;
+    const [findOne] = await ORM.findOne(CUSTOMER_TABLE, query);
     if(findOne) {
       const isTheSame = compareObjects(findOne, data);
       if(!isTheSame) {
         // If not the same then update and log that it has been updated
-        const resultUpdatedOne = await ORM.updateOneObj(CUSTOMER_TABLE, data, `customer_id = ${Customer_ID}`);
+        const resultUpdatedOne = await ORM.updateOneObj(CUSTOMER_TABLE, data, query);
 
         const addItemIntoList = await ORM.insertOneObj(TRACK_CUSTOMER_UPDATE, {
           customer_id: Customer_ID, 
@@ -183,16 +188,19 @@ const processRowData = async (rowData) => {
       }
     }
     else {
+      if(!data.customer_id) {
+        delete data.customer_id;
+      }
       const resultAddedOne = await ORM.insertOneObj(CUSTOMER_TABLE, data);
       const addItemIntoList = await ORM.insertOneObj(TRACK_CUSTOMER_UPDATE, {
-        customer_id: Customer_ID, 
+        customer_id: Customer_ID || null, 
         new_email: Email,
         type: "CREATED",
       });
       action = "CREATED";
     }
-    // console.log(`\u001b[38;5;${Customer_ID % 255}m${Email} -- action: ${action}\u001b[0m`);
-    await sleep(100);
+    console.log(`\u001b[38;5;${Customer_ID % 255}m${Email} -- action: ${action}\u001b[0m`);
+    // await sleep(100);
   } catch (error) {
     if (error.code == "ER_DUP_ENTRY") {
       return "Already added";
@@ -229,6 +237,7 @@ const main = async () => {
       let startNum = parseInt(trackFile.split(":")[1]);
 
       let fileLocation = `/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge/splitcsv-6176e074-0acd-4ea0-8571-17b26e6473f5-results/customers_salesforce-${fileNumber}.csv`;
+      // Check if file exist
       const data = await readFile(new URL(fileLocation, import.meta.url), {
         encoding: "utf8",
       });

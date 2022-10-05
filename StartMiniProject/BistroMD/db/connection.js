@@ -2,7 +2,7 @@
 import mysql from "mysql";
 import dotenv from "dotenv";
 
-dotenv.config();
+dotenv.config({path: "./.env.dev"});
 
 const { DB_USER, DB_HOST, DB_PASSWORD, DB_DATABASE } = process.env;
 

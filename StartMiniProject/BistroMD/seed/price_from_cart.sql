@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS `price_from_cart`;
-CREATE TABLE `price_from_cart` (
+DROP TABLE IF EXISTS `_price_from_cart`;
+CREATE TABLE `_price_from_cart` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `price` double DEFAULT NULL,
   `recurring_price` double DEFAULT NULL,

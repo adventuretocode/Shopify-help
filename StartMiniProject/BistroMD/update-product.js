@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 
-dotenv.config({ path: "/.env.dev" });
+dotenv.config({ path: "./.env.dev" });
 
 const TABLE_NAME = "dev_price_from_cart";
 
