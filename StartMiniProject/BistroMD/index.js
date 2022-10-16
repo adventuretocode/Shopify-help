@@ -153,7 +153,6 @@ const processRowData = async (rowData) => {
     shipping_interval_frequency: 1,
 
     customer_stripe_id: CIM_Profile_ID,
-		// TODO: Dev and stage transform email
     shipping_email: Email,
     shipping_first_name: First_Name,
     shipping_last_name: Last_Name,
@@ -172,6 +171,14 @@ const processRowData = async (rowData) => {
     billing_country: Billing_Country,
     billing_phone: Account_Phone,
   };
+
+	if(BISTRO_ENV == "prod") {
+		data.shipping_email = Email;
+	}
+	else {
+		const email = Email.replace("@", "---").concat("@example.com");
+		data.shipping_email = email;
+	}
 
   try {
     let action = "NO CHANGE";

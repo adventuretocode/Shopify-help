@@ -1,12 +1,17 @@
 ### Process
 1. Set env. keys `dev` `stage` `prod`
 2. Create Tables: 
-   1. recharge migration, 
-   2. source recharge migration, 
-   3. prices to cart (import)
+   1. prices to cart (import)
+   2. recharge migration
+      1. Change ENV name
+   3. source recharge migration
+      1. Change ENV name
    4. Tracking table to run recharge update (possible shopify update)
+      1. Change ENV and day name
 3. Run update-product.js to get the correct product and variant ids
+   1. Change ENV name
 4. Optional: reset track file
+5. Export: Null export as ''
 
 Error: ER_NOT_SUPPORTED_AUTH_MODE: Client does not support authentication protocol requested by server; consider upgrading MySQL client
 
