@@ -59,6 +59,10 @@ const ORM = {
       });
     });
   },
+	/*
+	 * returns empty array for no table found
+	 * @return [] || [{RowPacket}]
+	 */
 	tableExistsOrNot: (table) => {
 		return new Promise((resolve, reject) => {
 			var query = `SHOW TABLES LIKE "${table}"`;
