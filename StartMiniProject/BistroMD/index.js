@@ -3,12 +3,15 @@ import neatCsv from "neat-csv";
 import { readFile, writeFile } from "fs/promises";
 import momentJS from "./helpers/moment.js";
 
-const BISTRO_ENV = "dev"; 
+const BISTRO_ENV = "dev";
+const BISTRO_DAY = "sunday";
+
 dotenv.config({ path: `/.env.${BISTRO_ENV}` });
 
 const CUSTOMER_TABLE = `${BISTRO_ENV}_bistro_recharge_migration`;
-const PRODUCT_TABLE = `${BISTRO_ENV}_price_from_cart`;
-const TRACK_CUSTOMER_UPDATE = `${BISTRO_ENV}_monday_track_customer`
+const CUSTOMER_TABLE_SOURCE = `${BISTRO_ENV}_source_bistro_recharge_migration`;
+const PRODUCT_TABLE = `${BISTRO_ENV}_prices_from_cart`;
+const TRACK_CUSTOMER_UPDATE = `${BISTRO_ENV}_${BISTRO_DAY}_track_customer`
 
 import ORM from "./db/orm.js";
 import compareObjects from "./helpers/compareObjects.js";
@@ -100,6 +103,7 @@ const processRowData = async (rowData) => {
 
   let nextChargeDate = "";
 
+	// TODO: possibly put cancelled if older date
   if (
     Program_Status == "On Program" ||
     Program_Status == "New Customer" ||
@@ -135,7 +139,7 @@ const processRowData = async (rowData) => {
     external_product_name: productData.external_product_name,
     external_product_id: productData.external_product_id,
     external_variant_id: productData.external_variant_id,
-    recurring_price: productData.recurring_price,
+    recurring_price: productData.recurring_price.trim(),
     next_charge_date: nextChargeDate,
 
     // shipping_company: "??????????????????",
@@ -149,6 +153,7 @@ const processRowData = async (rowData) => {
     shipping_interval_frequency: 1,
 
     customer_stripe_id: CIM_Profile_ID,
+		// TODO: Dev and stage transform email
     shipping_email: Email,
     shipping_first_name: First_Name,
     shipping_last_name: Last_Name,
@@ -169,36 +174,29 @@ const processRowData = async (rowData) => {
   };
 
   try {
-    let action = "Nothing";
-    let query = Customer_ID ? `customer_id = ${Customer_ID}` :  `shipping_email = '${Email}'`;
-    const [findOne] = await ORM.findOne(CUSTOMER_TABLE, query);
-    if(findOne) {
-      const isTheSame = compareObjects(findOne, data);
+    let action = "NO CHANGE";
+    let query = `customer_id = ${Customer_ID}`;
+    const [foundOne] = await ORM.findOne(CUSTOMER_TABLE_SOURCE, query);
+    if(foundOne) {
+      const isTheSame = compareObjects(foundOne, data);
       if(!isTheSame) {
+				action = "UPDATED";
         // If not the same then update and log that it has been updated
         const resultUpdatedOne = await ORM.updateOneObj(CUSTOMER_TABLE, data, query);
-
-        const addItemIntoList = await ORM.insertOneObj(TRACK_CUSTOMER_UPDATE, {
-          customer_id: Customer_ID, 
-          new_email: Email,
-          old_email: findOne.email,
-          type: "UPDATED",
-        });
-        action = "UPDATED";
       }
     }
     else {
-      if(!data.customer_id) {
-        delete data.customer_id;
-      }
       const resultAddedOne = await ORM.insertOneObj(CUSTOMER_TABLE, data);
-      const addItemIntoList = await ORM.insertOneObj(TRACK_CUSTOMER_UPDATE, {
-        customer_id: Customer_ID || null, 
-        new_email: Email,
-        type: "CREATED",
-      });
-      action = "CREATED";
+      const resultAddedOneSource = await ORM.insertOneObj(CUSTOMER_TABLE_SOURCE, data);
+			action = "CREATED";
     }
+		const addItemIntoList = await ORM.insertOneObj(TRACK_CUSTOMER_UPDATE, {
+			customer_id: Customer_ID, 
+			new_email: Email,
+			old_email: foundOne ? foundOne.shipping_email : "",
+			type: action,
+		});
+
     console.log(`\u001b[38;5;${Customer_ID % 255}m${Email} -- action: ${action}\u001b[0m`);
     // await sleep(100);
   } catch (error) {
@@ -214,13 +212,12 @@ const processRowData = async (rowData) => {
 // If no track file
 // await writeFile(
 //   new URL(trackFileLocation, import.meta.url),
-//   `0:0`
+//   `1:0`
 // )
 
 const main = async () => {
   try {
     let fileExist = true;
-    // let fileNumber = 2;
     const trackFileLocation = `./seed/track.txt`;
 
     while (fileExist) {
@@ -249,6 +246,7 @@ const main = async () => {
         const rowCSV = csvArr[i];
         // =============================================
         await processRowData(rowCSV);
+				// TODO: update recharge customer if UPDATED API
         // =============================================
         await writeFile(
           new URL(trackFileLocation, import.meta.url),
