@@ -1,8 +1,10 @@
 import dotenv from "dotenv";
 
-dotenv.config({ path: "./.env.dev" });
+const BISTRO_ENV = "dev";
 
-const TABLE_NAME = "dev_price_from_cart";
+dotenv.config({ path: `./.env.${BISTRO_ENV}` });
+
+const TABLE_NAME = `${BISTRO_ENV}_prices_from_cart`;
 
 import ORM from "./db/orm.js";
 import cleanIdGraphql from "./helpers/cleanIdGraphql.js";
@@ -69,12 +71,16 @@ const processDatabaseResults = async (rowData) => {
 
 const main = async () => {
   try {
+		const doesTableExist = await ORM.tableExistsOrNot(TABLE_NAME);
+		if(!doesTableExist.length) throw new Error("Table does not exist");
+
     const result = await ORM.selectAll(TABLE_NAME);
     await processDatabaseResults(result);
-    console.log("COMPLETED");
+    console.log("======== COMPLETED ==========");
     process.exit();
   } catch (error) {
     console.log("Error: ", error);
+		process.exit();
   }
 };
 

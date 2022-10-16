@@ -59,6 +59,15 @@ const ORM = {
       });
     });
   },
+	tableExistsOrNot: (table) => {
+		return new Promise((resolve, reject) => {
+			var query = `SHOW TABLES LIKE "${table}"`;
+			connection.query(query, (err, data) => {
+				if (err) reject(err);
+				resolve(data);
+			});
+		});
+	}
 };
 
 export default ORM;
