@@ -3,6 +3,9 @@ import neatCsv from "neat-csv";
 import { readFile, writeFile } from "fs/promises";
 import momentJS from "./helpers/moment.js";
 
+// TODO: script to skip a future week(s)
+// TODO: authorize.net payment id
+
 const BISTRO_ENV = "dev";
 const BISTRO_DAY = "sunday";
 
@@ -11,7 +14,7 @@ dotenv.config({ path: `/.env.${BISTRO_ENV}` });
 const CUSTOMER_TABLE = `${BISTRO_ENV}_bistro_recharge_migration`;
 const CUSTOMER_TABLE_SOURCE = `${BISTRO_ENV}_source_bistro_recharge_migration`;
 const PRODUCT_TABLE = `${BISTRO_ENV}_prices_from_cart`;
-const TRACK_CUSTOMER_UPDATE = `${BISTRO_ENV}_${BISTRO_DAY}_track_customer`
+const TRACK_CUSTOMER_UPDATE = `${BISTRO_ENV}_${BISTRO_DAY}_track_customer`;
 
 import ORM from "./db/orm.js";
 import compareObjects from "./helpers/compareObjects.js";
@@ -19,10 +22,10 @@ import compareObjects from "./helpers/compareObjects.js";
 const sleep = async (timeInMillieSec) => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve()
+      resolve();
     }, timeInMillieSec);
   });
-}
+};
 
 const processRowData = async (rowData) => {
   const {
@@ -54,6 +57,7 @@ const processRowData = async (rowData) => {
     Billing_StateProvince,
     Billing_Country,
     Account_Phone,
+
     CIM_Profile_ID,
   } = rowData;
 
@@ -61,8 +65,8 @@ const processRowData = async (rowData) => {
     return "No Program Type";
   }
 
-  if(!Customer_ID) {
-    return "No Customer ID"
+  if (!Customer_ID) {
+    return "No Customer ID";
   }
 
   let productData = {};
@@ -71,8 +75,7 @@ const processRowData = async (rowData) => {
     let snackQuery;
     if (!Program_Snack_Type) {
       snackQuery = `(snack_type IS NULL OR snack_type = '')`;
-    }
-    else {
+    } else {
       snackQuery = `snack_type = '${Program_Snack_Type}'`;
     }
     const product = await ORM.findOne(
@@ -103,27 +106,36 @@ const processRowData = async (rowData) => {
 
   let nextChargeDate = "";
 
-	// TODO: possibly put cancelled if older date
+  // TODO: possibly put cancelled if older date
   if (
     Program_Status == "On Program" ||
     Program_Status == "New Customer" ||
     Program_Status == "Returning Customer" ||
-    // 
+    //
     Program_Status == "Card Declined" ||
     Program_Status == "Fraud" ||
     Program_Status == "Verify Address"
   ) {
-    nextChargeDate = momentJS.getNextDayOfWeek("2022-10-21", Shipping_Day.replace("-MUST SHIP", ""));
+    nextChargeDate = momentJS.getNextDayOfWeek(
+      "2022-10-21",
+      Shipping_Day.replace("-MUST SHIP", "")
+    );
   } else if (Program_Status == "Hold with Resume Date") {
     // Issue is unskipping
-    nextChargeDate = momentJS.getNextDayOfWeek("2022-10-28", Shipping_Day.replace("-MUST SHIP", ""));
-  } else if (
-    Program_Status == "Finished" ||
-    Program_Status == "On Hold"
-  ) {
+    nextChargeDate = momentJS.getNextDayOfWeek(
+      "2022-10-28",
+      Shipping_Day.replace("-MUST SHIP", "")
+    );
+  } else if (Program_Status == "Finished" || Program_Status == "On Hold") {
     // Add but in the past
-    nextChargeDate = momentJS.getNextDayOfWeek("2022-10-01", Shipping_Day.replace("-MUST SHIP", ""));
-  } else if (Program_Status == "Never Started" || Program_Status == "Gift Certificate Verify") {
+    nextChargeDate = momentJS.getNextDayOfWeek(
+      "2022-10-16",
+      Shipping_Day.replace("-MUST SHIP", "")
+    );
+  } else if (
+    Program_Status == "Never Started" ||
+    Program_Status == "Gift Certificate Verify"
+  ) {
     console.log("skipped!!!!!!, Never Started, Gift Certificate Verify");
     return;
   } else {
@@ -152,7 +164,9 @@ const processRowData = async (rowData) => {
     shipping_interval_unit_type: "week",
     shipping_interval_frequency: 1,
 
-    customer_stripe_id: CIM_Profile_ID,
+    customer_stripe_id: "",
+    // authorizedotnet_customer_profile_id: CIM_Profile_ID
+    // authorizedotnet_customer_payment_profile_id:
     shipping_email: Email,
     shipping_first_name: First_Name,
     shipping_last_name: Last_Name,
@@ -172,39 +186,46 @@ const processRowData = async (rowData) => {
     billing_phone: Account_Phone,
   };
 
-	if(BISTRO_ENV == "prod") {
-		data.shipping_email = Email;
-	}
-	else {
-		const email = Email.replace("@", "---").concat("@example.com");
-		data.shipping_email = email;
-	}
+  if (BISTRO_ENV == "prod") {
+    data.shipping_email = Email;
+  } else {
+    const email = Email.replace("@", "---").concat("@example.com");
+    data.shipping_email = email;
+  }
 
   try {
     let action = "NO CHANGE";
     let query = `customer_id = ${Customer_ID}`;
     const [foundOne] = await ORM.findOne(CUSTOMER_TABLE_SOURCE, query);
-    if(foundOne) {
+    if (foundOne) {
       const isTheSame = compareObjects(foundOne, data);
-      if(!isTheSame) {
-				action = "UPDATED";
+      if (!isTheSame) {
+        action = "UPDATED";
         // If not the same then update and log that it has been updated
-        const resultUpdatedOne = await ORM.updateOneObj(CUSTOMER_TABLE, data, query);
+        const resultUpdatedOne = await ORM.updateOneObj(
+          CUSTOMER_TABLE,
+          data,
+          query
+        );
       }
-    }
-    else {
+    } else {
       const resultAddedOne = await ORM.insertOneObj(CUSTOMER_TABLE, data);
-      const resultAddedOneSource = await ORM.insertOneObj(CUSTOMER_TABLE_SOURCE, data);
-			action = "CREATED";
+      const resultAddedOneSource = await ORM.insertOneObj(
+        CUSTOMER_TABLE_SOURCE,
+        data
+      );
+      action = "CREATED";
     }
-		const addItemIntoList = await ORM.insertOneObj(TRACK_CUSTOMER_UPDATE, {
-			customer_id: Customer_ID, 
-			new_email: Email,
-			old_email: foundOne ? foundOne.shipping_email : "",
-			type: action,
-		});
+    const addItemIntoList = await ORM.insertOneObj(TRACK_CUSTOMER_UPDATE, {
+      customer_id: Customer_ID,
+      new_email: Email,
+      old_email: foundOne ? foundOne.shipping_email : "",
+      type: action,
+    });
 
-    console.log(`\u001b[38;5;${Customer_ID % 255}m${Email} -- action: ${action}\u001b[0m`);
+    console.log(
+      `\u001b[38;5;${Customer_ID % 255}m${Email} -- action: ${action}\u001b[0m`
+    );
     // await sleep(100);
   } catch (error) {
     if (error.code == "ER_DUP_ENTRY") {
@@ -247,13 +268,12 @@ const main = async () => {
       });
       const csvArr = await neatCsv(data);
       let endNum = csvArr.length;
-      
 
       for (let i = startNum; i < endNum; i++) {
         const rowCSV = csvArr[i];
         // =============================================
         await processRowData(rowCSV);
-				// TODO: update recharge customer if UPDATED API
+        // TODO: update recharge customer if UPDATED API
         // =============================================
         await writeFile(
           new URL(trackFileLocation, import.meta.url),
