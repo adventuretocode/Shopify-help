@@ -9,7 +9,7 @@ import momentJS from "./helpers/moment.js";
 const BISTRO_ENV = "dev";
 const BISTRO_DAY = "sunday";
 
-dotenv.config({ path: `/.env.${BISTRO_ENV}` });
+dotenv.config({ path: `./.env.${BISTRO_ENV}` });
 
 const CUSTOMER_TABLE = `${BISTRO_ENV}_bistro_recharge_migration`;
 const CUSTOMER_TABLE_SOURCE = `${BISTRO_ENV}_source_bistro_recharge_migration`;
@@ -28,38 +28,18 @@ const sleep = async (timeInMillieSec) => {
 };
 
 const processRowData = async (rowData) => {
-  const {
-    Customer_ID,
-    Program_Type,
-    Program_Snack_Type,
-    Program_Status,
+  // "Program Week Updated"
+  // "Account: Created Date"
+  // "CIM Profile ID"
 
-    // Things Menu Admin needs to know.
-    // Email
-    Program_Week_Updated,
-    Gender,
-    Shipping_Day,
-
-    First_Name,
-    Last_Name,
-    Email,
-    Shipping_Address_Line_1,
-    Shipping_Address_Line_2,
-    Shipping_StateProvince,
-    Shipping_City,
-    Shipping_ZipPostal_Code,
-    Shipping_Country,
-    Phone,
-    Billing_Address_Line_1,
-    Billing_Address_Line_2,
-    Billing_City,
-    Billing_ZipPostal_Code,
-    Billing_StateProvince,
-    Billing_Country,
-    Account_Phone,
-
-    CIM_Profile_ID,
-  } = rowData;
+  const Program_Type = rowData['Program_Type'] || rowData["Program Type"];
+  const Program_Status = rowData['Program_Status'] || rowData["Program Status"];
+  const Program_Snack_Type = rowData['Program_Snack_Type'] || rowData["Program Snack Type"];
+  const Customer_ID = rowData['Customer_ID'] || rowData["Customer ID"];
+  const Shipping_Day = rowData['Shipping_Day'] || rowData["Shipping Day"];
+  const Shipping_Address_Line_1 = rowData['Shipping_Address_Line_1'] || rowData['Shipping Address Line 1'];
+  const Shipping_City = rowData['Shipping_City'] || rowData['Shipping City'];
+  const Email = rowData['Email'];
 
   if (!Program_Type || !Shipping_Address_Line_1 || !Shipping_City) {
     return "No Program Type";
@@ -146,7 +126,7 @@ const processRowData = async (rowData) => {
   const data = {
     customer_id: Customer_ID,
     // program_week: Program_Week_Updated,
-    // gender: Gender,
+    // gender: rowData['Gender'],
 
     external_product_name: productData.external_product_name,
     external_product_id: productData.external_product_id,
@@ -155,8 +135,8 @@ const processRowData = async (rowData) => {
     next_charge_date: nextChargeDate,
 
     // shipping_company: "??????????????????",
-    // billing_first_name: "?????????????",
-    // billing_last_name: "?????????????????",
+    billing_first_name: rowData['First_Name'] || rowData["First Name"],
+    billing_last_name: rowData['Last_Name'] || rowData["Last Name"],
 
     quantity: 1,
     charge_interval_unit_type: "week",
@@ -168,22 +148,22 @@ const processRowData = async (rowData) => {
     // authorizedotnet_customer_profile_id: CIM_Profile_ID
     // authorizedotnet_customer_payment_profile_id:
     shipping_email: Email,
-    shipping_first_name: First_Name,
-    shipping_last_name: Last_Name,
-    shipping_phone: Phone,
+    shipping_first_name: rowData['First_Name'] || rowData["First Name"],
+    shipping_last_name: rowData['Last_Name'] || rowData["Last Name"],
+    shipping_phone: rowData['Phone'],
     shipping_address_1: Shipping_Address_Line_1,
-    shipping_address_2: Shipping_Address_Line_2,
+    shipping_address_2: rowData['Shipping_Address_Line_2'] || rowData['Shipping Address Line 2'],
     shipping_city: Shipping_City,
-    shipping_province: Shipping_StateProvince,
-    shipping_zip: Shipping_ZipPostal_Code,
-    shipping_country: Shipping_Country,
-    billing_address_1: Billing_Address_Line_1,
-    billing_address_2: Billing_Address_Line_2,
-    billing_city: Billing_City,
-    billing_postalcode: Billing_ZipPostal_Code,
-    billing_province_state: Billing_StateProvince,
-    billing_country: Billing_Country,
-    billing_phone: Account_Phone,
+    shipping_province: rowData['Shipping_StateProvince'] || rowData["Shipping State/Province"],
+    shipping_zip: rowData['Shipping_ZipPostal_Code'] || rowData["Shipping Zip/Postal Code"],
+    shipping_country: rowData['Shipping_Country'] || rowData["Shipping Country"],
+    billing_address_1: rowData['Billing_Address_Line_1'] || rowData["Billing Address Line 1"],
+    billing_address_2: rowData['Billing_Address_Line_2'] || rowData["Billing Address Line 2"],
+    billing_city: rowData['Billing_City'] || rowData["Billing City"],
+    billing_postalcode: rowData['Billing_ZipPostal_Code'] || rowData["Billing Zip/Postal Code"],
+    billing_province_state: rowData['Billing_StateProvince'] || rowData["Billing State/Province"],
+    billing_country: rowData['Billing_Country'] || rowData["Billing Country"],
+    billing_phone: rowData['Account_Phone'] || rowData["Account: Phone"],
   };
 
   if (BISTRO_ENV == "prod") {
@@ -261,7 +241,7 @@ const main = async () => {
       let fileNumber = parseInt(trackFile.split(":")[0]);
       let startNum = parseInt(trackFile.split(":")[1]);
 
-      let fileLocation = `/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge/splitcsv-6176e074-0acd-4ea0-8571-17b26e6473f5-results/customers_salesforce-${fileNumber}.csv`;
+      let fileLocation = `/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge/export_1-1/customer_${fileNumber}.csv`;
       // Check if file exist
       const data = await readFile(new URL(fileLocation, import.meta.url), {
         encoding: "utf8",
