@@ -38,4 +38,4 @@ SELECT
   `billing_phone`
 FROM
   `dev_bistro_recharge_migration`
-LIMIT 5000;
+LIMIT 0, 5000;
