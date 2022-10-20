@@ -276,12 +276,7 @@ const main = async () => {
     }
 
     while (true) {
-      let trackFile = await readFile(
-        new URL(trackFileLocation, import.meta.url),
-        {
-          encoding: "utf8",
-        }
-      );
+      let trackFile = await readFile( new URL(trackFileLocation, import.meta.url), { encoding: "utf8", });
       let fileNumber = parseInt(trackFile.split(":")[0]);
       let startNum = parseInt(trackFile.split(":")[1]);
 
