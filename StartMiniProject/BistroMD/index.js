@@ -10,7 +10,7 @@ import momentJS from "./helpers/moment.js";
 const DEBUG_MODE = false;
 
 const BISTRO_ENV = "dev";
-const BISTRO_DAY = "sunday";
+const BISTRO_DAY = "monday";
 
 dotenv.config({ path: `./.env.${BISTRO_ENV}` });
 
@@ -124,7 +124,7 @@ const processRowData = async (rowData) => {
     Program_Status == "Verify Address"
   ) {
     nextChargeDate = momentJS.getNextDayOfWeek(
-      "2022-10-21",
+      "2022-10-21", // TODO: "2022-11-07"
       Shipping_Day.replace("-MUST SHIP", "")
     );
   } else if (Program_Status == "Hold with Resume Date") {
@@ -281,8 +281,8 @@ const main = async () => {
       let fileNumber = parseInt(trackFile.split(":")[0]);
       let startNum = parseInt(trackFile.split(":")[1]);
 
-      // let fileLocation = `/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge/export_1-1/customer_${fileNumber}.csv`;
-      let fileLocation = `/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge/export_1-0/splitcsv-6176e074-0acd-4ea0-8571-17b26e6473f5-results/customers_salesforce-${fileNumber}.csv`;
+      let fileLocation = `/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge/export_1-1/customer_${fileNumber}.csv`;
+      // let fileLocation = `/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge/export_1-0/splitcsv-6176e074-0acd-4ea0-8571-17b26e6473f5-results/customers_salesforce-${fileNumber}.csv`;
 
       try {
         await access(fileLocation)
