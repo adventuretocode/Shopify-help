@@ -4,6 +4,7 @@ USE `bistromd`;
 DROP TABLE IF EXISTS `dev_bistro_recharge_migration`;
 CREATE TABLE `dev_bistro_recharge_migration` (
   `id` INT NOT NULL AUTO_INCREMENT,
+  `gender` ENUM("Male", "Female"),
   `customer_id` INT DEFAULT NULL,
   `external_product_name` varchar(100) DEFAULT NULL,
   `external_variant_name` varchar(100) DEFAULT NULL,
@@ -48,6 +49,7 @@ CREATE TABLE `dev_bistro_recharge_migration` (
 DROP TABLE IF EXISTS `dev_source_bistro_recharge_migration`;
 CREATE TABLE `dev_source_bistro_recharge_migration` (
   `id` INT NOT NULL AUTO_INCREMENT,
+  `gender` ENUM("Male", "Female"),
   `customer_id` INT DEFAULT NULL,
   `external_product_name` varchar(100) DEFAULT NULL,
   `external_variant_name` varchar(100) DEFAULT NULL,

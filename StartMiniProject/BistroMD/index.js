@@ -45,10 +45,9 @@ const processRowData = async (rowData) => {
   const Shipping_City = rowData['Shipping_City'] || rowData['Shipping City'];
   // TODO: mark email as unique
   const Email = rowData['Email'];
+  let status = "";
 
-  if(!Email) {
-    return
-  }
+  if(!Email) return "";
 
   if(
     Email == "eric.carestia+narvarstoretest2@bistromd.com" || 
@@ -115,7 +114,6 @@ const processRowData = async (rowData) => {
 
   let nextChargeDate = "";
 
-  // TODO: possibly put cancelled if older date
   if (
     Program_Status == "On Program" ||
     Program_Status == "New Customer" ||
@@ -133,6 +131,7 @@ const processRowData = async (rowData) => {
     // TODO: will need to create a program to start skipping
   } else if (Program_Status == "Finished" || Program_Status == "On Hold") {
     // Next Charge date can be left blank
+    status = "cancelled";
   } else if (
     Program_Status == "Never Started" ||
     Program_Status == "Gift Certificate Verify"
@@ -148,7 +147,9 @@ const processRowData = async (rowData) => {
   const data = {
     customer_id: Customer_ID,
     // program_week: Program_Week_Updated,
-    // gender: rowData['Gender'],
+    gender: rowData['Gender'],
+
+    status: status,
 
     external_product_name: productData.external_product_name,
     external_product_id: productData.external_product_id,
@@ -187,8 +188,6 @@ const processRowData = async (rowData) => {
     billing_country: rowData['Billing_Country'] || rowData["Billing Country"],
     billing_phone: rowData['Account_Phone'] || rowData["Account: Phone"],
     
-    status: '',
-
     is_prepaid: '',
     charge_on_day_of_month: '',
     last_charge_date: '',
@@ -208,7 +207,6 @@ const processRowData = async (rowData) => {
     let query = `customer_id = ${Customer_ID}`;
     const [foundOne] = await ORM.findOne(CUSTOMER_TABLE_SOURCE, query);
     if (foundOne) {
-      delete foundOne['status'];
 
       delete foundOne['charge_on_day_of_month'];
       delete foundOne['is_prepaid'];
