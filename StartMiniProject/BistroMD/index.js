@@ -170,6 +170,7 @@ const processRowData = async (rowData) => {
     customer_stripe_id: "",
     // authorizedotnet_customer_profile_id: CIM_Profile_ID
     // authorizedotnet_customer_payment_profile_id:
+    // TODO: email is unique
     shipping_email: Email,
     shipping_first_name: rowData['First_Name'] || rowData["First Name"],
     shipping_last_name: rowData['Last_Name'] || rowData["Last Name"],
@@ -289,7 +290,7 @@ const main = async () => {
         console.log("==========================================");
         console.log("=============  COMPLETED ALL FILES =======");
         console.log("==========================================");
-        return "Completed";
+        process.exit();
       }
 
       const data = await readFile(new URL(fileLocation, import.meta.url), {
