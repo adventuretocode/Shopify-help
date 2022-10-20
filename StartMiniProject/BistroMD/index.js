@@ -272,7 +272,7 @@ const main = async () => {
     try {
       await access(trackFileLocation);
     } catch (error) {
-      await writeFile( new URL(trackFileLocation, import.meta.url), `0:0`);
+      await writeFile( new URL(trackFileLocation, import.meta.url), `1:0`);
     }
 
     while (true) {
@@ -280,8 +280,8 @@ const main = async () => {
       let fileNumber = parseInt(trackFile.split(":")[0]);
       let startNum = parseInt(trackFile.split(":")[1]);
 
-      let fileLocation = `/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge/export_1-1/customer_${fileNumber}.csv`;
-      // let fileLocation = `/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge/export_1-0/splitcsv-6176e074-0acd-4ea0-8571-17b26e6473f5-results/customers_salesforce-${fileNumber}.csv`;
+      // let fileLocation = `/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge/export_1-1/customer_${fileNumber}.csv`;
+      let fileLocation = `/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge/export_1-0/splitcsv-6176e074-0acd-4ea0-8571-17b26e6473f5-results/customers_salesforce-${fileNumber}.csv`;
 
       try {
         await access(fileLocation)
