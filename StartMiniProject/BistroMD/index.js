@@ -247,7 +247,7 @@ const processRowData = async (rowData) => {
       new_email: Email,
       old_email: foundOne ? foundOne.shipping_email : "",
       type: action,
-      whatChanged: whatChanged,
+      whatChanged: whatChanged.join(","),
       program_status: Program_Status,
     });
 
