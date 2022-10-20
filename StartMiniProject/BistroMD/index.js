@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import neatCsv from "neat-csv";
-import { readFile, writeFile } from "fs/promises";
+import { readFile, writeFile, access } from "fs/promises";
 import momentJS from "./helpers/moment.js";
 
 // TODO: script to skip a future week(s)
@@ -268,11 +268,15 @@ const processRowData = async (rowData) => {
 
 const main = async () => {
   try {
-    let fileExist = true;
-    // TODO: Create file if not exist
-    const trackFileLocation = `./seed/track.txt`;
+    const trackFileLocation = `./track.txt`;
 
-    while (fileExist) {
+    try {
+      await access(trackFileLocation);
+    } catch (error) {
+      await writeFile( new URL(trackFileLocation, import.meta.url), `0:0`);
+    }
+
+    while (true) {
       // Write function to see if file exist or not
       // If it doesn't then create one
 
@@ -285,8 +289,17 @@ const main = async () => {
       let fileNumber = parseInt(trackFile.split(":")[0]);
       let startNum = parseInt(trackFile.split(":")[1]);
 
-      // let fileLocation = `/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge/export_1-1/customer_${fileNumber}.csv`;
-      let fileLocation = `/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge/export_1-0/splitcsv-6176e074-0acd-4ea0-8571-17b26e6473f5-results/customers_salesforce-${fileNumber}.csv`;
+      let fileLocation = `/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge/export_1-1/customer_${fileNumber}.csv`;
+      // let fileLocation = `/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge/export_1-0/splitcsv-6176e074-0acd-4ea0-8571-17b26e6473f5-results/customers_salesforce-${fileNumber}.csv`;
+
+      try {
+        await access(fileLocation)
+      } catch (error) {
+        console.log("==========================================");
+        console.log("=============  COMPLETED ALL FILES =======");
+        console.log("==========================================");
+        return "Completed";
+      }
 
       // TODO: Check if file exist
       const data = await readFile(new URL(fileLocation, import.meta.url), {
