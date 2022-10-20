@@ -5,6 +5,7 @@ import momentJS from "./helpers/moment.js";
 
 // TODO: script to skip a future week(s)
 // TODO: authorize.net payment id
+// TODO: Update `process-many-csv.`
 
 const DEBUG_MODE = false;
 
@@ -277,9 +278,6 @@ const main = async () => {
     }
 
     while (true) {
-      // Write function to see if file exist or not
-      // If it doesn't then create one
-
       let trackFile = await readFile(
         new URL(trackFileLocation, import.meta.url),
         {
@@ -301,7 +299,6 @@ const main = async () => {
         return "Completed";
       }
 
-      // TODO: Check if file exist
       const data = await readFile(new URL(fileLocation, import.meta.url), {
         encoding: "utf8",
       });
@@ -311,6 +308,7 @@ const main = async () => {
       for (let i = startNum; i < endNum; i++) {
         const rowCSV = csvArr[i];
         // =============================================
+        // TODO: try catch and log errors and continue to process the rest: WATCH_MODE
         await processRowData(rowCSV);
         // TODO: update recharge customer if UPDATED API
         // =============================================
