@@ -9,7 +9,7 @@ import momentJS from "./helpers/moment.js";
 const DEBUG_MODE = false;
 
 const BISTRO_ENV = "dev";
-const BISTRO_DAY = "tuesday";
+const BISTRO_DAY = "sunday";
 
 dotenv.config({ path: `./.env.${BISTRO_ENV}` });
 
@@ -217,7 +217,7 @@ const processRowData = async (rowData) => {
       const isTheSame = compareObjects(foundOne, data);
       if (!isTheSame) {
         // TODO: Possibly log the changes with the tuesday updates
-        whatChanged = findAllChangesKeys(foundOne, data);
+        whatChanged = findAllChangesKeys(foundOne, data).join(",");
         if(DEBUG_MODE) console.log(whatChanged);
 
         action = "UPDATED";
@@ -247,7 +247,7 @@ const processRowData = async (rowData) => {
       new_email: Email,
       old_email: foundOne ? foundOne.shipping_email : "",
       type: action,
-      whatChanged: whatChanged.join(","),
+      what_changed: whatChanged,
       program_status: Program_Status,
     });
 
@@ -285,7 +285,9 @@ const main = async () => {
       let fileNumber = parseInt(trackFile.split(":")[0]);
       let startNum = parseInt(trackFile.split(":")[1]);
 
-      let fileLocation = `/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge/export_1-1/customer_${fileNumber}.csv`;
+      // let fileLocation = `/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge/export_1-1/customer_${fileNumber}.csv`;
+      let fileLocation = `/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge/export_1-0/splitcsv-6176e074-0acd-4ea0-8571-17b26e6473f5-results/customers_salesforce-${fileNumber}.csv`;
+
       // TODO: Check if file exist
       const data = await readFile(new URL(fileLocation, import.meta.url), {
         encoding: "utf8",
