@@ -92,8 +92,8 @@ CREATE TABLE `dev_source_bistro_recharge_migration` (
   PRIMARY KEY (`id`)
 );
 
-DROP TABLE IF EXISTS `dev___track_customer`;
-CREATE TABLE `dev___track_customer` (
+DROP TABLE IF EXISTS `dev_track__customer`;
+CREATE TABLE `dev_track__customer` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `customer_id` INT NOT NULL,
   `new_email` varchar(100) NOT NULL,
