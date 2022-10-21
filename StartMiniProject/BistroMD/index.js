@@ -242,13 +242,14 @@ const processRowData = async (rowData) => {
         CUSTOMER_TABLE_SOURCE,
         data
       );
-      action = "TO_ADD";
+      action = "CREATED";
+      trackStatus = "TO_ADD";
     }
     const addItemIntoList = await ORM.insertOneObj(TRACK_CUSTOMER_UPDATE, {
       customer_id: Customer_ID,
       new_email: Email,
       old_email: foundOne ? foundOne.shipping_email : "",
-      type: action,
+      action: action,
       status: trackStatus,
       what_changed: whatChanged,
       program_status: Program_Status,
