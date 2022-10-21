@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import neatCsv from "neat-csv";
 import { readFile, writeFile, access } from "fs/promises";
+import { phone } from 'phone';
 import momentJS from "./helpers/moment.js";
 
 // TODO: script to skip a future week(s)
@@ -9,15 +10,19 @@ import momentJS from "./helpers/moment.js";
 
 const DEBUG_MODE = false;
 
+const START_DATE = "2022-11-07";
 const BISTRO_ENV = "dev";
 const BISTRO_DAY = "monday";
+const FOLDER = "export_1-1"; // Restart the track file
+
+const DIRECTORY = "/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge";
 
 dotenv.config({ path: `./.env.${BISTRO_ENV}` });
 
 const CUSTOMER_TABLE = `${BISTRO_ENV}_bistro_recharge_migration`;
 const CUSTOMER_TABLE_SOURCE = `${BISTRO_ENV}_source_bistro_recharge_migration`;
 const PRODUCT_TABLE = `${BISTRO_ENV}_prices_from_cart`;
-const TRACK_CUSTOMER_UPDATE = `${BISTRO_ENV}_${BISTRO_DAY}_track_customer`;
+const TRACK_CUSTOMER_UPDATE = `${BISTRO_ENV}_track_${BISTRO_DAY}_customer`;
 
 import ORM from "./db/orm.js";
 import compareObjects from "./helpers/compareObjects.js";
@@ -50,21 +55,12 @@ const processRowData = async (rowData) => {
   if(!Email) return "";
 
   if(
-    Email == "eric.carestia+narvarstoretest2@bistromd.com" || 
-    Email == "eric.carestia+authorizecardtester@bistromd.com" ||
-    Email == "eric.carestia+narvarbistrotest@bistromd.com" ||
     Email == "eric.narvartest@bistromd.com" ||
-    Email == "eric.carestia+carttesternov30@gmail.com" ||
-    Email == "eric.carestia+urlparamterster@bistromd.com" ||
-    Email == "eric.carestia+pricechangetestorder@bistromd.com" ||
-    Email == "eric.carestia+bistrofbapitestorder@bistromd.com" ||
-    Email == "eric.carestia+betatester11@gmail.com" ||
-    Email == 'eric.carestia+betatester10@bistromd.com' ||
-    Email == 'eric.carestia+betatester5@bistromd.com' ||
     Email == 'ericcarestia+asdkfljsdflkjddd@gmail.com' ||
     Email == 'ericcarestia+storetesterspeed@bistromd.com' ||
     Email.includes('eric.carestia') ||
-    Email.includes('ericcarestia+')
+    Email.includes('ericcarestia+') ||
+    Email.includes('eric.carestia+')
   ) {
     return '';
   }
@@ -124,7 +120,7 @@ const processRowData = async (rowData) => {
     Program_Status == "Verify Address"
   ) {
     nextChargeDate = momentJS.getNextDayOfWeek(
-      "2022-10-21", // TODO: "2022-11-07"
+      START_DATE,
       Shipping_Day.replace("-MUST SHIP", "")
     );
   } else if (Program_Status == "Hold with Resume Date") {
@@ -142,6 +138,17 @@ const processRowData = async (rowData) => {
     console.log(Program_Status);
     console.log(new Error("New program status, unaccounted for"));
     throw new Error("New program status, unaccounted for");
+  }
+
+  let phoneNumber = rowData['Phone'];
+  try {
+    const phoneResult = phone(phoneNumber, {country: 'USA'});
+    if(phoneResult.isValid) {
+      phoneNumber = phoneResult.phoneNumber;
+    }
+  } catch (error) {
+    console.log("Phone Number Error: ", Customer_ID);
+    throw new Error("Phone Number Error");
   }
 
   const data = {
@@ -174,7 +181,7 @@ const processRowData = async (rowData) => {
     shipping_email: Email,
     shipping_first_name: rowData['First_Name'] || rowData["First Name"],
     shipping_last_name: rowData['Last_Name'] || rowData["Last Name"],
-    shipping_phone: rowData['Phone'],
+    shipping_phone: phoneNumber,
     shipping_address_1: Shipping_Address_Line_1,
     shipping_address_2: rowData['Shipping_Address_Line_2'] || rowData['Shipping Address Line 2'],
     shipping_city: Shipping_City,
@@ -217,13 +224,11 @@ const processRowData = async (rowData) => {
 
       const isTheSame = compareObjects(foundOne, data);
       if (!isTheSame) {
-        // TODO: Possibly log the changes with the tuesday updates
         whatChanged = findAllChangesKeys(foundOne, data).join(",");
         if(DEBUG_MODE) console.log(whatChanged);
 
         action = "UPDATED";
         trackStatus = "UPDATE";
-        // If not the same then update and log that it has been updated
         const resultUpdatedOne = await ORM.updateOneObj(
           CUSTOMER_TABLE,
           data,
@@ -272,6 +277,7 @@ const processRowData = async (rowData) => {
 
 const main = async () => {
   try {
+    console.time();
     const trackFileLocation = `./track.txt`;
 
     try {
@@ -285,8 +291,7 @@ const main = async () => {
       let fileNumber = parseInt(trackFile.split(":")[0]);
       let startNum = parseInt(trackFile.split(":")[1]);
 
-      let fileLocation = `/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge/export_1-1/customer_${fileNumber}.csv`;
-      // let fileLocation = `/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge/export_1-0/splitcsv-6176e074-0acd-4ea0-8571-17b26e6473f5-results/customers_salesforce-${fileNumber}.csv`;
+      let fileLocation = `${DIRECTORY}/${FOLDER}/customer_${fileNumber}.csv`;
 
       try {
         await access(fileLocation)
@@ -294,6 +299,7 @@ const main = async () => {
         console.log("==========================================");
         console.log("=============  COMPLETED ALL FILES =======");
         console.log("==========================================");
+        console.timeEnd();
         process.exit();
       }
 
