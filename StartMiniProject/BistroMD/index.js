@@ -222,7 +222,7 @@ const processRowData = async (rowData) => {
         if(DEBUG_MODE) console.log(whatChanged);
 
         action = "UPDATED";
-        trackStatus = "ATTENTION";
+        trackStatus = "UPDATED";
         // If not the same then update and log that it has been updated
         const resultUpdatedOne = await ORM.updateOneObj(
           CUSTOMER_TABLE,
@@ -242,7 +242,7 @@ const processRowData = async (rowData) => {
         CUSTOMER_TABLE_SOURCE,
         data
       );
-      action = "CREATED";
+      action = "TO_ADD";
     }
     const addItemIntoList = await ORM.insertOneObj(TRACK_CUSTOMER_UPDATE, {
       customer_id: Customer_ID,
