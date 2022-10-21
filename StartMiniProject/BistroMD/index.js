@@ -204,6 +204,7 @@ const processRowData = async (rowData) => {
 
   try {
     let action = "NO CHANGE";
+    let trackStatus = "NONE";
     let whatChanged = "";
     let query = `customer_id = ${Customer_ID}`;
     const [foundOne] = await ORM.findOne(CUSTOMER_TABLE_SOURCE, query);
@@ -221,6 +222,7 @@ const processRowData = async (rowData) => {
         if(DEBUG_MODE) console.log(whatChanged);
 
         action = "UPDATED";
+        trackStatus = "ATTENTION";
         // If not the same then update and log that it has been updated
         const resultUpdatedOne = await ORM.updateOneObj(
           CUSTOMER_TABLE,
@@ -247,6 +249,7 @@ const processRowData = async (rowData) => {
       new_email: Email,
       old_email: foundOne ? foundOne.shipping_email : "",
       type: action,
+      status: trackStatus,
       what_changed: whatChanged,
       program_status: Program_Status,
     });
