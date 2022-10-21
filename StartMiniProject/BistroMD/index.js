@@ -49,7 +49,7 @@ const processRowData = async (rowData) => {
   const Shipping_Address_Line_1 = rowData['Shipping_Address_Line_1'] || rowData['Shipping Address Line 1'];
   const Shipping_City = rowData['Shipping_City'] || rowData['Shipping City'];
   // TODO: mark email as unique
-  const Email = rowData['Email'];
+  let Email = rowData['Email'];
   let status = "";
 
   if(!Email) return "";
@@ -151,6 +151,11 @@ const processRowData = async (rowData) => {
     throw new Error("Phone Number Error");
   }
 
+  if (BISTRO_ENV == "prod") {
+  } else {
+    Email = Email.replace("@", "---").concat("@example.com");
+  }
+
   const data = {
     customer_id: Customer_ID,
     // program_week: Program_Week_Updated,
@@ -201,13 +206,6 @@ const processRowData = async (rowData) => {
     last_charge_date: '',
     customer_created_at: '',
   };
-
-  if (BISTRO_ENV == "prod") {
-    data.shipping_email = Email;
-  } else {
-    const email = Email.replace("@", "---").concat("@example.com");
-    data.shipping_email = email;
-  }
 
   try {
     let action = "NO CHANGE";
