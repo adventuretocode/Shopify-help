@@ -73,7 +73,7 @@ const updateRechargeCustomer = async (rechargeCustomer, localCustomer) => {
         } Update Customer Profile\u001b[0m`
       );
   } catch (error) {
-    console.log("Recharge billing update error");
+    console.log("Recharge Error updating customer profile");
     throw error;
   }
 
