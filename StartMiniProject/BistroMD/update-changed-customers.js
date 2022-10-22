@@ -7,9 +7,7 @@ import dotenv from "dotenv";
 import Recharge from "recharge-api-node"; // npm i --save-dev @types/recharge-api-node
 
 import ORM from "./db/orm.js";
-import compareObjects from "./helpers/compareObjects.js";
 import compareSpecificKey from "./helpers/compareSpecificKey.js";
-import findAllChangesKeys from "./helpers/findAllChangesKeys.js";
 
 import ReChargeCustom from "./ReCharge/Recharge.js";
 
@@ -18,7 +16,7 @@ const DEBUG_MODE = false;
 const BISTRO_ENV = "dev";
 const BISTRO_DAY = "monday";
 
-dotenv.config({ path: `./.env.${BISTRO_ENV}` });
+dotenv.config({ path: `./.env` });
 
 const { RECHARGE_TOKEN, RECHARGE_SECRET } = process.env;
 
@@ -33,13 +31,11 @@ const recharge_search = new Recharge({
 // });
 
 const CUSTOMER_TABLE = `${BISTRO_ENV}_bistro_recharge_migration`;
-const CUSTOMER_TABLE_SOURCE = `${BISTRO_ENV}_source_bistro_recharge_migration`;
-const PRODUCT_TABLE = `${BISTRO_ENV}_prices_from_cart`;
 const TRACK_CUSTOMER_UPDATE = `${BISTRO_ENV}_track_${BISTRO_DAY}_customer`;
 
 const updateCustomerProfile = async (rechargeCustomer, localCustomer) => {
   try {
-    // update the billing on the customer object
+    const rechargeCustomerId = rechargeCustomer.id;
     const keys = [
       { recharge: "email", local: "shipping_email" },
       { recharge: "first_name", local: "billing_first_name" },
@@ -53,7 +49,7 @@ const updateCustomerProfile = async (rechargeCustomer, localCustomer) => {
       keys
     );
 
-    const rechargeCustomerId = rechargeCustomer.id;
+    if (keysToUpdate.length === 0) return "Nothing to update";
 
     const updateObj = {};
 
@@ -66,11 +62,12 @@ const updateCustomerProfile = async (rechargeCustomer, localCustomer) => {
       rechargeCustomerId,
       updateObj
     );
+
     if (DEBUG_MODE)
       console.log(
         `\u001b[38;5;${rechargeCustomerId % 255}m${
           rechargeCustomer.email
-        } Update Customer Profile\u001b[0m`
+        } Updated Customer Profile\u001b[0m`
       );
   } catch (error) {
     console.log("Recharge Error updating customer profile");
@@ -78,45 +75,93 @@ const updateCustomerProfile = async (rechargeCustomer, localCustomer) => {
   }
 };
 
-const updateReCustomerController = async (rechargeCustomer, localCustomer) => {
-	// await updateCustomerProfile(rechargeCustomer, localCustomer)
+const updateCustomerBilling = async (rechargeCustomer, localCustomer) => {
   try {
-    // Update billing
+    const rechargeCustomerId = rechargeCustomer.id;
     const keys = [
-      { recharge: "billing_address1", local: "billing_address_1" },
-      { recharge: "billing_address2", local: "billing_address_2" },
-      { recharge: "billing_city", local: "billing_city" },
-      { recharge: "billing_country", local: "billing_country" },
-      { recharge: "billing_province", local: "billing_province_state" },
-      { recharge: "billing_zip", local: "billing_postalcode" },
+      { recharge: "address1", local: "billing_address_1" },
+      { recharge: "address2", local: "billing_address_2" },
+      { recharge: "city", local: "billing_city" },
+      // { recharge: "country", local: "billing_country" },
+      { recharge: "province", local: "billing_province_state" },
+      { recharge: "zip", local: "billing_postalcode" },
+      { recharge: "phone", local: "billing_phone" },
+      { recharge: "first_name", local: "billing_first_name" },
+      { recharge: "last_name", local: "billing_last_name" },
     ];
 
     // Get payment method first
     // Check if there is one. There should just be one for now.
     // Update payment
 
-    ReChargeCustom.PaymentMethods.list();
-  } catch (error) {
-    console.log("Recharge shipping update error");
-    throw error;
-  }
+    const { payment_methods } = await ReChargeCustom.PaymentMethods.list(
+      rechargeCustomerId
+    );
 
-  try {
-    // update the shipping
+    if (payment_methods.length == 0) {
+      return "Payment method not found";
+    } else if (payment_methods.length > 1) {
+      debugger;
+      throw new Error("More than 1 payment method");
+    }
+
+    const payment_method = payment_methods[0];
+
+    const keysToUpdate = compareSpecificKey(
+      payment_method.billing_address,
+      localCustomer,
+      keys
+    );
+
+    if (keysToUpdate.length === 0) return "Nothing to update";
+
+    const updateObj = {};
+
+    for (let i = 0; i < keysToUpdate.length; i++) {
+      const key = keysToUpdate[i];
+      updateObj[key.recharge] = localCustomer[key.local];
+    }
+
+    const finalObj = {
+      billing_address: {
+        ...updateObj,
+      },
+    };
+
+    const result = await ReChargeCustom.PaymentMethods.update(
+      payment_method.id,
+      finalObj
+    );
+
+    if (DEBUG_MODE)
+      console.log(
+        `\u001b[38;5;${rechargeCustomerId % 255}m${
+          rechargeCustomer.email
+        } Updated Billing Address\u001b[0m`
+      );
   } catch (error) {
-    console.log("Recharge shipping update error");
+    console.log("Recharge Billing update error");
     throw error;
   }
 };
 
-const main = (async () => {
+const updateReCustomerController = async (rechargeCustomer, localCustomer) => {
+  try {
+    // await updateCustomerProfile(rechargeCustomer, localCustomer)
+    // await updateCustomerBilling(rechargeCustomer, localCustomer);
+  } catch (error) {
+    throw error;
+  }
+};
+
+(async () => {
   while (true) {
     try {
       let query = `action = 'UPDATED' LIMIT 1`;
       const [foundOne] = await ORM.findOne(TRACK_CUSTOMER_UPDATE, query);
       const rechargeCustomer = await recharge_search.customer.list({
         // email: foundOne.new_email
-        email: "janet.cheringalgmail.com@example.com",
+        email: "santa_claus@candylane.com",
       });
 
       if (rechargeCustomer.length == 0) {
