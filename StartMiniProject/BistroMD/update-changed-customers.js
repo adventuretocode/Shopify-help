@@ -37,7 +37,7 @@ const CUSTOMER_TABLE_SOURCE = `${BISTRO_ENV}_source_bistro_recharge_migration`;
 const PRODUCT_TABLE = `${BISTRO_ENV}_prices_from_cart`;
 const TRACK_CUSTOMER_UPDATE = `${BISTRO_ENV}_track_${BISTRO_DAY}_customer`;
 
-const updateRechargeCustomer = async (rechargeCustomer, localCustomer) => {
+const updateCustomerProfile = async (rechargeCustomer, localCustomer) => {
   try {
     // update the billing on the customer object
     const keys = [
@@ -76,7 +76,10 @@ const updateRechargeCustomer = async (rechargeCustomer, localCustomer) => {
     console.log("Recharge Error updating customer profile");
     throw error;
   }
+};
 
+const updateReCustomerController = async (rechargeCustomer, localCustomer) => {
+	// await updateCustomerProfile(rechargeCustomer, localCustomer)
   try {
     // Update billing
     const keys = [
@@ -87,6 +90,12 @@ const updateRechargeCustomer = async (rechargeCustomer, localCustomer) => {
       { recharge: "billing_province", local: "billing_province_state" },
       { recharge: "billing_zip", local: "billing_postalcode" },
     ];
+
+    // Get payment method first
+    // Check if there is one. There should just be one for now.
+    // Update payment
+
+    ReChargeCustom.PaymentMethods.list();
   } catch (error) {
     console.log("Recharge shipping update error");
     throw error;
@@ -133,7 +142,7 @@ const main = (async () => {
           findCustomerQuery
         );
 
-        await updateRechargeCustomer(rechargeCustomer[0], localCustomer);
+        await updateReCustomerController(rechargeCustomer[0], localCustomer);
 
         const { shopify_customer_id } = rechargeCustomer[0];
         // TODO: Update Shopify as well
