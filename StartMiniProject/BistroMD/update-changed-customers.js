@@ -170,7 +170,7 @@ const updateReChargeShipping = async (rechargeCustomer, localCustomer) => {
       return "Address not found";
     } else if (addresses.length > 1) {
       debugger;
-      throw new Error("More than 1 payment method");
+      throw new Error("More than 1 address");
     }
 
     const address = addresses[0];
@@ -200,11 +200,90 @@ const updateReChargeShipping = async (rechargeCustomer, localCustomer) => {
   }
 };
 
+const updateReChargeSubscription = async (rechargeCustomer, localCustomer) => {
+  try {
+    const rechargeCustomerId = rechargeCustomer.id;
+
+    const { subscriptions } = await ReChargeCustom.Subscriptions.list(
+      rechargeCustomerId
+    );
+
+    if (subscriptions.length > 1) {
+      debugger;
+      throw new Error("More than 1 subscription");
+    }
+
+    const subscription = subscriptions[0];
+
+    const {
+      address_id,
+      next_charge_scheduled_at,
+      external_variant_id: { ecommerce: external_variant_id },
+      status,
+    } = subscription;
+
+    let { id: subscription_id } = subscription;
+
+    const hasPlanChanged =
+      external_variant_id != localCustomer.external_variant_id;
+    const hasChargeDateChanged =
+      next_charge_scheduled_at != localCustomer.next_charge_date;
+
+    if (!hasPlanChanged && !hasChargeDateChanged) {
+      return "Subscription has not changed";
+    }
+
+    if (hasPlanChanged) {
+      await ReChargeCustom.Subscriptions.remove(subscription_id);
+
+      const body = {
+        address_id: address_id,
+        charge_interval_frequency: "1",
+        // Customer could have cancelled, leaving no next date on local
+        next_charge_scheduled_at:
+          localCustomer.next_charge_date || next_charge_scheduled_at,
+        order_interval_frequency: "1",
+        order_interval_unit: "week",
+        external_variant_id: {
+          ecommerce: external_variant_id,
+        },
+        quantity: 1,
+      };
+
+      const result = await ReChargeCustom.Subscriptions.create(body);
+      subscription_id = result.subscription.id;
+      if (DEBUG_MODE) {
+        console.log(result);
+      }
+    }
+
+    if (hasChargeDateChanged) {
+      // cancel
+      // update the charge date
+      const updateObj = {};
+
+      updateObj.status = status;
+      updateObj.next_charge_scheduled_at = localCustomer.next_charge_date;
+
+      const result = await ReChargeCustom.Subscriptions.update(
+        subscription_id,
+        updateObj
+      );
+    }
+
+    // Look out for skips?
+  } catch (error) {
+    console.log("Recharge Subscription update error");
+    throw error;
+  }
+};
+
 const updateReCustomerController = async (rechargeCustomer, localCustomer) => {
   try {
     // await updateReChargeCustomerProfile(rechargeCustomer, localCustomer);
     // await updateReChargeBillingAddress(rechargeCustomer, localCustomer);
     // await updateReChargeShipping(rechargeCustomer, localCustomer);
+    await updateReChargeSubscription(rechargeCustomer, localCustomer);
   } catch (error) {
     throw error;
   }
@@ -213,11 +292,11 @@ const updateReCustomerController = async (rechargeCustomer, localCustomer) => {
 (async () => {
   while (true) {
     try {
-      let query = `action = 'UPDATED' LIMIT 1`;
+      let query = `status = 'UPDATE' LIMIT 1`;
       const [foundOne] = await ORM.findOne(TRACK_CUSTOMER_UPDATE, query);
       const rechargeCustomer = await recharge_search.customer.list({
         // email: foundOne.new_email
-        email: "santa_claus@candylane.com",
+        email: "jfaltzgmail.com@example.com",
       });
 
       if (rechargeCustomer.length == 0) {
@@ -247,6 +326,14 @@ const updateReCustomerController = async (rechargeCustomer, localCustomer) => {
 
         const { shopify_customer_id } = rechargeCustomer[0];
         // TODO: Update Shopify as well
+
+        // TODO: Mark update to
+        // await ORM.updateOne(
+        //   TRACK_CUSTOMER_UPDATE,
+        //   "status",
+        //   "COMPLETED",
+        //   `WHERE id = '${foundOne.id}'`
+        // );
       }
     } catch (error) {
       debugger;
