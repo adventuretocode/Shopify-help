@@ -12,8 +12,8 @@ const DEBUG_MODE = false;
 
 const START_DATE = "2022-11-07";
 const BISTRO_ENV = "dev";
-const BISTRO_DAY = "tuesday";
-const FOLDER = "export_1-2"; // Restart the track file
+const BISTRO_DAY = "sunday";
+const FOLDER = "export_1-0"; // Restart the track file
 
 const DIRECTORY = "/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge";
 
@@ -123,8 +123,14 @@ const processRowData = async (rowData) => {
       START_DATE,
       Shipping_Day.replace("-MUST SHIP", "")
     );
+		status = "active";
   } else if (Program_Status == "Hold with Resume Date") {
     // TODO: will need to create a program to start skipping
+		nextChargeDate = momentJS.getNextDayOfWeek(
+      START_DATE,
+      Shipping_Day.replace("-MUST SHIP", "")
+    );
+		status = "active";
   } else if (Program_Status == "Finished" || Program_Status == "On Hold") {
     // Next Charge date can be left blank
     status = "cancelled";
@@ -264,12 +270,8 @@ const processRowData = async (rowData) => {
       );
     }
   } catch (error) {
-    if (error.code == "ER_DUP_ENTRY") {
-      return "Already added";
-    } else {
-      console.log(error);
-      throw error;
-    }
+		console.log(error);
+		throw error;
   }
 };
 
@@ -312,7 +314,6 @@ const main = async () => {
         // =============================================
         // TODO: try catch and log errors and continue to process the rest: WATCH_MODE
         await processRowData(rowCSV);
-        // TODO: update recharge customer if UPDATED API
         // =============================================
         await writeFile(
           new URL(trackFileLocation, import.meta.url),
