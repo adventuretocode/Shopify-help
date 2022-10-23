@@ -6,18 +6,17 @@ import momentJS from "./helpers/moment.js";
 
 // TODO: script to skip a future week(s)
 // TODO: authorize.net payment id
-// TODO: Update `process-many-csv.`
 
 const DEBUG_MODE = false;
 
 const START_DATE = "2022-11-07";
 const BISTRO_ENV = "dev";
-const BISTRO_DAY = "sunday";
-const FOLDER = "export_1-0"; // Restart the track file
+const BISTRO_DAY = "monday";
+const FOLDER = "export_1-1"; // Restart the track file
 
 const DIRECTORY = "/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge";
 
-dotenv.config({ path: `./.env.${BISTRO_ENV}` });
+dotenv.config({ path: `./.env` });
 
 const CUSTOMER_TABLE = `${BISTRO_ENV}_bistro_recharge_migration`;
 const CUSTOMER_TABLE_SOURCE = `${BISTRO_ENV}_source_bistro_recharge_migration`;

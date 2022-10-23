@@ -1,42 +1,54 @@
 // Example file for future use
-// Import from a large file. The files are spilt up first Ln: 21
 import dotenv from "dotenv";
 import neatCsv from "neat-csv";
-import { readFile, writeFile } from "fs/promises";
+import { readFile, writeFile, access } from "fs/promises";
 
 dotenv.config();
 
+const FOLDER = "/project";
+const DIRECTORY = `~/Document`;
+
 const main = async () => {
   try {
-    let fileExist = true;
-    let fileNumber = 1;
-    const trackFileLocation = `./data/track.txt`;
+		console.time();
+    const trackFileLocation = `./track.txt`;
 
-    while (fileExist) {
-      await writeFile(
-        new URL(trackFileLocation, import.meta.url),
-        `${fileNumber}\n:0)}`
-      );
+		try {
+      await access(trackFileLocation);
+    } catch (error) {
+      await writeFile( new URL(trackFileLocation, import.meta.url), `1:0`);
+    }
 
-      let fileLocation = `~/Document/project/customers-${fileNumber}.csv`;
+    while (true) {
+			let trackFile = await readFile( new URL(trackFileLocation, import.meta.url), { encoding: "utf8", });
+      let fileNumber = parseInt(trackFile.split(":")[0]);
+      let startNum = parseInt(trackFile.split(":")[1]);
+
+			let fileLocation = `${DIRECTORY}/${FOLDER}/customer_${fileNumber}.csv`;
+
+      try {
+        await access(fileLocation)
+      } catch (error) {
+        console.log("==========================================");
+        console.log("=============  COMPLETED ALL FILES =======");
+        console.log("==========================================");
+        console.timeEnd();
+        process.exit();
+      }
+
       const data = await readFile(new URL(fileLocation, import.meta.url), {
         encoding: "utf8",
       });
       const csvArr = await neatCsv(data);
       let endNum = csvArr.length;
-      let trackFile = await readFile(
-        new URL(trackFileLocation, import.meta.url),
-        {
-          encoding: "utf8",
-        }
-      );
-      let startNum = parseInt(trackFile.split(":")[1]);
 
       for (let i = startNum; i < endNum; i++) {
         const rowCSV = csvArr[i];
 				// =============================================
+        // TODO: try catch and log errors and continue to process the rest: WATCH_MODE
         // Example to where processing should happen
         console.log(rowCSV);
+				// await processRowData(rowCSV);
 				// =============================================
         await writeFile(
           new URL(trackFileLocation, import.meta.url),
@@ -44,9 +56,16 @@ const main = async () => {
         );
       }
 			fileNumber += 1;
+
+			await writeFile(
+        new URL(trackFileLocation, import.meta.url),
+        `${fileNumber}:0`
+      );
     }
   } catch (error) {
+		debugger;
     console.log("Error: ", error);
+		throw error;
   }
 };
 
