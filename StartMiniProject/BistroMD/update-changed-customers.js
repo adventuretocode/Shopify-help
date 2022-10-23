@@ -4,7 +4,6 @@
 // If they do exist then just do an update.
 
 import dotenv from "dotenv";
-import Recharge from "recharge-api-node"; // npm i --save-dev @types/recharge-api-node
 
 import ORM from "./db/orm.js";
 import compareSpecificKey from "./helpers/compareSpecificKey.js";
@@ -17,18 +16,6 @@ const BISTRO_ENV = "dev";
 const BISTRO_DAY = "monday";
 
 dotenv.config({ path: `./.env` });
-
-const { RECHARGE_TOKEN, RECHARGE_SECRET } = process.env;
-
-const recharge_search = new Recharge({
-  apiKey: RECHARGE_TOKEN,
-  secrete: RECHARGE_SECRET,
-});
-
-// const recharge_update = new Recharge({
-//   apiKey: RECHARGE_TOKEN,
-//   secrete: RECHARGE_SECRET,
-// });
 
 const CUSTOMER_TABLE = `${BISTRO_ENV}_bistro_recharge_migration`;
 const TRACK_CUSTOMER_UPDATE = `${BISTRO_ENV}_track_${BISTRO_DAY}_customer`;
@@ -294,10 +281,7 @@ const updateReCustomerController = async (rechargeCustomer, localCustomer) => {
     try {
       let query = `status = 'UPDATE' LIMIT 1`;
       const [foundOne] = await ORM.findOne(TRACK_CUSTOMER_UPDATE, query);
-      const rechargeCustomer = await recharge_search.customer.list({
-        // email: foundOne.new_email
-        email: "jfaltzgmail.com@example.com",
-      });
+      const rechargeCustomer = await ReChargeCustom.Customers.list(foundOne.email);
 
       if (rechargeCustomer.length == 0) {
         // Add customer to recharge
@@ -324,16 +308,15 @@ const updateReCustomerController = async (rechargeCustomer, localCustomer) => {
 
         await updateReCustomerController(rechargeCustomer[0], localCustomer);
 
-        const { shopify_customer_id } = rechargeCustomer[0];
-        // TODO: Update Shopify as well
-
-        // TODO: Mark update to
-        // await ORM.updateOne(
-        //   TRACK_CUSTOMER_UPDATE,
-        //   "status",
-        //   "COMPLETED",
-        //   `WHERE id = '${foundOne.id}'`
-        // );
+        // const { shopify_customer_id } = rechargeCustomer[0];
+				// Updating shopify not required. ReCharge updates customer email and phone number
+				
+        await ORM.updateOne(
+          TRACK_CUSTOMER_UPDATE,
+          "status",
+          "COMPLETED",
+          `WHERE id = '${foundOne.id}'`
+        );
       }
     } catch (error) {
       debugger;
