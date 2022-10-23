@@ -10,6 +10,21 @@ const create = async (body) => {
   }
 };
 
+const activate = async (subscription_id) => {
+  try {
+    const options = buildOptions(
+      `/subscriptions/${subscription_id}/activate`,
+      "POST",
+      null,
+      {}
+    );
+    const result = await networkRequest(options);
+    return result;
+  } catch (error) {
+    throw new Error("Axios Error");
+  }
+};
+
 const list = async (customer_id) => {
   try {
     const options = buildOptions(`/subscriptions`, "GET", {
@@ -37,6 +52,36 @@ const update = async (subscription_id, body) => {
   }
 };
 
+const set_next_charge_date = async (subscription_id, date) => {
+  try {
+    const options = buildOptions(
+      `/subscriptions/${subscription_id}/set_next_charge_date`,
+      "POST",
+      null,
+      { date }
+    );
+    const result = await networkRequest(options);
+    return result;
+  } catch (error) {
+    throw new Error("Axios Error");
+  }
+};
+
+const cancel = async (subscription_id) => {
+  try {
+    const options = buildOptions(
+      `/subscriptions/${subscription_id}/cancel`,
+      "POST",
+      null,
+      { cancellation_reason: "Cancel on Shopify import" }
+    );
+    const result = await networkRequest(options);
+    return result;
+  } catch (error) {
+    throw new Error("Axios Error");
+  }
+};
+
 const remove = async (subscription_id) => {
   try {
     const options = buildOptions(`/subscriptions/${subscription_id}`, "DELETE");
@@ -49,8 +94,11 @@ const remove = async (subscription_id) => {
 
 const Subscriptions = {
   create,
+  activate,
+  set_next_charge_date,
   update,
   list,
+  cancel,
   remove,
 };
 

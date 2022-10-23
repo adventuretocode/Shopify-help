@@ -215,6 +215,7 @@ const updateReChargeSubscription = async (rechargeCustomer, localCustomer) => {
       external_variant_id != localCustomer.external_variant_id;
     const hasChargeDateChanged =
       next_charge_scheduled_at != localCustomer.next_charge_date;
+    let hasReactivated;
 
     if (!hasPlanChanged && !hasChargeDateChanged) {
       return "Subscription has not changed";
@@ -244,21 +245,44 @@ const updateReChargeSubscription = async (rechargeCustomer, localCustomer) => {
       }
     }
 
-    if (hasChargeDateChanged) {
-      // cancel
-      // update the charge date
-      const updateObj = {};
-
-      updateObj.status = status;
-      updateObj.next_charge_scheduled_at = localCustomer.next_charge_date;
-
-      const result = await ReChargeCustom.Subscriptions.update(
-        subscription_id,
-        updateObj
-      );
+    if (status != localCustomer.status) {
+      let result;
+      if (status === "cancelled") {
+        // cancel subscription
+        result = await ReChargeCustom.Subscriptions.cancel(subscription_id);
+      } else if (status === "active") {
+        // activate subscription
+        const subActivate = await ReChargeCustom.Subscriptions.activate(
+          subscription_id
+        );
+        if (
+          subActivate.next_charge_scheduled_at != localCustomer.next_charge_date
+        ) {
+          result = await ReChargeCustom.Subscriptions.set_next_charge_date(
+            subscription_id,
+            localCustomer.next_charge_date
+          );
+        }
+        hasReactivated = true;
+        if (DEBUG_MODE) {
+          console.log(subActivate);
+          console.log(result);
+        }
+      }
     }
 
-    // Look out for skips?
+    if (hasChargeDateChanged && !hasReactivated) {
+      const result = await ReChargeCustom.Subscriptions.set_next_charge_date(
+        subscription_id,
+        localCustomer.next_charge_date
+      );
+
+      if (DEBUG_MODE) {
+        console.log(result);
+      }
+    }
+
+		return "Completed";
   } catch (error) {
     console.log("Recharge Subscription update error");
     throw error;
@@ -281,7 +305,9 @@ const updateReCustomerController = async (rechargeCustomer, localCustomer) => {
     try {
       let query = `status = 'UPDATE' LIMIT 1`;
       const [foundOne] = await ORM.findOne(TRACK_CUSTOMER_UPDATE, query);
-      const rechargeCustomer = await ReChargeCustom.Customers.list(foundOne.email);
+      const rechargeCustomer = await ReChargeCustom.Customers.list(
+        foundOne.email
+      );
 
       if (rechargeCustomer.length == 0) {
         // Add customer to recharge
@@ -309,8 +335,8 @@ const updateReCustomerController = async (rechargeCustomer, localCustomer) => {
         await updateReCustomerController(rechargeCustomer[0], localCustomer);
 
         // const { shopify_customer_id } = rechargeCustomer[0];
-				// Updating shopify not required. ReCharge updates customer email and phone number
-				
+        // Updating shopify not required. ReCharge updates customer email and phone number
+
         await ORM.updateOne(
           TRACK_CUSTOMER_UPDATE,
           "status",
