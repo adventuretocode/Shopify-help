@@ -1,8 +1,8 @@
 import dotenv from "dotenv";
 import neatCsv from "neat-csv";
 import { readFile, writeFile, access } from "fs/promises";
-import { phone } from 'phone';
-import momentJS from "./helpers/moment.js";
+import { phone } from "phone";
+import { getNextDayOfWeek } from "./helpers/moment.js";
 
 // TODO: script to skip a future week(s)
 // TODO: authorize.net payment id
@@ -12,9 +12,10 @@ const DEBUG_MODE = false;
 const START_DATE = "2022-11-07";
 const BISTRO_ENV = "dev";
 const BISTRO_DAY = "monday";
-const FOLDER = "export_1-1"; // Restart the track file
+const FOLDER = "export_1-0"; // Restart the track file
 
-const DIRECTORY = "/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge";
+const DIRECTORY =
+  "/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge";
 
 dotenv.config({ path: `./.env` });
 
@@ -40,28 +41,30 @@ const processRowData = async (rowData) => {
   // "Account: Created Date"
   // "CIM Profile ID"
 
-  const Program_Type = rowData['Program_Type'] || rowData["Program Type"];
-  const Program_Status = rowData['Program_Status'] || rowData["Program Status"];
-  const Program_Snack_Type = rowData['Program_Snack_Type'] || rowData["Program Snack Type"];
-  const Customer_ID = rowData['Customer_ID'] || rowData["Customer ID"];
-  const Shipping_Day = rowData['Shipping_Day'] || rowData["Shipping Day"];
-  const Shipping_Address_Line_1 = rowData['Shipping_Address_Line_1'] || rowData['Shipping Address Line 1'];
-  const Shipping_City = rowData['Shipping_City'] || rowData['Shipping City'];
+  const Program_Type = rowData["Program_Type"] || rowData["Program Type"];
+  const Program_Status = rowData["Program_Status"] || rowData["Program Status"];
+  const Program_Snack_Type =
+    rowData["Program_Snack_Type"] || rowData["Program Snack Type"];
+  const Customer_ID = rowData["Customer_ID"] || rowData["Customer ID"];
+  const Shipping_Day = rowData["Shipping_Day"] || rowData["Shipping Day"];
+  const Shipping_Address_Line_1 =
+    rowData["Shipping_Address_Line_1"] || rowData["Shipping Address Line 1"];
+  const Shipping_City = rowData["Shipping_City"] || rowData["Shipping City"];
   // TODO: mark email as unique
-  let Email = rowData['Email'];
+  let Email = rowData["Email"];
   let status = "";
 
-  if(!Email) return "";
+  if (!Email) return "";
 
-  if(
+  if (
     Email == "eric.narvartest@bistromd.com" ||
-    Email == 'ericcarestia+asdkfljsdflkjddd@gmail.com' ||
-    Email == 'ericcarestia+storetesterspeed@bistromd.com' ||
-    Email.includes('eric.carestia') ||
-    Email.includes('ericcarestia+') ||
-    Email.includes('eric.carestia+')
+    Email == "ericcarestia+asdkfljsdflkjddd@gmail.com" ||
+    Email == "ericcarestia+storetesterspeed@bistromd.com" ||
+    Email.includes("eric.carestia") ||
+    Email.includes("ericcarestia+") ||
+    Email.includes("eric.carestia+")
   ) {
-    return '';
+    return "";
   }
 
   if (!Program_Type || !Shipping_Address_Line_1 || !Shipping_City) {
@@ -118,18 +121,18 @@ const processRowData = async (rowData) => {
     Program_Status == "Fraud" ||
     Program_Status == "Verify Address"
   ) {
-    nextChargeDate = momentJS.getNextDayOfWeek(
+    nextChargeDate = getNextDayOfWeek(
       START_DATE,
       Shipping_Day.replace("-MUST SHIP", "")
     );
-		status = "active";
+    status = "active";
   } else if (Program_Status == "Hold with Resume Date") {
     // TODO: will need to create a program to start skipping
-		nextChargeDate = momentJS.getNextDayOfWeek(
+    nextChargeDate = getNextDayOfWeek(
       START_DATE,
       Shipping_Day.replace("-MUST SHIP", "")
     );
-		status = "active";
+    status = "active";
   } else if (Program_Status == "Finished" || Program_Status == "On Hold") {
     // Next Charge date can be left blank
     status = "cancelled";
@@ -137,7 +140,8 @@ const processRowData = async (rowData) => {
     Program_Status == "Never Started" ||
     Program_Status == "Gift Certificate Verify"
   ) {
-    if(DEBUG_MODE) console.log("skipped!!!!!!, Never Started, Gift Certificate Verify");
+    if (DEBUG_MODE)
+      console.log("skipped!!!!!!, Never Started, Gift Certificate Verify");
     return;
   } else {
     console.log(Program_Status);
@@ -145,10 +149,10 @@ const processRowData = async (rowData) => {
     throw new Error("New program status, unaccounted for");
   }
 
-  let phoneNumber = rowData['Phone'];
+  let phoneNumber = rowData["Phone"];
   try {
-    const phoneResult = phone(phoneNumber, {country: 'USA'});
-    if(phoneResult.isValid) {
+    const phoneResult = phone(phoneNumber, { country: "USA" });
+    if (phoneResult.isValid) {
       phoneNumber = phoneResult.phoneNumber;
     }
   } catch (error) {
@@ -164,7 +168,7 @@ const processRowData = async (rowData) => {
   const data = {
     customer_id: Customer_ID,
     // program_week: Program_Week_Updated,
-    gender: rowData['Gender'],
+    gender: rowData["Gender"],
 
     status: status,
 
@@ -175,8 +179,8 @@ const processRowData = async (rowData) => {
     next_charge_date: nextChargeDate,
 
     // shipping_company: "??????????????????",
-    billing_first_name: rowData['First_Name'] || rowData["First Name"],
-    billing_last_name: rowData['Last_Name'] || rowData["Last Name"],
+    billing_first_name: rowData["First_Name"] || rowData["First Name"],
+    billing_last_name: rowData["Last_Name"] || rowData["Last Name"],
 
     quantity: 1,
     charge_interval_unit_type: "week",
@@ -189,27 +193,35 @@ const processRowData = async (rowData) => {
     // authorizedotnet_customer_payment_profile_id:
     // TODO: email is unique
     shipping_email: Email,
-    shipping_first_name: rowData['First_Name'] || rowData["First Name"],
-    shipping_last_name: rowData['Last_Name'] || rowData["Last Name"],
+    shipping_first_name: rowData["First_Name"] || rowData["First Name"],
+    shipping_last_name: rowData["Last_Name"] || rowData["Last Name"],
     shipping_phone: phoneNumber,
     shipping_address_1: Shipping_Address_Line_1,
-    shipping_address_2: rowData['Shipping_Address_Line_2'] || rowData['Shipping Address Line 2'],
+    shipping_address_2:
+      rowData["Shipping_Address_Line_2"] || rowData["Shipping Address Line 2"],
     shipping_city: Shipping_City,
-    shipping_province: rowData['Shipping_StateProvince'] || rowData["Shipping State/Province"],
-    shipping_zip: rowData['Shipping_ZipPostal_Code'] || rowData["Shipping Zip/Postal Code"],
-    shipping_country: rowData['Shipping_Country'] || rowData["Shipping Country"],
-    billing_address_1: rowData['Billing_Address_Line_1'] || rowData["Billing Address Line 1"],
-    billing_address_2: rowData['Billing_Address_Line_2'] || rowData["Billing Address Line 2"],
-    billing_city: rowData['Billing_City'] || rowData["Billing City"],
-    billing_postalcode: rowData['Billing_ZipPostal_Code'] || rowData["Billing Zip/Postal Code"],
-    billing_province_state: rowData['Billing_StateProvince'] || rowData["Billing State/Province"],
-    billing_country: rowData['Billing_Country'] || rowData["Billing Country"],
-    billing_phone: rowData['Account_Phone'] || rowData["Account: Phone"],
-    
-    is_prepaid: '',
-    charge_on_day_of_month: '',
-    last_charge_date: '',
-    customer_created_at: '',
+    shipping_province:
+      rowData["Shipping_StateProvince"] || rowData["Shipping State/Province"],
+    shipping_zip:
+      rowData["Shipping_ZipPostal_Code"] || rowData["Shipping Zip/Postal Code"],
+    shipping_country:
+      rowData["Shipping_Country"] || rowData["Shipping Country"],
+    billing_address_1:
+      rowData["Billing_Address_Line_1"] || rowData["Billing Address Line 1"],
+    billing_address_2:
+      rowData["Billing_Address_Line_2"] || rowData["Billing Address Line 2"],
+    billing_city: rowData["Billing_City"] || rowData["Billing City"],
+    billing_postalcode:
+      rowData["Billing_ZipPostal_Code"] || rowData["Billing Zip/Postal Code"],
+    billing_province_state:
+      rowData["Billing_StateProvince"] || rowData["Billing State/Province"],
+    billing_country: rowData["Billing_Country"] || rowData["Billing Country"],
+    billing_phone: rowData["Account_Phone"] || rowData["Account: Phone"],
+
+    is_prepaid: "",
+    charge_on_day_of_month: "",
+    last_charge_date: "",
+    customer_created_at: "",
   };
 
   try {
@@ -219,16 +231,15 @@ const processRowData = async (rowData) => {
     let query = `customer_id = ${Customer_ID}`;
     const [foundOne] = await ORM.findOne(CUSTOMER_TABLE_SOURCE, query);
     if (foundOne) {
-
-      delete foundOne['charge_on_day_of_month'];
-      delete foundOne['is_prepaid'];
-      delete foundOne['last_charge_date'];
-      delete foundOne['customer_created_at'];
+      delete foundOne["charge_on_day_of_month"];
+      delete foundOne["is_prepaid"];
+      delete foundOne["last_charge_date"];
+      delete foundOne["customer_created_at"];
 
       const isTheSame = compareObjects(foundOne, data);
       if (!isTheSame) {
         whatChanged = findAllChangesKeys(foundOne, data).join(",");
-        if(DEBUG_MODE) console.log(whatChanged);
+        if (DEBUG_MODE) console.log(whatChanged);
 
         action = "UPDATED";
         trackStatus = "UPDATE";
@@ -263,14 +274,16 @@ const processRowData = async (rowData) => {
       program_status: Program_Status,
     });
 
-    if(DEBUG_MODE) {
+    if (DEBUG_MODE) {
       console.log(
-        `\u001b[38;5;${Customer_ID % 255}m${Email} -- action: ${action}\u001b[0m`
+        `\u001b[38;5;${
+          Customer_ID % 255
+        }m${Email} -- action: ${action}\u001b[0m`
       );
     }
   } catch (error) {
-		console.log(error);
-		throw error;
+    console.log(error);
+    throw error;
   }
 };
 
@@ -282,24 +295,27 @@ const main = async () => {
     try {
       await access(trackFileLocation);
     } catch (error) {
-      await writeFile( new URL(trackFileLocation, import.meta.url), `1:0`);
+      await writeFile(new URL(trackFileLocation, import.meta.url), `1:0`);
     }
 
     while (true) {
-      let trackFile = await readFile( new URL(trackFileLocation, import.meta.url), { encoding: "utf8", });
+      let trackFile = await readFile(
+        new URL(trackFileLocation, import.meta.url),
+        { encoding: "utf8" }
+      );
       let fileNumber = parseInt(trackFile.split(":")[0]);
       let startNum = parseInt(trackFile.split(":")[1]);
 
       let fileLocation = `${DIRECTORY}/${FOLDER}/customer_${fileNumber}.csv`;
 
       try {
-        await access(fileLocation)
+        await access(fileLocation);
       } catch (error) {
-        console.log("==========================================");
-        console.log("=============  COMPLETED ALL FILES =======");
-        console.log("==========================================");
-        console.timeEnd();
-        process.exit();
+        if (fileNumber == 1) {
+          throw new Error("File Location Not Found");
+        } else {
+          return "=============  COMPLETED ALL FILES =======";
+        }
       }
 
       const data = await readFile(new URL(fileLocation, import.meta.url), {
@@ -332,4 +348,22 @@ const main = async () => {
   }
 };
 
-main();
+main()
+  .then((success) => {
+    console.log("==========================================");
+    console.log(success);
+    console.log("==========================================");
+    console.timeEnd();
+    console.log("==========================================");
+    process.exit();
+  })
+  .catch((err) => {
+    console.log("==========================================");
+    console.log(err);
+    console.log("==========================================");
+    console.timeEnd();
+    console.log("==========================================");
+    process.exit();
+  });
+
+export default main;
