@@ -1,6 +1,6 @@
 import moment from "moment";
 
-const getNextDayOfWeek = (startDate, dayOfWeek) => {
+export const getNextDayOfWeek = (startDate, dayOfWeek) => {
   let cutOverDay = moment(moment(startDate).format("YYYY-MM-DD"));
   let nextDayOfWeek = moment(moment(startDate).format("YYYY-MM-DD")).day(
     dayOfWeek
@@ -16,6 +16,8 @@ const getNextDayOfWeek = (startDate, dayOfWeek) => {
 
 // console.log(getNextDayOfWeek("2022-10-01", "Monday"));
 
-export default {
-  getNextDayOfWeek,
-};
+export const getDayOfTheWeek = (date) => {
+	const d = moment(moment(startDate).format("YYYY-MM-DD"));
+	const day = d.day();
+	return day;
+}
