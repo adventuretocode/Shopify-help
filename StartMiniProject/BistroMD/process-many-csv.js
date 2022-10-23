@@ -7,27 +7,28 @@ dotenv.config();
 
 const FOLDER = "/project";
 const DIRECTORY = `~/Document`;
+const TRACK_FILE = `./track.txt`;
 
-const main = async () => {
+(async () => {
+  console.time();
   try {
-		console.time();
-    const trackFileLocation = `./track.txt`;
-
-		try {
-      await access(trackFileLocation);
+    try {
+      await access(TRACK_FILE);
     } catch (error) {
-      await writeFile( new URL(trackFileLocation, import.meta.url), `1:0`);
+      await writeFile(new URL(TRACK_FILE, import.meta.url), `1:0`);
     }
 
     while (true) {
-			let trackFile = await readFile( new URL(trackFileLocation, import.meta.url), { encoding: "utf8", });
+      let trackFile = await readFile(new URL(TRACK_FILE, import.meta.url), {
+        encoding: "utf8",
+      });
       let fileNumber = parseInt(trackFile.split(":")[0]);
       let startNum = parseInt(trackFile.split(":")[1]);
 
-			let fileLocation = `${DIRECTORY}/${FOLDER}/customer_${fileNumber}.csv`;
+      let fileLocation = `${DIRECTORY}/${FOLDER}/customer_${fileNumber}.csv`;
 
       try {
-        await access(fileLocation)
+        await access(fileLocation);
       } catch (error) {
         console.log("==========================================");
         console.log("=============  COMPLETED ALL FILES =======");
@@ -44,29 +45,24 @@ const main = async () => {
 
       for (let i = startNum; i < endNum; i++) {
         const rowCSV = csvArr[i];
-				// =============================================
+        // =============================================
         // TODO: try catch and log errors and continue to process the rest: WATCH_MODE
         // Example to where processing should happen
         console.log(rowCSV);
-				// await processRowData(rowCSV);
-				// =============================================
+        // await processRowData(rowCSV);
+        // =============================================
         await writeFile(
-          new URL(trackFileLocation, import.meta.url),
+          new URL(TRACK_FILE, import.meta.url),
           `${fileNumber}:${(i + 1).toString()}`
         );
       }
-			fileNumber += 1;
+      fileNumber += 1;
 
-			await writeFile(
-        new URL(trackFileLocation, import.meta.url),
-        `${fileNumber}:0`
-      );
+      await writeFile(new URL(TRACK_FILE, import.meta.url), `${fileNumber}:0`);
     }
   } catch (error) {
-		debugger;
+    debugger;
     console.log("Error: ", error);
-		throw error;
+    throw error;
   }
-};
-
-main();
+})();
