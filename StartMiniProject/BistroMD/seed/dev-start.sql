@@ -20,7 +20,7 @@ CREATE TABLE `dev_bistro_recharge_migration` (
   `charge_on_day_of_month` varchar(30) DEFAULT '',
   `last_charge_date` varchar(30) DEFAULT '',
   `next_charge_date` varchar(30) DEFAULT NULL,
-  `status` varchar(30) DEFAULT '',
+  `status` ENUM("active", "cancelled"),
   `customer_stripe_id` varchar(16) DEFAULT NULL,
   `customer_created_at` varchar(30) DEFAULT '',
   `shipping_email` varchar(100) NOT NULL,
@@ -66,7 +66,7 @@ CREATE TABLE `dev_source_bistro_recharge_migration` (
   `charge_on_day_of_month` varchar(30) DEFAULT '',
   `last_charge_date` varchar(30) DEFAULT '',
   `next_charge_date` varchar(30) DEFAULT NULL,
-  `status` varchar(30) DEFAULT '',
+  `status` ENUM("active", "cancelled"),
   `customer_stripe_id` varchar(16) DEFAULT NULL,
   `customer_created_at` varchar(30) DEFAULT '',
   `shipping_email` varchar(100) NOT NULL,
@@ -104,4 +104,3 @@ CREATE TABLE `dev_track__customer` (
   `program_status` ENUM("On Program","New Customer","Returning Customer","Card Declined","Fraud","Verify Address","Hold with Resume Date", "Finished","On Hold", "Never Started", "Gift Certificate Verify"),
   PRIMARY KEY (`id`)
 );
- 
