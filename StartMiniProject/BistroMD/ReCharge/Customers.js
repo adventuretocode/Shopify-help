@@ -1,20 +1,19 @@
-import axios from "axios";
-
-const { RECHARGE_TOKEN } = process.env;
+import { buildOptions, networkRequest } from "./base.js";
 
 const update = async (customerId, data) => {
   try {
-    const options = {
-      url: `https://api.rechargeapps.com/customers/${customerId}`,
-      headers: {
-        "Content-Type": "application/json",
-        "X-Recharge-Version": "2021-11",
-        "X-Recharge-Access-Token": RECHARGE_TOKEN,
-      },
-      method: "PUT",
-      data: data,
-    };
-    const result = await axios(options);
+    const options = buildOptions(`/customers/${customerId}`, "PUT", null, data);
+    const result = await networkRequest(options);
+    return result;
+  } catch (error) {
+    throw new Error("Axios Error");
+  }
+};
+
+const list = async (email) => {
+  try {
+    const options = buildOptions(`/customers`, "GET", { email });
+    const result = await networkRequest(options);
     return result;
   } catch (error) {
     throw new Error("Axios Error");
@@ -23,6 +22,7 @@ const update = async (customerId, data) => {
 
 const Customers = {
   update,
+  list,
 };
 
 export default Customers;
