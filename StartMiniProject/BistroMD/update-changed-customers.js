@@ -186,10 +186,7 @@ const updateReChargeShipping = async (rechargeCustomer, localCustomer) => {
       updateObj[key.recharge] = localCustomer[key.local];
     }
 
-    const result = await ReChargeCustom.Addresses.update(
-      address.id,
-      updateObj
-    );
+    const result = await ReChargeCustom.Addresses.update(address.id, updateObj);
 
     if (DEBUG_MODE)
       console.log(
