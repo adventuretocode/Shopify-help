@@ -33,7 +33,10 @@ const recharge_search = new Recharge({
 const CUSTOMER_TABLE = `${BISTRO_ENV}_bistro_recharge_migration`;
 const TRACK_CUSTOMER_UPDATE = `${BISTRO_ENV}_track_${BISTRO_DAY}_customer`;
 
-const updateCustomerProfile = async (rechargeCustomer, localCustomer) => {
+const updateReChargeCustomerProfile = async (
+  rechargeCustomer,
+  localCustomer
+) => {
   try {
     const rechargeCustomerId = rechargeCustomer.id;
     const keys = [
@@ -75,7 +78,10 @@ const updateCustomerProfile = async (rechargeCustomer, localCustomer) => {
   }
 };
 
-const updateCustomerBilling = async (rechargeCustomer, localCustomer) => {
+const updateReChargeBillingAddress = async (
+  rechargeCustomer,
+  localCustomer
+) => {
   try {
     const rechargeCustomerId = rechargeCustomer.id;
     const keys = [
@@ -89,10 +95,6 @@ const updateCustomerBilling = async (rechargeCustomer, localCustomer) => {
       { recharge: "first_name", local: "billing_first_name" },
       { recharge: "last_name", local: "billing_last_name" },
     ];
-
-    // Get payment method first
-    // Check if there is one. There should just be one for now.
-    // Update payment
 
     const { payment_methods } = await ReChargeCustom.PaymentMethods.list(
       rechargeCustomerId
@@ -145,10 +147,67 @@ const updateCustomerBilling = async (rechargeCustomer, localCustomer) => {
   }
 };
 
+const updateReChargeShipping = async (rechargeCustomer, localCustomer) => {
+  try {
+    const rechargeCustomerId = rechargeCustomer.id;
+    const keys = [
+      { recharge: "address1", local: "shipping_address_1" },
+      { recharge: "address2", local: "shipping_address_2" },
+      { recharge: "city", local: "shipping_city" },
+      { recharge: "province", local: "shipping_province" },
+      { recharge: "zip", local: "shipping_zip" },
+      // { recharge: "country", local: "shipping_country" },
+      { recharge: "phone", local: "shipping_phone" },
+      { recharge: "first_name", local: "shipping_first_name" },
+      { recharge: "last_name", local: "shipping_last_name" },
+    ];
+
+    const { addresses } = await ReChargeCustom.Addresses.list(
+      rechargeCustomerId
+    );
+
+    if (addresses.length == 0) {
+      return "Address not found";
+    } else if (addresses.length > 1) {
+      debugger;
+      throw new Error("More than 1 payment method");
+    }
+
+    const address = addresses[0];
+
+    const keysToUpdate = compareSpecificKey(address, localCustomer, keys);
+
+    if (keysToUpdate.length === 0) return "Nothing to update";
+
+    const updateObj = {};
+
+    for (let i = 0; i < keysToUpdate.length; i++) {
+      const key = keysToUpdate[i];
+      updateObj[key.recharge] = localCustomer[key.local];
+    }
+
+    const result = await ReChargeCustom.Addresses.update(
+      address.id,
+      updateObj
+    );
+
+    if (DEBUG_MODE)
+      console.log(
+        `\u001b[38;5;${rechargeCustomerId % 255}m${
+          rechargeCustomer.email
+        } Updated Billing Address\u001b[0m`
+      );
+  } catch (error) {
+    console.log("Recharge Address update error");
+    throw error;
+  }
+};
+
 const updateReCustomerController = async (rechargeCustomer, localCustomer) => {
   try {
-    // await updateCustomerProfile(rechargeCustomer, localCustomer)
-    // await updateCustomerBilling(rechargeCustomer, localCustomer);
+    // await updateReChargeCustomerProfile(rechargeCustomer, localCustomer);
+    // await updateReChargeBillingAddress(rechargeCustomer, localCustomer);
+    // await updateReChargeShipping(rechargeCustomer, localCustomer);
   } catch (error) {
     throw error;
   }
@@ -195,6 +254,7 @@ const updateReCustomerController = async (rechargeCustomer, localCustomer) => {
     } catch (error) {
       debugger;
       console.log("Error: ", error);
+      throw "";
     }
   }
 })();
