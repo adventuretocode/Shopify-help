@@ -6,7 +6,7 @@ import { readFile, writeFile, access } from "fs/promises";
 dotenv.config();
 
 const DIRECTORY = `~/Document`;
-const FOLDER = `/project`;
+const FOLDER = `project`;
 const APPEND_FILE_NAME = `export`;
 const TRACK_FILE = `./track.txt`;
 
