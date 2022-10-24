@@ -10,7 +10,7 @@ const update = async (customerId, data) => {
   }
 };
 
-const list = async (email) => {
+const findByEmail = async (email) => {
   try {
     const options = buildOptions(`/customers`, "GET", { email });
     const result = await networkRequest(options);
@@ -22,7 +22,7 @@ const list = async (email) => {
 
 const Customers = {
   update,
-  list,
+  findByEmail,
 };
 
 export default Customers;
