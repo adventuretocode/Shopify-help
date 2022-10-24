@@ -5,11 +5,12 @@ import { readFile, writeFile, access } from "fs/promises";
 
 dotenv.config();
 
-const FOLDER = "/project";
 const DIRECTORY = `~/Document`;
+const FOLDER = `/project`;
+const APPEND_FILE_NAME = `export`;
 const TRACK_FILE = `./track.txt`;
 
-(async () => {
+const main = async () => {
   console.time();
   try {
     try {
@@ -25,16 +26,16 @@ const TRACK_FILE = `./track.txt`;
       let fileNumber = parseInt(trackFile.split(":")[0]);
       let startNum = parseInt(trackFile.split(":")[1]);
 
-      let fileLocation = `${DIRECTORY}/${FOLDER}/customer_${fileNumber}.csv`;
+      let fileLocation = `${DIRECTORY}/${FOLDER}/${APPEND_FILE_NAME}_${fileNumber}.csv`;
 
       try {
         await access(fileLocation);
       } catch (error) {
-        console.log("==========================================");
-        console.log("=============  COMPLETED ALL FILES =======");
-        console.log("==========================================");
-        console.timeEnd();
-        process.exit();
+        if (fileNumber == 1) {
+          throw new Error("File Location Not Found");
+        } else {
+          return "=============  COMPLETED ALL FILES =======";
+        }
       }
 
       const data = await readFile(new URL(fileLocation, import.meta.url), {
@@ -61,8 +62,27 @@ const TRACK_FILE = `./track.txt`;
       await writeFile(new URL(TRACK_FILE, import.meta.url), `${fileNumber}:0`);
     }
   } catch (error) {
-    debugger;
     console.log("Error: ", error);
     throw error;
   }
-})();
+};
+
+main()
+  .then((success) => {
+    console.log("==========================================");
+    console.log(success);
+    console.log("==========================================");
+    console.timeEnd();
+    console.log("==========================================");
+    process.exit();
+  })
+  .catch((err) => {
+    console.log("==========================================");
+    console.log(err);
+    console.log("==========================================");
+    console.timeEnd();
+    console.log("==========================================");
+    process.exit();
+  });
+
+export default main;
