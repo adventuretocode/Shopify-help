@@ -53,10 +53,7 @@ const processRowData = async (rowCSV) => {
 
     const { next_charge_date, shipping_email } = localCustomers[0];
 
-    // const rechargeCustomers = await ReCharge.Customers.list(shipping_email);
-    const { customers: rechargeCustomers } = await ReCharge.Customers.list(
-      "santa_claus@candylane.com"
-    );
+    const rechargeCustomers = await ReCharge.Customers.list(shipping_email);
 
     if (rechargeCustomers.length != 1) {
       throw new Error(`ReCharge Customer has ${localCustomers.length} records`);
@@ -65,9 +62,7 @@ const processRowData = async (rowCSV) => {
     const dayOfWeek = getDayOfTheWeek(next_charge_date);
     const nextDateOfWeek = getNextDayOfWeek(startHoldDate, dayOfWeek);
 
-    const { subscriptions } = ReCharge.Subscriptions.list(
-      "santa_claus@candylane.com"
-    );
+    const { subscriptions } = ReCharge.Subscriptions.list(shipping_email);
 
     if (subscriptions.length != 1)
       throw new Error(`Subscription has ${subscriptions.length} records`);
