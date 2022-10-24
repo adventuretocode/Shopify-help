@@ -1,4 +1,7 @@
 import axios from "axios";
+import dotenv from "dotenv";
+
+dotenv.config({ path: `./.env` });
 
 const { RECHARGE_TOKEN } = process.env;
 
