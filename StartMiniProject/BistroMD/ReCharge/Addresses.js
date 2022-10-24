@@ -35,7 +35,7 @@ const skip_future_charge = async (address_id, date, items) => {
       null,
       {
         date,
-        purchase_item_ids: items,
+        subscription_ids: items,
       }
     );
     const result = await networkRequest(options);
