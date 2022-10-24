@@ -12,8 +12,8 @@ const DEBUG_MODE = false;
 
 const START_DATE = "2022-11-07";
 const BISTRO_ENV = "dev";
-const BISTRO_DAY = "tuesday";
-const FOLDER = "export_1-2"; // Restart the track file
+const BISTRO_DAY = "sunday";
+const FOLDER = "export_2-0"; // Restart the track file
 
 const DIRECTORY =
   "/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge";
@@ -151,10 +151,16 @@ const processRowData = async (rowData) => {
   }
 
   let phoneNumber = rowData["Phone"];
+  let billingPhoneNumber =
+    rowData["Account_Phone"] || rowData["Account: Phone"];
   try {
     const phoneResult = phone(phoneNumber, { country: "USA" });
     if (phoneResult.isValid) {
       phoneNumber = phoneResult.phoneNumber;
+    }
+    const billingPhoneResult = phone(billingPhoneNumber, { country: "USA" });
+    if (billingPhoneResult.isValid) {
+      billingPhoneNumber = billingPhoneResult.phoneNumber;
     }
   } catch (error) {
     console.log("Phone Number Error: ", Customer_ID);
@@ -217,7 +223,7 @@ const processRowData = async (rowData) => {
     billing_province_state:
       rowData["Billing_StateProvince"] || rowData["Billing State/Province"],
     billing_country: rowData["Billing_Country"] || rowData["Billing Country"],
-    billing_phone: rowData["Account_Phone"] || rowData["Account: Phone"],
+    billing_phone: billingPhoneNumber,
 
     is_prepaid: "",
     charge_on_day_of_month: "",
