@@ -305,7 +305,7 @@ const updateReCustomerController = async (rechargeCustomer, localCustomer) => {
     try {
       let query = `status = 'UPDATE' LIMIT 1`;
       const [foundOne] = await ORM.findOne(TRACK_CUSTOMER_UPDATE, query);
-      const rechargeCustomer = await ReChargeCustom.Customers.list(
+      const rechargeCustomer = await ReChargeCustom.Customers.findByEmail(
         foundOne.email
       );
 

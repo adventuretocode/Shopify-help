@@ -53,7 +53,7 @@ const processRowData = async (rowCSV) => {
 
     const { next_charge_date, shipping_email } = localCustomers[0];
 
-    const rechargeCustomers = await ReCharge.Customers.list(shipping_email);
+    const rechargeCustomers = await ReCharge.Customers.findByEmail(shipping_email);
 
     if (rechargeCustomers.length != 1) {
       throw new Error(`ReCharge Customer has ${localCustomers.length} records`);
