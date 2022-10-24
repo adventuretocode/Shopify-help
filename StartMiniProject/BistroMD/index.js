@@ -212,7 +212,9 @@ const processRowData = async (rowData) => {
     shipping_zip:
       rowData["Shipping_ZipPostal_Code"] || rowData["Shipping Zip/Postal Code"],
     shipping_country:
-      rowData["Shipping_Country"] || rowData["Shipping Country"],
+      rowData["Shipping_Country"] ||
+      rowData["Shipping Country"] ||
+      "United States",
     billing_address_1:
       rowData["Billing_Address_Line_1"] || rowData["Billing Address Line 1"],
     billing_address_2:
@@ -222,7 +224,10 @@ const processRowData = async (rowData) => {
       rowData["Billing_ZipPostal_Code"] || rowData["Billing Zip/Postal Code"],
     billing_province_state:
       rowData["Billing_StateProvince"] || rowData["Billing State/Province"],
-    billing_country: rowData["Billing_Country"] || rowData["Billing Country"],
+    billing_country:
+      rowData["Billing_Country"] ||
+      rowData["Billing Country"] ||
+      "United States",
     billing_phone: billingPhoneNumber,
 
     is_prepaid: "",
