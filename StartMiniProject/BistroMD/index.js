@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import neatCsv from "neat-csv";
+import say from "say";
 import { readFile, writeFile, access } from "fs/promises";
 import { phone } from "phone";
 import { getNextDayOfWeek } from "./helpers/moment.js";
@@ -11,8 +12,8 @@ const DEBUG_MODE = false;
 
 const START_DATE = "2022-11-07";
 const BISTRO_ENV = "dev";
-const BISTRO_DAY = "monday";
-const FOLDER = "export_1-0"; // Restart the track file
+const BISTRO_DAY = "tuesday";
+const FOLDER = "export_1-2"; // Restart the track file
 
 const DIRECTORY =
   "/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge";
@@ -343,8 +344,8 @@ const main = async () => {
       );
     }
   } catch (error) {
-    debugger;
     console.log("Error: ", error);
+    throw error;
   }
 };
 
@@ -355,6 +356,7 @@ main()
     console.log("==========================================");
     console.timeEnd();
     console.log("==========================================");
+    say.speak("Node js has completed successfully");
     process.exit();
   })
   .catch((err) => {
@@ -363,6 +365,7 @@ main()
     console.log("==========================================");
     console.timeEnd();
     console.log("==========================================");
+    say.speak("Node js has exited with errors " + err.message);
     process.exit();
   });
 
