@@ -7,7 +7,7 @@ import {
 
 const remove = async (customer_id) => {
   try {
-    const options = buildOptions(`/customers/${customer_id}`, "DELETE");
+    const options = buildOptions(`/customers/${customer_id}.json`, "DELETE");
     const result = await networkRequest(options);
     return result;
   } catch (error) {
