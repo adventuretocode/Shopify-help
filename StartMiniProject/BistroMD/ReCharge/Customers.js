@@ -10,6 +10,10 @@ const update = async (customerId, data) => {
   }
 };
 
+/**
+ * 
+ * @return list of customers
+ */
 const findByEmail = async (email) => {
   try {
     const options = buildOptions(`/customers`, "GET", { email });
