@@ -38,7 +38,8 @@ SELECT
   `billing_phone`
 FROM
   `dev_bistro_recharge_migration`
-LIMIT 0, 5000;
+WHERE 
+  `status` != 'DONT_PROCESS';
 
 -- 
 
