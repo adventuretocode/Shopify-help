@@ -10,15 +10,15 @@ import { getNextDayOfWeek } from "./helpers/moment.js";
 const DEBUG_MODE = false;
 
 const START_DATE = "2022-11-06";
-const BISTRO_ENV_TABLE = "dev";
+const BISTRO_ENV_TABLE = "prod";
 const BISTRO_ENV_DATA = "prod";
 const BISTRO_DAY = "sunday";
-const FOLDER = "export_2"; // Restart the track file
+const FOLDER = "export_2-2"; // Restart the track file
 
 const DIRECTORY =
   "/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge";
 
-dotenv.config({ path: `./.env` });
+dotenv.config({ path: `./.env.${BISTRO_ENV_DATA}` });
 
 const CUSTOMER_TABLE = `${BISTRO_ENV_TABLE}_bistro_recharge_migration`;
 const CUSTOMER_TABLE_SOURCE = `${BISTRO_ENV_TABLE}_source_bistro_recharge_migration`;
@@ -234,10 +234,11 @@ const processRowData = async (rowData) => {
     customer_created_at: "",
   };
 
-	if(BISTRO_ENV_DATA == "prod") {
-		data.authorizedotnet_customer_profile_id = rowData["CIM Profile ID"];
-    data.authorizedotnet_customer_payment_profile_id = rowData["Payment Profile ID"];
-	}
+  if (BISTRO_ENV_DATA == "prod") {
+    data.authorizedotnet_customer_profile_id = rowData["CIM Profile ID"];
+    data.authorizedotnet_customer_payment_profile_id =
+      rowData["Payment Profile ID"];
+  }
 
   try {
     let action = "NO CHANGE";

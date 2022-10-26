@@ -2,7 +2,9 @@
 import mysql from "mysql";
 import dotenv from "dotenv";
 
-dotenv.config({path: "./.env"});
+const BISTRO_ENV = "prod";
+
+dotenv.config({ path: `./.env.${BISTRO_ENV}` });
 
 const { DB_USER, DB_HOST, DB_PASSWORD, DB_DATABASE } = process.env;
 
