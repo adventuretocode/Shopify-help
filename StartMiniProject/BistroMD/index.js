@@ -243,6 +243,11 @@ const processRowData = async (rowData) => {
     let query = `customer_id = ${Customer_ID}`;
     const [foundOne] = await ORM.findOne(CUSTOMER_TABLE_SOURCE, query);
     if (foundOne) {
+      if (foundOne.status === "DONT_PROCESS") {
+        trackStatus = "DONT_PROCESS";
+        return "Manual overwrite Don't process";
+      }
+
       delete foundOne["charge_on_day_of_month"];
       delete foundOne["is_prepaid"];
       delete foundOne["last_charge_date"];
