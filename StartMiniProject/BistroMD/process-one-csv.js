@@ -8,6 +8,15 @@ const DIRECTORY = `~/Document`;
 const FILE_NAME = `export`;
 const TRACK_FILE = `./track.txt`;
 
+const processRowData = async (rowData) => {
+  try {
+    console.log(rowData);
+		return "async";
+  } catch (error) {
+    throw error;
+  }
+}
+
 const main = async () => {
   console.time();
   try {
@@ -39,7 +48,7 @@ const main = async () => {
     for (let i = startNum; i < endNum; i++) {
       const rowCSV = csvArr[i];
       // =========================================================
-      console.log(rowCSV);
+      await processRowData(rowCSV);
       // =========================================================
       await writeFile(new URL(TRACK_FILE, import.meta.url), (i + 1).toString());
     }
