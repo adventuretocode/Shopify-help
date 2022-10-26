@@ -196,9 +196,7 @@ const processRowData = async (rowData) => {
     shipping_interval_frequency: 1,
 
     customer_stripe_id: "",
-    // authorizedotnet_customer_profile_id: CIM_Profile_ID
-    // authorizedotnet_customer_payment_profile_id:
-    // TODO: email is unique
+
     shipping_email: Email,
     shipping_first_name: rowData["First_Name"] || rowData["First Name"],
     shipping_last_name: rowData["Last_Name"] || rowData["Last Name"],
@@ -235,6 +233,11 @@ const processRowData = async (rowData) => {
     last_charge_date: "",
     customer_created_at: "",
   };
+
+	if(BISTRO_ENV == "prod") {
+		data.authorizedotnet_customer_profile_id = rowData["CIM_Profile_ID"];
+    data.authorizedotnet_customer_payment_profile_id = rowData["Payment Profile ID"];
+	}
 
   try {
     let action = "NO CHANGE";
