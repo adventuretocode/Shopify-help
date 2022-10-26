@@ -6,24 +6,24 @@ import { phone } from "phone";
 import { getNextDayOfWeek } from "./helpers/moment.js";
 
 // TODO: script to skip a future week(s)
-// TODO: authorize.net payment id
 
 const DEBUG_MODE = false;
 
 const START_DATE = "2022-11-07";
-const BISTRO_ENV = "dev";
+const BISTRO_ENV_TABLE = "dev";
+const BISTRO_ENV_DATA = "prod";
 const BISTRO_DAY = "sunday";
-const FOLDER = "export_2-0"; // Restart the track file
+const FOLDER = "export_2"; // Restart the track file
 
 const DIRECTORY =
   "/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge";
 
 dotenv.config({ path: `./.env` });
 
-const CUSTOMER_TABLE = `${BISTRO_ENV}_bistro_recharge_migration`;
-const CUSTOMER_TABLE_SOURCE = `${BISTRO_ENV}_source_bistro_recharge_migration`;
-const PRODUCT_TABLE = `${BISTRO_ENV}_prices_from_cart`;
-const TRACK_CUSTOMER_UPDATE = `${BISTRO_ENV}_track_${BISTRO_DAY}_customer`;
+const CUSTOMER_TABLE = `${BISTRO_ENV_TABLE}_bistro_recharge_migration`;
+const CUSTOMER_TABLE_SOURCE = `${BISTRO_ENV_TABLE}_source_bistro_recharge_migration`;
+const PRODUCT_TABLE = `${BISTRO_ENV_TABLE}_prices_from_cart`;
+const TRACK_CUSTOMER_UPDATE = `${BISTRO_ENV_TABLE}_track_${BISTRO_DAY}_customer`;
 
 import ORM from "./db/orm.js";
 import compareObjects from "./helpers/compareObjects.js";
@@ -167,7 +167,7 @@ const processRowData = async (rowData) => {
     throw new Error("Phone Number Error");
   }
 
-  if (BISTRO_ENV == "prod") {
+  if (BISTRO_ENV_DATA == "prod") {
   } else {
     Email = Email.replace("@", "---").concat("@example.com");
   }
@@ -234,7 +234,7 @@ const processRowData = async (rowData) => {
     customer_created_at: "",
   };
 
-	if(BISTRO_ENV == "prod") {
+	if(BISTRO_ENV_DATA == "prod") {
 		data.authorizedotnet_customer_profile_id = rowData["CIM_Profile_ID"];
     data.authorizedotnet_customer_payment_profile_id = rowData["Payment Profile ID"];
 	}
