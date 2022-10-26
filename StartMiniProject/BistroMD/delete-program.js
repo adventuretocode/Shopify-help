@@ -59,6 +59,7 @@ const deleteCustomerOrder = async (orders) => {
 const deleteCustomerController = async (gid, email) => {
   try {
     const result = await ShopifyCustom.Customers.deleteCustomerGraphQL(gid);
+    // TODO: may error out
     const { customerDelete } = result;
 
     if (customerDelete.userErrors.length) {
@@ -167,6 +168,12 @@ const removeCustomerReChargeAndShopify = async (rechargeCustomer) => {
     external_customer_id: { ecommerce: shopify_customer_id },
   } = rechargeCustomer;
 
+  // Temporary due to Shopify error
+  // the customer has an active subscription now, or if the customer ever had a subscription in the past
+  if (subscriptions_total_count > 0) {
+    return "";
+  }
+
   try {
     try {
       await rechargeRemoveCustomerAndSubscriptions(rechargeCustomer);
@@ -205,7 +212,12 @@ const deleteMany = async () => {
       const length = rechargeCustomers.length;
       for (let i = 0; i < length; i++) {
         const customer = rechargeCustomers[i];
-        await removeCustomerReChargeAndShopify(customer);
+        try {
+          await removeCustomerReChargeAndShopify(customer);
+        } catch (error) {
+          console.log(error);
+          console.log("===== removeCustomerReChargeAndShopify ========");
+        }
       }
     }
   } catch (error) {
