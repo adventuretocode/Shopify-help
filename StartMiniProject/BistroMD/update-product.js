@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 
-const BISTRO_ENV = "dev";
+const BISTRO_ENV = "prod";
 
 dotenv.config({ path: `./.env.${BISTRO_ENV}` });
 

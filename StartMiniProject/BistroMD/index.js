@@ -9,7 +9,7 @@ import { getNextDayOfWeek } from "./helpers/moment.js";
 
 const DEBUG_MODE = false;
 
-const START_DATE = "2022-11-07";
+const START_DATE = "2022-11-06";
 const BISTRO_ENV_TABLE = "dev";
 const BISTRO_ENV_DATA = "prod";
 const BISTRO_DAY = "sunday";
@@ -235,7 +235,7 @@ const processRowData = async (rowData) => {
   };
 
 	if(BISTRO_ENV_DATA == "prod") {
-		data.authorizedotnet_customer_profile_id = rowData["CIM_Profile_ID"];
+		data.authorizedotnet_customer_profile_id = rowData["CIM Profile ID"];
     data.authorizedotnet_customer_payment_profile_id = rowData["Payment Profile ID"];
 	}
 
