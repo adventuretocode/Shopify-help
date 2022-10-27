@@ -15,6 +15,8 @@ SELECT
   `next_charge_date`,
   `status`,
   `customer_stripe_id`,
+  `authorizedotnet_customer_profile_id`,
+	`authorizedotnet_customer_payment_profile_id`,
   `customer_created_at`,
   `shipping_email`,
   `shipping_first_name`,
