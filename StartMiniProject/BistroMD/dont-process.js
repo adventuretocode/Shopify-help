@@ -9,7 +9,7 @@ const DIRECTORY = `/Volumes/XTRM-Q/Code/Projects/myGIT/Shopify-help/StartMiniPro
 const FILE_NAME = `./data/DONT_PROCESS`;
 const TRACK_FILE = `./track-dont_process.txt`;
 
-const BISTRO_ENV = "dev";
+const BISTRO_ENV = "prod";
 
 const CUSTOMER_TABLE = `${BISTRO_ENV}_bistro_recharge_migration`;
 
