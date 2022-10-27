@@ -240,6 +240,9 @@ const processRowData = async (rowData) => {
       rowData["Payment Profile ID"];
   }
 
+	data.shipping_province = data.shipping_province.toUpperCase();
+	data.billing_province_state = data.billing_province_state.toUpperCase();
+
   try {
     let action = "NO CHANGE";
     let trackStatus = "NONE";
