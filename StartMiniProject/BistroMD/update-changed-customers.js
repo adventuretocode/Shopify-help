@@ -10,12 +10,12 @@ import compareSpecificKey from "./helpers/compareSpecificKey.js";
 
 import ReChargeCustom from "./ReCharge/Recharge.js";
 
-const DEBUG_MODE = false;
+const DEBUG_MODE = true;
 
 const BISTRO_ENV = "dev";
 const BISTRO_DAY = "monday";
 
-dotenv.config({ path: `./.env` });
+dotenv.config();
 
 const CUSTOMER_TABLE = `${BISTRO_ENV}_bistro_recharge_migration`;
 const TRACK_CUSTOMER_UPDATE = `${BISTRO_ENV}_track_${BISTRO_DAY}_customer`;
@@ -214,7 +214,7 @@ const updateReChargeSubscription = async (rechargeCustomer, localCustomer) => {
     const hasPlanChanged =
       external_variant_id != localCustomer.external_variant_id;
     const hasChargeDateChanged =
-      next_charge_scheduled_at != localCustomer.next_charge_date;
+      !!next_charge_scheduled_at != !!localCustomer.next_charge_date;
     let hasReactivated;
 
     if (!hasPlanChanged && !hasChargeDateChanged) {
@@ -282,7 +282,7 @@ const updateReChargeSubscription = async (rechargeCustomer, localCustomer) => {
       }
     }
 
-		return "Completed";
+    return "Completed";
   } catch (error) {
     console.log("Recharge Subscription update error");
     throw error;
@@ -291,9 +291,9 @@ const updateReChargeSubscription = async (rechargeCustomer, localCustomer) => {
 
 const updateReCustomerController = async (rechargeCustomer, localCustomer) => {
   try {
-    // await updateReChargeCustomerProfile(rechargeCustomer, localCustomer);
-    // await updateReChargeBillingAddress(rechargeCustomer, localCustomer);
-    // await updateReChargeShipping(rechargeCustomer, localCustomer);
+    await updateReChargeCustomerProfile(rechargeCustomer, localCustomer);
+    await updateReChargeBillingAddress(rechargeCustomer, localCustomer);
+    await updateReChargeShipping(rechargeCustomer, localCustomer);
     await updateReChargeSubscription(rechargeCustomer, localCustomer);
   } catch (error) {
     throw error;
@@ -305,9 +305,11 @@ const updateReCustomerController = async (rechargeCustomer, localCustomer) => {
     try {
       let query = `status = 'UPDATE' LIMIT 1`;
       const [foundOne] = await ORM.findOne(TRACK_CUSTOMER_UPDATE, query);
-      const rechargeCustomer = await ReChargeCustom.Customers.findByEmail(
-        foundOne.email
+      const results = await ReChargeCustom.Customers.findByEmail(
+        foundOne.old_email
       );
+
+      const { customers: rechargeCustomer } = results;
 
       if (rechargeCustomer.length == 0) {
         // Add customer to recharge
@@ -334,14 +336,11 @@ const updateReCustomerController = async (rechargeCustomer, localCustomer) => {
 
         await updateReCustomerController(rechargeCustomer[0], localCustomer);
 
-        // const { shopify_customer_id } = rechargeCustomer[0];
-        // Updating shopify not required. ReCharge updates customer email and phone number
-
         await ORM.updateOne(
           TRACK_CUSTOMER_UPDATE,
           "status",
           "COMPLETED",
-          `WHERE id = '${foundOne.id}'`
+          `id = '${foundOne.id}'`
         );
       }
     } catch (error) {
