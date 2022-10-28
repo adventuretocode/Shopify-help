@@ -227,6 +227,7 @@ const processRowData = async (rowData) => {
       "United States",
     billing_phone: billingPhoneNumber,
 
+		program_week: rowData["Program Week Updated"],
 		shipping_day: Shipping_Day.replace("-MUST SHIP", ""),
     is_prepaid: "",
     charge_on_day_of_month: "",

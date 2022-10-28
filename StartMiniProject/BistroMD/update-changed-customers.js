@@ -9,9 +9,11 @@ import ORM from "./db/orm.js";
 import compareSpecificKey from "./helpers/compareSpecificKey.js";
 
 import ReChargeCustom from "./ReCharge/Recharge.js";
+import { getNextDayOfWeek } from "./helpers/moment";
 
 const DEBUG_MODE = true;
 
+const START_DATE = "2022-11-06";
 const BISTRO_ENV = "dev";
 const BISTRO_DAY = "monday";
 
@@ -179,7 +181,7 @@ const updateReChargeShipping = async (rechargeCustomer, localCustomer) => {
       console.log(
         `\u001b[38;5;${rechargeCustomerId % 255}m${
           rechargeCustomer.email
-        } Updated Billing Address\u001b[0m`
+        } Updated Shipping Address\u001b[0m`
       );
   } catch (error) {
     console.log("Recharge Address update error");
@@ -213,23 +215,44 @@ const updateReChargeSubscription = async (rechargeCustomer, localCustomer) => {
 
     const hasPlanChanged =
       external_variant_id != localCustomer.external_variant_id;
-    const hasChargeDateChanged =
-      !!next_charge_scheduled_at != !!localCustomer.next_charge_date;
-    let hasReactivated;
 
-    if (!hasPlanChanged && !hasChargeDateChanged) {
+    let hasReactivated;
+    let hasChargeDateChanged;
+    let statusChanged = status != localCustomer.status;
+
+    if (
+      (next_charge_scheduled_at == "" || next_charge_scheduled_at == null) &&
+      (localCustomer.next_charge_date == "" ||
+        localCustomer.next_charge_date == null)
+    ) {
+      hasChargeDateChanged = false;
+    }
+    if (hasChargeDateChanged == undefined) {
+      hasChargeDateChanged =
+        next_charge_scheduled_at != localCustomer.next_charge_date;
+    }
+
+    if (!hasPlanChanged && !hasChargeDateChanged && !statusChanged) {
       return "Subscription has not changed";
     }
 
     if (hasPlanChanged) {
       await ReChargeCustom.Subscriptions.remove(subscription_id);
 
+      let nextChargeScheduledAt =
+        localCustomer.next_charge_date || next_charge_scheduled_at;
+      if (!nextChargeScheduledAt) {
+        nextChargeScheduledAt = getNextDayOfWeek(
+          START_DATE,
+          localCustomer.shipping_day
+        );
+      }
+
       const body = {
         address_id: address_id,
         charge_interval_frequency: "1",
         // Customer could have cancelled, leaving no next date on local
-        next_charge_scheduled_at:
-          localCustomer.next_charge_date || next_charge_scheduled_at,
+        next_charge_scheduled_at: nextChargeScheduledAt,
         order_interval_frequency: "1",
         order_interval_unit: "week",
         external_variant_id: {
@@ -245,18 +268,19 @@ const updateReChargeSubscription = async (rechargeCustomer, localCustomer) => {
       }
     }
 
-    if (status != localCustomer.status) {
+    if (statusChanged) {
       let result;
-      if (status === "cancelled") {
+      if (status === "active" && localCustomer.status === "cancelled") {
         // cancel subscription
         result = await ReChargeCustom.Subscriptions.cancel(subscription_id);
-      } else if (status === "active") {
+      } else if (status === "cancelled" && localCustomer.status === "active") {
         // activate subscription
         const subActivate = await ReChargeCustom.Subscriptions.activate(
           subscription_id
         );
         if (
-          subActivate.next_charge_scheduled_at != localCustomer.next_charge_date
+          subActivate.subscription.next_charge_scheduled_at !=
+          localCustomer.next_charge_date
         ) {
           result = await ReChargeCustom.Subscriptions.set_next_charge_date(
             subscription_id,
