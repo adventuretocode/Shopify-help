@@ -60,6 +60,7 @@ const main = async () => {
       // =========================================================
       await writeFile(new URL(TRACK_FILE, import.meta.url), (i + 1).toString());
     }
+		return "Completed"
   } catch (error) {
     console.log("Error: ", error);
     throw error;
