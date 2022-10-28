@@ -14,11 +14,12 @@ const BISTRO_ENV_TABLE = "prod";
 const BISTRO_ENV_DATA = "prod";
 const BISTRO_DAY = "sunday";
 const FOLDER = "export_2-2"; // Restart the track file
+// const FOLDER = "test-update-program"; // Restart the track file
 
 const DIRECTORY =
   "/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge";
 
-dotenv.config({ path: `./.env.${BISTRO_ENV_DATA}` });
+dotenv.config();
 
 const CUSTOMER_TABLE = `${BISTRO_ENV_TABLE}_bistro_recharge_migration`;
 const CUSTOMER_TABLE_SOURCE = `${BISTRO_ENV_TABLE}_source_bistro_recharge_migration`;
@@ -39,8 +40,6 @@ const sleep = async (timeInMillieSec) => {
 
 const processRowData = async (rowData) => {
   // "Program Week Updated"
-  // "Account: Created Date"
-  // "CIM Profile ID"
 
   const Program_Type = rowData["Program_Type"] || rowData["Program Type"];
   const Program_Status = rowData["Program_Status"] || rowData["Program Status"];
@@ -228,6 +227,7 @@ const processRowData = async (rowData) => {
       "United States",
     billing_phone: billingPhoneNumber,
 
+		shipping_day: Shipping_Day.replace("-MUST SHIP", ""),
     is_prepaid: "",
     charge_on_day_of_month: "",
     last_charge_date: "",
