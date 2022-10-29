@@ -12,8 +12,8 @@ const DEBUG_MODE = false;
 const START_DATE = "2022-11-06";
 const BISTRO_ENV_TABLE = "prod";
 const BISTRO_ENV_DATA = "prod";
-const BISTRO_DAY = "sunday";
-const FOLDER = "export_2-2"; // Restart the track file
+const BISTRO_DAY = "friday";
+const FOLDER = "export_2-3"; // Restart the track file
 // const FOLDER = "test-update-program"; // Restart the track file
 
 const DIRECTORY =
