@@ -9,13 +9,14 @@ import ORM from "./db/orm.js";
 import compareSpecificKey from "./helpers/compareSpecificKey.js";
 
 import ReChargeCustom from "./ReCharge/Recharge.js";
-import { getNextDayOfWeek } from "./helpers/moment";
+import { getNextDayOfWeek } from "./helpers/moment.js";
 
 const DEBUG_MODE = true;
 
 const START_DATE = "2022-11-06";
-const BISTRO_ENV = "dev";
-const BISTRO_DAY = "monday";
+const BISTRO_ENV = "prod";
+const BISTRO_DAY = "friday";
+//
 
 dotenv.config();
 
@@ -59,7 +60,7 @@ const updateReChargeCustomerProfile = async (
       console.log(
         `\u001b[38;5;${rechargeCustomerId % 255}m${
           rechargeCustomer.email
-        } Updated Customer Profile\u001b[0m`
+        } Updated Customer Profile ${Object.keys(updateObj)} \u001b[0m`
       );
   } catch (error) {
     console.log("Recharge Error updating customer profile");
@@ -128,7 +129,7 @@ const updateReChargeBillingAddress = async (
       console.log(
         `\u001b[38;5;${rechargeCustomerId % 255}m${
           rechargeCustomer.email
-        } Updated Billing Address\u001b[0m`
+        } Updated Billing Address ${Object.keys(updateObj)} \u001b[0m`
       );
   } catch (error) {
     console.log("Recharge Billing update error");
@@ -181,7 +182,7 @@ const updateReChargeShipping = async (rechargeCustomer, localCustomer) => {
       console.log(
         `\u001b[38;5;${rechargeCustomerId % 255}m${
           rechargeCustomer.email
-        } Updated Shipping Address\u001b[0m`
+        } Updated Shipping Address ${Object.keys(updateObj)} \u001b[0m`
       );
   } catch (error) {
     console.log("Recharge Address update error");
@@ -218,7 +219,7 @@ const updateReChargeSubscription = async (rechargeCustomer, localCustomer) => {
 
     let hasReactivated;
     let hasChargeDateChanged;
-    let statusChanged = status != localCustomer.status;
+    let hasStatusChanged = status != localCustomer.status;
 
     if (
       (next_charge_scheduled_at == "" || next_charge_scheduled_at == null) &&
@@ -232,7 +233,7 @@ const updateReChargeSubscription = async (rechargeCustomer, localCustomer) => {
         next_charge_scheduled_at != localCustomer.next_charge_date;
     }
 
-    if (!hasPlanChanged && !hasChargeDateChanged && !statusChanged) {
+    if (!hasPlanChanged && !hasChargeDateChanged && !hasStatusChanged) {
       return "Subscription has not changed";
     }
 
@@ -268,7 +269,7 @@ const updateReChargeSubscription = async (rechargeCustomer, localCustomer) => {
       }
     }
 
-    if (statusChanged) {
+    if (hasStatusChanged) {
       let result;
       if (status === "active" && localCustomer.status === "cancelled") {
         // cancel subscription
@@ -306,6 +307,14 @@ const updateReChargeSubscription = async (rechargeCustomer, localCustomer) => {
       }
     }
 
+		if (DEBUG_MODE) {
+			console.log(
+				`\u001b[38;5;${rechargeCustomerId % 255}m${
+					rechargeCustomer.email
+				} Subscription Update ${Object.keys(updateObj)} \u001b[0m`
+			);
+		}
+
     return "Completed";
   } catch (error) {
     console.log("Recharge Subscription update error");
@@ -342,7 +351,7 @@ const updateReCustomerController = async (rechargeCustomer, localCustomer) => {
           TRACK_CUSTOMER_UPDATE,
           "status",
           "TO_ADD",
-          `WHERE id = '${foundOne.id}'`
+          `id = '${foundOne.id}'`
         );
         if (DEBUG_MODE)
           console.log(
