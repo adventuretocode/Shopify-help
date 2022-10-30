@@ -75,3 +75,11 @@ FROM
   `prod_track_friday_customer`
 WHERE 
   `status` = 'UPDATE';
+
+-----------------------
+UPDATE
+  `prod_track_friday_customer`
+SET 
+  `status` = 'COMPLETED'
+WHERE 
+  `status` = 'TO_ADD';
