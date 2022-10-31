@@ -10,6 +10,7 @@ import compareSpecificKey from "./helpers/compareSpecificKey.js";
 
 import ReChargeCustom from "./ReCharge/Recharge.js";
 import { getNextDayOfWeek } from "./helpers/moment.js";
+import isStateProvinceAbv from "./helpers/isStateProvinceAbv.js";
 
 const DEBUG_MODE = true;
 
@@ -22,6 +23,29 @@ dotenv.config();
 
 const CUSTOMER_TABLE = `${BISTRO_ENV}_bistro_recharge_migration`;
 const TRACK_CUSTOMER_UPDATE = `${BISTRO_ENV}_track_${BISTRO_DAY}_customer`;
+
+const logChanges = (
+  topic,
+  rechargeCustomer,
+  updateObj,
+  obj1,
+  obj2,
+  keysToUpdate
+) => {
+  console.log(
+    `\u001b[38;5;${rechargeCustomer.id % 255}m${
+      rechargeCustomer.email
+    } ${topic}\u001b[0m`
+  );
+  console.log(
+    `\u001b[38;5;${(rechargeCustomer.id + 2) % 255}m${Object.keys(
+      updateObj
+    )}\u001b[0m`
+  );
+  keysToUpdate.forEach(({ recharge, local }) => {
+    console.log(`${obj1[recharge]} => ${obj2[local]}`);
+  });
+};
 
 const updateReChargeCustomerProfile = async (
   rechargeCustomer,
@@ -56,12 +80,16 @@ const updateReChargeCustomerProfile = async (
       updateObj
     );
 
-    if (DEBUG_MODE)
-      console.log(
-        `\u001b[38;5;${rechargeCustomerId % 255}m${
-          rechargeCustomer.email
-        } Updated Customer Profile ${Object.keys(updateObj)} \u001b[0m`
+    if (DEBUG_MODE) {
+      logChanges(
+        "Customer Profile",
+        rechargeCustomer,
+        updateObj,
+        rechargeCustomer,
+        localCustomer,
+        keysToUpdate
       );
+    }
   } catch (error) {
     console.log("Recharge Error updating customer profile");
     throw error;
@@ -91,7 +119,8 @@ const updateReChargeBillingAddress = async (
     );
 
     if (payment_methods.length == 0) {
-      return "Payment method not found";
+      debugger;
+      throw new Error("Payment method not found");
     } else if (payment_methods.length > 1) {
       debugger;
       throw new Error("More than 1 payment method");
@@ -104,6 +133,26 @@ const updateReChargeBillingAddress = async (
       localCustomer,
       keys
     );
+
+    const provinceChanged = keysToUpdate.find(({ recharge: reKey }) =>
+      reKey.includes("province")
+    );
+
+    if (Object.keys(provinceChanged).length) {
+      const { recharge: reKey, local: localKey } = provinceChanged;
+      const stateIsSame = isStateProvinceAbv(
+        payment_method.billing_address[reKey],
+        localCustomer[localKey]
+      );
+      if (stateIsSame) {
+        keysToUpdate.splice(
+          keysToUpdate.findIndex(
+            (a) => a.recharge === provinceChanged.recharge
+          ),
+          1
+        );
+      }
+    }
 
     if (keysToUpdate.length === 0) return "Nothing to update";
 
@@ -125,12 +174,16 @@ const updateReChargeBillingAddress = async (
       finalObj
     );
 
-    if (DEBUG_MODE)
-      console.log(
-        `\u001b[38;5;${rechargeCustomerId % 255}m${
-          rechargeCustomer.email
-        } Updated Billing Address ${Object.keys(updateObj)} \u001b[0m`
+    if (DEBUG_MODE) {
+      logChanges(
+        "Billing Address",
+        rechargeCustomer,
+        updateObj,
+        payment_method.billing_address,
+        localCustomer,
+        keysToUpdate
       );
+    }
   } catch (error) {
     console.log("Recharge Billing update error");
     throw error;
@@ -157,7 +210,8 @@ const updateReChargeShipping = async (rechargeCustomer, localCustomer) => {
     );
 
     if (addresses.length == 0) {
-      return "Address not found";
+      debugger;
+      throw new Error("Address not found");
     } else if (addresses.length > 1) {
       debugger;
       throw new Error("More than 1 address");
@@ -166,6 +220,26 @@ const updateReChargeShipping = async (rechargeCustomer, localCustomer) => {
     const address = addresses[0];
 
     const keysToUpdate = compareSpecificKey(address, localCustomer, keys);
+
+    const provinceChanged = keysToUpdate.find(({ recharge: reKey }) =>
+      reKey.includes("province")
+    );
+
+    if (Object.keys(provinceChanged).length) {
+      const { recharge: reKey, local: localKey } = provinceChanged;
+      const stateIsSame = isStateProvinceAbv(
+        rechargeCustomer[reKey],
+        localCustomer[localKey]
+      );
+      if (stateIsSame) {
+        keysToUpdate.splice(
+          keysToUpdate.findIndex(
+            (a) => a.recharge === provinceChanged.recharge
+          ),
+          1
+        );
+      }
+    }
 
     if (keysToUpdate.length === 0) return "Nothing to update";
 
@@ -178,12 +252,16 @@ const updateReChargeShipping = async (rechargeCustomer, localCustomer) => {
 
     const result = await ReChargeCustom.Addresses.update(address.id, updateObj);
 
-    if (DEBUG_MODE)
-      console.log(
-        `\u001b[38;5;${rechargeCustomerId % 255}m${
-          rechargeCustomer.email
-        } Updated Shipping Address ${Object.keys(updateObj)} \u001b[0m`
+    if (DEBUG_MODE) {
+      logChanges(
+        "Shipping",
+        rechargeCustomer,
+        updateObj,
+        address,
+        localCustomer,
+        keysToUpdate
       );
+    }
   } catch (error) {
     console.log("Recharge Address update error");
     throw error;
@@ -307,13 +385,18 @@ const updateReChargeSubscription = async (rechargeCustomer, localCustomer) => {
       }
     }
 
-		if (DEBUG_MODE) {
-			console.log(
-				`\u001b[38;5;${rechargeCustomerId % 255}m${
-					rechargeCustomer.email
-				} Subscription Update ${Object.keys(updateObj)} \u001b[0m`
-			);
-		}
+    if (DEBUG_MODE) {
+      console.log(
+        `\u001b[38;5;${rechargeCustomerId % 255}m${
+          rechargeCustomer.email
+        } Subscription Update\u001b[0m`
+      );
+      console.log(
+        `\u001b[38;5;${(rechargeCustomerId + 2) % 255}m${
+          rechargeCustomer.email
+        } hasPlanChanged ${hasPlanChanged}\nhasReactivated${hasReactivated}\nhasChargeDateChanged${hasChargeDateChanged}\nhasStatusChanged${hasStatusChanged} \u001b[0m`
+      );
+    }
 
     return "Completed";
   } catch (error) {
@@ -343,6 +426,18 @@ const updateReCustomerController = async (rechargeCustomer, localCustomer) => {
       );
 
       const { customers: rechargeCustomer } = results;
+
+      if (DEBUG_MODE) {
+        for (const key in foundOne) {
+          if (Object.hasOwnProperty.call(foundOne, key)) {
+            console.log(
+              `\u001b[38;5;${foundOne.customer_id % 255}m${key}: ${
+                foundOne[key]
+              }\u001b[0m`
+            );
+          }
+        }
+      }
 
       if (rechargeCustomer.length == 0) {
         // Add customer to recharge
