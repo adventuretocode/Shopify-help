@@ -236,7 +236,7 @@ const updateReChargeShipping = async (rechargeCustomer, localCustomer) => {
     if (provinceChanged && Object.keys(provinceChanged).length) {
       const { recharge: reKey, local: localKey } = provinceChanged;
       const stateIsSame = isStateProvinceAbv(
-        rechargeCustomer[reKey],
+        address[reKey],
         localCustomer[localKey]
       );
       if (stateIsSame) {
@@ -482,16 +482,15 @@ const updateReCustomerController = async (rechargeCustomer, localCustomer) => {
           "COMPLETED",
           `id = '${foundOne.id}'`
         );
-
-        await sleep(200);
       }
     } catch (error) {
       console.log(error?.response?.data);
       if (error?.response?.data?.warning === "too many requests") {
-        console.log("too many requests sleep for 1sec");
-        await sleep(1000);
+        console.log("too many requests sleep for 5sec");
+        await sleep(5000);
       } else {
         console.log("Error: ", error);
+        console.log(error?.response?.data?.errors);
         debugger;
         throw "";
       }
