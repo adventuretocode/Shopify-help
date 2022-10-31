@@ -148,10 +148,14 @@ const processRowData = async (rowData) => {
     const phoneResult = phone(phoneNumber, { country: "USA" });
     if (phoneResult.isValid) {
       phoneNumber = phoneResult.phoneNumber;
+    } else {
+      phoneNumber = "";
     }
     const billingPhoneResult = phone(billingPhoneNumber, { country: "USA" });
     if (billingPhoneResult.isValid) {
       billingPhoneNumber = billingPhoneResult.phoneNumber;
+    } else {
+      billingPhoneNumber = "";
     }
   } catch (error) {
     console.log("Phone Number Error: ", Customer_ID);
@@ -219,8 +223,8 @@ const processRowData = async (rowData) => {
       "United States",
     billing_phone: billingPhoneNumber,
 
-		program_week: rowData["Program Week Updated"],
-		shipping_day: Shipping_Day.replace("-MUST SHIP", ""),
+    program_week: rowData["Program Week Updated"],
+    shipping_day: Shipping_Day.replace("-MUST SHIP", ""),
     is_prepaid: "",
     charge_on_day_of_month: "",
     last_charge_date: "",
@@ -233,8 +237,8 @@ const processRowData = async (rowData) => {
       rowData["Payment Profile ID"];
   }
 
-	data.shipping_province = data.shipping_province.toUpperCase();
-	data.billing_province_state = data.billing_province_state.toUpperCase();
+  data.shipping_province = data.shipping_province.toUpperCase();
+  data.billing_province_state = data.billing_province_state.toUpperCase();
 
   try {
     let action = "NO CHANGE";
