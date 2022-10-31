@@ -260,6 +260,7 @@ const processRowData = async (rowData) => {
       delete foundOne["is_prepaid"];
       delete foundOne["last_charge_date"];
       delete foundOne["customer_created_at"];
+      delete foundOne["program_week"];
 
       const isTheSame = compareObjects(foundOne, data);
       if (!isTheSame) {
