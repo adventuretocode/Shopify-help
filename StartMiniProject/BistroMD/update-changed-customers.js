@@ -47,6 +47,14 @@ const logChanges = (
   });
 };
 
+const sleep = async (timeInMillieSec) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, timeInMillieSec);
+  });
+};
+
 const updateReChargeCustomerProfile = async (
   rechargeCustomer,
   localCustomer
@@ -138,7 +146,7 @@ const updateReChargeBillingAddress = async (
       reKey.includes("province")
     );
 
-    if (Object.keys(provinceChanged).length) {
+    if (provinceChanged && Object.keys(provinceChanged).length) {
       const { recharge: reKey, local: localKey } = provinceChanged;
       const stateIsSame = isStateProvinceAbv(
         payment_method.billing_address[reKey],
@@ -225,7 +233,7 @@ const updateReChargeShipping = async (rechargeCustomer, localCustomer) => {
       reKey.includes("province")
     );
 
-    if (Object.keys(provinceChanged).length) {
+    if (provinceChanged && Object.keys(provinceChanged).length) {
       const { recharge: reKey, local: localKey } = provinceChanged;
       const stateIsSame = isStateProvinceAbv(
         rechargeCustomer[reKey],
@@ -374,7 +382,11 @@ const updateReChargeSubscription = async (rechargeCustomer, localCustomer) => {
       }
     }
 
-    if (hasChargeDateChanged && !hasReactivated) {
+    if (
+      hasChargeDateChanged &&
+      !hasReactivated &&
+      localCustomer.status != "cancelled"
+    ) {
       const result = await ReChargeCustom.Subscriptions.set_next_charge_date(
         subscription_id,
         localCustomer.next_charge_date
@@ -394,7 +406,7 @@ const updateReChargeSubscription = async (rechargeCustomer, localCustomer) => {
       console.log(
         `\u001b[38;5;${(rechargeCustomerId + 2) % 255}m${
           rechargeCustomer.email
-        } hasPlanChanged ${hasPlanChanged}\nhasReactivated${hasReactivated}\nhasChargeDateChanged${hasChargeDateChanged}\nhasStatusChanged${hasStatusChanged} \u001b[0m`
+        }\nhasPlanChanged => ${hasPlanChanged}\nhasReactivated => ${hasReactivated}\nhasChargeDateChanged => ${hasChargeDateChanged}\nhasStatusChanged => ${hasStatusChanged} \u001b[0m`
       );
     }
 
@@ -470,11 +482,19 @@ const updateReCustomerController = async (rechargeCustomer, localCustomer) => {
           "COMPLETED",
           `id = '${foundOne.id}'`
         );
+
+        await sleep(200);
       }
     } catch (error) {
-      debugger;
-      console.log("Error: ", error);
-      throw "";
+      console.log(error?.response?.data);
+      if (error?.response?.data?.warning === "too many requests") {
+        console.log("too many requests sleep for 1sec");
+        await sleep(1000);
+      } else {
+        console.log("Error: ", error);
+        debugger;
+        throw "";
+      }
     }
   }
 })();
