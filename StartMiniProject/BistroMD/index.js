@@ -30,14 +30,6 @@ import ORM from "./db/orm.js";
 import compareObjects from "./helpers/compareObjects.js";
 import findAllChangesKeys from "./helpers/findAllChangesKeys.js";
 
-const sleep = async (timeInMillieSec) => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve();
-    }, timeInMillieSec);
-  });
-};
-
 const processRowData = async (rowData) => {
   // "Program Week Updated"
 
