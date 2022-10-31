@@ -6,7 +6,8 @@ const create = async (body) => {
     const result = await networkRequest(options);
     return result;
   } catch (error) {
-    throw new Error("Axios Error");
+    console.log("Axios Error");
+    throw error;
   }
 };
 
@@ -21,7 +22,8 @@ const activate = async (subscription_id) => {
     const result = await networkRequest(options);
     return result;
   } catch (error) {
-    throw new Error("Axios Error");
+    console.log("Axios Error");
+    throw error;
   }
 };
 
@@ -33,7 +35,8 @@ const list = async (customer_id) => {
     const result = await networkRequest(options);
     return result;
   } catch (error) {
-    throw new Error("Axios Error");
+    console.log("Axios Error");
+    throw error;
   }
 };
 
@@ -48,7 +51,8 @@ const update = async (subscription_id, body) => {
     const result = await networkRequest(options);
     return result;
   } catch (error) {
-    throw new Error("Axios Error");
+    console.log("Axios Error");
+    throw error;
   }
 };
 
@@ -63,7 +67,8 @@ const set_next_charge_date = async (subscription_id, date) => {
     const result = await networkRequest(options);
     return result;
   } catch (error) {
-    throw new Error("Axios Error");
+    console.log("Axios Error");
+    throw error;
   }
 };
 
@@ -78,7 +83,8 @@ const cancel = async (subscription_id) => {
     const result = await networkRequest(options);
     return result;
   } catch (error) {
-    throw new Error("Axios Error");
+    console.log("Axios Error");
+    throw error;
   }
 };
 
@@ -88,7 +94,8 @@ const remove = async (subscription_id) => {
     const result = await networkRequest(options);
     return result;
   } catch (error) {
-    throw new Error("Axios Error");
+    console.log("Axios Error");
+    throw error;
   }
 };
 

@@ -11,7 +11,8 @@ const remove = async (customer_id) => {
     const result = await networkRequest(options);
     return result;
   } catch (error) {
-    throw new Error("Network Request Error");
+    console.log("Axios Error");
+    throw error;
   }
 };
 

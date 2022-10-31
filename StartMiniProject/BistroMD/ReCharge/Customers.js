@@ -6,7 +6,8 @@ const update = async (customerId, data) => {
     const result = await networkRequest(options);
     return result;
   } catch (error) {
-    throw new Error("Network Request Error");
+    console.log("Axios Error");
+    throw error;
   }
 };
 
@@ -20,7 +21,8 @@ const findByEmail = async (email) => {
     const result = await networkRequest(options);
     return result;
   } catch (error) {
-    throw new Error("Network Request Error");
+    console.log("Axios Error");
+    throw error;
   }
 };
 
@@ -30,7 +32,8 @@ const listAnyCustomer = async () => {
     const result = await networkRequest(options);
     return result;
   } catch (error) {
-    throw new Error("Network Request Error");
+    console.log("Axios Error");
+    throw error;
   }
 };
 
@@ -40,7 +43,8 @@ const remove = async (customer_id) => {
     const result = await networkRequest(options);
     return result;
   } catch (error) {
-    throw new Error("Network Request Error");
+    console.log("Axios Error");
+    throw error;
   }
 }
 

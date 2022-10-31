@@ -9,7 +9,8 @@ const list = async (customer_id) => {
     const result = await networkRequest(options);
     return result;
   } catch (error) {
-    throw new Error("Axios Error");
+    console.log("Axios Error");
+    throw error;
   }
 };
 

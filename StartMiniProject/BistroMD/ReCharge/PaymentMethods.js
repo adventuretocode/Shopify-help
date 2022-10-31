@@ -17,7 +17,8 @@ const update = async (payment_method_id, data) => {
     const result = await axios(options);
     return result.data;
   } catch (error) {
-    throw new Error("Axios Error");
+    console.log("Axios Error");
+    throw error;
   }
 };
 
@@ -37,7 +38,8 @@ const list = async (customer_id) => {
     const result = await axios(options);
     return result.data;
   } catch (error) {
-    throw new Error("Axios Error");
+    console.log("Axios Error");
+    throw error;
   }
 };
 
