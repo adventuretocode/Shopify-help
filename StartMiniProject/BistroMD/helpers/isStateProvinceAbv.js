@@ -56,10 +56,14 @@ export default (state, abv) => {
     { label: "Wisconsin", value: "WI" },
     { label: "Wyoming", value: "WY" },
   ];
-  const stateFullName = stateLabelValues.filter(({ label }) => label === state);
-  const stateAbv = stateLabelValues.filter(({ value }) => value === abv);
+  const [stateFullName] = stateLabelValues.filter(
+    ({ label }) => label === state
+  );
+  const [stateAbv] = stateLabelValues.filter(({ value }) => value === abv);
   return (
+    stateFullName &&
+    stateAbv &&
     stateFullName.label === stateAbv.label &&
-    stateFullName.value === stateAbv.label
+    stateFullName.value === stateAbv.value
   );
 };
