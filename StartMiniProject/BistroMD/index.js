@@ -3,18 +3,15 @@ import neatCsv from "neat-csv";
 import say from "say";
 import { readFile, writeFile, access } from "fs/promises";
 import { phone } from "phone";
-import { getNextDayOfWeek } from "./helpers/moment.js";
 
 // TODO: script to skip a future week(s)
 
 const DEBUG_MODE = false;
 
-const START_DATE = "2022-11-06";
 const BISTRO_ENV_TABLE = "prod";
 const BISTRO_ENV_DATA = "prod";
-const BISTRO_DAY = "friday";
-const FOLDER = "export_2-3"; // Restart the track file
-// const FOLDER = "test-update-program"; // Restart the track file
+const BISTRO_DAY = "tuesday";
+const FOLDER = "export_2-4"; // Restart the track file
 
 const DIRECTORY =
   "/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge";
@@ -23,6 +20,7 @@ dotenv.config();
 
 const CUSTOMER_TABLE = `${BISTRO_ENV_TABLE}_bistro_recharge_migration`;
 const CUSTOMER_TABLE_SOURCE = `${BISTRO_ENV_TABLE}_source_bistro_recharge_migration`;
+const CUSTOMER_SHIP_DAY = `${BISTRO_ENV_TABLE}_logistic_day`;
 const PRODUCT_TABLE = `${BISTRO_ENV_TABLE}_prices_from_cart`;
 const TRACK_CUSTOMER_UPDATE = `${BISTRO_ENV_TABLE}_track_${BISTRO_DAY}_customer`;
 
@@ -113,17 +111,19 @@ const processRowData = async (rowData) => {
     Program_Status == "Fraud" ||
     Program_Status == "Verify Address"
   ) {
-    nextChargeDate = getNextDayOfWeek(
-      START_DATE,
-      Shipping_Day.replace("-MUST SHIP", "")
-    );
+    const ship_day = Shipping_Day.replace("-MUST SHIP", "");
+    const query = `day_of_week = '${ship_day}'`;
+    const [ship_day_profile] = await ORM.findOne(CUSTOMER_SHIP_DAY, query);
+    nextChargeDate = ship_day_profile.warehouse_date;
+
     status = "active";
   } else if (Program_Status == "Hold with Resume Date") {
     // TODO: will need to create a program to start skipping
-    nextChargeDate = getNextDayOfWeek(
-      START_DATE,
-      Shipping_Day.replace("-MUST SHIP", "")
-    );
+    const ship_day = Shipping_Day.replace("-MUST SHIP", "");
+    const query = `day_of_week = '${ship_day}'`;
+    const [ship_day_profile] = await ORM.findOne(CUSTOMER_SHIP_DAY, query);
+    nextChargeDate = ship_day_profile.warehouse_date;
+
     status = "active";
   } else if (Program_Status == "Finished" || Program_Status == "On Hold") {
     // Next Charge date can be left blank
