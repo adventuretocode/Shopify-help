@@ -9,16 +9,51 @@ import ORM from "./db/orm.js";
 import compareSpecificKey from "./helpers/compareSpecificKey.js";
 
 import ReChargeCustom from "./ReCharge/Recharge.js";
+import { getNextDayOfWeek } from "./helpers/moment.js";
+import isStateProvinceAbv from "./helpers/isStateProvinceAbv.js";
 
-const DEBUG_MODE = false;
+const DEBUG_MODE = true;
 
-const BISTRO_ENV = "dev";
-const BISTRO_DAY = "monday";
+const START_DATE = "2022-11-06";
+const BISTRO_ENV = "prod";
+const BISTRO_DAY = "friday";
+//
 
-dotenv.config({ path: `./.env` });
+dotenv.config();
 
 const CUSTOMER_TABLE = `${BISTRO_ENV}_bistro_recharge_migration`;
 const TRACK_CUSTOMER_UPDATE = `${BISTRO_ENV}_track_${BISTRO_DAY}_customer`;
+
+const logChanges = (
+  topic,
+  rechargeCustomer,
+  updateObj,
+  obj1,
+  obj2,
+  keysToUpdate
+) => {
+  console.log(
+    `\u001b[38;5;${rechargeCustomer.id % 255}m${
+      rechargeCustomer.email
+    } ${topic}\u001b[0m`
+  );
+  console.log(
+    `\u001b[38;5;${(rechargeCustomer.id + 2) % 255}m${Object.keys(
+      updateObj
+    )}\u001b[0m`
+  );
+  keysToUpdate.forEach(({ recharge, local }) => {
+    console.log(`${obj1[recharge]} => ${obj2[local]}`);
+  });
+};
+
+const sleep = async (timeInMillieSec) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, timeInMillieSec);
+  });
+};
 
 const updateReChargeCustomerProfile = async (
   rechargeCustomer,
@@ -53,12 +88,16 @@ const updateReChargeCustomerProfile = async (
       updateObj
     );
 
-    if (DEBUG_MODE)
-      console.log(
-        `\u001b[38;5;${rechargeCustomerId % 255}m${
-          rechargeCustomer.email
-        } Updated Customer Profile\u001b[0m`
+    if (DEBUG_MODE) {
+      logChanges(
+        "Customer Profile",
+        rechargeCustomer,
+        updateObj,
+        rechargeCustomer,
+        localCustomer,
+        keysToUpdate
       );
+    }
   } catch (error) {
     console.log("Recharge Error updating customer profile");
     throw error;
@@ -88,7 +127,8 @@ const updateReChargeBillingAddress = async (
     );
 
     if (payment_methods.length == 0) {
-      return "Payment method not found";
+      debugger;
+      throw new Error("Payment method not found");
     } else if (payment_methods.length > 1) {
       debugger;
       throw new Error("More than 1 payment method");
@@ -101,6 +141,26 @@ const updateReChargeBillingAddress = async (
       localCustomer,
       keys
     );
+
+    const provinceChanged = keysToUpdate.find(({ recharge: reKey }) =>
+      reKey.includes("province")
+    );
+
+    if (provinceChanged && Object.keys(provinceChanged).length) {
+      const { recharge: reKey, local: localKey } = provinceChanged;
+      const stateIsSame = isStateProvinceAbv(
+        payment_method.billing_address[reKey],
+        localCustomer[localKey]
+      );
+      if (stateIsSame) {
+        keysToUpdate.splice(
+          keysToUpdate.findIndex(
+            (a) => a.recharge === provinceChanged.recharge
+          ),
+          1
+        );
+      }
+    }
 
     if (keysToUpdate.length === 0) return "Nothing to update";
 
@@ -122,12 +182,16 @@ const updateReChargeBillingAddress = async (
       finalObj
     );
 
-    if (DEBUG_MODE)
-      console.log(
-        `\u001b[38;5;${rechargeCustomerId % 255}m${
-          rechargeCustomer.email
-        } Updated Billing Address\u001b[0m`
+    if (DEBUG_MODE) {
+      logChanges(
+        "Billing Address",
+        rechargeCustomer,
+        updateObj,
+        payment_method.billing_address,
+        localCustomer,
+        keysToUpdate
       );
+    }
   } catch (error) {
     console.log("Recharge Billing update error");
     throw error;
@@ -154,7 +218,8 @@ const updateReChargeShipping = async (rechargeCustomer, localCustomer) => {
     );
 
     if (addresses.length == 0) {
-      return "Address not found";
+      debugger;
+      throw new Error("Address not found");
     } else if (addresses.length > 1) {
       debugger;
       throw new Error("More than 1 address");
@@ -163,6 +228,26 @@ const updateReChargeShipping = async (rechargeCustomer, localCustomer) => {
     const address = addresses[0];
 
     const keysToUpdate = compareSpecificKey(address, localCustomer, keys);
+
+    const provinceChanged = keysToUpdate.find(({ recharge: reKey }) =>
+      reKey.includes("province")
+    );
+
+    if (provinceChanged && Object.keys(provinceChanged).length) {
+      const { recharge: reKey, local: localKey } = provinceChanged;
+      const stateIsSame = isStateProvinceAbv(
+        address[reKey],
+        localCustomer[localKey]
+      );
+      if (stateIsSame) {
+        keysToUpdate.splice(
+          keysToUpdate.findIndex(
+            (a) => a.recharge === provinceChanged.recharge
+          ),
+          1
+        );
+      }
+    }
 
     if (keysToUpdate.length === 0) return "Nothing to update";
 
@@ -175,12 +260,16 @@ const updateReChargeShipping = async (rechargeCustomer, localCustomer) => {
 
     const result = await ReChargeCustom.Addresses.update(address.id, updateObj);
 
-    if (DEBUG_MODE)
-      console.log(
-        `\u001b[38;5;${rechargeCustomerId % 255}m${
-          rechargeCustomer.email
-        } Updated Billing Address\u001b[0m`
+    if (DEBUG_MODE) {
+      logChanges(
+        "Shipping",
+        rechargeCustomer,
+        updateObj,
+        address,
+        localCustomer,
+        keysToUpdate
       );
+    }
   } catch (error) {
     console.log("Recharge Address update error");
     throw error;
@@ -213,23 +302,44 @@ const updateReChargeSubscription = async (rechargeCustomer, localCustomer) => {
 
     const hasPlanChanged =
       external_variant_id != localCustomer.external_variant_id;
-    const hasChargeDateChanged =
-      next_charge_scheduled_at != localCustomer.next_charge_date;
-    let hasReactivated;
 
-    if (!hasPlanChanged && !hasChargeDateChanged) {
+    let hasReactivated;
+    let hasChargeDateChanged;
+    let hasStatusChanged = status != localCustomer.status;
+
+    if (
+      (next_charge_scheduled_at == "" || next_charge_scheduled_at == null) &&
+      (localCustomer.next_charge_date == "" ||
+        localCustomer.next_charge_date == null)
+    ) {
+      hasChargeDateChanged = false;
+    }
+    if (hasChargeDateChanged == undefined) {
+      hasChargeDateChanged =
+        next_charge_scheduled_at != localCustomer.next_charge_date;
+    }
+
+    if (!hasPlanChanged && !hasChargeDateChanged && !hasStatusChanged) {
       return "Subscription has not changed";
     }
 
     if (hasPlanChanged) {
       await ReChargeCustom.Subscriptions.remove(subscription_id);
 
+      let nextChargeScheduledAt =
+        localCustomer.next_charge_date || next_charge_scheduled_at;
+      if (!nextChargeScheduledAt) {
+        nextChargeScheduledAt = getNextDayOfWeek(
+          START_DATE,
+          localCustomer.shipping_day
+        );
+      }
+
       const body = {
         address_id: address_id,
         charge_interval_frequency: "1",
         // Customer could have cancelled, leaving no next date on local
-        next_charge_scheduled_at:
-          localCustomer.next_charge_date || next_charge_scheduled_at,
+        next_charge_scheduled_at: nextChargeScheduledAt,
         order_interval_frequency: "1",
         order_interval_unit: "week",
         external_variant_id: {
@@ -245,18 +355,19 @@ const updateReChargeSubscription = async (rechargeCustomer, localCustomer) => {
       }
     }
 
-    if (status != localCustomer.status) {
+    if (hasStatusChanged) {
       let result;
-      if (status === "cancelled") {
+      if (status === "active" && localCustomer.status === "cancelled") {
         // cancel subscription
         result = await ReChargeCustom.Subscriptions.cancel(subscription_id);
-      } else if (status === "active") {
+      } else if (status === "cancelled" && localCustomer.status === "active") {
         // activate subscription
         const subActivate = await ReChargeCustom.Subscriptions.activate(
           subscription_id
         );
         if (
-          subActivate.next_charge_scheduled_at != localCustomer.next_charge_date
+          subActivate.subscription.next_charge_scheduled_at !=
+          localCustomer.next_charge_date
         ) {
           result = await ReChargeCustom.Subscriptions.set_next_charge_date(
             subscription_id,
@@ -271,7 +382,11 @@ const updateReChargeSubscription = async (rechargeCustomer, localCustomer) => {
       }
     }
 
-    if (hasChargeDateChanged && !hasReactivated) {
+    if (
+      hasChargeDateChanged &&
+      !hasReactivated &&
+      localCustomer.status != "cancelled"
+    ) {
       const result = await ReChargeCustom.Subscriptions.set_next_charge_date(
         subscription_id,
         localCustomer.next_charge_date
@@ -282,7 +397,20 @@ const updateReChargeSubscription = async (rechargeCustomer, localCustomer) => {
       }
     }
 
-		return "Completed";
+    if (DEBUG_MODE) {
+      console.log(
+        `\u001b[38;5;${rechargeCustomerId % 255}m${
+          rechargeCustomer.email
+        } Subscription Update\u001b[0m`
+      );
+      console.log(
+        `\u001b[38;5;${(rechargeCustomerId + 2) % 255}m${
+          rechargeCustomer.email
+        }\nhasPlanChanged => ${hasPlanChanged}\nhasReactivated => ${hasReactivated}\nhasChargeDateChanged => ${hasChargeDateChanged}\nhasStatusChanged => ${hasStatusChanged} \u001b[0m`
+      );
+    }
+
+    return "Completed";
   } catch (error) {
     console.log("Recharge Subscription update error");
     throw error;
@@ -291,9 +419,9 @@ const updateReChargeSubscription = async (rechargeCustomer, localCustomer) => {
 
 const updateReCustomerController = async (rechargeCustomer, localCustomer) => {
   try {
-    // await updateReChargeCustomerProfile(rechargeCustomer, localCustomer);
-    // await updateReChargeBillingAddress(rechargeCustomer, localCustomer);
-    // await updateReChargeShipping(rechargeCustomer, localCustomer);
+    await updateReChargeCustomerProfile(rechargeCustomer, localCustomer);
+    await updateReChargeBillingAddress(rechargeCustomer, localCustomer);
+    await updateReChargeShipping(rechargeCustomer, localCustomer);
     await updateReChargeSubscription(rechargeCustomer, localCustomer);
   } catch (error) {
     throw error;
@@ -305,9 +433,23 @@ const updateReCustomerController = async (rechargeCustomer, localCustomer) => {
     try {
       let query = `status = 'UPDATE' LIMIT 1`;
       const [foundOne] = await ORM.findOne(TRACK_CUSTOMER_UPDATE, query);
-      const rechargeCustomer = await ReChargeCustom.Customers.findByEmail(
-        foundOne.email
+      const results = await ReChargeCustom.Customers.findByEmail(
+        foundOne.old_email
       );
+
+      const { customers: rechargeCustomer } = results;
+
+      if (DEBUG_MODE) {
+        for (const key in foundOne) {
+          if (Object.hasOwnProperty.call(foundOne, key)) {
+            console.log(
+              `\u001b[38;5;${foundOne.customer_id % 255}m${key}: ${
+                foundOne[key]
+              }\u001b[0m`
+            );
+          }
+        }
+      }
 
       if (rechargeCustomer.length == 0) {
         // Add customer to recharge
@@ -316,7 +458,7 @@ const updateReCustomerController = async (rechargeCustomer, localCustomer) => {
           TRACK_CUSTOMER_UPDATE,
           "status",
           "TO_ADD",
-          `WHERE id = '${foundOne.id}'`
+          `id = '${foundOne.id}'`
         );
         if (DEBUG_MODE)
           console.log(
@@ -334,20 +476,24 @@ const updateReCustomerController = async (rechargeCustomer, localCustomer) => {
 
         await updateReCustomerController(rechargeCustomer[0], localCustomer);
 
-        // const { shopify_customer_id } = rechargeCustomer[0];
-        // Updating shopify not required. ReCharge updates customer email and phone number
-
         await ORM.updateOne(
           TRACK_CUSTOMER_UPDATE,
           "status",
           "COMPLETED",
-          `WHERE id = '${foundOne.id}'`
+          `id = '${foundOne.id}'`
         );
       }
     } catch (error) {
-      debugger;
-      console.log("Error: ", error);
-      throw "";
+      console.log(error?.response?.data);
+      if (error?.response?.data?.warning === "too many requests") {
+        console.log("too many requests sleep for 5sec");
+        await sleep(5000);
+      } else {
+        console.log("Error: ", error);
+        console.log(error?.response?.data?.errors);
+        debugger;
+        throw "";
+      }
     }
   }
 })();

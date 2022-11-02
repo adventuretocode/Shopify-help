@@ -1,8 +1,8 @@
 CREATE DATABASE IF NOT EXISTS `bistromd`;
 USE `bistromd`;
 
-DROP TABLE IF EXISTS `dev_bistro_recharge_migration`;
-CREATE TABLE `dev_bistro_recharge_migration` (
+DROP TABLE IF EXISTS `prod_bistro_recharge_migration`;
+CREATE TABLE `prod_bistro_recharge_migration` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `gender` ENUM("Male", "Female"),
   `customer_id` INT DEFAULT NULL,
@@ -51,8 +51,8 @@ CREATE TABLE `dev_bistro_recharge_migration` (
   PRIMARY KEY (`id`)
 );
 
-DROP TABLE IF EXISTS `dev_source_bistro_recharge_migration`;
-CREATE TABLE `dev_source_bistro_recharge_migration` (
+DROP TABLE IF EXISTS `prod_source_bistro_recharge_migration`;
+CREATE TABLE `prod_source_bistro_recharge_migration` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `gender` ENUM("Male", "Female"),
   `customer_id` INT DEFAULT NULL,
@@ -100,8 +100,8 @@ CREATE TABLE `dev_source_bistro_recharge_migration` (
   PRIMARY KEY (`id`)
 );
 
-DROP TABLE IF EXISTS `dev_track__customer`;
-CREATE TABLE `dev_track__customer` (
+DROP TABLE IF EXISTS `prod_track__customer`;
+CREATE TABLE `prod_track__customer` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `customer_id` INT NOT NULL,
   `new_email` varchar(100) NOT NULL,

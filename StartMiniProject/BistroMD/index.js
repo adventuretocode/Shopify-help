@@ -6,41 +6,32 @@ import { phone } from "phone";
 import { getNextDayOfWeek } from "./helpers/moment.js";
 
 // TODO: script to skip a future week(s)
-// TODO: authorize.net payment id
 
 const DEBUG_MODE = false;
 
-const START_DATE = "2022-11-07";
-const BISTRO_ENV = "dev";
-const BISTRO_DAY = "sunday";
-const FOLDER = "export_2-0"; // Restart the track file
+const START_DATE = "2022-11-06";
+const BISTRO_ENV_TABLE = "prod";
+const BISTRO_ENV_DATA = "prod";
+const BISTRO_DAY = "friday";
+const FOLDER = "export_2-3"; // Restart the track file
+// const FOLDER = "test-update-program"; // Restart the track file
 
 const DIRECTORY =
   "/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge";
 
-dotenv.config({ path: `./.env` });
+dotenv.config();
 
-const CUSTOMER_TABLE = `${BISTRO_ENV}_bistro_recharge_migration`;
-const CUSTOMER_TABLE_SOURCE = `${BISTRO_ENV}_source_bistro_recharge_migration`;
-const PRODUCT_TABLE = `${BISTRO_ENV}_prices_from_cart`;
-const TRACK_CUSTOMER_UPDATE = `${BISTRO_ENV}_track_${BISTRO_DAY}_customer`;
+const CUSTOMER_TABLE = `${BISTRO_ENV_TABLE}_bistro_recharge_migration`;
+const CUSTOMER_TABLE_SOURCE = `${BISTRO_ENV_TABLE}_source_bistro_recharge_migration`;
+const PRODUCT_TABLE = `${BISTRO_ENV_TABLE}_prices_from_cart`;
+const TRACK_CUSTOMER_UPDATE = `${BISTRO_ENV_TABLE}_track_${BISTRO_DAY}_customer`;
 
 import ORM from "./db/orm.js";
 import compareObjects from "./helpers/compareObjects.js";
 import findAllChangesKeys from "./helpers/findAllChangesKeys.js";
 
-const sleep = async (timeInMillieSec) => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve();
-    }, timeInMillieSec);
-  });
-};
-
 const processRowData = async (rowData) => {
   // "Program Week Updated"
-  // "Account: Created Date"
-  // "CIM Profile ID"
 
   const Program_Type = rowData["Program_Type"] || rowData["Program Type"];
   const Program_Status = rowData["Program_Status"] || rowData["Program Status"];
@@ -157,17 +148,21 @@ const processRowData = async (rowData) => {
     const phoneResult = phone(phoneNumber, { country: "USA" });
     if (phoneResult.isValid) {
       phoneNumber = phoneResult.phoneNumber;
+    } else {
+      phoneNumber = "";
     }
     const billingPhoneResult = phone(billingPhoneNumber, { country: "USA" });
     if (billingPhoneResult.isValid) {
       billingPhoneNumber = billingPhoneResult.phoneNumber;
+    } else {
+      billingPhoneNumber = "";
     }
   } catch (error) {
     console.log("Phone Number Error: ", Customer_ID);
     throw new Error("Phone Number Error");
   }
 
-  if (BISTRO_ENV == "prod") {
+  if (BISTRO_ENV_DATA == "prod") {
   } else {
     Email = Email.replace("@", "---").concat("@example.com");
   }
@@ -196,9 +191,7 @@ const processRowData = async (rowData) => {
     shipping_interval_frequency: 1,
 
     customer_stripe_id: "",
-    // authorizedotnet_customer_profile_id: CIM_Profile_ID
-    // authorizedotnet_customer_payment_profile_id:
-    // TODO: email is unique
+
     shipping_email: Email,
     shipping_first_name: rowData["First_Name"] || rowData["First Name"],
     shipping_last_name: rowData["Last_Name"] || rowData["Last Name"],
@@ -230,11 +223,22 @@ const processRowData = async (rowData) => {
       "United States",
     billing_phone: billingPhoneNumber,
 
+    program_week: rowData["Program Week Updated"],
+    shipping_day: Shipping_Day.replace("-MUST SHIP", ""),
     is_prepaid: "",
     charge_on_day_of_month: "",
     last_charge_date: "",
     customer_created_at: "",
   };
+
+  if (BISTRO_ENV_DATA == "prod") {
+    data.authorizedotnet_customer_profile_id = rowData["CIM Profile ID"];
+    data.authorizedotnet_customer_payment_profile_id =
+      rowData["Payment Profile ID"];
+  }
+
+  data.shipping_province = data.shipping_province.toUpperCase();
+  data.billing_province_state = data.billing_province_state.toUpperCase();
 
   try {
     let action = "NO CHANGE";
@@ -243,10 +247,16 @@ const processRowData = async (rowData) => {
     let query = `customer_id = ${Customer_ID}`;
     const [foundOne] = await ORM.findOne(CUSTOMER_TABLE_SOURCE, query);
     if (foundOne) {
+      if (foundOne.status === "DONT_PROCESS") {
+        trackStatus = "DONT_PROCESS";
+        return "Manual overwrite Don't process";
+      }
+
       delete foundOne["charge_on_day_of_month"];
       delete foundOne["is_prepaid"];
       delete foundOne["last_charge_date"];
       delete foundOne["customer_created_at"];
+      delete foundOne["program_week"];
 
       const isTheSame = compareObjects(foundOne, data);
       if (!isTheSame) {

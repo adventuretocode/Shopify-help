@@ -6,7 +6,8 @@ const update = async (address_id, body) => {
     const result = await networkRequest(options);
     return result;
   } catch (error) {
-    throw new Error("Axios Error");
+    console.log("Axios Error");
+    throw error;
   }
 };
 
@@ -18,7 +19,8 @@ const list = async (customer_id) => {
     const result = await networkRequest(options);
     return result;
   } catch (error) {
-    throw new Error("Axios Error");
+    console.log("Axios Error");
+    throw error;
   }
 };
 
@@ -41,7 +43,8 @@ const skip_future_charge = async (address_id, date, items) => {
     const result = await networkRequest(options);
     return result;
   } catch (error) {
-    throw new Error("Axios Error");
+    console.log("Axios Error");
+    throw error;
   }
 };
 
