@@ -23,6 +23,7 @@ dotenv.config();
 
 const CUSTOMER_TABLE = `${BISTRO_ENV}_bistro_recharge_migration`;
 const TRACK_CUSTOMER_UPDATE = `${BISTRO_ENV}_track_${BISTRO_DAY}_customer`;
+const CUSTOMER_SHIP_DAY = `${BISTRO_ENV_TABLE}_logistic_day`;
 
 const logChanges = (
   topic,
@@ -329,10 +330,9 @@ const updateReChargeSubscription = async (rechargeCustomer, localCustomer) => {
       let nextChargeScheduledAt =
         localCustomer.next_charge_date || next_charge_scheduled_at;
       if (!nextChargeScheduledAt) {
-        nextChargeScheduledAt = getNextDayOfWeek(
-          START_DATE,
-          localCustomer.shipping_day
-        );
+        const query = `day_of_week = '${localCustomer.shipping_day}'`;
+        const [ship_day_profile] = await ORM.findOne(CUSTOMER_SHIP_DAY, query);
+        nextChargeScheduledAt  = ship_day_profile.warehouse_date;
       }
 
       const body = {
