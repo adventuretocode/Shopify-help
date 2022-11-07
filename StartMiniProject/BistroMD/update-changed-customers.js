@@ -14,7 +14,7 @@ import isStateProvinceAbv from "./helpers/isStateProvinceAbv.js";
 
 const DEBUG_MODE = true;
 
-const START_DATE = "2022-11-06";
+const START_DATE = "2022-1-07";
 const BISTRO_ENV = "prod";
 const BISTRO_DAY = "friday";
 //
@@ -413,6 +413,13 @@ const updateReChargeSubscription = async (rechargeCustomer, localCustomer) => {
     return "Completed";
   } catch (error) {
     console.log("Recharge Subscription update error");
+    if (
+      error?.response?.data?.errors?.subscription[0].length == 1 &&
+      error?.response?.data?.errors?.subscription[0] ===
+        "item already set to active"
+    ) {
+      return "";
+    }
     throw error;
   }
 };
@@ -433,6 +440,9 @@ const updateReCustomerController = async (rechargeCustomer, localCustomer) => {
     try {
       let query = `status = 'UPDATE' LIMIT 1`;
       const [foundOne] = await ORM.findOne(TRACK_CUSTOMER_UPDATE, query);
+
+			if(!foundOne) return "Completed";
+			
       const results = await ReChargeCustom.Customers.findByEmail(
         foundOne.old_email
       );
