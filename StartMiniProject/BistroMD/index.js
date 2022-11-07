@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import neatCsv from "neat-csv";
 import say from "say";
-import { readFile, writeFile, access } from "fs/promises";
+import { readFile, writeFile, access, appendFile } from "fs/promises";
 import { phone } from "phone";
 
 // TODO: script to skip a future week(s)
@@ -10,8 +10,8 @@ const DEBUG_MODE = false;
 
 const BISTRO_ENV_TABLE = "prod";
 const BISTRO_ENV_DATA = "prod";
-const BISTRO_DAY = "tuesday";
-const FOLDER = "export_2-4"; // Restart the track file
+const BISTRO_DAY = "monday";
+const FOLDER = "export_2-3"; // Restart the track file
 
 const DIRECTORY =
   "/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge";
@@ -28,18 +28,44 @@ import ORM from "./db/orm.js";
 import compareObjects from "./helpers/compareObjects.js";
 import findAllChangesKeys from "./helpers/findAllChangesKeys.js";
 
+const retrieveCustomer = async (customerId, email) => {
+  try {
+    let foundById;
+    if (customerId) {
+      let query = `customer_id = ${customerId}`;
+      const [customerByID] = await ORM.findOne(CUSTOMER_TABLE_SOURCE, query);
+      if (customerByID) {
+        foundById = customerByID;
+      }
+    }
+    let query = `shipping_email = '${email}'`;
+    const [customerByEmail] = await ORM.findOne(CUSTOMER_TABLE_SOURCE, query);
+
+    if (!customerId && customerByEmail) {
+      console.log(email);
+      await appendFile(new URL(`./questionable_customers.txt`, import.meta.url), `${email}\n`);
+      return "Missing customer Id";
+      // throw new Error("Customer missing ID but found via email");
+    } else if (!customerId && !customerByEmail) {
+      // console.log(email);
+      return "New Customer with no ID";
+    }
+    return foundById;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const processRowData = async (rowData) => {
   // "Program Week Updated"
 
-  const Program_Type = rowData["Program_Type"] || rowData["Program Type"];
-  const Program_Status = rowData["Program_Status"] || rowData["Program Status"];
-  const Program_Snack_Type =
-    rowData["Program_Snack_Type"] || rowData["Program Snack Type"];
-  const Customer_ID = rowData["Customer_ID"] || rowData["Customer ID"];
-  const Shipping_Day = rowData["Shipping_Day"] || rowData["Shipping Day"];
-  const Shipping_Address_Line_1 =
-    rowData["Shipping_Address_Line_1"] || rowData["Shipping Address Line 1"];
-  const Shipping_City = rowData["Shipping_City"] || rowData["Shipping City"];
+  const Program_Type = rowData["Program Type"];
+  const Program_Status = rowData["Program Status"];
+  const Program_Snack_Type = rowData["Program Snack Type"];
+  const Customer_ID = rowData["Customer Id"] || rowData["Customer ID"];
+  const Shipping_Day = rowData["Shipping Day"];
+  const Shipping_Address_Line_1 = rowData["Shipping Address Line 1"];
+  const Shipping_City = rowData["Shipping City"];
   // TODO: mark email as unique
   let Email = rowData["Email"];
   let status = "";
@@ -63,6 +89,10 @@ const processRowData = async (rowData) => {
 
   if (!Customer_ID) {
     return "No Customer ID";
+  }
+
+  if (!Shipping_Day) {
+    return "No Ship Day"
   }
 
   let productData = {};
@@ -109,19 +139,15 @@ const processRowData = async (rowData) => {
     //
     Program_Status == "Card Declined" ||
     Program_Status == "Fraud" ||
-    Program_Status == "Verify Address"
+    Program_Status == "Verify Address" || 
+    Program_Status == "Hold with Resume Date"
   ) {
-    const ship_day = Shipping_Day.replace("-MUST SHIP", "");
+    const ship_day = Shipping_Day.replace("-MUST SHIP", "").toLowerCase();
     const query = `day_of_week = '${ship_day}'`;
     const [ship_day_profile] = await ORM.findOne(CUSTOMER_SHIP_DAY, query);
-    nextChargeDate = ship_day_profile.warehouse_date;
-
-    status = "active";
-  } else if (Program_Status == "Hold with Resume Date") {
-    // TODO: will need to create a program to start skipping
-    const ship_day = Shipping_Day.replace("-MUST SHIP", "");
-    const query = `day_of_week = '${ship_day}'`;
-    const [ship_day_profile] = await ORM.findOne(CUSTOMER_SHIP_DAY, query);
+    if (!ship_day_profile) {
+      return "Ship day must be a day of the week";
+    }
     nextChargeDate = ship_day_profile.warehouse_date;
 
     status = "active";
@@ -181,8 +207,8 @@ const processRowData = async (rowData) => {
     next_charge_date: nextChargeDate,
 
     // shipping_company: "??????????????????",
-    billing_first_name: rowData["First_Name"] || rowData["First Name"],
-    billing_last_name: rowData["Last_Name"] || rowData["Last Name"],
+    billing_first_name: rowData["First Name"],
+    billing_last_name: rowData["Last Name"],
 
     quantity: 1,
     charge_interval_unit_type: "week",
@@ -193,34 +219,21 @@ const processRowData = async (rowData) => {
     customer_stripe_id: "",
 
     shipping_email: Email,
-    shipping_first_name: rowData["First_Name"] || rowData["First Name"],
-    shipping_last_name: rowData["Last_Name"] || rowData["Last Name"],
+    shipping_first_name: rowData["First Name"],
+    shipping_last_name: rowData["Last Name"],
     shipping_phone: phoneNumber,
     shipping_address_1: Shipping_Address_Line_1,
-    shipping_address_2:
-      rowData["Shipping_Address_Line_2"] || rowData["Shipping Address Line 2"],
+    shipping_address_2: rowData["Shipping Address Line 2"],
     shipping_city: Shipping_City,
-    shipping_province:
-      rowData["Shipping_StateProvince"] || rowData["Shipping State/Province"],
-    shipping_zip:
-      rowData["Shipping_ZipPostal_Code"] || rowData["Shipping Zip/Postal Code"],
-    shipping_country:
-      rowData["Shipping_Country"] ||
-      rowData["Shipping Country"] ||
-      "United States",
-    billing_address_1:
-      rowData["Billing_Address_Line_1"] || rowData["Billing Address Line 1"],
-    billing_address_2:
-      rowData["Billing_Address_Line_2"] || rowData["Billing Address Line 2"],
-    billing_city: rowData["Billing_City"] || rowData["Billing City"],
-    billing_postalcode:
-      rowData["Billing_ZipPostal_Code"] || rowData["Billing Zip/Postal Code"],
-    billing_province_state:
-      rowData["Billing_StateProvince"] || rowData["Billing State/Province"],
-    billing_country:
-      rowData["Billing_Country"] ||
-      rowData["Billing Country"] ||
-      "United States",
+    shipping_province: rowData["Shipping State/Province"],
+    shipping_zip: rowData["Shipping Zip/Postal Code"],
+    shipping_country: rowData["Shipping Country"] || "United States",
+    billing_address_1: rowData["Billing Address Line 1"],
+    billing_address_2: rowData["Billing Address Line 2"],
+    billing_city: rowData["Billing City"],
+    billing_postalcode: rowData["Billing Zip/Postal Code"],
+    billing_province_state: rowData["Billing State/Province"],
+    billing_country: rowData["Billing Country"] || "United States",
     billing_phone: billingPhoneNumber,
 
     program_week: rowData["Program Week Updated"],
@@ -245,7 +258,13 @@ const processRowData = async (rowData) => {
     let trackStatus = "NONE";
     let whatChanged = "";
     let query = `customer_id = ${Customer_ID}`;
-    const [foundOne] = await ORM.findOne(CUSTOMER_TABLE_SOURCE, query);
+    const foundOne = await retrieveCustomer(Customer_ID, Email);
+    if (
+      foundOne === "Missing customer Id" ||
+      foundOne === "New Customer with no ID"
+    ) {
+      return;
+    }
     if (foundOne) {
       if (foundOne.status === "DONT_PROCESS") {
         trackStatus = "DONT_PROCESS";
@@ -386,7 +405,7 @@ main()
     console.log("==========================================");
     console.timeEnd();
     console.log("==========================================");
-    say.speak("Node js has exited with errors " + err.message);
+    // say.speak("Node js has exited with errors " + err.message);
     process.exit();
   });
 
