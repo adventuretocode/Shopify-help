@@ -9,21 +9,19 @@ import ORM from "./db/orm.js";
 import compareSpecificKey from "./helpers/compareSpecificKey.js";
 
 import ReChargeCustom from "./ReCharge/Recharge.js";
-import { getNextDayOfWeek } from "./helpers/moment.js";
 import isStateProvinceAbv from "./helpers/isStateProvinceAbv.js";
 
 const DEBUG_MODE = true;
 
-const START_DATE = "2022-1-07";
 const BISTRO_ENV = "prod";
-const BISTRO_DAY = "friday";
+const BISTRO_DAY = "monday";
 //
 
 dotenv.config();
 
 const CUSTOMER_TABLE = `${BISTRO_ENV}_bistro_recharge_migration`;
 const TRACK_CUSTOMER_UPDATE = `${BISTRO_ENV}_track_${BISTRO_DAY}_customer`;
-const CUSTOMER_SHIP_DAY = `${BISTRO_ENV_TABLE}_logistic_day`;
+const CUSTOMER_SHIP_DAY = `${BISTRO_ENV}_logistic_day`;
 
 const logChanges = (
   topic,
