@@ -1,0 +1,18 @@
+{% comment %}  
+  Code take from https://shopify.dev/themes/navigation-search/navigation
+	Ignoring child links
+{% endcomment %}
+	
+{% endif %}
+<ul class="menu">
+  {% for link in section.settings.menu.links %}
+    <li class="menu-link">
+      <a 
+			 href="{{ link.url }}"
+			 class="{% if canonical_url contains link.url %}active{% endif %}"
+			>
+			  {{ link.title }}
+			</a>
+    </li>
+  {% endfor %}
+</ul>
