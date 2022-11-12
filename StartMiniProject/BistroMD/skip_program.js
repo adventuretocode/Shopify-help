@@ -22,7 +22,7 @@ const BISTRO_ENV = "dev";
 const DEBUG_MODE = true;
 
 const DIRECTORY = `/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge`;
-const FOLDER = `skip_1-0`;
+const FOLDER = `run-skip_1-0`;
 const APPEND_FILE_NAME = `customer_split`;
 const TRACK_FILE = `./track_split.txt`;
 

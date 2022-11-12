@@ -11,7 +11,7 @@ const DEBUG_MODE = false;
 const BISTRO_ENV_TABLE = "prod";
 const BISTRO_ENV_DATA = "prod";
 const BISTRO_DAY = "monday";
-const FOLDER = "export_2-3"; // Restart the track file
+const FOLDER = "run-export_2-3"; // Restart the track file
 
 const DIRECTORY =
   "/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge";
