@@ -11,7 +11,7 @@ import compareSpecificKey from "./helpers/compareSpecificKey.js";
 import ReChargeCustom from "./ReCharge/Recharge.js";
 import isStateProvinceAbv from "./helpers/isStateProvinceAbv.js";
 
-const DEBUG_MODE = true;
+const DEBUG_MODE = false;
 
 const BISTRO_ENV = "prod";
 const BISTRO_DAY = "monday";
@@ -330,7 +330,7 @@ const updateReChargeSubscription = async (rechargeCustomer, localCustomer) => {
       if (!nextChargeScheduledAt) {
         const query = `day_of_week = '${localCustomer.shipping_day}'`;
         const [ship_day_profile] = await ORM.findOne(CUSTOMER_SHIP_DAY, query);
-        nextChargeScheduledAt  = ship_day_profile.warehouse_date;
+        nextChargeScheduledAt = ship_day_profile.warehouse_date;
       }
 
       const body = {
@@ -428,80 +428,133 @@ const updateReCustomerController = async (rechargeCustomer, localCustomer) => {
     await updateReChargeBillingAddress(rechargeCustomer, localCustomer);
     await updateReChargeShipping(rechargeCustomer, localCustomer);
     await updateReChargeSubscription(rechargeCustomer, localCustomer);
+    return "Completed";
   } catch (error) {
     throw error;
+  }
+};
+
+const processCustomer = async (foundOne) => {
+  try {
+    const results = await ReChargeCustom.Customers.findByEmail(
+      foundOne.old_email
+    );
+
+    const { customers: rechargeCustomer } = results;
+
+    if (DEBUG_MODE) {
+      for (const key in foundOne) {
+        if (Object.hasOwnProperty.call(foundOne, key)) {
+          console.log(
+            `\u001b[38;5;${foundOne.customer_id % 255}m${key}: ${
+              foundOne[key]
+            }\u001b[0m`
+          );
+        }
+      }
+    }
+
+    if (rechargeCustomer.length == 0) {
+      // Add customer to recharge
+      // Mark as `TO_ADD` for the export
+      await ORM.updateOne(
+        TRACK_CUSTOMER_UPDATE,
+        "status",
+        "TO_ADD",
+        `id = '${foundOne.id}'`
+      );
+      if (DEBUG_MODE)
+        console.log(
+          `\u001b[38;5;${foundOne.customer_id % 255}m${
+            foundOne.new_email
+          } -- status: TO_ADD\u001b[0m`
+        );
+    } else if (rechargeCustomer.length == 1) {
+      // Update the customers
+      let findCustomerQuery = `customer_id = ${foundOne.customer_id}`;
+      const [localCustomer] = await ORM.findOne(
+        CUSTOMER_TABLE,
+        findCustomerQuery
+      );
+
+      await updateReCustomerController(rechargeCustomer[0], localCustomer);
+
+      await ORM.updateOne(
+        TRACK_CUSTOMER_UPDATE,
+        "status",
+        "COMPLETED",
+        `id = '${foundOne.id}'`
+      );
+    }
+
+    if (DEBUG_MODE)
+      console.log(
+        `\u001b[38;5;${foundOne.customer_id % 255}m${
+          foundOne.new_email
+        } -- status: TO_ADD\u001b[0m`
+      );
+
+    return foundOne.old_email;
+  } catch (error) {
+    console.log(error?.response?.data);
+    if (error?.response?.data?.warning === "too many requests") {
+      console.log("too many requests sleep for 2sec");
+      await sleep(2000);
+    } else {
+      console.log("Error: ", error);
+      console.log(error?.response?.data?.errors);
+      if ((error.errno == -3008)) {
+        return;
+      } else {
+        debugger;
+        throw "";
+      }
+    }
   }
 };
 
 (async () => {
   while (true) {
     try {
-      let query = `status = 'UPDATE' LIMIT 1`;
-      const [foundOne] = await ORM.findOne(TRACK_CUSTOMER_UPDATE, query);
-
-			if(!foundOne) return "Completed";
-			
-      const results = await ReChargeCustom.Customers.findByEmail(
-        foundOne.old_email
+      let query = `status = 'UPDATE' LIMIT 3`;
+      const [customerOne, customerTwo, customerThree] = await ORM.findOne(
+        TRACK_CUSTOMER_UPDATE,
+        query
       );
 
-      const { customers: rechargeCustomer } = results;
+      if (!customerOne && !customerTwo && !customerThree) return "Completed";
 
-      if (DEBUG_MODE) {
-        for (const key in foundOne) {
-          if (Object.hasOwnProperty.call(foundOne, key)) {
-            console.log(
-              `\u001b[38;5;${foundOne.customer_id % 255}m${key}: ${
-                foundOne[key]
-              }\u001b[0m`
-            );
-          }
-        }
+      let resultOne, resultTwo, resultThree;
+      if (customerOne) {
+        resultOne = processCustomer(customerOne);
       }
 
-      if (rechargeCustomer.length == 0) {
-        // Add customer to recharge
-        // Mark as `TO_ADD` for the export
-        await ORM.updateOne(
-          TRACK_CUSTOMER_UPDATE,
-          "status",
-          "TO_ADD",
-          `id = '${foundOne.id}'`
-        );
-        if (DEBUG_MODE)
-          console.log(
-            `\u001b[38;5;${foundOne.customer_id % 255}m${
-              foundOne.new_email
-            } -- status: TO_ADD\u001b[0m`
-          );
-      } else if (rechargeCustomer.length == 1) {
-        // Update the customers
-        let findCustomerQuery = `customer_id = ${foundOne.customer_id}`;
-        const [localCustomer] = await ORM.findOne(
-          CUSTOMER_TABLE,
-          findCustomerQuery
-        );
-
-        await updateReCustomerController(rechargeCustomer[0], localCustomer);
-
-        await ORM.updateOne(
-          TRACK_CUSTOMER_UPDATE,
-          "status",
-          "COMPLETED",
-          `id = '${foundOne.id}'`
-        );
+      if (customerTwo) {
+        resultTwo = processCustomer(customerTwo);
       }
+
+      if (customerThree) {
+        resultThree = processCustomer(customerThree);
+      }
+
+      const resultArr = [];
+
+      if (resultOne) {
+        resultArr.push(resultOne);
+      }
+
+      if (resultTwo) {
+        resultArr.push(resultTwo);
+      }
+
+      if (resultThree) {
+        resultArr.push(resultThree);
+      }
+
+      const resultFinal = await Promise.all(resultArr);
+      console.log(resultFinal);
     } catch (error) {
-      console.log(error?.response?.data);
-      if (error?.response?.data?.warning === "too many requests") {
-        console.log("too many requests sleep for 5sec");
-        await sleep(5000);
-      } else {
-        console.log("Error: ", error);
-        console.log(error?.response?.data?.errors);
-        debugger;
-        throw "";
-      }
+      throw error;
     }
   }
 })();

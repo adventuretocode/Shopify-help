@@ -24,7 +24,7 @@ const buildOptions = (url, method, params, data) => {
       headers: {
         "Content-Type": "application/json",
         "X-Recharge-Version": "2021-11",
-        "X-Recharge-Access-Token": process.env[`RECHARGE_TOKEN_${keyNum % 4}`],
+        "X-Recharge-Access-Token": process.env[`RECHARGE_TOKEN_${keyNum % 6}`],
       },
     };
 
