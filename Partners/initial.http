@@ -1,0 +1,14 @@
+@organization_id={{$dotenv ORGANIZATION_ID}}
+@partner_access_token={{$dotenv PARTNER_ACCESS_TOKEN}}
+@app_id={{$dotenv APP_ID}}
+
+###
+POST https://partners.shopify.com/{{organization_id}}/api/2022-10/graphql.json
+Content-Type: application/graphql
+X-Shopify-Access-Token: {{partner_access_token}}
+
+query {
+  app(id: "gid://partners/App/{{app_id}}") {
+    name
+  }
+}
