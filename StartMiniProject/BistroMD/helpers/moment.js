@@ -1,13 +1,14 @@
 import moment from "moment";
 
-export const isBefore = (startDate) => {
-  const startD = moment(startDate, "MM/DD/YYYY");
-  return moment(startD).isBefore();
+export const isBefore = (startDate, migrationDate,format) => {
+  const startD = moment(startDate, format);
+	const migrationD = moment(migrationDate, format);
+  return moment(startD).isBefore(migrationD);
 };
 
 export const getNextDayOfWeek = (startDate, dayOfWeek) => {
-  let cutOverDay = moment(moment(startDate).format("YYYY-MM-DD"));
-  let nextDayOfWeek = moment(moment(startDate).format("YYYY-MM-DD")).day(
+  let cutOverDay = moment(startDate, "MM-DD-YYYY");
+  let nextDayOfWeek = moment(startDate, "MM-DD-YYYY").day(
     dayOfWeek
   );
 
