@@ -1,5 +1,5 @@
 import axios from "axios";
-const { SHOP, SHOPIFY_TOKEN, API_VERSION } = process.env;
+const { SHOP_NAME, SHOPIFY_ACCESS_TOKEN, SHOPIFY_API_VERSION } = process.env;
 
 const sleep = (time) => {
   return new Promise((resolve) => {
@@ -12,10 +12,10 @@ const sleep = (time) => {
 const buildGraphqlQuery = async (query, variables) => {
   try {
     const options = {
-      url: `https://${SHOP}.myshopify.com/admin/api/${API_VERSION}/graphql.json`,
+      url: `https://${SHOP_NAME}.myshopify.com/admin/api/${SHOPIFY_API_VERSION}/graphql.json`,
       headers: {
         "Content-Type": "application/json",
-        "X-Shopify-Access-Token": SHOPIFY_TOKEN,
+        "X-Shopify-Access-Token": SHOPIFY_ACCESS_TOKEN,
       },
       method: "POST",
       data: {
