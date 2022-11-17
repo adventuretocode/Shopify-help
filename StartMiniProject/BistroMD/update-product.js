@@ -1,8 +1,8 @@
 import dotenv from "dotenv";
 
-const BISTRO_ENV = "prod";
+const BISTRO_ENV = "stage";
 
-dotenv.config({ path: `./.env.${BISTRO_ENV}` });
+dotenv.config({ path: `./.env` });
 
 const TABLE_NAME = `${BISTRO_ENV}_prices_from_cart`;
 
