@@ -18,8 +18,9 @@ import {
   isBefore,
 } from "./helpers/moment.js";
 
-const BISTRO_ENV = "dev";
+const BISTRO_ENV = "prod";
 const DEBUG_MODE = true;
+const OFFICIAL_START = "12/06/2022";
 
 const DIRECTORY = `/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge`;
 const FOLDER = `run-skip_1-0`;
@@ -40,29 +41,32 @@ const processRowData = async (rowCSV) => {
   const daysBetween = getAmountOfDaysPassed(startHoldDate, endHoldDate);
   if (daysBetween > 6) throw new Error("More than 1 week is included");
 
-  const isBeforeToday = isBefore(startHoldDate);
-  // if (isBeforeToday) return "Old Date";
+  const isBeforeToday = isBefore(startHoldDate, OFFICIAL_START, "MM/DD/YYYY");
+  if (isBeforeToday) return "Old Date";
 
   try {
     const query = `customer_id = ${customerId}`;
     const localCustomers = await ORM.findOne(CUSTOMER_TABLE, query);
 
     if (localCustomers.length != 1) {
-      throw new Error(`Customer has ${localCustomers.length} records`);
+      throw new Error(`Customer has ${localCustomers.length} records: ${customerId}`);
     }
 
     const { next_charge_date, shipping_email } = localCustomers[0];
 
-    const rechargeCustomers = await ReCharge.Customers.findByEmail(shipping_email);
+    const { customers: rechargeCustomers } =
+      await ReCharge.Customers.findByEmail(shipping_email);
 
     if (rechargeCustomers.length != 1) {
-      throw new Error(`ReCharge Customer has ${localCustomers.length} records`);
+      throw new Error(`ReCharge Customer has ${localCustomers.length} records: ${shipping_email}`);
     }
 
-    const dayOfWeek = getDayOfTheWeek(next_charge_date);
-    const nextDateOfWeek = getNextDayOfWeek(startHoldDate, dayOfWeek);
+    const warehouseDay = getDayOfTheWeek(next_charge_date);
+    const nextDateOfWeek = getNextDayOfWeek(startHoldDate, warehouseDay);
 
-    const { subscriptions } = ReCharge.Subscriptions.list(shipping_email);
+    const { subscriptions } = await ReCharge.Subscriptions.list(
+      rechargeCustomers[0].id
+    );
 
     if (subscriptions.length != 1)
       throw new Error(`Subscription has ${subscriptions.length} records`);
@@ -73,14 +77,20 @@ const processRowData = async (rowCSV) => {
     if (status == "cancelled")
       throw new Error("No active subscription to skip");
 
-    const result = await ReCharge.Addresses.skip_future_charge(
+    const { charger } = await ReCharge.Addresses.skip_future_charge(
       address_id,
       nextDateOfWeek,
       [id]
     );
 
     if (DEBUG_MODE) {
-      console.log(result);
+      if (DEBUG_MODE) {
+        console.log(
+          `\u001b[38;5;${
+            id % 255
+          }m${shipping_email} -- ${nextDateOfWeek}\u001b[0m`
+        );
+      }
     }
 
     return "Success";
