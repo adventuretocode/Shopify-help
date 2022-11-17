@@ -4,14 +4,12 @@ import say from "say";
 import { readFile, writeFile, access, appendFile } from "fs/promises";
 import { phone } from "phone";
 
-// TODO: script to skip a future week(s)
-
 const DEBUG_MODE = false;
 
-const BISTRO_ENV_TABLE = "prod";
-const BISTRO_ENV_DATA = "prod";
-const BISTRO_DAY = "monday";
-const FOLDER = "run-export_2-3"; // Restart the track file
+const BISTRO_ENV_TABLE = "stage";
+const BISTRO_ENV_DATA = "stage";
+const BISTRO_DAY = "wednesday";
+const FOLDER = "stage-run-export_2-5"; // Restart the track file
 
 const DIRECTORY =
   "/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge";
@@ -396,7 +394,7 @@ main()
     console.log("==========================================");
     console.timeEnd();
     console.log("==========================================");
-    say.speak("Node js has completed successfully");
+    say.speak("BistroMD has completed successfully");
     process.exit();
   })
   .catch((err) => {
@@ -405,7 +403,7 @@ main()
     console.log("==========================================");
     console.timeEnd();
     console.log("==========================================");
-    // say.speak("Node js has exited with errors " + err.message);
+    say.speak("BistroMD has exited with errors " + err.message);
     process.exit();
   });
 
