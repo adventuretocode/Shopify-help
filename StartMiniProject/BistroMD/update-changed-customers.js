@@ -516,7 +516,7 @@ const processCustomer = async (foundOne) => {
   }
 };
 
-(async () => {
+const runMany = async () => {
   while (true) {
     try {
       let query = `status = 'UPDATE' LIMIT 3`;
@@ -560,4 +560,80 @@ const processCustomer = async (foundOne) => {
       throw error;
     }
   }
-})();
+};
+
+const runOne = async () => {
+  while (true) {
+    try {
+      let query = `status = 'UPDATE' LIMIT 1`;
+      const [foundOne] = await ORM.findOne(TRACK_CUSTOMER_UPDATE, query);
+
+			if(!foundOne) return "Completed";
+			
+      const results = await ReChargeCustom.Customers.findByEmail(
+        foundOne.old_email
+      );
+
+      const { customers: rechargeCustomer } = results;
+
+      if (DEBUG_MODE) {
+        for (const key in foundOne) {
+          if (Object.hasOwnProperty.call(foundOne, key)) {
+            console.log(
+              `\u001b[38;5;${foundOne.customer_id % 255}m${key}: ${
+                foundOne[key]
+              }\u001b[0m`
+            );
+          }
+        }
+      }
+
+      if (rechargeCustomer.length == 0) {
+        // Add customer to recharge
+        // Mark as `TO_ADD` for the export
+        await ORM.updateOne(
+          TRACK_CUSTOMER_UPDATE,
+          "status",
+          "TO_ADD",
+          `id = '${foundOne.id}'`
+        );
+        if (DEBUG_MODE)
+          console.log(
+            `\u001b[38;5;${foundOne.customer_id % 255}m${
+              foundOne.new_email
+            } -- status: TO_ADD\u001b[0m`
+          );
+      } else if (rechargeCustomer.length == 1) {
+        // Update the customers
+        let findCustomerQuery = `customer_id = ${foundOne.customer_id}`;
+        const [localCustomer] = await ORM.findOne(
+          CUSTOMER_TABLE,
+          findCustomerQuery
+        );
+
+        await updateReCustomerController(rechargeCustomer[0], localCustomer);
+
+        await ORM.updateOne(
+          TRACK_CUSTOMER_UPDATE,
+          "status",
+          "COMPLETED",
+          `id = '${foundOne.id}'`
+        );
+      }
+    } catch (error) {
+      console.log(error?.response?.data);
+      if (error?.response?.data?.warning === "too many requests") {
+        console.log("too many requests sleep for 5sec");
+        await sleep(5000);
+      } else {
+        console.log("Error: ", error);
+        console.log(error?.response?.data?.errors);
+        debugger;
+        throw "";
+      }
+    }
+  }
+};
+
+// runOne();
+// runMany();
