@@ -283,15 +283,27 @@ const updateReChargeSubscription = async (rechargeCustomer, localCustomer) => {
       rechargeCustomerId
     );
 
-    // TODO: its okay if a customer doesn't have a subscription
-    // Just make sure to match up what they have now.
+    let subscription;
+    let isJustAdd;
+
+    if(subscriptions.length === 0 && localCustomer.status === "active") {
+      const { addresses } = await ReChargeCustom.Addresses.list(rechargeCustomerId);
+      subscription = {
+        address_id: addresses[0].id,
+        next_charge_scheduled_at: localCustomer.next_charge_date,
+        external_variant_id: { ecommerce: localCustomer.external_variant_id },
+        status: "active"
+      }
+      isJustAdd = true;
+    }
+    else {
+      subscription = subscriptions[0];
+    }
 
     if (subscriptions.length > 1) {
       debugger;
       throw new Error("More than 1 subscription");
     }
-
-    const subscription = subscriptions[0];
 
     const {
       address_id,
@@ -321,8 +333,28 @@ const updateReChargeSubscription = async (rechargeCustomer, localCustomer) => {
         next_charge_scheduled_at != localCustomer.next_charge_date;
     }
 
-    if (!hasPlanChanged && !hasChargeDateChanged && !hasStatusChanged) {
+    if (!hasPlanChanged && !hasChargeDateChanged && !hasStatusChanged && !isJustAdd) {
       return "Subscription has not changed";
+    }
+
+    if(isJustAdd) {
+      const body = {
+        address_id: subscription.address_id,
+        charge_interval_frequency: "1",
+        next_charge_scheduled_at: next_charge_scheduled_at,
+        order_interval_frequency: "1",
+        order_interval_unit: "week",
+        external_variant_id: {
+          ecommerce: `${subscription.external_variant_id.ecommerce}`,
+        },
+        quantity: 1,
+      };
+
+      const result = await ReChargeCustom.Subscriptions.create(body);
+      subscription_id = result.subscription.id;
+      if (DEBUG_MODE) {
+        console.log(result);
+      }
     }
 
     if (hasPlanChanged) {
@@ -344,7 +376,7 @@ const updateReChargeSubscription = async (rechargeCustomer, localCustomer) => {
         order_interval_frequency: "1",
         order_interval_unit: "week",
         external_variant_id: {
-          ecommerce: external_variant_id,
+          ecommerce: `${external_variant_id}`,
         },
         quantity: 1,
       };
@@ -352,7 +384,7 @@ const updateReChargeSubscription = async (rechargeCustomer, localCustomer) => {
       const result = await ReChargeCustom.Subscriptions.create(body);
       subscription_id = result.subscription.id;
       if (DEBUG_MODE) {
-        console.log(result);
+        console.log(result.subscription.variant_title);
       }
     }
 
@@ -562,10 +594,11 @@ const runMany = async () => {
   }
 };
 
-const runOne = async () => {
-  while (true) {
+const runOne = async (customerId) => {
+  const continuous = !customerId;
+  do {
     try {
-      let query = `status = 'UPDATE' LIMIT 1`;
+      let query = customerId ? `customer_id = ${customerId}` : `status = 'UPDATE' LIMIT 1`;
       const [foundOne] = await ORM.findOne(TRACK_CUSTOMER_UPDATE, query);
 
 			if(!foundOne) return "Completed";
@@ -632,8 +665,9 @@ const runOne = async () => {
         throw "";
       }
     }
-  }
+  } while (continuous);
+  process.exit();
 };
 
-// runOne();
+runOne(3916970);
 // runMany();
