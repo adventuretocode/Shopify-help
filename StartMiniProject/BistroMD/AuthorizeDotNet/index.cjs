@@ -2,17 +2,17 @@
 const { createCustomerProfile } = require("./create-customer-profile-with-payment.cjs");
 
 const customer = {
-  email: "john@chelseaandrachel.com",
-  firstName: "John",
+  email: "sam@chelseaandrachel.com",
+  firstName: "Sam",
   lastName: "Walmart",
-  address: "11822 Gilbert St",
-  city: "Garden Grove",
+  address: "3600 W McFadden Ave",
+  city: "Santa Ana",
   state: "CA",
-  zipCode: "92841",
+  zipCode: "92704",
   country: "United Sate",
-  phone: "714-591-1300",
+  phone: "714-775-1804",
   cardNumber: "4242424242424242",
-  expDate: "1226",
+  expDate: "1227",
 };
 
 createCustomerProfile(function () {
