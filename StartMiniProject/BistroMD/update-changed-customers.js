@@ -11,10 +11,10 @@ import compareSpecificKey from "./helpers/compareSpecificKey.js";
 import ReChargeCustom from "./ReCharge/Recharge.js";
 import isStateProvinceAbv from "./helpers/isStateProvinceAbv.js";
 
-const DEBUG_MODE = false;
+const DEBUG_MODE = true;
 
 const BISTRO_ENV = "prod";
-const BISTRO_DAY = "monday";
+const BISTRO_DAY = "thursday";
 //
 
 dotenv.config();
@@ -282,6 +282,9 @@ const updateReChargeSubscription = async (rechargeCustomer, localCustomer) => {
     const { subscriptions } = await ReChargeCustom.Subscriptions.list(
       rechargeCustomerId
     );
+
+    // TODO: its okay if a customer doesn't have a subscription
+    // Just make sure to match up what they have now.
 
     if (subscriptions.length > 1) {
       debugger;
