@@ -4,7 +4,7 @@ var ApiContracts = require('authorizenet').APIContracts;
 var ApiControllers = require('authorizenet').APIControllers;
 var dotenv = require('dotenv');
 
-const BISTRO_ENV = "dev";
+const BISTRO_ENV = "staging";
 dotenv.config({ path: `./.env.${BISTRO_ENV}` });
 
 const { AUTH_NET_API_LOGIN_KEY, AUTH_NET_TRANSACTION_KEY, AUTH_NET_API_ENDPOINT } = process.env;
