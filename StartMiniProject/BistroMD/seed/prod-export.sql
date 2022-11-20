@@ -41,7 +41,7 @@ SELECT
 FROM
   `prod_bistro_recharge_migration` `migration`
 INNER JOIN 
-  `prod_track_friday_customer` `track`
+  `prod_track__customer` `track`
   ON `migration`.`customer_id` = `track`.`customer_id`
 WHERE 
   `track`.`status` = 'TO_ADD';
