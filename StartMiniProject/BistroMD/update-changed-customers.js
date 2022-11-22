@@ -13,8 +13,8 @@ import isStateProvinceAbv from "./helpers/isStateProvinceAbv.js";
 
 const DEBUG_MODE = true;
 
-const BISTRO_ENV = "prod";
-const BISTRO_DAY = "thursday";
+const BISTRO_ENV = "stage";
+const BISTRO_DAY = "monday";
 //
 
 dotenv.config();
@@ -669,5 +669,23 @@ const runOne = async (customerId) => {
   process.exit();
 };
 
-runOne(3916970);
-// runMany();
+// runOne(3916970);
+runMany()
+  .then((success) => {
+    console.log("==========================================");
+    console.log(success);
+    console.log("==========================================");
+    console.timeEnd();
+    console.log("==========================================");
+    console.log("BistroMD has completed successfully");
+    process.exit();
+  })
+  .catch((err) => {
+    console.log("==========================================");
+    console.log(err);
+    console.log("==========================================");
+    console.timeEnd();
+    console.log("==========================================");
+    console.log("BistroMD has exited with errors " + err.message);
+    process.exit();
+  });
