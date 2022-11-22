@@ -45,3 +45,12 @@ INNER JOIN
   ON `migration`.`customer_id` = `track`.`customer_id`
 WHERE 
   `track`.`status` = 'TO_ADD';
+
+---
+
+UPDATE
+  `stage_track__customer`
+SET 
+  `status` = 'COMPLETED'
+WHERE 
+  `status` = 'TO_ADD';
