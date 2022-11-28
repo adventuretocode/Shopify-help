@@ -6,10 +6,10 @@ import { phone } from "phone";
 
 const DEBUG_MODE = false;
 
-const BISTRO_ENV_TABLE = "stage";
-const BISTRO_ENV_DATA = "stage";
-const BISTRO_DAY = "monday";
-const FOLDER = "stage-run-export_2-6"; // Restart the track file
+const BISTRO_ENV_TABLE = "prod";
+const BISTRO_ENV_DATA = "prod";
+const BISTRO_DAY = "tuesday";
+const FOLDER = "prod-export_2-8"; // Restart the track file
 
 const DIRECTORY =
   "/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge";
