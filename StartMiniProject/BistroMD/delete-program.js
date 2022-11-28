@@ -70,6 +70,9 @@ const deleteCustomerController = async (gid, email) => {
       if (customerDelete.userErrors[0].message === "Customer can't be found") {
         return true;
       }
+      else if (customerDelete.userErrors[0].message === "Customer cannot be deleted because of existing subscription contracts") {
+        return true;
+      }
       return false;
     }
 
@@ -170,9 +173,9 @@ const removeCustomerReChargeAndShopify = async (rechargeCustomer) => {
 
   // Temporary due to Shopify error
   // the customer has an active subscription now, or if the customer ever had a subscription in the past
-  if (subscriptions_total_count > 0) {
-    return "";
-  }
+  // if (subscriptions_total_count > 0) {
+  //   return "";
+  // }
 
   try {
     try {
@@ -190,7 +193,7 @@ const removeCustomerReChargeAndShopify = async (rechargeCustomer) => {
     }
 
     if (DEBUG_MODE) {
-      console.log(`\u001b[38;5;${id % 255}m${email}\u001b[0m`);
+      console.log(`\u001b[38;5;${shopify_customer_id % 255}m${email}\u001b[0m`);
     }
   } catch (error) {
     throw error;
