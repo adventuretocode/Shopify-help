@@ -8,7 +8,7 @@ const DEBUG_MODE = false;
 
 const BISTRO_ENV_TABLE = "prod";
 const BISTRO_ENV_DATA = "prod";
-const BISTRO_DAY = "tuesday";
+const BISTRO_DAY = "monday";
 const FOLDER = "prod-export_2-8"; // Restart the track file
 
 const DIRECTORY =
