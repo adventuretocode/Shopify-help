@@ -13,7 +13,7 @@ import isStateProvinceAbv from "./helpers/isStateProvinceAbv.js";
 
 const DEBUG_MODE = true;
 
-const BISTRO_ENV = "stage";
+const BISTRO_ENV = "prod";
 const BISTRO_DAY = "monday";
 //
 
@@ -658,7 +658,11 @@ const runOne = async (customerId) => {
       if (error?.response?.data?.warning === "too many requests") {
         console.log("too many requests sleep for 5sec");
         await sleep(5000);
-      } else {
+      } 
+      else if (error?.response?.data?.errors?.subscription[0] == 'item already set to active') {
+        await sleep(1000);
+      }
+      else {
         console.log("Error: ", error);
         console.log(error?.response?.data?.errors);
         debugger;
@@ -669,8 +673,8 @@ const runOne = async (customerId) => {
   process.exit();
 };
 
-// runOne(3916970);
-runMany()
+runOne()
+// runMany()
   .then((success) => {
     console.log("==========================================");
     console.log(success);
