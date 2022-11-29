@@ -51,7 +51,7 @@ WHERE
 SELECT
 	COUNT(*)
 FROM
-  `prod_track_friday_customer`
+  `prod_track__customer`
 WHERE 
   `status` = 'TO_ADD';
 
@@ -62,7 +62,7 @@ SELECT
 FROM
   `prod_bistro_recharge_migration` `migration`
 INNER JOIN 
-  `prod_track_friday_customer` `track`
+  `prod_track__customer` `track`
   ON `migration`.`customer_id` = `track`.`customer_id`
 WHERE 
   `track`.`status` = 'TO_ADD';
@@ -72,13 +72,13 @@ WHERE
 SELECT
   COUNT(*)
 FROM
-  `prod_track_friday_customer`
+  `prod_track__customer`
 WHERE 
   `status` = 'UPDATE';
 
 -----------------------
 UPDATE
-  `prod_track_friday_customer`
+  `prod_track__customer`
 SET 
   `status` = 'COMPLETED'
 WHERE 
