@@ -8,8 +8,8 @@ const DEBUG_MODE = false;
 
 const BISTRO_ENV_TABLE = "prod";
 const BISTRO_ENV_DATA = "prod";
-const BISTRO_DAY = "monday";
-const FOLDER = "prod-export_2-8"; // Restart the track file
+const BISTRO_DAY = "tuesday";
+const FOLDER = "prod-export_2-9"; // Restart the track file
 
 const DIRECTORY =
   "/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge";
@@ -71,6 +71,7 @@ const processRowData = async (rowData) => {
   if (!Email) return "";
 
   if (
+    Email == "Email" ||
     Email == "eric.narvartest@bistromd.com" ||
     Email == "ericcarestia+asdkfljsdflkjddd@gmail.com" ||
     Email == "ericcarestia+storetesterspeed@bistromd.com" ||
@@ -194,7 +195,7 @@ const processRowData = async (rowData) => {
   const data = {
     customer_id: Customer_ID,
     // program_week: Program_Week_Updated,
-    gender: rowData["Gender"],
+    gender: rowData["Gender"] || "Male",
 
     status: status,
 
