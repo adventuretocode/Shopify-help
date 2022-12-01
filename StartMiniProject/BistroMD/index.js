@@ -8,8 +8,8 @@ const DEBUG_MODE = false;
 
 const BISTRO_ENV_TABLE = "prod";
 const BISTRO_ENV_DATA = "prod";
-const BISTRO_DAY = "tuesday";
-const FOLDER = "prod-export_2-9"; // Restart the track file
+const BISTRO_DAY = "thursday";
+const FOLDER = "prod-export_2-11"; // Restart the track file
 
 const DIRECTORY =
   "/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge";
