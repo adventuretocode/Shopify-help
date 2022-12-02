@@ -16,21 +16,22 @@ import {
   getNextDayOfWeek,
   getAmountOfDaysPassed,
   isBefore,
+  formatDate,
 } from "./helpers/moment.js";
 
 const BISTRO_ENV = "prod";
 const DEBUG_MODE = true;
-const OFFICIAL_START = "12/06/2022";
+const OFFICIAL_START = "12/04/2022";
 
 const DIRECTORY = `/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge`;
-const FOLDER = `run-skip_1-0`;
+const FOLDER = `run-skip_2-11`;
 const APPEND_FILE_NAME = `customer_split`;
 const TRACK_FILE = `./track_split.txt`;
 
 const CUSTOMER_TABLE = `${BISTRO_ENV}_bistro_recharge_migration`;
 
 const processRowData = async (rowCSV) => {
-  const customerId = rowCSV["Customer ID"];
+  const customerId = rowCSV["Customer Id"];
   const startHoldDate = rowCSV["Start Hold Date"]; // MM/DD/YYYY;
   const endHoldDate = rowCSV["End Hold Date"]; // MM/DD/YYYY;
 
@@ -53,6 +54,7 @@ const processRowData = async (rowCSV) => {
     }
 
     const { next_charge_date, shipping_email } = localCustomers[0];
+    console.log(shipping_email);
 
     const { customers: rechargeCustomers } =
       await ReCharge.Customers.findByEmail(shipping_email);
@@ -62,7 +64,14 @@ const processRowData = async (rowCSV) => {
     }
 
     const warehouseDay = getDayOfTheWeek(next_charge_date);
-    const nextDateOfWeek = getNextDayOfWeek(startHoldDate, warehouseDay);
+    const nextDateOfWeek = next_charge_date == formatDate(startHoldDate) ? next_charge_date : getNextDayOfWeek(startHoldDate, warehouseDay);
+
+    if(next_charge_date == formatDate(startHoldDate)) {
+      console.log("-------");
+    }
+    else {
+      return;
+    }
 
     const { subscriptions } = await ReCharge.Subscriptions.list(
       rechargeCustomers[0].id
@@ -76,21 +85,34 @@ const processRowData = async (rowCSV) => {
     // TODO: what if subscription is cancelled
     if (status == "cancelled")
       throw new Error("No active subscription to skip");
-
-    const { charger } = await ReCharge.Addresses.skip_future_charge(
-      address_id,
-      nextDateOfWeek,
-      [id]
-    );
+    
+    try {
+      const result = await ReCharge.Addresses.skip_future_charge(
+        address_id,
+        nextDateOfWeek,
+        [id]
+      );
+      console.log(result);
+    } catch (error) {
+      try {
+        const  { charges } = await ReCharge.Charges.listByStatus(rechargeCustomers[0].id, "QUEUED");
+        const charge = charges[0];
+        if(charge.scheduled_at != nextDateOfWeek) {
+          throw "";
+        }
+        const skipped = await ReCharge.Charges.skip(charge.id, [id]);
+        console.log(charges, skipped);
+      } catch (error) {
+        throw new Error("Skips not possible");
+      }
+    }
 
     if (DEBUG_MODE) {
-      if (DEBUG_MODE) {
-        console.log(
-          `\u001b[38;5;${
-            id % 255
-          }m${shipping_email} -- ${nextDateOfWeek}\u001b[0m`
-        );
-      }
+      console.log(
+        `\u001b[38;5;${
+          id % 255
+        }m${shipping_email} -- ${nextDateOfWeek}\u001b[0m`
+      );
     }
 
     return "Success";
@@ -100,8 +122,7 @@ const processRowData = async (rowCSV) => {
   }
 };
 
-(async () => {
-  console.time();
+const runMany = async () => {
   try {
     try {
       await access(TRACK_FILE);
@@ -124,7 +145,6 @@ const processRowData = async (rowCSV) => {
         console.log("==========================================");
         console.log("=============  COMPLETED ALL FILES =======");
         console.log("==========================================");
-        console.timeEnd();
         process.exit();
       }
 
@@ -156,4 +176,21 @@ const processRowData = async (rowCSV) => {
     console.log("Error: ", error);
     throw error;
   }
-})();
+};
+
+const runOne = async (customerId, startHoldDate, endHoldDate) => {
+  const row = {
+    "Customer Id": customerId,
+    "Start Hold Date": startHoldDate,
+    "End Hold Date": endHoldDate,
+  }
+  try {
+    await processRowData(row);
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+// runOne("3691404","12/5/2022","12/11/2022");
+runMany();
