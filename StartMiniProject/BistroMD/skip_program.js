@@ -53,8 +53,8 @@ const processRowData = async (rowCSV) => {
       throw new Error(`Customer has ${localCustomers.length} records: ${customerId}`);
     }
 
-    const { next_charge_date, shipping_email } = localCustomers[0];
-    console.log(shipping_email);
+    const { next_charge_date, shipping_email, customer_id } = localCustomers[0];
+    console.log(shipping_email, customer_id);
 
     const { customers: rechargeCustomers } =
       await ReCharge.Customers.findByEmail(shipping_email);
@@ -91,16 +91,14 @@ const processRowData = async (rowCSV) => {
       );
       console.log(result);
     } catch (error) {
+      console.log(error?.response?.data?.errors?.charge);
       try {
         const  { charges } = await ReCharge.Charges.listByStatus(rechargeCustomers[0].id, "QUEUED");
         const charge = charges[0];
-        if(charge.scheduled_at != nextDateOfWeek) {
-          throw "";
-        }
         const skipped = await ReCharge.Charges.skip(charge.id, [id]);
         console.log(charges, skipped);
       } catch (error) {
-        throw new Error("Skips not possible");
+        console.log(error);
       }
     }
 

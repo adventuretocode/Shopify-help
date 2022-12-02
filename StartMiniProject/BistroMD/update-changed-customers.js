@@ -14,7 +14,7 @@ import isStateProvinceAbv from "./helpers/isStateProvinceAbv.js";
 const DEBUG_MODE = true;
 
 const BISTRO_ENV = "prod";
-const BISTRO_DAY = "tuesday";
+const BISTRO_DAY = "saturday";
 //
 
 dotenv.config();
