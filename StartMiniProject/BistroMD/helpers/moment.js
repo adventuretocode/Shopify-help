@@ -1,5 +1,9 @@
 import moment from "moment";
 
+export const formatDate = (date) => {
+  return moment(date, "MM-DD-YYYY").format("YYYY-MM-DD");
+}
+
 export const isBefore = (startDate, migrationDate,format) => {
   const startD = moment(startDate, format);
 	const migrationD = moment(migrationDate, format);

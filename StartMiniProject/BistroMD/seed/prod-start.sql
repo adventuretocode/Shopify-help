@@ -112,3 +112,7 @@ CREATE TABLE `prod_track__customer` (
   `program_status` ENUM("On Program","New Customer","Returning Customer","Card Declined","Fraud","Verify Address","Hold with Resume Date", "Finished","On Hold", "Never Started", "Gift Certificate Verify"),
   PRIMARY KEY (`id`)
 );
+
+
+ALTER TABLE `prod_bistro_recharge_migration`
+   ADD `reprocessing` boolean default false;

@@ -3,6 +3,7 @@ import PaymentMethods from './PaymentMethods.js'
 import Addresses from './Addresses.js';
 import Subscriptions from "./Subscriptions.js";
 import DeliverySchedule from "./DeliverySchedule.js";
+import Charges from './Charges.js';
 
 const Recharge = {
 	Customers,
@@ -10,6 +11,7 @@ const Recharge = {
 	Addresses,
 	Subscriptions,
 	DeliverySchedule,
+	Charges
 }
 
 export default Recharge;

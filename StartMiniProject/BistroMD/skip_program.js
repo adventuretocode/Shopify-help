@@ -69,9 +69,6 @@ const processRowData = async (rowCSV) => {
     if(next_charge_date == formatDate(startHoldDate)) {
       console.log("-------");
     }
-    else {
-      return;
-    }
 
     const { subscriptions } = await ReCharge.Subscriptions.list(
       rechargeCustomers[0].id
@@ -117,6 +114,9 @@ const processRowData = async (rowCSV) => {
 
     return "Success";
   } catch (error) {
+    if(error?.message.includes("Customer has 0 records")) {
+      return;
+    }
     debugger;
     throw error;
   }

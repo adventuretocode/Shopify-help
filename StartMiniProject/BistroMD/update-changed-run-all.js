@@ -469,67 +469,38 @@ const updateReCustomerController = async (rechargeCustomer, localCustomer) => {
   }
 };
 
-const processCustomer = async (foundOne) => {
+const processCustomer = async (localCustomer) => {
   try {
     const results = await ReChargeCustom.Customers.findByEmail(
-      foundOne.old_email
+      localCustomer.shipping_email
     );
 
     const { customers: rechargeCustomer } = results;
 
-    if (DEBUG_MODE) {
-      for (const key in foundOne) {
-        if (Object.hasOwnProperty.call(foundOne, key)) {
-          console.log(
-            `\u001b[38;5;${foundOne.customer_id % 255}m${key}: ${
-              foundOne[key]
-            }\u001b[0m`
-          );
-        }
-      }
-    }
-
     if (rechargeCustomer.length == 0) {
-      // Add customer to recharge
-      // Mark as `TO_ADD` for the export
-      await ORM.updateOne(
-        TRACK_CUSTOMER_UPDATE,
-        "status",
-        "TO_ADD",
-        `id = '${foundOne.id}'`
-      );
-      if (DEBUG_MODE)
-        console.log(
-          `\u001b[38;5;${foundOne.customer_id % 255}m${
-            foundOne.new_email
-          } -- status: TO_ADD\u001b[0m`
-        );
+      debugger
+      throw new Error("No customer");
     } else if (rechargeCustomer.length == 1) {
       // Update the customers
-      let findCustomerQuery = `customer_id = ${foundOne.customer_id}`;
-      const [localCustomer] = await ORM.findOne(
-        CUSTOMER_TABLE,
-        findCustomerQuery
-      );
 
       await updateReCustomerController(rechargeCustomer[0], localCustomer);
 
       await ORM.updateOne(
-        TRACK_CUSTOMER_UPDATE,
-        "status",
-        "COMPLETED",
-        `id = '${foundOne.id}'`
+        CUSTOMER_TABLE,
+        "reprocessing",
+        true,
+        `id = '${localCustomer.id}'`
       );
     }
 
     if (DEBUG_MODE)
       console.log(
-        `\u001b[38;5;${foundOne.customer_id % 255}m${
-          foundOne.new_email
-        } -- status: TO_ADD\u001b[0m`
+        `\u001b[38;5;${localCustomer.customer_id % 255}m${
+          localCustomer.shipping_email
+        }\u001b[0m`
       );
 
-    return foundOne.old_email;
+    return localCustomer.shipping_email;
   } catch (error) {
     console.log(error?.response?.data);
     if (error?.response?.data?.warning === "too many requests") {
@@ -551,9 +522,9 @@ const processCustomer = async (foundOne) => {
 const runMany = async () => {
   while (true) {
     try {
-      let query = `status = 'UPDATE' LIMIT 3`;
+      let query = `reprocessing = false AND status = 'active' LIMIT 3`;
       const [customerOne, customerTwo, customerThree] = await ORM.findOne(
-        TRACK_CUSTOMER_UPDATE,
+        CUSTOMER_TABLE,
         query
       );
 
@@ -598,59 +569,29 @@ const runOne = async (customerId) => {
   const continuous = !customerId;
   do {
     try {
-      let query = customerId ? `customer_id = ${customerId}` : `status = 'UPDATE' LIMIT 1`;
-      const [foundOne] = await ORM.findOne(TRACK_CUSTOMER_UPDATE, query);
+      let query = customerId ? `customer_id = ${customerId}` : `reprocessing = false AND status = 'active' LIMIT 1`;
+      const [localCustomer] = await ORM.findOne(CUSTOMER_TABLE, query);
 
-			if(!foundOne) return "Completed";
+			if(!localCustomer) return "Completed";
 			
       const results = await ReChargeCustom.Customers.findByEmail(
-        foundOne.old_email
+        localCustomer.shipping_email
       );
 
       const { customers: rechargeCustomer } = results;
 
-      if (DEBUG_MODE) {
-        for (const key in foundOne) {
-          if (Object.hasOwnProperty.call(foundOne, key)) {
-            console.log(
-              `\u001b[38;5;${foundOne.customer_id % 255}m${key}: ${
-                foundOne[key]
-              }\u001b[0m`
-            );
-          }
-        }
-      }
-
       if (rechargeCustomer.length == 0) {
-        // Add customer to recharge
-        // Mark as `TO_ADD` for the export
-        await ORM.updateOne(
-          TRACK_CUSTOMER_UPDATE,
-          "status",
-          "TO_ADD",
-          `id = '${foundOne.id}'`
-        );
-        if (DEBUG_MODE)
-          console.log(
-            `\u001b[38;5;${foundOne.customer_id % 255}m${
-              foundOne.new_email
-            } -- status: TO_ADD\u001b[0m`
-          );
+        debugger
+        throw new Error("No customer");
       } else if (rechargeCustomer.length == 1) {
-        // Update the customers
-        let findCustomerQuery = `customer_id = ${foundOne.customer_id}`;
-        const [localCustomer] = await ORM.findOne(
-          CUSTOMER_TABLE,
-          findCustomerQuery
-        );
-
+        
         await updateReCustomerController(rechargeCustomer[0], localCustomer);
 
         await ORM.updateOne(
-          TRACK_CUSTOMER_UPDATE,
-          "status",
-          "COMPLETED",
-          `id = '${foundOne.id}'`
+          CUSTOMER_TABLE,
+          "reprocessing",
+          true,
+          `id = '${localCustomer.id}'`
         );
       }
     } catch (error) {
@@ -673,8 +614,8 @@ const runOne = async (customerId) => {
   process.exit();
 };
 
-runOne()
-// runMany()
+// runOne()
+runMany()
   .then((success) => {
     console.log("==========================================");
     console.log(success);

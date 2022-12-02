@@ -14,7 +14,7 @@ import isStateProvinceAbv from "./helpers/isStateProvinceAbv.js";
 const DEBUG_MODE = true;
 
 const BISTRO_ENV = "prod";
-const BISTRO_DAY = "thursday";
+const BISTRO_DAY = "tuesday";
 //
 
 dotenv.config();
@@ -376,7 +376,7 @@ const updateReChargeSubscription = async (rechargeCustomer, localCustomer) => {
         order_interval_frequency: "1",
         order_interval_unit: "week",
         external_variant_id: {
-          ecommerce: `${external_variant_id}`,
+          ecommerce: `${localCustomer.external_variant_id}`,
         },
         quantity: 1,
       };
