@@ -44,7 +44,7 @@ export const getAmountOfDaysPassed = (startDate, endDate) => {
   return days;
 };
 
-const addBusinessDays = (originalDate, numDaysToAdd) => {
+export const addBusinessDays = (originalDate, numDaysToAdd) => {
   const date = moment(originalDate, "YYYY-MM-DD");
 
   const Sunday = 0;

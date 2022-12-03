@@ -20,9 +20,10 @@ const retrieveDescCustomerSkips = async (customerSkips, shipping_day) => {
     );
 
     let warehouseDay = minusBusinessDays(dateOfWeek, 1);
-    if(warehouseDay === "2022-12-02") {
-      warehouseDay = "2022-12-09";
+    if(shipping_day.toLowerCase() === "monday") {
+      warehouseDay = addBusinessDays(warehouseDay, 5);
     }
+   
     return {
       scheduled_at_skips: warehouseDay,
       momentDate: moment(warehouseDay),
@@ -149,6 +150,8 @@ const processData = async (rechargeSubObj) => {
     console.log(customerSkips);
 
     let { charges } = await Recharge.Charges.list(re_customer_id);
+    if(!charges) return;
+
     const reChargeCharges = await retrieveReChargeQueueDescByDate(charges);
     console.log(reChargeCharges);
 
@@ -195,7 +198,7 @@ const main = async () => {
     try {
       let queryHold = `WHERE processed = false LIMIT 1`;
       const [simpleRecord] = await ORM.find(
-        "prod_holds_customers",
+        "customer_active_skip_monday",
         queryHold
       );
       if (!simpleRecord) return "Completed";
@@ -205,6 +208,17 @@ const main = async () => {
         "prod_bistro_recharge_migration",
         queryLegacy
       );
+
+      if(!legacyCustomer) {
+        await ORM.updateOne(
+          "customer_active_skip_monday",
+          "processed",
+          true,
+          `leg_customer_id = ${simpleRecord.leg_customer_id}`
+        );
+        continue;
+      }
+
       delete legacyCustomer.customer_id;
 
       let queryReSub = `customer_email = '${legacyCustomer.shipping_email}'`;
@@ -212,6 +226,16 @@ const main = async () => {
         "Recharge_subscriptions",
         queryReSub
       );
+
+      if(!rechargeSubObj) {
+        await ORM.updateOne(
+          "customer_active_skip_monday",
+          "processed",
+          true,
+          `leg_customer_id = ${simpleRecord.leg_customer_id}`
+        );
+        continue;
+      }
 
       const customerObj = Object.assign(
         simpleRecord,
@@ -230,7 +254,7 @@ const main = async () => {
       await processData(customerObj);
 
       await ORM.updateOne(
-        "prod_holds_customers",
+        "customer_active_skip_monday",
         "processed",
         true,
         `leg_customer_id = ${simpleRecord.leg_customer_id}`

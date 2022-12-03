@@ -116,3 +116,21 @@ CREATE TABLE `prod_track__customer` (
 
 ALTER TABLE `prod_bistro_recharge_migration`
    ADD `reprocessing` boolean default false;
+
+
+SELECT
+	`migration`.`shipping_email`,
+	 `migration`.`customer_id` AS `leg_customer_id`
+FROM
+  `prod_bistro_recharge_migration` `migration`
+INNER JOIN 
+  `prod_holds_customers` `skip`
+  ON `migration`.`customer_id` = `skip`.`leg_customer_id`
+WHERE 
+  `migration`.`shipping_day` = 'Monday' AND `migration`.`status` = 'active';
+
+
+ALTER TABLE `customer_active_skip_monday`
+  ADD `reprocessed` boolean default false,
+  ADD `shipping_day` varchar(10) default 'Monday',
+  ADD `status` varchar(10) default 'active';

@@ -7,9 +7,10 @@ import {
   skipsGetDateOfWeek,
   formatDate,
   minusBusinessDays,
+  addBusinessDays,
 } from "./helpers/moment.js";
 
-dotenv.config({path: "./.env.prod"});
+dotenv.config({ path: "./.env.prod" });
 
 const retrieveDescCustomerSkips = async (customerSkips, shipping_day) => {
   let scheduleAtSkips = customerSkips.map((row) => {
@@ -20,8 +21,8 @@ const retrieveDescCustomerSkips = async (customerSkips, shipping_day) => {
     );
 
     let warehouseDay = minusBusinessDays(dateOfWeek, 1);
-    if(warehouseDay === "2022-12-02") {
-      warehouseDay = "2022-12-09";
+    if(shipping_day.toLowerCase() === "monday") {
+      warehouseDay = addBusinessDays(warehouseDay, 5);
     }
     return {
       scheduled_at_skips: warehouseDay,
@@ -77,6 +78,7 @@ const addSkips = async (
   if (!skipsToAdd.length) return;
 
   const [queuedCharge] = charges.filter((c) => c.status === "queued");
+  if(!queuedCharge) { return; }
 
   for (let i = 0; i < skipsToAdd.length; i++) {
     const skipToAdd = skipsToAdd[i];
@@ -99,9 +101,10 @@ const addSkips = async (
     } catch (error) {
       const errMsg = JSON.stringify(error?.response?.data?.errors);
       console.log(errMsg);
-      if (errMsg.includes("must be within the charge interval schedule")) {
+      if (errMsg?.includes("must be within the charge interval schedule")) {
         continue;
       } else {
+        console.log(error?.response?.data);
         throw error;
       }
     }
@@ -141,7 +144,10 @@ const processData = async (rechargeSubObj) => {
     } = rechargeSubObj;
 
     const queryHolds = `leg_customer_id = ${leg_customer_id}`;
-    const skipResults = await ORM.findOne("prod_hold_skips-remoedup", queryHolds);
+    const skipResults = await ORM.findOne(
+      "prod_hold_skips-remoedup",
+      queryHolds
+    );
     const customerSkips = await retrieveDescCustomerSkips(
       skipResults,
       shipping_day
@@ -149,6 +155,8 @@ const processData = async (rechargeSubObj) => {
     console.log(customerSkips);
 
     let { charges } = await Recharge.Charges.list(re_customer_id);
+    if(!charges) return;
+
     const reChargeCharges = await retrieveReChargeQueueDescByDate(charges);
     console.log(reChargeCharges);
 
@@ -189,64 +197,113 @@ const processData = async (rechargeSubObj) => {
   }
 };
 
-const main = async () => {
-  console.time();
-  while (true) {
-    try {
-      let queryHold = `processed = false LIMIT 1`;
-      const [simpleRecord] = await ORM.findOne(
-        "prod_holds_customers",
-        queryHold
-      );
-      if (!simpleRecord) return "Completed";
+const outerProcess = async (simpleRecord) => {
+  try {
+    let queryLegacy = `customer_id = ${simpleRecord.leg_customer_id}`;
+    const [legacyCustomer] = await ORM.findOne(
+      "prod_bistro_recharge_migration",
+      queryLegacy
+    );
 
-      let queryLegacy = `customer_id = ${simpleRecord.leg_customer_id}`;
-      const [legacyCustomer] = await ORM.findOne(
-        "prod_bistro_recharge_migration",
-        queryLegacy
-      );
-      delete legacyCustomer.customer_id;
-
-      let queryReSub = `customer_email = '${legacyCustomer.shipping_email}'`;
-      const [rechargeSubObj] = await ORM.findOne(
-        "Recharge_subscriptions",
-        queryReSub
-      );
-
-      const customerObj = Object.assign(
-        simpleRecord,
-        legacyCustomer,
-        rechargeSubObj
-      );
-
-      console.log(
-        `=============================================================`
-      );
-      console.log(
-        `legacy Id: ${simpleRecord.leg_customer_id} - ${simpleRecord.customer_email}`
-      );
-      console.log(`Recharge Id: ${customerObj.customer_id}`);
-
-      await processData(customerObj);
-
+    if (!legacyCustomer) {
       await ORM.updateOne(
-        "prod_holds_customers",
+        "customer_active_skip_monday",
         "processed",
         true,
         `leg_customer_id = ${simpleRecord.leg_customer_id}`
       );
+      return;
+    }
 
-      console.log(
-        `\u001b[38;5;${simpleRecord.leg_customer_id % 255}m${
-          legacyCustomer.shipping_email
-        }\u001b[0m`
+    delete legacyCustomer.customer_id;
+
+    let queryReSub = `customer_email = '${legacyCustomer.shipping_email}'`;
+    const [rechargeSubObj] = await ORM.findOne(
+      "Recharge_subscriptions",
+      queryReSub
+    );
+
+    if (!rechargeSubObj) {
+      await ORM.updateOne(
+        "customer_active_skip_monday",
+        "processed",
+        true,
+        `leg_customer_id = ${simpleRecord.leg_customer_id}`
       );
-      console.log(
-        `=============================================================`
+      return;
+    }
+
+    const customerObj = Object.assign(
+      simpleRecord,
+      legacyCustomer,
+      rechargeSubObj
+    );
+
+    console.log(
+      `=============================================================`
+    );
+    console.log(
+      `legacy Id: ${simpleRecord.leg_customer_id} - ${simpleRecord.customer_email}`
+    );
+    console.log(`Recharge Id: ${customerObj.customer_id}`);
+
+    await processData(customerObj);
+
+    await ORM.updateOne(
+      "customer_active_skip_monday",
+      "processed",
+      true,
+      `leg_customer_id = ${simpleRecord.leg_customer_id}`
+    );
+
+    console.log(
+      `\u001b[38;5;${simpleRecord.leg_customer_id % 255}m${
+        legacyCustomer.shipping_email
+      }\u001b[0m`
+    );
+    console.log(
+      `=============================================================`
+    );
+  } catch (error) {
+    //  say.speak("BistroMD has exited with errors " + error.message);
+    console.log("Error: ", error);
+    throw error;
+  }
+};
+
+const main = async () => {
+  console.time();
+  while (true) {
+    try {
+      let queryHold = `processed = false LIMIT 3`;
+      const [simpleRecord, simpleRecord2, simpleRecord3] = await ORM.findOne(
+        "customer_active_skip_monday",
+        queryHold
       );
+      if (!simpleRecord && !simpleRecord2 && !simpleRecord3) return "Completed";
+
+      const processingArr = [];
+      if (simpleRecord) {
+        const first = outerProcess(simpleRecord);
+        processingArr.push(first);
+      }
+
+      if (simpleRecord2) {
+        const second = outerProcess(simpleRecord2);
+        processingArr.push(second);
+      }
+
+      if (simpleRecord3) {
+        const third = outerProcess(simpleRecord3);
+        processingArr.push(third);
+      }
+
+      if (processingArr.length) {
+        const result = await Promise.all(processingArr);
+        console.log(result);
+      }
     } catch (error) {
-      say.speak("BistroMD has exited with errors " + error.message);
-      console.log("Error: ", error);
+      say.speak("exited with errors ");
       throw error;
     }
   }
