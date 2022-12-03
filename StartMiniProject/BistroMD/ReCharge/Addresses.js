@@ -43,7 +43,6 @@ const skip_future_charge = async (address_id, date, items) => {
     const result = await networkRequest(options);
     return result;
   } catch (error) {
-    console.log("Axios Error");
     throw error;
   }
 };

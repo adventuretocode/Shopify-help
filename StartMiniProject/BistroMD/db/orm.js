@@ -59,6 +59,16 @@ const ORM = {
       });
     });
   },
+  find: (table, condition) => {
+    return new Promise((resolve, reject) => {
+      var query = "SELECT * FROM ?? " + condition;
+      var mode = [table];
+      connection.query(query, mode, (err, data) => {
+        if (err) reject(err);
+        resolve(data);
+      });
+    });
+  },
 	/*
 	 * returns empty array for no table found
 	 * @return [] || [{RowPacket}]

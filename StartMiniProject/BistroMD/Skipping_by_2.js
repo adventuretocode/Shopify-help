@@ -9,7 +9,7 @@ import {
   minusBusinessDays,
 } from "./helpers/moment.js";
 
-dotenv.config({path: "./.env.prod"});
+dotenv.config();
 
 const retrieveDescCustomerSkips = async (customerSkips, shipping_day) => {
   let scheduleAtSkips = customerSkips.map((row) => {
@@ -193,8 +193,8 @@ const main = async () => {
   console.time();
   while (true) {
     try {
-      let queryHold = `processed = false LIMIT 1`;
-      const [simpleRecord] = await ORM.findOne(
+      let queryHold = `WHERE processed = false LIMIT 1`;
+      const [simpleRecord] = await ORM.find(
         "prod_holds_customers",
         queryHold
       );

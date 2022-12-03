@@ -24,6 +24,11 @@ export const getNextDayOfWeek = (startDate, dayOfWeek) => {
   return nextDayOfWeek.format("YYYY-MM-DD");
 };
 
+export const skipsGetDateOfWeek = (startWeek, formatDate, dayOfWeek) => {
+  let dateOfWeek = moment(startWeek, formatDate).day(dayOfWeek);
+  return dateOfWeek;
+}
+
 // console.log(getNextDayOfWeek("2022-10-01", "Monday"));
 
 export const getDayOfTheWeek = (date) => {
@@ -50,6 +55,26 @@ const addBusinessDays = (originalDate, numDaysToAdd) => {
 
   while (daysRemaining > 0) {
     newDate.add(1, "days");
+    if (newDate.day() !== Sunday && newDate.day() !== Saturday) {
+      daysRemaining--;
+    }
+  }
+
+  const formattedDate = moment(newDate).format("YYYY-MM-DD");
+  return formattedDate;
+};
+
+export const minusBusinessDays = (originalDate, numDaysToSubtract) => {
+  const date = moment(originalDate, "YYYY-MM-DD");
+
+  const Sunday = 0;
+  const Saturday = 6;
+  let daysRemaining = numDaysToSubtract;
+
+  const newDate = date.clone();
+
+  while (daysRemaining > 0) {
+    newDate.subtract(1, "days");
     if (newDate.day() !== Sunday && newDate.day() !== Saturday) {
       daysRemaining--;
     }
