@@ -83,3 +83,95 @@ SET
   `status` = 'COMPLETED'
 WHERE 
   `status` = 'TO_ADD';
+
+
+--------------------------------
+
+
+SELECT 
+  `Customer Id`,
+  `Email` 
+FROM 
+  `z-bistro-full` 
+WHERE 
+  `Customer Id`
+in 
+  (
+    SELECT
+      `Customer Id`
+    FROM 
+      `z-bistro-full`
+    GROUP BY
+      `Customer Id`
+    HAVING COUNT(*) > 2
+  )
+AND 
+  `Program Status` != 'Finished'
+AND 
+  `Program Status` != 'Never Started'
+AND 
+  `Customer Id` != '';
+
+
+SELECT 
+  * 
+FROM 
+  `z-bistro-full`
+WHERE `Shipping Day` = 'Unassigned'
+AND `Program Status` != 'Never Started'
+AND `Program Status` != 'Finished';
+
+
+
+SELECT 
+  CONCAT_WS(' ', `z-bistro-full`.`First Name`, `z-bistro-full`.`Last Name`) AS NAME
+FROM 
+  `z-bistro-full`
+WHERE `Customer Id` = ''
+AND `Program Status` != 'Never Started'
+AND `Program Status` != 'On Hold'
+AND `Program Status` != 'Finished'
+AND `CIM Profile ID` != ''
+AND NOT EXISTS (SELECT * FROM `prod_bistro_recharge_migration` WHERE `shipping_email` = `z-bistro-full`.`Email`);
+
+
+SELECT
+  `Hold_customer_no_id`.`Account Name`,
+  CONCAT_WS(' ', `z-bistro-full`.`First Name`, `z-bistro-full`.`Last Name`) AS NAME,
+  `z-bistro-full`.`Email`,
+  `Hold_customer_no_id`.`End Hold Date`,
+  `Hold_customer_no_id`.`Start Hold Date`
+FROM 
+  `z-bistro-full`
+RIGHT JOIN
+  `Hold_customer_no_id`
+ON 
+  CONCAT_WS(' ', `z-bistro-full`.`First Name`, `z-bistro-full`.`Last Name`) = `Hold_customer_no_id`.`Account Name`
+WHERE `z-bistro-full`.`Customer Id` = ''
+AND `z-bistro-full`.`Program Status` != 'Never Started'
+AND `z-bistro-full`.`Program Status` != 'On Hold'
+AND `z-bistro-full`.`Program Status` != 'Finished'
+AND `z-bistro-full`.`CIM Profile ID` != ''
+AND NOT EXISTS (SELECT * FROM `prod_bistro_recharge_migration` WHERE `shipping_email` = `z-bistro-full`.`Email`);
+
+
+
+-- 
+
+SELECT
+  `Email`
+FROM 
+  `z-bistro-full`
+WHERE 
+  (`Program Status` = 'On Program' OR
+  `Program Status` = "New Customer" OR
+  `Program Status` = "Returning Customer" OR
+  `Program Status` = "Hold with Resume Date")
+AND 
+  `Shipping Day` != 'Unassigned'
+AND 
+  EXISTS (SELECT `emails` FROM `b-monday-ship` WHERE `emails` = `z-bistro-full`.`Email`)
+  
+
+
+
