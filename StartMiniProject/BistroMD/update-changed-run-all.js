@@ -10,18 +10,21 @@ import compareSpecificKey from "./helpers/compareSpecificKey.js";
 
 import ReChargeCustom from "./ReCharge/Recharge.js";
 import isStateProvinceAbv from "./helpers/isStateProvinceAbv.js";
+import Recharge from "./ReCharge/Recharge.js";
 
 const DEBUG_MODE = true;
 
 const BISTRO_ENV = "prod";
-const BISTRO_DAY = "tuesday";
+const BISTRO_DAY = "thursday";
 //
 
 dotenv.config();
 
-const CUSTOMER_TABLE = `${BISTRO_ENV}_bistro_recharge_migration`;
+// const CUSTOMER_TABLE = `${BISTRO_ENV}_bistro_recharge_migration`;
+const CUSTOMER_TABLE = `b-${BISTRO_DAY}-ship-full`;
 const TRACK_CUSTOMER_UPDATE = `${BISTRO_ENV}_track_${BISTRO_DAY}_customer`;
 const CUSTOMER_SHIP_DAY = `${BISTRO_ENV}_logistic_day`;
+const PROCESSING_BOOLEAN = "reprocessed";
 
 const logChanges = (
   topic,
@@ -52,6 +55,20 @@ const sleep = async (timeInMillieSec) => {
       resolve();
     }, timeInMillieSec);
   });
+};
+
+const updateFlag = async (localCustomer, flag) => {
+  try {
+    await ORM.updateOne(
+      CUSTOMER_TABLE,
+      flag,
+      true,
+      `id = '${localCustomer.id}'`
+    );
+  } catch (error) {
+    console.log(error);
+    throw new Error("Could Not Flag");
+  }
 };
 
 const updateReChargeCustomerProfile = async (
@@ -275,7 +292,11 @@ const updateReChargeShipping = async (rechargeCustomer, localCustomer) => {
   }
 };
 
-const updateReChargeSubscription = async (rechargeCustomer, localCustomer) => {
+const updateReChargeSubscription = async (
+  rechargeCustomer,
+  localCustomer,
+  isPerformStates
+) => {
   try {
     const rechargeCustomerId = rechargeCustomer.id;
 
@@ -286,17 +307,18 @@ const updateReChargeSubscription = async (rechargeCustomer, localCustomer) => {
     let subscription;
     let isJustAdd;
 
-    if(subscriptions.length === 0 && localCustomer.status === "active") {
-      const { addresses } = await ReChargeCustom.Addresses.list(rechargeCustomerId);
+    if (subscriptions.length === 0 && localCustomer.status === "active") {
+      const { addresses } = await ReChargeCustom.Addresses.list(
+        rechargeCustomerId
+      );
       subscription = {
         address_id: addresses[0].id,
         next_charge_scheduled_at: localCustomer.next_charge_date,
         external_variant_id: { ecommerce: localCustomer.external_variant_id },
-        status: "active"
-      }
+        status: "active",
+      };
       isJustAdd = true;
-    }
-    else {
+    } else {
       subscription = subscriptions[0];
     }
 
@@ -333,11 +355,23 @@ const updateReChargeSubscription = async (rechargeCustomer, localCustomer) => {
         next_charge_scheduled_at != localCustomer.next_charge_date;
     }
 
-    if (!hasPlanChanged && !hasChargeDateChanged && !hasStatusChanged && !isJustAdd) {
+    if (
+      !hasPlanChanged &&
+      !hasChargeDateChanged &&
+      !hasStatusChanged &&
+      !isJustAdd
+    ) {
+      await updateFlag(localCustomer, "subscription_has_not_changed");
       return "Subscription has not changed";
     }
 
-    if(isJustAdd) {
+    // Preserve skips
+    const { charges } = await Recharge.Charges.list(rechargeCustomerId);
+    const reChargeCharges =
+      Recharge.Helpers.retrieveReChargeQueueDescByDate(charges);
+    console.log(reChargeCharges);
+
+    if (isJustAdd && !isPerformStates) {
       const body = {
         address_id: subscription.address_id,
         charge_interval_frequency: "1",
@@ -355,9 +389,11 @@ const updateReChargeSubscription = async (rechargeCustomer, localCustomer) => {
       if (DEBUG_MODE) {
         console.log(result);
       }
+    } else if (isJustAdd && isPerformStates) {
+      await updateFlag(localCustomer, "is_just_add");
     }
 
-    if (hasPlanChanged) {
+    if (hasPlanChanged && !isPerformStates) {
       await ReChargeCustom.Subscriptions.remove(subscription_id);
 
       let nextChargeScheduledAt =
@@ -386,9 +422,11 @@ const updateReChargeSubscription = async (rechargeCustomer, localCustomer) => {
       if (DEBUG_MODE) {
         console.log(result.subscription.variant_title);
       }
+    } else if (hasPlanChanged && isPerformStates) {
+      await updateFlag(localCustomer, "has_plan_changed");
     }
 
-    if (hasStatusChanged) {
+    if (hasStatusChanged && !isPerformStates) {
       let result;
       if (status === "active" && localCustomer.status === "cancelled") {
         // cancel subscription
@@ -413,12 +451,15 @@ const updateReChargeSubscription = async (rechargeCustomer, localCustomer) => {
           console.log(result);
         }
       }
+    } else if (hasStatusChanged && isPerformStates) {
+      await updateFlag(localCustomer, "has_status_changed");
     }
 
     if (
       hasChargeDateChanged &&
       !hasReactivated &&
-      localCustomer.status != "cancelled"
+      localCustomer.status != "cancelled" &&
+      !isPerformStates
     ) {
       const result = await ReChargeCustom.Subscriptions.set_next_charge_date(
         subscription_id,
@@ -428,6 +469,29 @@ const updateReChargeSubscription = async (rechargeCustomer, localCustomer) => {
       if (DEBUG_MODE) {
         console.log(result);
       }
+    } else if (
+      hasChargeDateChanged &&
+      !hasReactivated &&
+      localCustomer.status != "cancelled" &&
+      isPerformStates
+    ) {
+      await updateFlag(localCustomer, "has_charge_date_changed");
+    }
+
+    if (status === "cancelled") {
+      await updateFlag(localCustomer, "has_cancelled");
+    }
+
+    if (reChargeCharges.length && !isPerformStates) {
+      await Recharge.Charges.addSkips(
+        reChargeCharges,
+        subscription.address_id,
+        subscription.id,
+        charges
+      );
+    }
+    else if (reChargeCharges.length && isPerformStates) {
+      await updateFlag(localCustomer, "has_skips");
     }
 
     if (DEBUG_MODE) {
@@ -457,12 +521,12 @@ const updateReChargeSubscription = async (rechargeCustomer, localCustomer) => {
   }
 };
 
-const updateReCustomerController = async (rechargeCustomer, localCustomer) => {
+const updateReCustomerController = async (rechargeCustomer, localCustomer, isPerformStates) => {
   try {
-    await updateReChargeCustomerProfile(rechargeCustomer, localCustomer);
-    await updateReChargeBillingAddress(rechargeCustomer, localCustomer);
-    await updateReChargeShipping(rechargeCustomer, localCustomer);
-    await updateReChargeSubscription(rechargeCustomer, localCustomer);
+    // await updateReChargeCustomerProfile(rechargeCustomer, localCustomer);
+    // await updateReChargeBillingAddress(rechargeCustomer, localCustomer);
+    // await updateReChargeShipping(rechargeCustomer, localCustomer);
+    await updateReChargeSubscription(rechargeCustomer, localCustomer, isPerformStates);
     return "Completed";
   } catch (error) {
     throw error;
@@ -478,16 +542,20 @@ const processCustomer = async (localCustomer) => {
     const { customers: rechargeCustomer } = results;
 
     if (rechargeCustomer.length == 0) {
-      debugger
+      debugger;
       throw new Error("No customer");
     } else if (rechargeCustomer.length == 1) {
       // Update the customers
 
-      await updateReCustomerController(rechargeCustomer[0], localCustomer);
+      await updateReCustomerController(
+        rechargeCustomer[0],
+        localCustomer,
+        true
+      );
 
       await ORM.updateOne(
         CUSTOMER_TABLE,
-        "reprocessing",
+        PROCESSING_BOOLEAN,
         true,
         `id = '${localCustomer.id}'`
       );
@@ -509,7 +577,7 @@ const processCustomer = async (localCustomer) => {
     } else {
       console.log("Error: ", error);
       console.log(error?.response?.data?.errors);
-      if ((error.errno == -3008)) {
+      if (error.errno == -3008) {
         return;
       } else {
         debugger;
@@ -519,10 +587,13 @@ const processCustomer = async (localCustomer) => {
   }
 };
 
-const runMany = async () => {
-  while (true) {
+const runMany = async (customerId) => {
+  const continuous = !customerId;
+  do {
     try {
-      let query = `reprocessing = false AND status = 'active' LIMIT 3`;
+      let query = customerId
+        ? `customer_id = ${customerId}`
+        : `${PROCESSING_BOOLEAN} = false LIMIT 3`;
       const [customerOne, customerTwo, customerThree] = await ORM.findOne(
         CUSTOMER_TABLE,
         query
@@ -530,31 +601,17 @@ const runMany = async () => {
 
       if (!customerOne && !customerTwo && !customerThree) return "Completed";
 
-      let resultOne, resultTwo, resultThree;
+      const resultArr = [];
       if (customerOne) {
-        resultOne = processCustomer(customerOne);
+        resultArr.push(processCustomer(customerOne));
       }
 
       if (customerTwo) {
-        resultTwo = processCustomer(customerTwo);
+        resultArr.push(processCustomer(customerTwo));
       }
 
       if (customerThree) {
-        resultThree = processCustomer(customerThree);
-      }
-
-      const resultArr = [];
-
-      if (resultOne) {
-        resultArr.push(resultOne);
-      }
-
-      if (resultTwo) {
-        resultArr.push(resultTwo);
-      }
-
-      if (resultThree) {
-        resultArr.push(resultThree);
+        resultArr.push(processCustomer(customerThree));
       }
 
       const resultFinal = await Promise.all(resultArr);
@@ -562,59 +619,10 @@ const runMany = async () => {
     } catch (error) {
       throw error;
     }
-  }
-};
-
-const runOne = async (customerId) => {
-  const continuous = !customerId;
-  do {
-    try {
-      let query = customerId ? `customer_id = ${customerId}` : `reprocessing = false AND status = 'active' LIMIT 1`;
-      const [localCustomer] = await ORM.findOne(CUSTOMER_TABLE, query);
-
-			if(!localCustomer) return "Completed";
-			
-      const results = await ReChargeCustom.Customers.findByEmail(
-        localCustomer.shipping_email
-      );
-
-      const { customers: rechargeCustomer } = results;
-
-      if (rechargeCustomer.length == 0) {
-        debugger
-        throw new Error("No customer");
-      } else if (rechargeCustomer.length == 1) {
-        
-        await updateReCustomerController(rechargeCustomer[0], localCustomer);
-
-        await ORM.updateOne(
-          CUSTOMER_TABLE,
-          "reprocessing",
-          true,
-          `id = '${localCustomer.id}'`
-        );
-      }
-    } catch (error) {
-      console.log(error?.response?.data);
-      if (error?.response?.data?.warning === "too many requests") {
-        console.log("too many requests sleep for 5sec");
-        await sleep(5000);
-      } 
-      else if (error?.response?.data?.errors?.subscription[0] == 'item already set to active') {
-        await sleep(1000);
-      }
-      else {
-        console.log("Error: ", error);
-        console.log(error?.response?.data?.errors);
-        debugger;
-        throw "";
-      }
-    }
   } while (continuous);
   process.exit();
 };
 
-// runOne()
 runMany()
   .then((success) => {
     console.log("==========================================");
