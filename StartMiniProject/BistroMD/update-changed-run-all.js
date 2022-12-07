@@ -11,11 +11,12 @@ import compareSpecificKey from "./helpers/compareSpecificKey.js";
 import ReChargeCustom from "./ReCharge/Recharge.js";
 import isStateProvinceAbv from "./helpers/isStateProvinceAbv.js";
 import Recharge from "./ReCharge/Recharge.js";
+import { minusBusinessDays } from "./helpers/moment.js";
 
 const DEBUG_MODE = true;
 
 const BISTRO_ENV = "prod";
-const BISTRO_DAY = "thursday";
+const BISTRO_DAY = "monday";
 //
 
 dotenv.config();
@@ -336,7 +337,7 @@ const updateReChargeSubscription = async (
 
     let { id: subscription_id } = subscription;
 
-    const hasPlanChanged =
+    let hasPlanChanged =
       external_variant_id != localCustomer.external_variant_id;
 
     let hasReactivated;
@@ -367,9 +368,17 @@ const updateReChargeSubscription = async (
 
     // Preserve skips
     const { charges } = await Recharge.Charges.list(rechargeCustomerId);
-    const reChargeCharges =
+    let reChargeCharges =
       Recharge.Helpers.retrieveReChargeQueueDescByDate(charges);
     console.log(reChargeCharges);
+    if(!reChargeCharges.includes(localCustomer.next_charge_date)) {
+      reChargeCharges = reChargeCharges.map((date) => minusBusinessDays(date, 5));
+      console.log(reChargeCharges);
+    }
+    else {
+      debugger;
+      return "Completed";
+    }
 
     if (isJustAdd && !isPerformStates) {
       const body = {
@@ -394,34 +403,34 @@ const updateReChargeSubscription = async (
     }
 
     if (hasPlanChanged && !isPerformStates) {
-      await ReChargeCustom.Subscriptions.remove(subscription_id);
+      // await ReChargeCustom.Subscriptions.remove(subscription_id);
 
-      let nextChargeScheduledAt =
-        localCustomer.next_charge_date || next_charge_scheduled_at;
-      if (!nextChargeScheduledAt) {
-        const query = `day_of_week = '${localCustomer.shipping_day}'`;
-        const [ship_day_profile] = await ORM.findOne(CUSTOMER_SHIP_DAY, query);
-        nextChargeScheduledAt = ship_day_profile.warehouse_date;
-      }
+      // let nextChargeScheduledAt =
+      //   localCustomer.next_charge_date || next_charge_scheduled_at;
+      // if (!nextChargeScheduledAt) {
+      //   const query = `day_of_week = '${localCustomer.shipping_day}'`;
+      //   const [ship_day_profile] = await ORM.findOne(CUSTOMER_SHIP_DAY, query);
+      //   nextChargeScheduledAt = ship_day_profile.warehouse_date;
+      // }
 
-      const body = {
-        address_id: address_id,
-        charge_interval_frequency: "1",
-        // Customer could have cancelled, leaving no next date on local
-        next_charge_scheduled_at: nextChargeScheduledAt,
-        order_interval_frequency: "1",
-        order_interval_unit: "week",
-        external_variant_id: {
-          ecommerce: `${localCustomer.external_variant_id}`,
-        },
-        quantity: 1,
-      };
+      // const body = {
+      //   address_id: address_id,
+      //   charge_interval_frequency: "1",
+      //   // Customer could have cancelled, leaving no next date on local
+      //   next_charge_scheduled_at: nextChargeScheduledAt,
+      //   order_interval_frequency: "1",
+      //   order_interval_unit: "week",
+      //   external_variant_id: {
+      //     ecommerce: `${localCustomer.external_variant_id}`,
+      //   },
+      //   quantity: 1,
+      // };
 
-      const result = await ReChargeCustom.Subscriptions.create(body);
-      subscription_id = result.subscription.id;
-      if (DEBUG_MODE) {
-        console.log(result.subscription.variant_title);
-      }
+      // const result = await ReChargeCustom.Subscriptions.create(body);
+      // subscription_id = result.subscription.id;
+      // if (DEBUG_MODE) {
+      //   console.log(result.subscription.variant_title);
+      // }
     } else if (hasPlanChanged && isPerformStates) {
       await updateFlag(localCustomer, "has_plan_changed");
     }
@@ -483,14 +492,14 @@ const updateReChargeSubscription = async (
     }
 
     if (reChargeCharges.length && !isPerformStates) {
+      const { charges } = await Recharge.Charges.list(rechargeCustomerId);
       await Recharge.Charges.addSkips(
         reChargeCharges,
         subscription.address_id,
         subscription.id,
         charges
       );
-    }
-    else if (reChargeCharges.length && isPerformStates) {
+    } else if (reChargeCharges.length && isPerformStates) {
       await updateFlag(localCustomer, "has_skips");
     }
 
@@ -521,12 +530,20 @@ const updateReChargeSubscription = async (
   }
 };
 
-const updateReCustomerController = async (rechargeCustomer, localCustomer, isPerformStates) => {
+const updateReCustomerController = async (
+  rechargeCustomer,
+  localCustomer,
+  isPerformStates
+) => {
   try {
     // await updateReChargeCustomerProfile(rechargeCustomer, localCustomer);
     // await updateReChargeBillingAddress(rechargeCustomer, localCustomer);
     // await updateReChargeShipping(rechargeCustomer, localCustomer);
-    await updateReChargeSubscription(rechargeCustomer, localCustomer, isPerformStates);
+    await updateReChargeSubscription(
+      rechargeCustomer,
+      localCustomer,
+      isPerformStates
+    );
     return "Completed";
   } catch (error) {
     throw error;
@@ -540,6 +557,9 @@ const processCustomer = async (localCustomer) => {
     );
 
     const { customers: rechargeCustomer } = results;
+    console.log(
+      `https://bistro-md-sp.admin.rechargeapps.com/merchant/customers/${rechargeCustomer[0].id}`
+    );
 
     if (rechargeCustomer.length == 0) {
       debugger;
@@ -594,6 +614,7 @@ const runMany = async (customerId) => {
       let query = customerId
         ? `customer_id = ${customerId}`
         : `${PROCESSING_BOOLEAN} = false LIMIT 3`;
+          // : `has_charge_date_changed = true AND has_skips = 0 AND has_cancelled = 0 AND ${PROCESSING_BOOLEAN} = false LIMIT 3`;
       const [customerOne, customerTwo, customerThree] = await ORM.findOne(
         CUSTOMER_TABLE,
         query
