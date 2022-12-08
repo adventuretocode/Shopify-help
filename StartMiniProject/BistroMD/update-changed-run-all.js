@@ -11,7 +11,7 @@ import compareSpecificKey from "./helpers/compareSpecificKey.js";
 import ReChargeCustom from "./ReCharge/Recharge.js";
 import isStateProvinceAbv from "./helpers/isStateProvinceAbv.js";
 import Recharge from "./ReCharge/Recharge.js";
-import { minusBusinessDays } from "./helpers/moment.js";
+import { getDayOfTheWeek, minusBusinessDays } from "./helpers/moment.js";
 
 const DEBUG_MODE = true;
 
@@ -371,13 +371,23 @@ const updateReChargeSubscription = async (
     let reChargeCharges =
       Recharge.Helpers.retrieveReChargeQueueDescByDate(charges);
     console.log(reChargeCharges);
-    if(!reChargeCharges.includes(localCustomer.next_charge_date)) {
-      reChargeCharges = reChargeCharges.map((date) => minusBusinessDays(date, 5));
+    if (!reChargeCharges.includes(localCustomer.next_charge_date)) {
+      reChargeCharges = reChargeCharges.map((date) =>
+        minusBusinessDays(date, 5)
+      );
       console.log(reChargeCharges);
-    }
-    else {
-      debugger;
+    } else {
+      // So that we don't process theme again
+      await updateFlag(localCustomer, "has_cancelled");
       return "Completed";
+    }
+
+    const nextChargeDay = getDayOfTheWeek(localCustomer.next_charge_date);
+    const allSkipMatchDayOfWeek = reChargeCharges.every(
+      (day) => getDayOfTheWeek(day) === nextChargeDay
+    );
+    if (!allSkipMatchDayOfWeek) {
+      debugger
     }
 
     if (isJustAdd && !isPerformStates) {
@@ -404,7 +414,6 @@ const updateReChargeSubscription = async (
 
     if (hasPlanChanged && !isPerformStates) {
       // await ReChargeCustom.Subscriptions.remove(subscription_id);
-
       // let nextChargeScheduledAt =
       //   localCustomer.next_charge_date || next_charge_scheduled_at;
       // if (!nextChargeScheduledAt) {
@@ -412,7 +421,6 @@ const updateReChargeSubscription = async (
       //   const [ship_day_profile] = await ORM.findOne(CUSTOMER_SHIP_DAY, query);
       //   nextChargeScheduledAt = ship_day_profile.warehouse_date;
       // }
-
       // const body = {
       //   address_id: address_id,
       //   charge_interval_frequency: "1",
@@ -425,7 +433,6 @@ const updateReChargeSubscription = async (
       //   },
       //   quantity: 1,
       // };
-
       // const result = await ReChargeCustom.Subscriptions.create(body);
       // subscription_id = result.subscription.id;
       // if (DEBUG_MODE) {
@@ -557,20 +564,21 @@ const processCustomer = async (localCustomer) => {
     );
 
     const { customers: rechargeCustomer } = results;
-    console.log(
-      `https://bistro-md-sp.admin.rechargeapps.com/merchant/customers/${rechargeCustomer[0].id}`
-    );
 
     if (rechargeCustomer.length == 0) {
       debugger;
       throw new Error("No customer");
     } else if (rechargeCustomer.length == 1) {
+      console.log(
+        `https://bistro-md-sp.admin.rechargeapps.com/merchant/customers/${rechargeCustomer[0].id}`
+      );
+
       // Update the customers
 
       await updateReCustomerController(
         rechargeCustomer[0],
         localCustomer,
-        true
+        false
       );
 
       await ORM.updateOne(
@@ -613,8 +621,8 @@ const runMany = async (customerId) => {
     try {
       let query = customerId
         ? `customer_id = ${customerId}`
-        : `${PROCESSING_BOOLEAN} = false LIMIT 3`;
-          // : `has_charge_date_changed = true AND has_skips = 0 AND has_cancelled = 0 AND ${PROCESSING_BOOLEAN} = false LIMIT 3`;
+        : // : `${PROCESSING_BOOLEAN} = false LIMIT 3`;
+          `has_charge_date_changed = true AND has_skips = 0 AND has_cancelled = 0 AND ${PROCESSING_BOOLEAN} = false LIMIT 1`;
       const [customerOne, customerTwo, customerThree] = await ORM.findOne(
         CUSTOMER_TABLE,
         query
