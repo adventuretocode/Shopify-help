@@ -22,9 +22,11 @@ const BISTRO_DAY = "monday";
 dotenv.config();
 
 // const CUSTOMER_TABLE = `${BISTRO_ENV}_bistro_recharge_migration`;
-const CUSTOMER_TABLE = `b-${BISTRO_DAY}-ship-full`;
+// const CUSTOMER_TABLE = `b-${BISTRO_DAY}-ship-full`;
+const CUSTOMER_TABLE = `grand-father-price-full`;
 const TRACK_CUSTOMER_UPDATE = `${BISTRO_ENV}_track_${BISTRO_DAY}_customer`;
 const CUSTOMER_SHIP_DAY = `${BISTRO_ENV}_logistic_day`;
+const PRODUCT_TABLE = `${BISTRO_ENV}_prices_from_cart_new`;
 const PROCESSING_BOOLEAN = "reprocessed";
 
 const logChanges = (
@@ -60,15 +62,79 @@ const sleep = async (timeInMillieSec) => {
 
 const updateFlag = async (localCustomer, flag) => {
   try {
-    await ORM.updateOne(
-      CUSTOMER_TABLE,
-      flag,
-      true,
-      `id = '${localCustomer.id}'`
-    );
+    if (localCustomer.id) {
+      await ORM.updateOne(
+        CUSTOMER_TABLE,
+        flag,
+        true,
+        `id = '${localCustomer.id}'`
+      );
+    } else if (localCustomer.Email) {
+      await ORM.updateOne(
+        CUSTOMER_TABLE,
+        flag,
+        true,
+        `Email = '${localCustomer.Email}'`
+      );
+    } else {
+      throw new Error("Could Not Flag, No identifier");
+    }
   } catch (error) {
     console.log(error);
     throw new Error("Could Not Flag");
+  }
+};
+
+const retrieveProductInfo = async (Program_Type, Program_Snack_Type) => {
+  try {
+    let snackQuery, product;
+
+    try {
+      if (!Program_Snack_Type) {
+        snackQuery = `(snack_type IS NULL OR snack_type = '')`;
+      } else {
+        snackQuery = `snack_type = '${Program_Snack_Type}'`;
+      }
+      product = await ORM.findOne(
+        PRODUCT_TABLE,
+        `product_type = '${Program_Type}' AND ${snackQuery}`
+      );
+
+      if (product.length == 0) {
+        product = await ORM.findOne(
+          PRODUCT_TABLE,
+          `shopify_sku = '${Program_Type}' AND ${snackQuery}`
+        );
+      }
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+
+    if (product.length > 1) throw new Error("More than 1 product");
+
+    if (product.length == 0) {
+      debugger;
+      return;
+    }
+
+    const {
+      external_product_name,
+      external_product_id,
+      external_variant_id,
+      recurring_price,
+    } = product[0];
+
+    return {
+      external_product_name,
+      external_product_id,
+      external_variant_id,
+      recurring_price,
+    };
+  } catch (error) {
+    console.log(error);
+    console.log(new Error("Unable to get product"));
+    throw error;
   }
 };
 
@@ -387,7 +453,7 @@ const updateReChargeSubscription = async (
       (day) => getDayOfTheWeek(day) === nextChargeDay
     );
     if (!allSkipMatchDayOfWeek) {
-      debugger
+      debugger;
     }
 
     if (isJustAdd && !isPerformStates) {
@@ -537,6 +603,118 @@ const updateReChargeSubscription = async (
   }
 };
 
+const updateReChargePrice = async (
+  rechargeCustomer,
+  localCustomer,
+  isPerformStates
+) => {
+  try {
+    // Get subscription
+    const { subscriptions } = await Recharge.Subscriptions.list(
+      rechargeCustomer.id
+    );
+    const activeSubscriptions = subscriptions.filter(
+      (sub) => sub.status === "active"
+    );
+
+    if (activeSubscriptions.length > 1) {
+      console.log(`=========================================================================`);
+      console.log(
+        `https://bistro-md-sp.admin.rechargeapps.com/merchant/customers/${rechargeCustomer.id}`
+      );
+      debugger;
+      return;
+    }
+
+    if (!activeSubscriptions.length) {
+      console.log("has_cancelled");
+      await updateFlag(localCustomer, "has_cancelled");
+      return;
+    }
+
+    const subscription = activeSubscriptions[0];
+
+    const {
+      id: subscription_id,
+      status,
+      external_variant_id,
+      price,
+    } = subscription;
+
+    console.log(
+      `======= ${localCustomer.shipping_email} ======== ${localCustomer.Program} === ${localCustomer.Snacks} ==== ${price} ======================`
+    );
+
+    // make sure it is active.
+    if (status != "active") {
+      console.log("has_cancelled");
+      await updateFlag(localCustomer, "has_cancelled");
+      return;
+    }
+
+    const isSamePrice = +localCustomer.OldPrice == +price;
+    if (isSamePrice) {
+      console.log("is_same_price");
+      await updateFlag(localCustomer, "is_same_price");
+      return;
+    }
+
+    const productData = await retrieveProductInfo(
+      localCustomer.Program,
+      localCustomer.Snacks
+    );
+    const isOldPriceHigher = +localCustomer.OldPrice > +price;
+    const hasProductChanged =
+      external_variant_id.ecommerce != productData.external_variant_id;
+
+    // Compare price.
+    if (isOldPriceHigher) {
+      console.log("current_price_is_lower");
+      await updateFlag(localCustomer, "current_price_is_lower");
+      return;
+    }
+
+    // make sure the product is the same
+    if (hasProductChanged) {
+      console.log("has_product_changed");
+      await updateFlag(localCustomer, "has_product_changed");
+      return;
+    }
+
+    // Preserve skips
+    const { charges } = await Recharge.Charges.list(rechargeCustomer.id);
+    let reChargeCharges =
+      Recharge.Helpers.retrieveReChargeQueueDescByDate(charges);
+    console.log(reChargeCharges);
+
+    const result = await Recharge.Subscriptions.update(subscription_id, {
+      price: localCustomer.OldPrice,
+    });
+    console.log(result.subscription.price, price);
+
+    if (reChargeCharges.length) {
+      const { charges } = await Recharge.Charges.list(rechargeCustomer.id);
+      let reChargeChargesNew =
+        Recharge.Helpers.retrieveReChargeQueueDescByDate(charges);
+      if (
+        JSON.stringify(reChargeCharges) != JSON.stringify(reChargeChargesNew)
+      ) {
+        debugger;
+        await Recharge.Charges.addSkips(
+          reChargeCharges,
+          subscription.address_id,
+          subscription.id,
+          charges
+        );
+      }
+    }
+    return "complete";
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 const updateReCustomerController = async (
   rechargeCustomer,
   localCustomer,
@@ -546,13 +724,22 @@ const updateReCustomerController = async (
     // await updateReChargeCustomerProfile(rechargeCustomer, localCustomer);
     // await updateReChargeBillingAddress(rechargeCustomer, localCustomer);
     // await updateReChargeShipping(rechargeCustomer, localCustomer);
-    await updateReChargeSubscription(
-      rechargeCustomer,
-      localCustomer,
-      isPerformStates
-    );
+    // await updateReChargeSubscription(
+    //   rechargeCustomer,
+    //   localCustomer,
+    //   isPerformStates
+    // );
+    await updateReChargePrice(rechargeCustomer, localCustomer);
     return "Completed";
   } catch (error) {
+    console.log(error?.response?.data);
+    if (
+      error?.response?.data?.error ===
+      "Subscription cannot be modified when it has a pending charge."
+    ) {
+      await updateFlag(localCustomer, `has_pending_charge`);
+      return;
+    }
     throw error;
   }
 };
@@ -560,7 +747,7 @@ const updateReCustomerController = async (
 const processCustomer = async (localCustomer) => {
   try {
     const results = await ReChargeCustom.Customers.findByEmail(
-      localCustomer.shipping_email
+      localCustomer.shipping_email || localCustomer.Email
     );
 
     const { customers: rechargeCustomer } = results;
@@ -581,12 +768,21 @@ const processCustomer = async (localCustomer) => {
         false
       );
 
-      await ORM.updateOne(
-        CUSTOMER_TABLE,
-        PROCESSING_BOOLEAN,
-        true,
-        `id = '${localCustomer.id}'`
-      );
+      if (localCustomer.id) {
+        await ORM.updateOne(
+          CUSTOMER_TABLE,
+          PROCESSING_BOOLEAN,
+          true,
+          `id = '${localCustomer.id}'`
+        );
+      } else if (localCustomer.Email) {
+        await ORM.updateOne(
+          CUSTOMER_TABLE,
+          PROCESSING_BOOLEAN,
+          true,
+          `Email = '${localCustomer.Email}'`
+        );
+      }
     }
 
     if (DEBUG_MODE)
@@ -600,6 +796,12 @@ const processCustomer = async (localCustomer) => {
   } catch (error) {
     console.log(error?.response?.data);
     if (error?.response?.data?.warning === "too many requests") {
+      console.log("too many requests sleep for 2sec");
+      await sleep(2000);
+    } else if (
+      error?.response?.data?.error ===
+      "A call to this route is already in progress."
+    ) {
       console.log("too many requests sleep for 2sec");
       await sleep(2000);
     } else {
@@ -621,8 +823,8 @@ const runMany = async (customerId) => {
     try {
       let query = customerId
         ? `customer_id = ${customerId}`
-        : // : `${PROCESSING_BOOLEAN} = false LIMIT 3`;
-          `has_charge_date_changed = true AND has_skips = 0 AND has_cancelled = 0 AND ${PROCESSING_BOOLEAN} = false LIMIT 1`;
+        : `${PROCESSING_BOOLEAN} = false LIMIT 3`;
+      // `has_charge_date_changed = true AND has_skips = 0 AND has_cancelled = 0 AND ${PROCESSING_BOOLEAN} = false LIMIT 1`;
       const [customerOne, customerTwo, customerThree] = await ORM.findOne(
         CUSTOMER_TABLE,
         query

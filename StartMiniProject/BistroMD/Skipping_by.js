@@ -21,7 +21,7 @@ const retrieveDescCustomerSkips = async (customerSkips, shipping_day) => {
     );
 
     let warehouseDay = minusBusinessDays(dateOfWeek, 1);
-    if(shipping_day.toLowerCase() === "monday") {
+    if (shipping_day.toLowerCase() === "monday") {
       warehouseDay = addBusinessDays(warehouseDay, 5);
     }
     return {
@@ -78,7 +78,9 @@ const addSkips = async (
   if (!skipsToAdd.length) return;
 
   const [queuedCharge] = charges.filter((c) => c.status === "queued");
-  if(!queuedCharge) { return; }
+  if (!queuedCharge) {
+    return;
+  }
 
   for (let i = 0; i < skipsToAdd.length; i++) {
     const skipToAdd = skipsToAdd[i];
@@ -155,7 +157,7 @@ const processData = async (rechargeSubObj) => {
     console.log(customerSkips);
 
     let { charges } = await Recharge.Charges.list(re_customer_id);
-    if(!charges) return;
+    if (!charges) return;
 
     const reChargeCharges = await retrieveReChargeQueueDescByDate(charges);
     console.log(reChargeCharges);
@@ -207,7 +209,7 @@ const outerProcess = async (simpleRecord) => {
 
     if (!legacyCustomer) {
       await ORM.updateOne(
-        "customer_active_skip_monday",
+        "prod_holds_customers",
         "processed",
         true,
         `leg_customer_id = ${simpleRecord.leg_customer_id}`
@@ -225,7 +227,7 @@ const outerProcess = async (simpleRecord) => {
 
     if (!rechargeSubObj) {
       await ORM.updateOne(
-        "customer_active_skip_monday",
+        "prod_holds_customers",
         "processed",
         true,
         `leg_customer_id = ${simpleRecord.leg_customer_id}`
@@ -250,14 +252,14 @@ const outerProcess = async (simpleRecord) => {
     await processData(customerObj);
 
     await ORM.updateOne(
-      "customer_active_skip_monday",
+      "prod_holds_customers",
       "processed",
       true,
       `leg_customer_id = ${simpleRecord.leg_customer_id}`
     );
 
     console.log(
-      `\u001b[38;5;${simpleRecord.leg_customer_id % 255}m${
+      `\u001b[38;5;${(Math.random() * 255) << 0}m${
         legacyCustomer.shipping_email
       }\u001b[0m`
     );
@@ -277,7 +279,7 @@ const main = async () => {
     try {
       let queryHold = `processed = false LIMIT 3`;
       const [simpleRecord, simpleRecord2, simpleRecord3] = await ORM.findOne(
-        "customer_active_skip_monday",
+        "prod_holds_customers",
         queryHold
       );
       if (!simpleRecord && !simpleRecord2 && !simpleRecord3) return "Completed";
@@ -303,13 +305,32 @@ const main = async () => {
         console.log(result);
       }
     } catch (error) {
-      say.speak("exited with errors ");
+      // say.speak("exited with errors ");
+      throw error;
+    }
+  }
+};
+
+const runOne = async () => {
+  console.time();
+  while (true) {
+    try {
+      let queryHold = `processed = false LIMIT 1`;
+      const [simpleRecord] = await ORM.findOne(
+        "prod_holds_customers",
+        queryHold
+      );
+
+      const result = await outerProcess(simpleRecord);
+    } catch (error) {
+      // say.speak("exited with errors ");
       throw error;
     }
   }
 };
 
 main()
+// runOne()
   .then((success) => {
     console.log("==========================================");
     console.log(success);

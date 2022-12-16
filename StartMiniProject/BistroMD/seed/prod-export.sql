@@ -174,4 +174,103 @@ AND
   
 
 
+/* SELECT
+ shipping_email
+FROM
+ `prod_bistro_recharge_migration`
+WHERE
+ `prod_bistro_recharge_migration`.`shipping_day` = 'Wednesday' AND
+ `prod_bistro_recharge_migration`.`status` = 'active' AND
+ `prod_bistro_recharge_migration`.`customer_id` NOT IN 
+  (SELECT `leg_customer_id` FROM `prod_hold_skips-remoedup` WHERE `start_hold_date` = '12/5/2022'); */;
+  
+
+SELECT
+ shipping_email
+FROM
+ `prod_bistro_recharge_migration`
+WHERE
+ `prod_bistro_recharge_migration`.`shipping_day` = 'Thursday' AND
+ `prod_bistro_recharge_migration`.`status` = 'active' AND
+ `prod_bistro_recharge_migration`.`customer_id` NOT IN 
+  (SELECT `leg_customer_id` FROM `prod_hold_skips-remoedup` WHERE `start_hold_date` = '12/5/2022');
+  
+
+
+
+UPDATE
+  `prod_bistro_recharge_migration`
+SET
+ `has_update_next_charge` = 1
+WHERE
+ `prod_bistro_recharge_migration`.`shipping_day` = 'Thursday' AND
+ `prod_bistro_recharge_migration`.`status` = 'active' AND
+ `prod_bistro_recharge_migration`.`customer_id` IN 
+  (SELECT `leg_customer_id` FROM `prod_hold_skips-remoedup` WHERE `start_hold_date` = '12/5/2022');
+  
+
+SELECT
+ COUNT(*)
+FROM 
+  `b-wednesday-ship-full`
+WHERE 
+  `has_update_next_charge` = false
+
+
+ALTER TABLE `b-thursday-ship-full`
+   ADD `is_just_add` boolean default false,
+   ADD `has_plan_changed` boolean default false,
+   ADD `has_status_changed` boolean default false,
+   ADD `has_charge_date_changed` boolean default false,
+   ADD `has_cancelled` boolean default false;
+
+
+----------------------------------------------------------------------------------------------
+
+
+SELECT
+ *
+FROM
+ `prod_bistro_recharge_migration`
+WHERE
+ `prod_bistro_recharge_migration`.`shipping_day` = 'Thursday' AND
+ `prod_bistro_recharge_migration`.`status` = 'active' AND
+ `prod_bistro_recharge_migration`.`customer_id` NOT IN 
+  (SELECT `leg_customer_id` FROM `prod_hold_skips-remoedup` WHERE `start_hold_date` = '12/5/2022');
+  
+
+UPDATE
+  `prod_bistro_recharge_migration`
+SET
+ `has_update_next_charge` = 0
+WHERE
+ `prod_bistro_recharge_migration`.`shipping_day` = 'Monday' AND
+ `prod_bistro_recharge_migration`.`status` = 'active' AND
+ `prod_bistro_recharge_migration`.`customer_id` IN 
+  (SELECT `leg_customer_id` FROM `prod_hold_skips-remoedup` WHERE `start_hold_date` = '12/5/2022');
+  
+
+
+ALTER TABLE `b-thursday-ship-full`
+   ADD `is_just_add` boolean default false,
+   ADD `has_plan_changed` boolean default false,
+   ADD `has_status_changed` boolean default false,
+   ADD `has_charge_date_changed` boolean default false,
+   ADD `has_cancelled` boolean default false,
+   ADD `has_skips` boolean default false,
+   ADD `subscription_has_not_changed` boolean default false;
+
+   
+UPDATE
+  `b-thursday-ship-full`
+SET
+  `reprocessed` = 0;
+
+
+SELECT
+  COUNT(*)
+FROM
+  `b-thursday-ship-full`
+WHERE
+  `reprocessed` = 0
 

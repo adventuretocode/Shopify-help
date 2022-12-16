@@ -14,7 +14,7 @@ import isStateProvinceAbv from "./helpers/isStateProvinceAbv.js";
 const DEBUG_MODE = true;
 
 const BISTRO_ENV = "prod";
-const BISTRO_DAY = "saturday";
+const BISTRO_DAY = "sat_real";
 //
 
 dotenv.config();
@@ -126,6 +126,7 @@ const updateReChargeBillingAddress = async (
     );
 
     if (payment_methods.length == 0) {
+      
       debugger;
       throw new Error("Payment method not found");
     } else if (payment_methods.length > 1) {
@@ -471,6 +472,17 @@ const updateReCustomerController = async (rechargeCustomer, localCustomer) => {
 
 const processCustomer = async (foundOne) => {
   try {
+
+    if(foundOne.what_changed == 'billing_phone' && foundOne.program_status == 'Finished') {
+      console.log("Only Billing phone updated. They are finished");
+      await ORM.updateOne(
+        TRACK_CUSTOMER_UPDATE,
+        "status",
+        "COMPLETED",
+        `id = '${foundOne.id}'`
+      );
+    }
+
     const results = await ReChargeCustom.Customers.findByEmail(
       foundOne.old_email
     );
@@ -528,6 +540,16 @@ const processCustomer = async (foundOne) => {
           foundOne.new_email
         } -- status: TO_ADD\u001b[0m`
       );
+
+      if(foundOne.program_status == "Hold with Resume Date") {
+        console.log(foundOne.customer_id);
+        await ORM.updateOne(
+          "prod_holds_customers",
+          "processed",
+          false,
+          `leg_customer_id = '${foundOne.customer_id}'`
+        );
+      }
 
     return foundOne.old_email;
   } catch (error) {
@@ -602,6 +624,17 @@ const runOne = async (customerId) => {
       const [foundOne] = await ORM.findOne(TRACK_CUSTOMER_UPDATE, query);
 
 			if(!foundOne) return "Completed";
+
+      if(foundOne.what_changed == 'billing_phone' && foundOne.program_status == 'Finished') {
+        console.log("Only Billing phone updated. They are finished");
+        await ORM.updateOne(
+          TRACK_CUSTOMER_UPDATE,
+          "status",
+          "COMPLETED",
+          `id = '${foundOne.id}'`
+        );
+        continue;
+      }
 			
       const results = await ReChargeCustom.Customers.findByEmail(
         foundOne.old_email
@@ -646,6 +679,16 @@ const runOne = async (customerId) => {
 
         await updateReCustomerController(rechargeCustomer[0], localCustomer);
 
+        if(foundOne.program_status == "Hold with Resume Date") {
+          console.log(foundOne.customer_id);
+          await ORM.updateOne(
+            "prod_holds_customers",
+            "processed",
+            false,
+            `leg_customer_id = '${foundOne.customer_id}'`
+          );
+        }
+
         await ORM.updateOne(
           TRACK_CUSTOMER_UPDATE,
           "status",
@@ -673,8 +716,8 @@ const runOne = async (customerId) => {
   process.exit();
 };
 
-runOne()
-// runMany()
+// runOne()
+runMany()
   .then((success) => {
     console.log("==========================================");
     console.log(success);

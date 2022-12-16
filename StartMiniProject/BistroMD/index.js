@@ -9,18 +9,18 @@ const DEBUG_MODE = false;
 const BISTRO_ENV_TABLE = "prod";
 const BISTRO_ENV_DATA = "prod";
 const BISTRO_DAY = "saturday";
-const FOLDER = "prod-export_2-13"; // Restart the track file
+const FOLDER = "prod-export_2-15"; // Restart the track file
 
 const DIRECTORY =
   "/Volumes/XTRM-Q/Code/Projects/ChelseaAndRachel/BistroMD/Migrations/Customer/ReCharge";
 
 dotenv.config();
 
-const CUSTOMER_TABLE = `${BISTRO_ENV_TABLE}_bistro_recharge_migration`;
-const CUSTOMER_TABLE_SOURCE = `${BISTRO_ENV_TABLE}_source_bistro_recharge_migration`;
+const CUSTOMER_TABLE = `z-${BISTRO_ENV_TABLE}_bistro_recharge_migration`;
+const CUSTOMER_TABLE_SOURCE = `z-${BISTRO_ENV_TABLE}_source_bistro_recharge_migration`;
 const CUSTOMER_SHIP_DAY = `${BISTRO_ENV_TABLE}_logistic_day`;
 const PRODUCT_TABLE = `${BISTRO_ENV_TABLE}_prices_from_cart`;
-const TRACK_CUSTOMER_UPDATE = `${BISTRO_ENV_TABLE}_track_${BISTRO_DAY}_customer`;
+const TRACK_CUSTOMER_UPDATE = `z-${BISTRO_ENV_TABLE}_track_${BISTRO_DAY}_customer`;
 
 import ORM from "./db/orm.js";
 import compareObjects from "./helpers/compareObjects.js";
@@ -86,9 +86,9 @@ const processRowData = async (rowData) => {
     return "No Program Type";
   }
 
-  if (!Customer_ID) {
-    return "No Customer ID";
-  }
+  // if (!Customer_ID) {
+  //   return "No Customer ID";
+  // }
 
   if (!Shipping_Day) {
     return "No Ship Day"
@@ -256,8 +256,10 @@ const processRowData = async (rowData) => {
     let action = "NO CHANGE";
     let trackStatus = "NONE";
     let whatChanged = "";
-    let query = `customer_id = ${Customer_ID}`;
-    const foundOne = await retrieveCustomer(Customer_ID, Email);
+    // let query = `customer_id = ${Customer_ID}`;
+    // const foundOne = await retrieveCustomer(Customer_ID, Email);
+    let query = `shipping_email = ${Email}`;
+    const foundOne = false;
     if (
       foundOne === "Missing customer Id" ||
       foundOne === "New Customer with no ID"
@@ -404,7 +406,7 @@ main()
     console.log("==========================================");
     console.timeEnd();
     console.log("==========================================");
-    // say.speak("BistroMD has exited with errors " + err.message);
+    say.speak("Index Failed");
     process.exit();
   });
 

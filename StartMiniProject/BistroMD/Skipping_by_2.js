@@ -72,7 +72,6 @@ const addSkips = async (
   skipsToAdd,
   address_id,
   subscriptionId,
-  re_customer_id,
   charges
 ) => {
   if (!skipsToAdd.length) return;
@@ -181,7 +180,6 @@ const processData = async (rechargeSubObj) => {
       skipsToAdd,
       address_id,
       subscription_id,
-      re_customer_id,
       charges
     );
     await removeSkips(skipsToRemove, subscription_id, charges);

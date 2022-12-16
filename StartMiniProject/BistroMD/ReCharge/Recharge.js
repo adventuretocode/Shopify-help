@@ -4,6 +4,7 @@ import Addresses from './Addresses.js';
 import Subscriptions from "./Subscriptions.js";
 import DeliverySchedule from "./DeliverySchedule.js";
 import Charges from './Charges.js';
+import Helpers from './Helpers.js'
 
 const Recharge = {
 	Customers,
@@ -11,7 +12,8 @@ const Recharge = {
 	Addresses,
 	Subscriptions,
 	DeliverySchedule,
-	Charges
+	Charges,
+	Helpers,
 }
 
 export default Recharge;

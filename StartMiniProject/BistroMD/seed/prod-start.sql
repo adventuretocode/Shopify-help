@@ -134,3 +134,23 @@ ALTER TABLE `customer_active_skip_monday`
   ADD `reprocessed` boolean default false,
   ADD `shipping_day` varchar(10) default 'Monday',
   ADD `status` varchar(10) default 'active';
+
+
+ALTER TABLE `grand-father-price-full`
+  ADD `reprocessed` boolean default false,
+  ADD `is_same_price` boolean default false,
+  ADD `current_price_is_lower` boolean default false,
+  ADD `has_product_changed` boolean default false,
+  ADD `has_cancelled` boolean default false,
+  ADD `has_skips` boolean default false,
+  ADD `has_pending_charge` boolean default false;
+
+SELECT
+ *
+FROM
+ `grand-father-customers`
+INNER JOIN
+  `prod_bistro_recharge_migration`
+ON
+  `grand-father-customers`.`Email` = `prod_bistro_recharge_migration`.`shipping_email`;
+
