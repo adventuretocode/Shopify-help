@@ -29,6 +29,20 @@ const listByStatus = async (customer_id, status) => {
   }
 };
 
+const listWithShopifyOrderId = async (customer_id, shopify_order_id) => {
+  try {
+    const options = buildOptions(`/charges`, "GET", {
+      customer_id: customer_id,
+      external_order_id: shopify_order_id,
+    });
+    const result = await networkRequest(options);
+    return result;
+  } catch (error) {
+    console.log("Axios Error");
+    throw error;
+  }
+};
+
 /**
  * @string date
  * @array  items
@@ -124,8 +138,8 @@ const addSkips = async (skipsToAdd, addressId, subscriptionId, charges) => {
       // if (errMsg?.includes("must be within the charge interval schedule")) {
       //   continue;
       // } else {
-        console.log(error?.response?.data);
-        throw error;
+      console.log(error?.response?.data);
+      throw error;
       // }
     }
   }
@@ -133,15 +147,50 @@ const addSkips = async (skipsToAdd, addressId, subscriptionId, charges) => {
   return "Success";
 };
 
+const processCharge = async (charge_id) => {
+  try {
+    const options = buildOptions(
+      `/charges/${charge_id}/process`,
+      "POST",
+      null,
+      {}
+    );
+    const result = await networkRequest(options);
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+const capturePayment = async (charge_id) => {
+  try {
+    const options = buildOptions(
+      `/charges/${charge_id}/capture_payment`,
+      "POST",
+      null,
+      {}
+    );
+    const result = await networkRequest(options);
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const Charges = {
   list,
   skip,
   unskip,
-  listByStatus,
   removeDiscount,
   applyDiscount,
-  // 
+  //
+  listByStatus,
+  listWithShopifyOrderId,
+  //
   addSkips,
+  processCharge,
+  capturePayment,
 };
 
 export default Charges;

@@ -274,3 +274,30 @@ FROM
 WHERE
   `reprocessed` = 0
 
+SELECT
+  `email`
+FROM 
+ `charging_customers_original`
+GROUP BY
+  `email`
+HAVING 
+ COUNT(*) > 1;
+ 
+ 
+ ALTER TABLE `charging_customers_many`
+  ADD `checked` tinyint(1) DEFAULT '0',
+  ADD `transaction_id` varchar(255) DEFAULT NULL,
+  ADD `payment_processor_name` varchar(255),
+  ADD `has_already_processed` tinyint(1) DEFAULT '0',
+  ADD `needs_capture` tinyint(1) DEFAULT '0',
+  ADD `message` varchar(255) DEFAULT NULL,
+  ADD `has_failed` tinyint(1) DEFAULT '0';
+  
+  
+SELECT
+  `email`,
+  `transaction_id`
+FROM 
+ `charging_customers_one`
+WHERE 
+ `has_failed` = true;
