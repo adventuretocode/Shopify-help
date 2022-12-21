@@ -6,9 +6,31 @@ const DATABASE = "";
 const PRIMARY_KEY = "";
 const PROCESSING_BOOLEAN = "";
 
+const hasFailed = async (data, message) => {
+  try {
+    const updateObj = {
+      message,
+      has_failed: true,
+    };
+    await ORM.updateOneObj(
+      DATABASE,
+      updateObj,
+      `${PRIMARY_KEY} = '${data[`${PRIMARY_KEY}`]}'`
+    );
+    return "ok";
+  } catch (error) {
+    throw new Error("Failed to record failed");
+  }
+};
+
 const processRowData = async (data) => {
   try {
     console.log(data);
+
+    if (data.failed) {
+      await hasFailed(data, "Row data has failed");
+      return data;
+    }
 
     return data;
   } catch (error) {
