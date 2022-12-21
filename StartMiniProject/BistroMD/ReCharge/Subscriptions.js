@@ -40,6 +40,20 @@ const list = async (customer_id) => {
   }
 };
 
+const listByStatus = async (customer_id, status) => {
+  try {
+    const options = buildOptions(`/subscriptions`, "GET", {
+      customer_id: customer_id,
+      status: status,
+    });
+    const result = await networkRequest(options);
+    return result;
+  } catch (error) {
+    console.log("Axios Error");
+    throw error;
+  }
+};
+
 const update = async (subscription_id, body) => {
   try {
     const options = buildOptions(
@@ -105,6 +119,7 @@ const Subscriptions = {
   set_next_charge_date,
   update,
   list,
+  listByStatus,
   cancel,
   remove,
 };
