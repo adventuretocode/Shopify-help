@@ -147,6 +147,24 @@ const addSkips = async (skipsToAdd, addressId, subscriptionId, charges) => {
   return "Success";
 };
 
+const removeSkips = async (skipsToRemove, subscriptionId, charges) => {
+  if (!skipsToRemove.length) return;
+
+  for (let i = 0; i < skipsToRemove.length; i++) {
+    try {
+      const skipToRemove = skipsToRemove[i];
+      const [charge] = charges.filter((c) => c.scheduled_at == skipToRemove);
+      const result = await Recharge.Charges.unskip(charge.id, [subscriptionId]);
+      console.log(JSON.stringify(result));
+    } catch (error) {
+      console.log(JSON.stringify(error?.response?.data?.errors));
+      throw error;
+    }
+  }
+
+  return "Success";
+};
+
 const processCharge = async (charge_id) => {
   try {
     const options = buildOptions(
@@ -161,7 +179,6 @@ const processCharge = async (charge_id) => {
     throw error;
   }
 };
-
 
 const capturePayment = async (charge_id) => {
   try {
@@ -189,6 +206,7 @@ const Charges = {
   listWithShopifyOrderId,
   //
   addSkips,
+  removeSkips,
   processCharge,
   capturePayment,
 };
