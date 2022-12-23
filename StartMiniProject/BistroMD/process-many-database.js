@@ -1,8 +1,10 @@
 import dotenv from "dotenv";
+// import Recharge from "./ReCharge/Recharge.js";
+// import ORM from "./db/orm.js";
 
 dotenv.config();
 
-const DATABASE = "";
+const TABLE_NAME = "";
 const PRIMARY_KEY = "";
 const PROCESSING_BOOLEAN = "";
 
@@ -13,7 +15,7 @@ const hasFailed = async (data, message) => {
       has_failed: true,
     };
     await ORM.updateOneObj(
-      DATABASE,
+      TABLE_NAME,
       updateObj,
       `${PRIMARY_KEY} = '${data[`${PRIMARY_KEY}`]}'`
     );
@@ -46,7 +48,7 @@ const main = async (identifier) => {
       let query = identifier
         ? `${PRIMARY_KEY} = '${identifier}'`
         : `${PROCESSING_BOOLEAN} = false LIMIT 1`;
-      const [record_1, record_2, record_3] = await ORM.findOne(DATABASE, query);
+      const [record_1, record_2, record_3] = await ORM.findOne(TABLE_NAME, query);
 
       if (!record_1 && !record_2 && !record_3) return "Completed";
 
@@ -67,7 +69,7 @@ const main = async (identifier) => {
       for (let i = 0; i < results.length; i++) {
         const result = results[i];
         await ORM.updateOne(
-          DATABASE,
+          TABLE_NAME,
           PROCESSING_BOOLEAN,
           true,
           `${PRIMARY_KEY} = '${result[`${PRIMARY_KEY}`]}'`
