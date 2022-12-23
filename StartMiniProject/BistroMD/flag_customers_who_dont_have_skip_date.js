@@ -4,10 +4,10 @@ import ORM from "./db/orm.js";
 
 dotenv.config();
 
-const TABLE_NAME = "skips_next_22";
+const TABLE_NAME = "skips_next_charge_23";
 const PRIMARY_KEY = "email";
 const PROCESSING_BOOLEAN = "has_processed_skipped";
-const SKIPPED_DATE = "2022-12-22";
+const SKIPPED_DATE = "2022-12-23";
 
 const hasFailed = async (data, message) => {
   try {
@@ -91,7 +91,7 @@ const processRowData = async (data) => {
     const nextChargeDate = subscription.next_charge_scheduled_at;
     const isNextChargeDateComingUp = ["2022-12-21", "2022-12-22", "2022-12-23"].some(date => date === nextChargeDate);
 
-    console.log(`====================== nextChargeDate ====  ${nextChargeDate}  ==================`);
+    console.log(`========== nextChargeDate ====  ${nextChargeDate}  ==================`);
 
     if (!doesSkipWeekExist && isNextChargeDateComingUp) {
       // Does not need to skip
@@ -152,7 +152,7 @@ const main = async (identifier) => {
     try {
       let query = identifier
         ? `${PRIMARY_KEY} = '${identifier}'`
-        : `${PROCESSING_BOOLEAN} = false AND requires_skip = true LIMIT 1`;
+        : `${PROCESSING_BOOLEAN} = false AND requires_skip = true LIMIT 3`;
       const [record_1, record_2, record_3] = await ORM.findOne(
         TABLE_NAME,
         query

@@ -4,10 +4,10 @@ import ORM from "./db/orm.js";
 
 dotenv.config();
 
-const TABLE_NAME = "skips_next_22";
+const TABLE_NAME = "skips_next_charge_23";
 const PRIMARY_KEY = "email";
 const PROCESSING_BOOLEAN = "processed";
-const SKIPPED_DATE = "2022-12-22";
+const SKIPPED_DATE = "2022-12-23";
 
 const hasFailed = async (data, message) => {
   try {
