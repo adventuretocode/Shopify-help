@@ -1,12 +1,16 @@
 import dotenv from "dotenv";
 import Recharge from "./ReCharge/Recharge.js";
 import ORM from "./db/orm.js";
+import { getNextDayOfWeek, isDateSameDayOfWeek } from "./helpers/moment.js";
 
 dotenv.config();
 
-const TABLE_NAME = "customer_skips";
+const TABLE_NAME = "skips_next_charge_all";
 const PRIMARY_KEY = "email";
 const PROCESSING_BOOLEAN = "processed";
+const FLAG_MODE = true;
+const DRY_RUN = true;
+const DEBUG_MODE = true;
 
 const hasFailed = async (data, message) => {
   try {
@@ -45,6 +49,16 @@ const processRowData = async (data) => {
     // Get ReCharge ID
     const { email } = data;
     let { recharge_number: re_customer_id } = data;
+    let rechargeCustomer;
+
+    if (DEBUG_MODE) {
+      console.log(`==============================`);
+      console.log(`Email: ${email}`);
+      console.log(
+        `https://bistro-md-sp.admin.rechargeapps.com/merchant/customers/${re_customer_id}`
+      );
+      console.log(`==============================`);
+    }
 
     if (!re_customer_id) {
       const { customers } = await Recharge.Customers.findByEmail(email);
@@ -72,6 +86,40 @@ const processRowData = async (data) => {
       return data;
     }
 
+    const menuAdminSkipChargeDates = data.skips.length
+      ? data.skips.split("|")
+      : [];
+
+    const [subscription] = subscriptions;
+    const {
+      next_charge_scheduled_at,
+      id: subscription_id,
+      address_id,
+    } = subscription;
+
+    let adjustSkipsRequired = false;
+    let mismatchChargeDate = false;
+
+    // Checks if if dates are the same day of the week
+    const areSkipsSameDayCadence = menuAdminSkipChargeDates.every((date) =>
+      isDateSameDayOfWeek(date, data.wday)
+    );
+    const isWarehouseDaySameDayCadence = isDateSameDayOfWeek(
+      data.next_charge_date,
+      data.wday
+    );
+
+    if(!next_charge_scheduled_at) {
+      await updateFlag(data, "re_missing_next_charge_schedule", true);
+    }
+
+    if (!areSkipsSameDayCadence || !isWarehouseDaySameDayCadence) {
+      await hasFailed(data, `Date are not aligned`);
+      return data;
+    }
+
+    // Check if warehouse day falls in continuos
+
     let originalSkippedCharges = [];
 
     if (data.skips) {
@@ -82,33 +130,33 @@ const processRowData = async (data) => {
       originalSkippedCharges = charges;
     }
 
-    const [subscription] = subscriptions;
-    const {
-      next_charge_scheduled_at,
-      id: subscription_id,
-      address_id,
-    } = subscription;
-    let isNeedSkipsAdded = false;
-
-    // Check to see if the next charge date is next week
-    // If its not this week then the lowest week array is it.
-    const isNextChargeDateNextWeek = [
-      "2022-12-21",
-      "2022-12-22",
-      "2022-12-23",
-      "2022-12-26",
-      "",
-    ];
-
     // Next charge date
-    if (next_charge_scheduled_at !== data.next_charge_date && !data.skips) {
-      await Recharge.Subscriptions.set_next_charge_date(
-        subscription_id,
-        data.next_charge_date
+    if (next_charge_scheduled_at !== data.next_charge_date) {
+      mismatchChargeDate = true;
+      const nextChargeDate = getNextDayOfWeek(
+        "2022-12-25",
+        data.wday,
+        "YYYY-MM-DD"
       );
+      if (FLAG_MODE) {
+        await updateFlag(data, "charge_date_has_adjusted", true);
+        await ORM.updateOne(
+          TABLE_NAME,
+          `message_flag_mode`,
+          `${nextChargeDate}: next Charge date`,
+          `${PRIMARY_KEY} = '${data[`${PRIMARY_KEY}`]}'`
+        );
+      }
+      if (!DRY_RUN) {
+        await Recharge.Subscriptions.set_next_charge_date(
+          subscription_id,
+          nextChargeDate
+        );
+      }
+    }
 
-      await updateFlag(data, "mismatch_charge_date", true);
-      isNeedSkipsAdded = true;
+    if (mismatchChargeDate && data.skips.length) {
+      adjustSkipsRequired = true;
     }
 
     const originalSkipChargeDates =
@@ -120,26 +168,25 @@ const processRowData = async (data) => {
     );
     const newSkipChargeDates =
       Recharge.Helpers.retrieveReChargeQueueDescByDate(charges);
-    const menuAdminSkipChargeDates = data.skips.length
-      ? data.skips.split("|")
-      : [];
 
     if (
       JSON.stringify(originalSkipChargeDates) !==
       JSON.stringify(menuAdminSkipChargeDates)
     ) {
-      await updateFlag(data, "mismatch_skips", true);
-      isNeedSkipsAdded = true;
+      if (FLAG_MODE) {
+        await updateFlag(data, "mismatch_skips", true);
+      }
+      adjustSkipsRequired = true;
     }
 
     if (
       JSON.stringify(newSkipChargeDates) !==
       JSON.stringify(menuAdminSkipChargeDates)
     ) {
-      isNeedSkipsAdded = true;
+      adjustSkipsRequired = true;
     }
 
-    if (!isNeedSkipsAdded) return data;
+    if (!adjustSkipsRequired) return data;
 
     const matchedSkips = menuAdminSkipChargeDates.filter((schedule_date) =>
       newSkipChargeDates.includes(schedule_date)
@@ -151,23 +198,54 @@ const processRowData = async (data) => {
       (schedule_date) => !menuAdminSkipChargeDates.includes(schedule_date)
     );
 
-    console.log({ matchedSkips, skipsToAdd, skipsToRemove });
-    if (!skipsToAdd.length && !skipsToRemove.length) {
-      debugger;
-      return "Nothing to do";
+    if (DEBUG_MODE) {
+      console.log(`==============================`);
+      console.log(`originalSkipChargeDates: ${originalSkipChargeDates}`);
+      console.log(`newSkipChargeDates: ${newSkipChargeDates}`);
+      console.log(`menuAdminSkipChargeDates: ${menuAdminSkipChargeDates}`);
+      console.log(`==============================`);
+      console.log(`matchedSkips: ${matchedSkips}`);
+      console.log(`skipsToAdd: ${skipsToAdd}`);
+      console.log(`skipsToRemove: ${skipsToRemove}`);
+      console.log(`==============================`);
     }
 
-    await Recharge.Charges.addSkips(
-      menuAdminSkipChargeDates,
-      address_id,
-      subscription_id,
-      charges
-    );
+    if (!skipsToAdd.length && !skipsToRemove.length) {
+      if (DEBUG_MODE && !DRY_RUN) debugger;
+      // Nothing to do;
+      return data;
+    }
 
-    await Recharge.Charges.removeSkips(skipsToRemove, subscription_id, charges);
+    if (FLAG_MODE) {
+      await updateFlag(data, "skips_has_adjusted", true);
+      await ORM.updateOne(
+        TABLE_NAME,
+        `message_flag_mode`,
+        JSON.stringify({ matchedSkips, skipsToAdd, skipsToRemove }),
+        `${PRIMARY_KEY} = '${data[`${PRIMARY_KEY}`]}'`
+      );
+    }
+
+    if (!DRY_RUN) {
+      await Recharge.Charges.addSkips(
+        menuAdminSkipChargeDates,
+        address_id,
+        subscription_id,
+        charges
+      );
+
+      await Recharge.Charges.removeSkips(
+        skipsToRemove,
+        subscription_id,
+        charges
+      );
+    }
 
     return data;
   } catch (error) {
+    const respData = error?.response?.data;
+    console.log(respData);
+    await hasFailed(data, JSON.stringify(respData));
     throw error;
   }
 };
@@ -179,7 +257,7 @@ const main = async (identifier) => {
     try {
       let query = identifier
         ? `${PRIMARY_KEY} = '${identifier}'`
-        : `${PROCESSING_BOOLEAN} = false LIMIT 1`;
+        : `${PROCESSING_BOOLEAN} = false LIMIT 3`;
       const [record_1, record_2, record_3] = await ORM.findOne(
         TABLE_NAME,
         query
