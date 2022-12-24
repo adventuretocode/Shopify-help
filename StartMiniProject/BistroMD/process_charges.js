@@ -4,37 +4,119 @@ import ORM from "./db/orm.js";
 
 dotenv.config();
 
-const DATABASE = "charging_customers_one";
+const DATABASE = "shipping_orders";
 const PRIMARY_KEY = "email";
-const PROCESSING_BOOLEAN = "checked";
+const PROCESSING_BOOLEAN = "processed";
 
-const processChargeWithShopifyOrderId = async (
-  rechargeCustomer,
-  shopify_order_id
-) => {
+const hasFailed = async (data, message) => {
   try {
-    const { id: re_customer_id } = rechargeCustomer;
-    const charges = await Recharge.Charges.listWithShopifyOrderId(
-      re_customer_id,
+    const updateObj = {
+      message,
+      has_failed: true,
+    };
+    await ORM.updateOneObj(
+      TABLE_NAME,
+      updateObj,
+      `${PRIMARY_KEY} = '${data[`${PRIMARY_KEY}`]}'`
+    );
+    return "ok";
+  } catch (error) {
+    throw new Error("Failed to record failed");
+  }
+};
+
+const updateFlag = async (data, columnName, bool = true) => {
+  try {
+    await ORM.updateOne(
+      TABLE_NAME,
+      columnName,
+      bool,
+      `${PRIMARY_KEY} = '${data[`${PRIMARY_KEY}`]}'`
+    );
+    return "ok";
+  } catch (error) {
+    console.log(error);
+    throw new Error("Could not update flag");
+  }
+};
+
+const processChargeWithShopifyOrderId = async (data, shopify_order_id) => {
+  try {
+    const { charges } = await Recharge.Charges.retrieveByShopifyOrderId(
       shopify_order_id
     );
 
     if (charges.length != 1) {
-      debugger;
-      throw new Error("More than 1 charge");
+      if (charges.length === 0) {
+        await hasFailed(data, "No Charge found for Shopify Order Id");
+      } else if (charges.length > 1) {
+        await hasFailed(data, "More than 1 Charge");
+      }
+      return data;
     }
 
-    const charge = charges;
-    const { status, processor_name } = charge;
-    if (processor_name === "authorize") {
-      if (status === "SUCCESS") {
-        // Do nothing;
-      } else if (status === "PENDING") {
-        // Capture Payment;
-      }
-    } else {
-      debugger;
+    const [charge] = charges;
+    const { id: charge_id, transaction_id } = charge;
+    let { status } = charge;
+    status = charge.status.toLowerCase();
+
+    await ORM.updateOne(
+      TABLE_NAME,
+      "transaction_id",
+      transaction_id,
+      `${PRIMARY_KEY} = '${data[`${PRIMARY_KEY}`]}'`
+    );
+
+    if (status === "success") {
+      await updateFlag(data, "charge_already_success");
+      return data;
     }
+
+    if (status !== "pending") {
+      await hasFailed(data, "No Pending Charge Found");
+      return data;
+    }
+
+    // Capture
+    const result = await Recharge.Charges.capturePayment(charge_id);
+    console.log(result);
+
+    return "complete";
+  } catch (error) {
+    throw error;
+  }
+};
+
+const processAllPendingCharges = async (data, rechargeCustomer) => {
+  try {
+    const { id: re_customer_id } = rechargeCustomer;
+    const { charges } = await Recharge.Charges.listByStatus(
+      re_customer_id,
+      "PENDING"
+    );
+
+    for (let i = 0; i < charges.length; i++) {
+      const charge = charges[i];
+      const { id: charge_id } = charge;
+
+      await ORM.updateByConcat(
+        TABLE_NAME,
+        "transaction_id",
+        `,${transaction_id}`,
+        `${PRIMARY_KEY} = '${data[`${PRIMARY_KEY}`]}'`
+      );
+
+      try {
+        const result = await Recharge.Charges.capturePayment(charge_id);
+        console.log(result);
+      } catch (error) {
+        const errMsg = error?.response?.data.errors;
+        console.log(errMsg);
+        debugger;
+        await hasFailed(data, JSON.stringify(errMsg));
+      }
+    }
+    return "complete";
   } catch (error) {
     throw error;
   }
@@ -52,70 +134,11 @@ const processRowData = async (data) => {
     }
 
     if (shopify_order_id) {
-      await processChargeWithShopifyOrderId(rechargeCustomer, shopify_order_id);
-    }
-
-    // If there is a shopify order look for shopify order
-
-    return data;
-  } catch (error) {
-    throw error;
-  }
-};
-
-const processRowDataCheck = async (data) => {
-  try {
-    const { email, shopify_order_id } = data;
-    const { customers } = await Recharge.Customers.findByEmail(email);
-    const [rechargeCustomer] = customers;
-
-    if (!rechargeCustomer) {
-      debugger;
-      throw new Error("No Customer Found");
-    }
-
-    if (shopify_order_id) {
-      // flags
-      let has_already_processed = false,
-        needs_capture = false;
-
-      const { id: re_customer_id } = rechargeCustomer;
-      const { charges } = await Recharge.Charges.listWithShopifyOrderId(
-        re_customer_id,
-        shopify_order_id
-      );
-
-      if (charges.length != 1) {
-        debugger;
-        throw new Error("More than 1 charge");
-      }
-
-      const [charge] = charges;
-      let { status, payment_processor, external_transaction_id } = charge;
-      status = status.toLowerCase();
-
-      if (status === "success") {
-        has_already_processed = true;
-      } else if (status === "pending") {
-        needs_capture = true;
-      }
-
-      const rowUpdate = {
-        has_already_processed,
-        needs_capture,
-        transaction_id: external_transaction_id.payment_processor,
-        payment_processor_name: payment_processor,
-      };
-
-      await ORM.updateOneObj(
-        DATABASE,
-        rowUpdate,
-        `${PRIMARY_KEY} = '${data[`${PRIMARY_KEY}`]}'`
-      );
-    }
-    else {
-      // If not shopify Order ID
-      debugger
+      await processChargeWithShopifyOrderId(data, shopify_order_id);
+      return data;
+    } else {
+      // No shopify order id, charging them all
+      await processAllPendingCharges(data, rechargeCustomer);
     }
 
     return data;
@@ -138,15 +161,15 @@ const main = async (identifier) => {
 
       const resultArr = [];
       if (record_1) {
-        resultArr.push(processRowDataCheck(record_1));
+        resultArr.push(processRowData(record_1));
       }
 
       if (record_2) {
-        resultArr.push(processRowDataCheck(record_2));
+        resultArr.push(processRowData(record_2));
       }
 
       if (record_3) {
-        resultArr.push(processRowDataCheck(record_3));
+        resultArr.push(processRowData(record_3));
       }
 
       const results = await Promise.all(resultArr);

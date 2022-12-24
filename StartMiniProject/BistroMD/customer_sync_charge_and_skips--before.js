@@ -1,9 +1,10 @@
 import dotenv from "dotenv";
-import Recharge from "./ReCharge/Recharge";
+import Recharge from "./ReCharge/Recharge.js";
+import ORM from "./db/orm.js";
 
 dotenv.config();
 
-const DATABASE = "BistroMD_2";
+const TABLE_NAME = "customer_skips";
 const PRIMARY_KEY = "email";
 const PROCESSING_BOOLEAN = "processed";
 
@@ -14,7 +15,7 @@ const hasFailed = async (data, message) => {
       has_failed: true,
     };
     await ORM.updateOneObj(
-      DATABASE,
+      TABLE_NAME,
       updateObj,
       `${PRIMARY_KEY} = '${data[`${PRIMARY_KEY}`]}'`
     );
@@ -27,7 +28,7 @@ const hasFailed = async (data, message) => {
 const updateFlag = async (data, columnName, bool = true) => {
   try {
     await ORM.updateOne(
-      DATABASE,
+      TABLE_NAME,
       columnName,
       bool,
       `${PRIMARY_KEY} = '${data[`${PRIMARY_KEY}`]}'`
@@ -71,7 +72,7 @@ const processRowData = async (data) => {
       return data;
     }
 
-    let originalSkippedCharges;
+    let originalSkippedCharges = [];
 
     if (data.skips) {
       const { charges } = await Recharge.Charges.listByStatus(
@@ -87,22 +88,29 @@ const processRowData = async (data) => {
       id: subscription_id,
       address_id,
     } = subscription;
-    let hasUpdatedChargeDate = false;
+    let isNeedSkipsAdded = false;
+
+    // Check to see if the next charge date is next week
+    // If its not this week then the lowest week array is it.
+    const isNextChargeDateNextWeek = [
+      "2022-12-21",
+      "2022-12-22",
+      "2022-12-23",
+      "2022-12-26",
+      "",
+    ];
 
     // Next charge date
-    if (next_charge_scheduled_at !== data.next_charge_date) {
-      debugger;
+    if (next_charge_scheduled_at !== data.next_charge_date && !data.skips) {
       await Recharge.Subscriptions.set_next_charge_date(
         subscription_id,
         data.next_charge_date
       );
 
       await updateFlag(data, "mismatch_charge_date", true);
-      hasUpdatedChargeDate = true;
+      isNeedSkipsAdded = true;
     }
 
-    // Get skips
-    if (!data.skips) return data;
     const originalSkipChargeDates =
       Recharge.Helpers.retrieveReChargeQueueDescByDate(originalSkippedCharges);
 
@@ -112,62 +120,53 @@ const processRowData = async (data) => {
     );
     const newSkipChargeDates =
       Recharge.Helpers.retrieveReChargeQueueDescByDate(charges);
-    const menuAdminSkipChargeDates = data.skips.split("|");
+    const menuAdminSkipChargeDates = data.skips.length
+      ? data.skips.split("|")
+      : [];
 
     if (
       JSON.stringify(originalSkipChargeDates) !==
       JSON.stringify(menuAdminSkipChargeDates)
     ) {
       await updateFlag(data, "mismatch_skips", true);
-    }
-
-    if (hasUpdatedChargeDate) {
-      await Recharge.Charges.addSkips(
-        menuAdminSkipChargeDates,
-        address_id,
-        subscription_id,
-        charges
-      );
-      return data;
+      isNeedSkipsAdded = true;
     }
 
     if (
       JSON.stringify(newSkipChargeDates) !==
       JSON.stringify(menuAdminSkipChargeDates)
     ) {
-      const matchedSkips = menuAdminSkipChargeDates.filter((schedule_date) =>
-        newSkipChargeDates.includes(schedule_date)
-      );
-      const skipsToAdd = menuAdminSkipChargeDates.filter(
-        (schedule_date) => !newSkipChargeDates.includes(schedule_date)
-      );
-      const skipsToRemove = newSkipChargeDates.filter(
-        (schedule_date) => !menuAdminSkipChargeDates.includes(schedule_date)
-      );
-
-      console.log({ matchedSkips, skipsToAdd, skipsToRemove });
-      if (!skipsToAdd.length && !skipsToRemove.length) {
-        debugger;
-        return "Nothing to do";
-      }
-
-      await Recharge.Charges.addSkips(
-        menuAdminSkipChargeDates,
-        address_id,
-        subscription_id,
-        charges
-      );
-
-      await Recharge.Charges.removeSkips(
-        skipsToRemove,
-        subscription_id,
-        charges
-      );
-
-      return data;
+      isNeedSkipsAdded = true;
     }
 
-    throw new Error("What............");
+    if (!isNeedSkipsAdded) return data;
+
+    const matchedSkips = menuAdminSkipChargeDates.filter((schedule_date) =>
+      newSkipChargeDates.includes(schedule_date)
+    );
+    const skipsToAdd = menuAdminSkipChargeDates.filter(
+      (schedule_date) => !newSkipChargeDates.includes(schedule_date)
+    );
+    const skipsToRemove = newSkipChargeDates.filter(
+      (schedule_date) => !menuAdminSkipChargeDates.includes(schedule_date)
+    );
+
+    console.log({ matchedSkips, skipsToAdd, skipsToRemove });
+    if (!skipsToAdd.length && !skipsToRemove.length) {
+      debugger;
+      return "Nothing to do";
+    }
+
+    await Recharge.Charges.addSkips(
+      menuAdminSkipChargeDates,
+      address_id,
+      subscription_id,
+      charges
+    );
+
+    await Recharge.Charges.removeSkips(skipsToRemove, subscription_id, charges);
+
+    return data;
   } catch (error) {
     throw error;
   }
@@ -181,7 +180,10 @@ const main = async (identifier) => {
       let query = identifier
         ? `${PRIMARY_KEY} = '${identifier}'`
         : `${PROCESSING_BOOLEAN} = false LIMIT 1`;
-      const [record_1, record_2, record_3] = await ORM.findOne(DATABASE, query);
+      const [record_1, record_2, record_3] = await ORM.findOne(
+        TABLE_NAME,
+        query
+      );
 
       if (!record_1 && !record_2 && !record_3) return "Completed";
 
@@ -202,7 +204,7 @@ const main = async (identifier) => {
       for (let i = 0; i < results.length; i++) {
         const result = results[i];
         await ORM.updateOne(
-          DATABASE,
+          TABLE_NAME,
           PROCESSING_BOOLEAN,
           true,
           `${PRIMARY_KEY} = '${result[`${PRIMARY_KEY}`]}'`
@@ -214,6 +216,7 @@ const main = async (identifier) => {
       throw error;
     }
   } while (continuous);
+  return "completed successfully";
 };
 
 main()
