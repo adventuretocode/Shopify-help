@@ -12,6 +12,14 @@ const FLAG_MODE = true;
 const DRY_RUN = false;
 const DEBUG_MODE = true;
 
+const sleep = async (timeInMillieSec) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, timeInMillieSec);
+  });
+};
+
 const hasFailed = async (data, message) => {
   try {
     const updateObj = {
@@ -235,14 +243,57 @@ const processRowData = async (data) => {
     }
 
     if (!DRY_RUN) {
-      const { charges: all_charges } = await Recharge.Charges.listByStatus(re_customer_id);
-
-      await Recharge.Charges.addSkips(
-        menuAdminSkipChargeDates,
-        address_id,
-        subscription_id,
-        all_charges
+      const { charges: all_charges } = await Recharge.Charges.listByStatus(
+        re_customer_id
       );
+
+      try {
+        await Recharge.Charges.addSkips(
+          skipsToAdd,
+          address_id,
+          subscription_id,
+          all_charges
+        );
+      } catch (error) {
+        if (error === "Blowup Charges") {
+          console.log("Schedules blew up restarting everything");
+
+          await Recharge.Charges.removeSkips(
+            newSkipChargeDates,
+            subscription_id,
+            charges
+          );
+
+          await Recharge.Subscriptions.set_next_charge_date(
+            subscription_id,
+            "2022-12-31"
+          );
+
+          await updateFlag(data, "blow_up_charge_dates_and_skips", true);
+          await sleep(3000);
+
+          const nextChargeDate = getNextDayOfWeek(
+            "2022-12-25",
+            data.wday,
+            "YYYY-MM-DD"
+          );
+
+          await Recharge.Subscriptions.set_next_charge_date(
+            subscription_id,
+            nextChargeDate
+          );
+
+          const { charges: all_charges_inner } =
+            await Recharge.Charges.listByStatus(re_customer_id);
+
+          await Recharge.Charges.addSkips(
+            menuAdminSkipChargeDates,
+            address_id,
+            subscription_id,
+            all_charges_inner
+          );
+        }
+      }
 
       await Recharge.Charges.removeSkips(
         skipsToRemove,
@@ -256,12 +307,18 @@ const processRowData = async (data) => {
     const respData = error?.response?.data;
     console.log(respData);
     await hasFailed(data, JSON.stringify(respData));
+    await updateFlag(data, "needs_reprocessing", true);
+    await ORM.updateOne(
+      TABLE_NAME,
+      PROCESSING_BOOLEAN,
+      true,
+      `${PRIMARY_KEY} = '${data[`${PRIMARY_KEY}`]}'`
+    );
     throw error;
   }
 };
 
 const main = async (identifier) => {
-  console.time();
   const continuous = !identifier;
   do {
     try {
@@ -307,20 +364,54 @@ const main = async (identifier) => {
   return "completed successfully";
 };
 
-main()
-  .then((success) => {
-    console.log("==========================================");
-    console.log(success);
-    console.log("==========================================");
-    console.timeEnd();
-    console.log("==========================================");
-    process.exit();
-  })
-  .catch((err) => {
-    console.log("==========================================");
-    console.log(err);
-    console.log("==========================================");
-    console.timeEnd();
-    console.log("==========================================");
-    process.exit();
-  });
+// main()
+//   .then((success) => {
+//     console.log("==========================================");
+//     console.log(success);
+//     console.log("==========================================");
+//     console.timeEnd();
+//     console.log("==========================================");
+//     process.exit();
+//   })
+//   .catch((err) => {
+//     console.log("==========================================");
+//     console.log(err);
+//     console.log("==========================================");
+//     console.timeEnd();
+//     console.log("==========================================");
+//     if (restartCount == 3) {
+//       process.exit();
+//     } else {
+//       restartCount += 1;
+//       main();
+//     }
+//   });
+
+(async () => {
+  let restartCount = 0;
+  console.time();
+
+  while (true) {
+    try {
+      const success = await main();
+      console.log("==========================================");
+      console.log(success);
+      console.log("==========================================");
+      console.timeEnd();
+      console.log("==========================================");
+      process.exit();
+    } catch (error) {
+      restartCount += 1;
+      if (restartCount > 3) {
+        console.log("==========================================");
+        console.log(error);
+        console.log("==========================================");
+        console.timeEnd();
+        console.log("==========================================");
+        process.exit();
+      } else {
+        continue;
+      }
+    }
+  }
+})();
