@@ -22,6 +22,8 @@ const retrieveReChargeQueueDescByDate = (charges) => {
   });
 
   charges = charges.map((c) => c.scheduled_at);
+  // Drop anything before today;
+  charges = charges.filter((c) => moment(c, "YYYY-MM-DD") >= moment());
   return charges;
 };
 
