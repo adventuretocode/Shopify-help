@@ -29,10 +29,9 @@ const listByStatus = async (customer_id, status) => {
   }
 };
 
-const listWithShopifyOrderId = async (customer_id, shopify_order_id) => {
+const retrieveByShopifyOrderId = async (shopify_order_id) => {
   try {
     const options = buildOptions(`/charges`, "GET", {
-      customer_id: customer_id,
       external_order_id: shopify_order_id,
     });
     const result = await networkRequest(options);
@@ -113,8 +112,13 @@ const addSkips = async (skipsToAdd, addressId, subscriptionId, charges) => {
 
   const [queuedCharge] = charges.filter((c) => c.status === "queued");
   if (!queuedCharge) {
-    return;
+    throw "No queued charges";
   }
+
+  const [charge] = charges;
+  const {
+    customer: { id: re_customer_id, email },
+  } = charge;
 
   for (let i = 0; i < skipsToAdd.length; i++) {
     const skipToAdd = skipsToAdd[i];
@@ -135,12 +139,15 @@ const addSkips = async (skipsToAdd, addressId, subscriptionId, charges) => {
     } catch (error) {
       const errMsg = JSON.stringify(error?.response?.data?.errors);
       console.log(errMsg);
-      // if (errMsg?.includes("must be within the charge interval schedule")) {
-      //   continue;
-      // } else {
+      if (errMsg?.includes("must be within the charge interval schedule")) {
+        console.log(`Email: ${email}`);
+        console.log(
+          `https://bistro-md-sp.admin.rechargeapps.com/merchant/customers/${re_customer_id}/delivery-schedule`
+        );
+        throw "Blowup Charges";
+      }
       console.log(error?.response?.data);
       throw error;
-      // }
     }
   }
 
@@ -202,8 +209,9 @@ const Charges = {
   removeDiscount,
   applyDiscount,
   //
+  retrieveByShopifyOrderId,
+  //
   listByStatus,
-  listWithShopifyOrderId,
   //
   addSkips,
   removeSkips,
