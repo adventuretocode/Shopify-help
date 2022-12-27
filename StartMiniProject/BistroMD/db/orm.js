@@ -39,6 +39,17 @@ const ORM = {
       });
     });
   },
+  updateByConcat: (table, cols, value, condition) => {
+    return new Promise((resolve, reject) => {
+      var query = "UPDATE ?? SET " + cols.toString() + "= CONCAT(" + cols.toString() + ", ?) WHERE " +
+        condition;
+      var mode = [table, value];
+      connection.query(query, mode, (err, data) => {
+        if (err) reject(err);
+        resolve(data);
+      });
+    });
+  },
   updateOneObj: (table, colAndValObj, condition) => {
     return new Promise((resolve, reject) => {
       var query = "UPDATE ?? SET ? WHERE " + condition;
@@ -69,19 +80,15 @@ const ORM = {
       });
     });
   },
-	/*
-	 * returns empty array for no table found
-	 * @return [] || [{RowPacket}]
-	 */
-	tableExistsOrNot: (table) => {
-		return new Promise((resolve, reject) => {
-			var query = `SHOW TABLES LIKE "${table}"`;
-			connection.query(query, (err, data) => {
-				if (err) reject(err);
-				resolve(data);
-			});
-		});
-	}
+  tableExistsOrNot: (table) => {
+    return new Promise((resolve, reject) => {
+      var query = `SHOW TABLES LIKE "${table}"`;
+      connection.query(query, (err, data) => {
+        if (err) reject(err);
+        resolve(data);
+      });
+    });
+  },
 };
 
 export default ORM;
