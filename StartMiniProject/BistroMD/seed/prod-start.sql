@@ -154,3 +154,63 @@ INNER JOIN
 ON
   `grand-father-customers`.`Email` = `prod_bistro_recharge_migration`.`shipping_email`;
 
+
+
+
+ALTER TABLE `skips_next_charge_23`
+  ADD `processed` tinyint(1) DEFAULT '0',
+  ADD `has_processed_skipped` tinyint(1) DEFAULT '0',
+  ADD `no_active_subscription` tinyint(1) DEFAULT '0',
+  ADD `requires_skip` tinyint(1) DEFAULT '0',
+  ADD `has_failed` tinyint(1) DEFAULT '0',
+  ADD `message` varchar(255) DEFAULT NULL;
+  
+  
+SELECT
+  COUNT(*)
+FROM 
+ `skips_next_charge_23`
+WHERE 
+ `requires_skip` = true AND `has_processed_skipped` = false;
+
+
+SELECT
+ *
+FROM 
+ `will_auth`
+INNER JOIN
+ `charging_customers_one`
+ON 
+ `will_auth`.`transaction_id` = `charging_customers_one`.`transaction_id`;
+
+
+SELECT
+ *
+FROM 
+ `will_auth`
+INNER JOIN
+ `charging_customers_many`
+ON 
+ `will_auth`.`transaction_id` = `charging_customers_many`.`transaction_id`;
+ 
+ 
+SELECT
+ *
+FROM 
+ `will_auth`
+INNER JOIN
+ `charging_customers_many`
+ON 
+ `will_auth`.`transaction_id` = `charging_customers_many`.`transaction_id`;
+ 
+
+SELECT
+ *
+FROM 
+ `will_auth`
+INNER JOIN
+ `charging_customers_original`
+ON 
+ `will_auth`.`tracking_number` = `charging_customers_original`.`tracking`;
+ 
+
