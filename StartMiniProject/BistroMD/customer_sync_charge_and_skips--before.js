@@ -9,7 +9,7 @@ const TABLE_NAME = "skips_next_charge_all";
 const PRIMARY_KEY = "email";
 const PROCESSING_BOOLEAN = "processed";
 const FLAG_MODE = true;
-const DRY_RUN = true;
+const DRY_RUN = false;
 const DEBUG_MODE = true;
 
 const hasFailed = async (data, message) => {
@@ -63,6 +63,10 @@ const processRowData = async (data) => {
     if (!re_customer_id) {
       const { customers } = await Recharge.Customers.findByEmail(email);
       rechargeCustomer = customers[0];
+      if (!rechargeCustomer) {
+        await hasFailed(data, "Customer not found");
+        return data;
+      }
       re_customer_id = rechargeCustomer.id;
     }
 
@@ -109,7 +113,7 @@ const processRowData = async (data) => {
       data.wday
     );
 
-    if(!next_charge_scheduled_at) {
+    if (!next_charge_scheduled_at) {
       await updateFlag(data, "re_missing_next_charge_schedule", true);
     }
 
@@ -186,6 +190,10 @@ const processRowData = async (data) => {
       adjustSkipsRequired = true;
     }
 
+    if (!adjustSkipsRequired && !mismatchChargeDate) {
+      await updateFlag(data, "prefect_match", true);
+    }
+
     if (!adjustSkipsRequired) return data;
 
     const matchedSkips = menuAdminSkipChargeDates.filter((schedule_date) =>
@@ -227,17 +235,19 @@ const processRowData = async (data) => {
     }
 
     if (!DRY_RUN) {
+      const { charges: all_charges } = await Recharge.Charges.listByStatus(re_customer_id);
+
       await Recharge.Charges.addSkips(
         menuAdminSkipChargeDates,
         address_id,
         subscription_id,
-        charges
+        all_charges
       );
 
       await Recharge.Charges.removeSkips(
         skipsToRemove,
         subscription_id,
-        charges
+        all_charges
       );
     }
 
@@ -257,7 +267,7 @@ const main = async (identifier) => {
     try {
       let query = identifier
         ? `${PRIMARY_KEY} = '${identifier}'`
-        : `${PROCESSING_BOOLEAN} = false LIMIT 3`;
+        : `${PROCESSING_BOOLEAN} = false LIMIT 1`;
       const [record_1, record_2, record_3] = await ORM.findOne(
         TABLE_NAME,
         query
