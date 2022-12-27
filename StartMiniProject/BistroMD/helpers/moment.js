@@ -1,5 +1,9 @@
 import moment from "moment";
 
+// "MM-DD-YYYY"
+// "MM/DD/YYYY"
+// "YYYY-MM-DD"
+
 export const formatDate = (date) => {
   return moment(date, "MM-DD-YYYY").format("YYYY-MM-DD");
 }
@@ -10,9 +14,9 @@ export const isBefore = (startDate, migrationDate,format) => {
   return moment(startD).isBefore(migrationD);
 };
 
-export const getNextDayOfWeek = (startDate, dayOfWeek) => {
-  let cutOverDay = moment(startDate, "MM-DD-YYYY");
-  let nextDayOfWeek = moment(startDate, "MM-DD-YYYY").day(
+export const getNextDayOfWeek = (startDate, dayOfWeek, format = "MM-DD-YYYY") => {
+  let cutOverDay = moment(startDate, format);
+  let nextDayOfWeek = moment(startDate, format).day(
     dayOfWeek
   );
 
@@ -36,6 +40,12 @@ export const getDayOfTheWeek = (date) => {
   const day = moment.weekdays(d.day());
   return day;
 };
+
+export const isDateSameDayOfWeek = (date, day, format = "YYYY-MM-DD") => {
+  const d = moment(moment(date, format));
+  const dy = moment.weekdays(d.day());
+  return dy.toLocaleLowerCase() === day.toLowerCase();
+}
 
 export const getAmountOfDaysPassed = (startDate, endDate) => {
   const dateOne = moment(startDate, "MM/DD/YYYY");
