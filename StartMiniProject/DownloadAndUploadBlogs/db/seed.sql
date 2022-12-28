@@ -21,6 +21,7 @@ CREATE TABLE `articles` (
   `author` VARCHAR(250) DEFAULT '',
   `tags` TEXT,
   `body_html` TEXT,
+  `summary_html` TEXT,
   `image` TEXT,
   UNIQUE(`title`),
   PRIMARY KEY (`id`)

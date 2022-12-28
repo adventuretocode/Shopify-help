@@ -1,5 +1,10 @@
+import dotenv from "dotenv";
 import Shopify from "./Shopify/index.js";
 import ORM from "./db/orm.js";
+
+dotenv.config();
+
+const TABLE_NAME = "blogs";
 
 const downloadAndSaveBlogs = async () => {
   try {
@@ -7,13 +12,14 @@ const downloadAndSaveBlogs = async () => {
     // Save Blog to database
     for (let i = 0; i < blogs.length; i++) {
       const blog = blogs[i];
-      const { id, title, tags } = blog;
+      const { id, title, tags, handle } = blog;
       const blogObj = {
         original_blog_id: id,
         title,
         tags,
+        handle,
       };
-      await ORM.insertOneObj("blogs", blogObj);
+      await ORM.insertOneObj(TABLE_NAME, blogObj);
     }
 
     return "Blogs Completed";
