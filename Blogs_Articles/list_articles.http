@@ -1,0 +1,7 @@
+###
+GET https://{{$dotenv SHOP_NAME}}.myshopify.com/admin/api/{{$dotenv SHOPIFY_API_VERSION}}/blogs/{{$dotenv BLOG_ID}}/articles.json?limit=2
+X-Shopify-Access-Token: {{$dotenv SHOPIFY_ACCESS_TOKEN}}
+
+###
+GET https://{{$dotenv SHOP_NAME}}.myshopify.com/admin/api/{{$dotenv SHOPIFY_API_VERSION}}/blogs/{{$dotenv BLOG_ID}}/articles/count.json
+X-Shopify-Access-Token: {{$dotenv SHOPIFY_ACCESS_TOKEN}}

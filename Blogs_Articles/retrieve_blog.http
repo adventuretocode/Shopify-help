@@ -1,0 +1,3 @@
+###
+GET https://{{$dotenv SHOP_NAME}}.myshopify.com/admin/api/{{$dotenv SHOPIFY_API_VERSION}}/blogs/{{$dotenv BLOG_ID}}.json
+X-Shopify-Access-Token: {{$dotenv SHOPIFY_ACCESS_TOKEN}}
