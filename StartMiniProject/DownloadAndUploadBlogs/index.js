@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-// import Recharge from "./ReCharge/Recharge.js";
+import Shopify from './Shopify/index.js'
 // import ORM from "./db/orm.js";
 
 dotenv.config();
@@ -52,6 +52,7 @@ const processRowData = async (data) => {
 
     if (!DRY_RUN) {
       // Do Action
+      // Download and then upload to another store
     }
 
     if (data.failed) {
@@ -65,44 +66,18 @@ const processRowData = async (data) => {
   }
 };
 
-const main = async (identifier) => {
+const saveBlogsAndArticles = async (identifier) => {
   console.time();
   const continuous = !identifier;
   do {
     try {
-      let query = identifier
-        ? `${PRIMARY_KEY} = '${identifier}'`
-        : `${PROCESSING_BOOLEAN} = false LIMIT 1`;
-      const [record_1, record_2, record_3] = await ORM.findOne(
-        TABLE_NAME,
-        query
-      );
-
-      if (!record_1 && !record_2 && !record_3) return "Completed";
-
-      const resultArr = [];
-      if (record_1) {
-        resultArr.push(processRowData(record_1));
-      }
-
-      if (record_2) {
-        resultArr.push(processRowData(record_2));
-      }
-
-      if (record_3) {
-        resultArr.push(processRowData(record_3));
-      }
-
-      const results = await Promise.all(resultArr);
-      for (let i = 0; i < results.length; i++) {
-        const result = results[i];
-        await ORM.updateOne(
-          TABLE_NAME,
-          PROCESSING_BOOLEAN,
-          true,
-          `${PRIMARY_KEY} = '${result[`${PRIMARY_KEY}`]}'`
-        );
-        console.log(`${result[`${PRIMARY_KEY}`]}: Completed`);
+      const { blogs } = await Shopify.Blogs.listAll();
+      // Save Blog to database
+      for (let i = 0; i < blogs.length; i++) {
+        const blog = blogs[i];
+        const { id: blog_id, handle, title } = blog;
+        const { articles } = await Shopify.Articles.listAll(blog_id, 250);
+        console.log(articles);
       }
     } catch (error) {
       console.log("Error: ", error);
@@ -111,7 +86,7 @@ const main = async (identifier) => {
   } while (continuous);
 };
 
-main()
+saveBlogsAndArticles()
   .then((success) => {
     console.log("==========================================");
     console.log(success);
