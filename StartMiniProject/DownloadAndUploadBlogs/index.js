@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
-import Shopify from './Shopify/index.js'
-// import ORM from "./db/orm.js";
+import Shopify from "./Shopify/index.js";
+import ORM from "./db/orm.js";
 
 dotenv.config();
 
@@ -66,6 +66,27 @@ const processRowData = async (data) => {
   }
 };
 
+const saveArticles = async (blog, article) => {
+  try {
+    const { blog_handle, blog_title } = blog;
+    const { title, author, tags, body_html, image } = article;
+
+    const articleObj = {
+      blog_handle,
+      blog_title,
+      title,
+      author,
+      tags,
+      body_html,
+      image,
+    };
+
+    await ORM.insertOneObj(articleObj);
+  } catch (error) {
+    throw error;
+  }
+};
+
 const saveBlogsAndArticles = async (identifier) => {
   console.time();
   const continuous = !identifier;
@@ -75,9 +96,14 @@ const saveBlogsAndArticles = async (identifier) => {
       // Save Blog to database
       for (let i = 0; i < blogs.length; i++) {
         const blog = blogs[i];
-        const { id: blog_id, handle, title } = blog;
+        const { id: blog_id } = blog;
         const { articles } = await Shopify.Articles.listAll(blog_id, 250);
-        console.log(articles);
+        if (!articles.length) continue;
+
+        for (let j = 0; j < articles.length; j++) {
+          const article = articles[j];
+          await saveArticles(blog, article);
+        }
       }
     } catch (error) {
       console.log("Error: ", error);
@@ -86,7 +112,29 @@ const saveBlogsAndArticles = async (identifier) => {
   } while (continuous);
 };
 
-saveBlogsAndArticles()
+const downloadAndSaveBlogs = async () => {
+  try {
+    const { blogs } = await Shopify.Blogs.listAll();
+    // Save Blog to database
+    for (let i = 0; i < blogs.length; i++) {
+      const blog = blogs[i];
+      const { id, title, tags } = blog;
+      const blogObj = {
+        original_blog_id: id,
+        title,
+        tags,
+      };
+      await ORM.insertOneObj("blogs", blogObj);
+    }
+
+    return "Blogs Completed";
+  } catch (error) {
+    console.log("Error: ", error);
+    throw error;
+  }
+};
+
+downloadAndSaveBlogs()
   .then((success) => {
     console.log("==========================================");
     console.log(success);
