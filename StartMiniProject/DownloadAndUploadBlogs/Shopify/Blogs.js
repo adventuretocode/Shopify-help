@@ -13,7 +13,7 @@ const listAll = async () => {
   } catch (error) {
     throw error;
   }
-}
+};
 
 const retrieveById = async (blogId) => {
   try {
@@ -23,14 +23,24 @@ const retrieveById = async (blogId) => {
   } catch (error) {
     throw error;
   }
-}
+};
+
+const create = async (blogBody) => {
+  try {
+    const options = buildOptions(`/blogs.json`, "POST", undefined, blogBody);
+    const result = await networkRequest(options);
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
 
 const Blogs = {
   // Rest
   listAll,
   retrieveById,
+  create,
   // GraphQL
-
 };
 
 export default Blogs;

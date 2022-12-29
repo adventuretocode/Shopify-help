@@ -26,3 +26,10 @@ CREATE TABLE `articles` (
   UNIQUE(`title`),
   PRIMARY KEY (`id`)
 );
+
+
+ALTER TABLE `blogs`
+  ADD `created` boolean default false;
+
+ALTER TABLE `blogs`
+  ADD `blog_id` BIGINT default NULL;

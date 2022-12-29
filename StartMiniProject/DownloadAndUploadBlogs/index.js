@@ -4,84 +4,48 @@ import ORM from "./db/orm.js";
 
 dotenv.config();
 
-const TABLE_NAME = "";
-const PRIMARY_KEY = "";
+const TABLE_NAME = "blogs";
+const TABLE_NAME_2ND = "articles";
+const PRIMARY_KEY = "original_blog_id";
 const PROCESSING_BOOLEAN = "processed";
-const FLAG_MODE = true;
-const DRY_RUN = true;
 
-const hasFailed = async (data, message) => {
+const saveArticles = async (data) => {
   try {
-    const updateObj = {
-      message,
-      has_failed: true,
-    };
-    await ORM.updateOneObj(
-      TABLE_NAME,
-      updateObj,
-      `${PRIMARY_KEY} = '${data[`${PRIMARY_KEY}`]}'`
-    );
-    return "ok";
-  } catch (error) {
-    throw new Error("Failed to record failed");
-  }
-};
+    const { original_blog_id, title: blog_title, handle: blog_handle } = data;
 
-const updateFlag = async (data, columnName, bool = true) => {
-  try {
-    await ORM.updateOne(
-      TABLE_NAME,
-      columnName,
-      bool,
-      `${PRIMARY_KEY} = '${data[`${PRIMARY_KEY}`]}'`
-    );
-    return "ok";
-  } catch (error) {
-    console.log(error);
-    throw new Error("Could not update flag");
-  }
-};
+    const { articles } = await Shopify.Articles.listAll(original_blog_id, 250);
+    if (!articles.length) return data;
 
-const processRowData = async (data) => {
-  try {
-    console.log(data);
+    for (let j = 0; j < articles.length; j++) {
+      const article = articles[j];
+      const { title, author, tags, body_html, image, summary_html, handle } = article;
+      if (image) {
+        delete image.created_at;
+        delete image.width;
+        delete image.height;
+      }
+      const articleObj = {
+        blog_handle,
+        blog_title,
+        title,
+        author,
+        tags,
+        body_html,
+        summary_html,
+        image,
+        handle,
+      };
 
-    if (FLAG_MODE) {
-      await updateFlag(data, "flag_data_row", true);
-    }
+      try {
+        await ORM.insertOneObj(TABLE_NAME_2ND, articleObj);
+      } catch (error) {
+        debugger;
+        continue;
+      }
 
-    if (!DRY_RUN) {
-      // Do Action
-      // Download and then upload to another store
-    }
-
-    if (data.failed) {
-      await hasFailed(data, "Row data has failed");
-      return data;
     }
 
     return data;
-  } catch (error) {
-    throw error;
-  }
-};
-
-const saveArticles = async (blog, article) => {
-  try {
-    const { blog_handle, blog_title } = blog;
-    const { title, author, tags, body_html, image } = article;
-
-    const articleObj = {
-      blog_handle,
-      blog_title,
-      title,
-      author,
-      tags,
-      body_html,
-      image,
-    };
-
-    await ORM.insertOneObj(articleObj);
   } catch (error) {
     throw error;
   }
@@ -112,29 +76,42 @@ const saveBlogsAndArticles = async (identifier) => {
   } while (continuous);
 };
 
-const downloadAndSaveBlogs = async () => {
-  try {
-    const { blogs } = await Shopify.Blogs.listAll();
-    // Save Blog to database
-    for (let i = 0; i < blogs.length; i++) {
-      const blog = blogs[i];
-      const { id, title, tags } = blog;
-      const blogObj = {
-        original_blog_id: id,
-        title,
-        tags,
-      };
-      await ORM.insertOneObj("blogs", blogObj);
-    }
+const downloadAndSaveArticles = async (identifier) => {
+  console.time();
+  const continuous = !identifier;
+  do {
+    try {
+      let query = identifier
+        ? `${PRIMARY_KEY} = '${identifier}'`
+        : `${PROCESSING_BOOLEAN} = false LIMIT 1`;
+      const [record_1] = await ORM.findOne(TABLE_NAME, query);
 
-    return "Blogs Completed";
-  } catch (error) {
-    console.log("Error: ", error);
-    throw error;
-  }
+      if (!record_1) return "Completed";
+
+      const resultArr = [];
+      if (record_1) {
+        resultArr.push(saveArticles(record_1));
+      }
+
+      const results = await Promise.all(resultArr);
+      for (let i = 0; i < results.length; i++) {
+        const result = results[i];
+        await ORM.updateOne(
+          TABLE_NAME,
+          PROCESSING_BOOLEAN,
+          true,
+          `${PRIMARY_KEY} = '${result[`${PRIMARY_KEY}`]}'`
+        );
+        console.log(`${result[`${PRIMARY_KEY}`]}: Completed`);
+      }
+    } catch (error) {
+      console.log("Error: ", error);
+      throw error;
+    }
+  } while (continuous);
 };
 
-downloadAndSaveBlogs()
+downloadAndSaveArticles()
   .then((success) => {
     console.log("==========================================");
     console.log(success);
