@@ -27,9 +27,19 @@ CREATE TABLE `articles` (
   PRIMARY KEY (`id`)
 );
 
-
 ALTER TABLE `blogs`
+  ADD `created` boolean default false;
+
+ALTER TABLE `articles`
   ADD `created` boolean default false;
 
 ALTER TABLE `blogs`
   ADD `blog_id` BIGINT default NULL;
+
+-- Reset
+
+UPDATE
+  `articles`
+SET
+  `created` = 0;
+ 
