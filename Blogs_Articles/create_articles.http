@@ -1,0 +1,13 @@
+POST https://{{$dotenv SHOP_NAME}}.myshopify.com/admin/api/{{$dotenv SHOPIFY_API_VERSION}}/blogs/{{$dotenv BLOG_ID}}/articles.json
+Content-Type: application/json
+X-Shopify-Access-Token: {{$dotenv SHOPIFY_ACCESS_TOKEN}}
+
+{
+  "article": {
+    "title": "My new Article title",
+    "author": "John Smith",
+    "tags": "This Post, Has Been Tagged",
+    "body_html": "<h1>I like articles</h1>\n<p><strong>Yea</strong>, I like posting them through <span class=\"caps\">REST</span>.</p>",
+    "published_at": "2022-12-01T00:00:00"
+  }
+}

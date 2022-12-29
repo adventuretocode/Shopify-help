@@ -30,10 +30,26 @@ const retrieveById = async (blogId, articleId) => {
   }
 };
 
+const create = async (blogId, articleBody) => {
+  try {
+    const options = buildOptions(
+      `/blogs/${blogId}/articles.json`,
+      "POST",
+      undefined,
+      articleBody
+    );
+    const result = await networkRequest(options);
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const Articles = {
   // Rest
   listAll,
   retrieveById,
+  create,
   // GraphQL
 };
 

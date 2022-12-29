@@ -18,12 +18,9 @@ const saveArticles = async (data) => {
 
     for (let j = 0; j < articles.length; j++) {
       const article = articles[j];
-      const { title, author, tags, body_html, image, summary_html, handle } = article;
-      if (image) {
-        delete image.created_at;
-        delete image.width;
-        delete image.height;
-      }
+      const { title, author, tags, body_html, image, summary_html, handle } =
+        article;
+
       const articleObj = {
         blog_handle,
         blog_title,
@@ -32,9 +29,15 @@ const saveArticles = async (data) => {
         tags,
         body_html,
         summary_html,
-        image,
         handle,
       };
+
+      if (image) {
+        delete image.created_at;
+        delete image.width;
+        delete image.height;
+        articleObj.image = JSON.stringify(image);
+      }
 
       try {
         await ORM.insertOneObj(TABLE_NAME_2ND, articleObj);
@@ -42,7 +45,6 @@ const saveArticles = async (data) => {
         debugger;
         continue;
       }
-
     }
 
     return data;
