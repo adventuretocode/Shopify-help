@@ -28,27 +28,32 @@ const processRowData = async (data) => {
         summary_html: data.summary_html,
         // image: data.image
         // published_at: "2022-12-01T00:00:00"
-      }
-    }
+      },
+    };
 
-    const [blog] = await ORM.findOne(TABLE_NAME_2ND, `handle = '${data.blog_handle}'`);
+    const [blog] = await ORM.findOne(
+      TABLE_NAME_2ND,
+      `handle = '${data.blog_handle}'`
+    );
     const { blog_id } = blog;
 
     const result = await Shopify.Articles.create(blog_id, articleObj);
     const { article } = result;
 
     console.log(article);
-    
+
     return data;
   } catch (error) {
-    const tooManyRequest = error?.response?.data?.errors?.includes("Exceeded 2 calls per second for api client. Reduce request rates to resume uninterrupted service.");
-    if(tooManyRequest) {
+    const tooManyRequest = error?.response?.data?.errors?.includes(
+      "Exceeded 2 calls per second for api client. Reduce request rates to resume uninterrupted service."
+    );
+    if (tooManyRequest) {
       sleep(2000);
       return {};
     }
     throw error;
   }
-}
+};
 
 const createArticles = async (identifier) => {
   console.time();
@@ -70,7 +75,7 @@ const createArticles = async (identifier) => {
       const results = await Promise.all(resultArr);
       for (let i = 0; i < results.length; i++) {
         const result = results[i];
-        if(!result[`${PRIMARY_KEY}`]) continue;
+        if (!result[`${PRIMARY_KEY}`]) continue;
         await ORM.updateOne(
           TABLE_NAME,
           PROCESSING_BOOLEAN,
@@ -103,4 +108,3 @@ createArticles()
     console.log("==========================================");
     process.exit();
   });
-
