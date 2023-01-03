@@ -5,7 +5,10 @@ dotenv.config();
 
 const countAllBlogsAndArticles = async () => {
   try {
-    let blogCount = 0, articleCount = 0, blogArticleCount = {}, longestTitle = 0;
+    let blogCount = 0,
+      articleCount = 0,
+      blogArticleCount = {},
+      longestTitle = 0;
 
     const { blogs } = await Shopify.Blogs.listAll();
     blogCount = blogs.length;
@@ -17,7 +20,7 @@ const countAllBlogsAndArticles = async () => {
       const { count } = result;
       blogArticleCount[title] = count;
       articleCount += count;
-      if(title.length > longestTitle) {
+      if (title.length > longestTitle) {
         longestTitle = title.length;
       }
     }
@@ -33,8 +36,6 @@ const countAllBlogsAndArticles = async () => {
     console.log(`Blogs: ${blogCount}`);
     console.log(`Article: ${articleCount}`);
     console.table(blogArticleCount);
-
-
 
     return "Count Complete";
   } catch (error) {
