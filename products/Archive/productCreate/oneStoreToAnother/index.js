@@ -1,10 +1,10 @@
-const buildRestBody = require("../../../helpers/buildRestBody");
+const buildRestBody = require("../../../../helpers/buildRestBody");
 const {
   cleanProductToCreateRest,
   cleanProductToCreateGraphql,
-} = require("../../../helpers/cleanProductToCreate.js");
-const buildGraphqlQuery = require("../../../helpers/buildGraphqlQuery.js");
-const fsWriteFile = require("../../../helpers/fsWriteFile.js");
+} = require("../../../../helpers/cleanProductToCreate.js");
+const buildGraphqlQuery = require("../../../../helpers/buildGraphqlQuery.js");
+const fsWriteFile = require("../../../../helpers/fsWriteFile.js");
 const path = require("path");
 const { API_VERSION } = process.env;
 
