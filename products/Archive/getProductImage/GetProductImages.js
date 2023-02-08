@@ -1,10 +1,10 @@
 require("../../config");
 const path = require("path");
 const mongojs = require("mongojs");
-const buildAxiosQuery = require("../../helpers/buildAxiosQuery");
-const fsAppendFile = require("../../helpers/fsAppendFile.js");
-const cleanIDGraphql = require("../../helpers/cleanIDGraphql");
-const consoleColor = require("../../helpers/consoleColor.js");
+const buildAxiosQuery = require("../../../helpers/buildAxiosQuery");
+const fsAppendFile = require("../../../helpers/fsAppendFile.js");
+const cleanIDGraphql = require("../../../helpers/cleanIDGraphql");
+const consoleColor = require("../../../helpers/consoleColor.js");
 
 const { NODE_ENV } = process.env;
 var db = mongojs("teefury", ["product_images"]);
