@@ -1,6 +1,4 @@
-require("../config.js");
-const axiosRequest = require("./axiosRequest.js");
-const { SHOP, ACCESS_TOKEN } = process.env;
+import axios from "axios";
 
 /**
  * Building rest API end point
@@ -13,19 +11,23 @@ const { SHOP, ACCESS_TOKEN } = process.env;
 const buildRestBody = async (url, method, body) => {
   try {
     const params = {
-      url: `https://${SHOP}.myshopify.com${url}`,
+      url: url,
       headers: {
-        "X-Shopify-Access-Token": ACCESS_TOKEN,
+        "X-Shopify-Access-Token": SHOPIFY_TOKEN,
         "Content-Type": "application/json",
       },
       method: method,
     };
-    const result = await axiosRequest(params);
+
+    if(body) {
+      params.data = body;
+    }
+
+    const result = await axios(params);
     return result;
   } catch (error) {
-    console.log("buildRestBody Error: ", error);
     throw error;
   }
 };
 
-module.exports = buildRestBody;
+export default buildRestBody;

@@ -1,13 +1,15 @@
-const axios = require("axios").default;
+import axios from "axios";
 
 /********************************
-const SHOP = "";
-const ACCESS_TOKEN = "";
+// example graphql query
+const SHOPIFY_DOMAIN = "";
+const SHOPIFY_TOKEN = "";
+const SHOPIFY_VERSION = "";
 const exampleQuery = {
-  url: `https://${SHOP}.myshopify.com/admin/api/2019-10/graphql.json`,
+  url: `https://${SHOP}.myshopify.com/admin/api/${SHOPIFY_VERSION}/graphql.json`,
   headers: {
     'Content-Type': 'application/json',
-    'X-Shopify-Access-Token': ACCESS_TOKEN,
+    'X-Shopify-Access-Token': SHOPIFY_TOKEN,
   },
   method: 'POST',
   data: {
@@ -17,6 +19,14 @@ const exampleQuery = {
 }
 *******************************/
 
+const sleep = (time) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, time);
+  });
+};
+
 /**
  * Post request to shopify
  *
@@ -25,19 +35,10 @@ const exampleQuery = {
  * @returns {Promise}       Promise object represents the post body
  */
 
- const sleep = (time) => {
-	return new Promise((resolve) => {
-		setTimeout(() => {
-			resolve();
-		}, time);
-	});
-}
-
-
-const axiosRequest = async (query, delay = 500) => {
+const axiosRequest = async (query, delay) => {
   try {
     const result = await axios(query);
-		sleep(delay);
+    sleep(delay);
     return result.data;
   } catch (error) {
     console.log(error);
@@ -45,4 +46,4 @@ const axiosRequest = async (query, delay = 500) => {
   }
 };
 
-module.exports = axiosRequest;
+export default axiosRequest;

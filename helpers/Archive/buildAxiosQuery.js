@@ -1,5 +1,5 @@
 require("../config");
-const axiosRequest = require("./axiosRequest.js");
+const axiosRequest = require("../axiosRequest.js");
 const { SHOP, ACCESS_TOKEN } = process.env;
 
 /**
