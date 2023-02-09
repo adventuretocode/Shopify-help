@@ -3,7 +3,7 @@
  *
  * @param {Number} num Amount of time in milliseconds
  */
-module.exports = (num) => {
+export default (num) => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve();
