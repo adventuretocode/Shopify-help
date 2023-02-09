@@ -10,11 +10,11 @@ import baseShopifyRequest from "../../helpers/Shopify/baseShopifyRest.js";
 const getProductDetailByIdRest = async (id) => {
   try {
     const { metafields } = await baseShopifyRequest(
-      `/admin/products/${id}/metafields.json`,
+      `/products/${id}/metafields.json`,
       "GET"
     );
     const { product } = await baseShopifyRequest(
-      `/admin/products/${id}.json`,
+      `/products/${id}.json`,
       "GET"
     );
     const productWithMetafield = { product: { ...product, metafields } };

@@ -1,5 +1,5 @@
 @shopify_version={{$dotenv SHOPIFY_VERSION}}
-@domain={{$dotenv DOMAIN}}
+@domain={{$dotenv SHOPIFY_DOMAIN}}
 @shopify_key={{$dotenv SHOPIFY_KEY}}
 @product_id={{$dotenv PRODUCT_ID}}
 
