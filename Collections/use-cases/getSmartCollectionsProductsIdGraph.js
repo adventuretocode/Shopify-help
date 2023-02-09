@@ -1,4 +1,4 @@
-const buildGraphqlQuery = require("./buildGraphqlQuery.js");
+const buildGraphqlQuery = require("../../helpers/buildGraphqlQuery.js");
 
 /**
  * Get product details of smart collection's products

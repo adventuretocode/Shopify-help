@@ -5,25 +5,26 @@ import axios from "axios";
  *
  * @param  {String} url    the url param of the end point
  * @param  {String} method HTTP method: GET, POST, PUT, DELETE
- * @param  {Object} body   The body if need to post data
+ * @param  {Object} params Url parameter search
+ * @param  {Object} data   The body if need to post data
  */
 
-const buildRestBody = async (url, method, body) => {
+const buildRestBody = async (url, method, params, data) => {
   try {
-    const params = {
+    const options = {
       url: url,
+      method: method,
+      params: params,
       headers: {
         "X-Shopify-Access-Token": SHOPIFY_TOKEN,
         "Content-Type": "application/json",
       },
-      method: method,
     };
 
-    if(body) {
-      params.data = body;
-    }
+    if (!data) delete options.data;
+    if (!params) delete options.params;
 
-    const result = await axios(params);
+    const result = await axios(options);
     return result;
   } catch (error) {
     throw error;
