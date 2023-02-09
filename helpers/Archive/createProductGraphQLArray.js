@@ -1,7 +1,7 @@
-const cleanProductToCreateRest = require("./cleanProductToCreate.js");
-const cleanIDGraphql = require("./cleanIDGraphql.js");
-const fsWriteFile = require("./fsWriteFile.js");
-const createProductGraphql = require("./createProductGraphql.js");
+const cleanProductToCreateRest = require("../cleanProductToCreate.js");
+const cleanIDGraphql = require("../cleanIDGraphql.js");
+const fsWriteFile = require("../fsWriteFile.js");
+const createProductGraphql = require("../createProductGraphql.js");
 
 /**
  * Create products in staging from id
