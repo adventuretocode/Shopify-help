@@ -1,8 +1,8 @@
 require("dotenv").config();
 const request = require("request");
 const fs = require("fs");
-const cleanData = require("../../helpers/cleanData.js");
-const fsWriteFile = require("../../helpers/fsWriteFile.js");
+const cleanData = require("../../helpers/cleanData.js.js");
+const fsWriteFile = require("../../helpers/fsWriteFile.js.js");
 const path = require("path");
 
 /**
