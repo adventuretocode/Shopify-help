@@ -1,4 +1,4 @@
-const buildGraphqlQuery = require("./buildGraphqlQuery.js");
+const buildGraphqlQuery = require("../../helpers/buildGraphqlQuery.js");
 
 /**
  * Create product from graphQL

@@ -1,5 +1,5 @@
-const fs = require("fs");
-const fsWriteFile = require("./fsWriteFile.js");
+import fs from "fs";
+import fsWriteFile from "./fsWriteFile.js";
 
 /**
  * File system create a file with json object
@@ -9,8 +9,8 @@ const fsWriteFile = require("./fsWriteFile.js");
  * @return {Promise}             Promise object if the file exist
  */
 
-const createFileIfNotExist = function(fileName) {
-  return new Promise(async function(resolve, reject) {
+const createFileIfNotExist = (fileName) => {
+  return new Promise(async (resolve, reject) => {
     try {
       if(!fs.existsSync(fileName)) {
         fsWriteFile(fileName, {});
@@ -22,4 +22,4 @@ const createFileIfNotExist = function(fileName) {
   });
 }
 
-module.exports = createFileIfNotExist;
+export default createFileIfNotExist;

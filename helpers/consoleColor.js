@@ -1,4 +1,4 @@
-const cleanIDGraphql = require("./cleanIDGraphql");
+import cleanIDGraphql from "./cleanIDGraphql.js";
 
 /**
  * Give the console a little color
@@ -6,7 +6,7 @@ const cleanIDGraphql = require("./cleanIDGraphql");
  * @param {Number} num Any number so the color bits can show normally an ID
  * @param {String} txt String to console to the terminal
  */
-module.exports = function (num, txt) {
+export default (num, txt) => {
   if (typeof num !== "number") {
     num = cleanIDGraphql(num);
   }

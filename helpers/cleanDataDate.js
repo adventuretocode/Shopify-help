@@ -1,7 +1,7 @@
 
 // Convert Shopify date into MariaDb date
 // 2020-02-28T23:09:18Z => 2020-04-28 14:39:26
-const convertDate = function(string) {
+export const convertDate = function(string) {
   if(string.length > 23) {
     const shopifyDateTime = string.replace("T", " ").replace("Z", "").split("-");
     shopifyDateTime.pop();
@@ -21,7 +21,7 @@ const convertDate = function(string) {
  * cleanArtistFileName("2020-05-13T05:08:59Z")
  * // 2020-5-13 00:10:02
  */
-const cleanDate = (shopifyDate) => {
+export const cleanDate = (shopifyDate) => {
   const newYorkTime = new Date(shopifyDate)
     .toLocaleString("en-US", { hour12: false, timeZone: "America/New_York" });
   const [date, time] = newYorkTime.split(", ");
@@ -30,5 +30,3 @@ const cleanDate = (shopifyDate) => {
   return [mariaDBDate, time].join(" ");
 };
 
-module.exports.convertDate = convertDate;
-module.exports.cleanDate = cleanDate;

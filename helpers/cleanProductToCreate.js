@@ -15,7 +15,7 @@
  * @return {Promise<Object>}
  */
 
-exports.cleanProductToCreateRest = (
+export const cleanProductToCreateRest = (
   {
     product: {
       title,
@@ -121,7 +121,7 @@ exports.cleanProductToCreateRest = (
  * @return {Promise<{Object}>}
  */
 
-exports.cleanProductToCreateGraphql = (
+export const cleanProductToCreateGraphql = (
   {
     product: {
       title,
