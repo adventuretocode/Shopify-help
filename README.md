@@ -22,3 +22,23 @@ GET https://{{domain}}.myshopify.com/admin/api/{{api_version}}/shop.json
 Content-Type: application/json
 X-Shopify-Access-Token: {{token}}
 ```
+
+Graphql example starter
+```js
+const SHOPIFY_DOMAIN = "";
+const SHOPIFY_TOKEN = "";
+const SHOPIFY_VERSION = "";
+
+const exampleQuery = {
+  url: `https://${SHOPIFY_DOMAIN}.myshopify.com/admin/api/${SHOPIFY_VERSION}/graphql.json`,
+  headers: {
+    'Content-Type': 'application/json',
+    'X-Shopify-Access-Token': SHOPIFY_TOKEN,
+  },
+  method: 'POST',
+  data: {
+    query: query,
+    variables: variables,
+  },
+}
+```
