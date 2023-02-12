@@ -2,7 +2,7 @@
 const { createCustomerProfile } = require("./create-customer-profile-with-payment.cjs");
 
 const customer = {
-  email: "sam@chelseaandrachel.com",
+  email: "",
   firstName: "Sam",
   lastName: "Walmart",
   address: "3600 W McFadden Ave",
