@@ -1,6 +1,12 @@
-POST https://{{$dotenv SHOPIFY_DOMAIN}}.myshopify.com/admin/api/{{$dotenv SHOPIFY_VERSION}}/graphql.json
+@api_version={{$dotenv SHOPIFY_VERSION}}
+@shop_domain={{$dotenv SHOPIFY_DOMAIN}}
+@shopify_token={{$dotenv SHOPIFY_TOKEN}}
+
+###
+# GraphQL
+POST https://{{shop_domain}}.myshopify.com/admin/api/{{api_version}}/graphql.json
 Content-Type: application/json
-X-Shopify-Access-Token: {{$dotenv SHOPIFY_TOKEN}}
+X-Shopify-Access-Token: {{shopify_token}}
 X-REQUEST-TYPE: GraphQL
 
 query listWebhooks {
@@ -17,3 +23,11 @@ query listWebhooks {
     }
   }
 }
+
+
+###
+# Rest
+GET https://{{shop_domain}}.myshopify.com/admin/api/{{api_version}}/webhooks.json
+Content-Type: application/json
+X-Shopify-Access-Token: {{shopify_token}}
+
