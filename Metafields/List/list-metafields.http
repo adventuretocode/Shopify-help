@@ -1,0 +1,16 @@
+@api_version={{$dotenv SHOPIFY_VERSION}}
+@shop_domain={{$dotenv SHOPIFY_DOMAIN}}
+@shopify_token={{$dotenv SHOPIFY_TOKEN}}
+@resource_owner_id={{$dotenv RESOURCE_OWNER_ID}}
+@resource_owner={{$dotenv RESOURCE_OWNER}}
+# customer, product, blogs
+
+###
+# TODO: Grapql
+
+###
+# Rest
+# encodeURI(`/admin/api/2023-01/metafields.json?metafield[owner_id]=${customerId}&metafield[owner_resource]=${resource_owner}`
+GET https://{{shop_domain}}.myshopify.com/admin/api/{{api_version}}/metafields.json?metafield%5Bowner_id%5D={{resource_owner_id}}&metafield%5Bowner_resource%5D={{resource_owner}}
+Content-Type: application/json
+X-Shopify-Access-Token: {{shopify_token}}
