@@ -1,0 +1,11 @@
+# List all Products in a specific collection
+@api_version={{$dotenv SHOPIFY_VERSION}}
+@domain={{$dotenv SHOPIFY_DOMAIN}}
+@token={{$dotenv SHOPIFY_TOKEN}}
+@limit=1 
+#max is 250
+@query_string=limit={{limit}}&collection_id={{$dotenv COLLECTION_ID}}
+###
+GET https://{{domain}}.myshopify.com/admin/api/{{api_version}}/products.json?{{query_string}}
+Content-Type: application/json
+X-Shopify-Access-Token: {{token}}
