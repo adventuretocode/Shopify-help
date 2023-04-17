@@ -1,4 +1,7 @@
-import cleanIDGraphql from "./cleanIDGraphql.js";
+const cleanIDGraphql = (gid) => {
+  const splitString = gid.split("/");
+  return parseInt(splitString[splitString.length - 1]);
+};
 
 /**
  * Give the console a little color
@@ -10,5 +13,5 @@ export default (num, txt) => {
   if (typeof num !== "number") {
     num = cleanIDGraphql(num);
   }
-  console.log(`\u001b[38;5;${num % 255}m${txt}\u001b[0m`);
+  return `\u001b[38;5;${num % 255}m${txt}\u001b[0m`;
 };

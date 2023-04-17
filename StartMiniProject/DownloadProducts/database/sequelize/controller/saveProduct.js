@@ -1,5 +1,5 @@
 import { Product, Variant, Option } from "../models/Product.js";
-import consoleColor from '../../../helper/consoleColor.js'
+import consoleColor from "../../../helper/consoleColor.js";
 
 const saveProduct = async (data) => {
   try {
@@ -73,7 +73,12 @@ const saveProduct = async (data) => {
       })
     );
 
-    consoleColor(data.id, `Saved! Shopify ID: ${data.id} Handle: ${data.handle}`);
+    console.log(
+      consoleColor(
+        data.id,
+        `Saved! Shopify ID: ${data.id} Handle: ${data.handle}`
+      )
+    );
     return "Saved!";
   } catch (error) {
     console.error(`Error saving product: ${error}`);
