@@ -1,7 +1,7 @@
 const {
   cleanProductToCreateRest,
   cleanProductToCreateGraphql
-} = require("../helpers/cleanProductToCreate.js");
+} = require("../../../helpers/cleanProductToCreate.js");
 const buildRestBody = require("../helpers/buildRestBody");
 const buildGraphqlQuery = require("../helpers/buildGraphqlQuery.js");
 

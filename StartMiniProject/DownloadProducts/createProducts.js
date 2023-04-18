@@ -26,8 +26,15 @@ const addProductsToStore = async (products) => {
       console.log("------------------------------");
       console.log("-----------ERROR!!!!!!!!!------------");
       console.log(`Issue Creating ${product.id}`);
+      console.log(JSON.stringify(error))
       console.log("------------------------------");
-      throw error;
+      const res = await BasicProduct.update(
+        { created_on_dev_store: true },
+        { where: { id: product.id } }
+      );
+      console.log("++++++++++++++++++++++++++++++")
+      console.log("++++++++++ Marked as created mehhhhhh! +++++++++++++++++")
+      console.log("++++++++++++++++++++++++++++++")
     }
   }
   return "Batch Completed";
@@ -46,7 +53,11 @@ const main = async () => {
       if(!products.length) {
         return "Finished";
       }
-      await addProductsToStore(products);
+      try {
+        await addProductsToStore(products);
+      } catch (error) {
+        // do nothing continue adding
+      }
     }
   } catch (error) {
     throw error;
@@ -60,5 +71,5 @@ main()
   })
   .catch((err) => {
     console.log("============ Main Errored =============");
-    console.log(err);
+    console.log(err.toString());
   });

@@ -1,6 +1,6 @@
 require("../config");
 const buildGraphqlQuery = require("../helpers/buildGraphqlQuery.js");
-const cleanIDGraphql = require("../helpers/cleanIDGraphql.js");
+const cleanIDGraphql = require("../../helpers/cleanIDGraphql.js");
 
 /**
  * Look for a smart collection
