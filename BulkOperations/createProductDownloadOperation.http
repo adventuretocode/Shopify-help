@@ -1,0 +1,11 @@
+mutation createProductBulkOperations ($query: !String {
+  bulkOperationRunQuery(query: $query) {
+    bulkOperation {
+    id
+    }
+  }
+}
+
+{ 
+  "query" : "{\n products {\n   edges {\n     node {\n id\n title\n handle\n vendor\n productType\n totalVariants\n templateSuffix\n tags\n createdAt\n publishedAt\n updatedAt\n description\n descriptionHtml\n bodyHtml\n options {\n   id\n   name\n   values\n }\n variants {\n   edges {\n     node {\nid\ntitle\nimage {\n  id\n  originalSrc\n}\nfulfillmentService {\n  inventoryManagement\n}\nselectedOptions {\n  name\n  value\n}\ninventoryQuantity\ninventoryPolicy\ninventoryItem {\n  inventoryHistoryUrl\n}\nprice\nsku\nbarcode\nselectedOptions {\n  name\n  value\n}\nposition\nrequiresShipping\ntaxable\ncompareAtPrice\nweight\nweightUnit\ncreatedAt\nupdatedAt\n     }\n   }\n }\n featuredImage {\n   id\n   originalSrc\n }\n     }\n   }\n }\n}"
+}
