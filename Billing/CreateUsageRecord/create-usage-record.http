@@ -1,12 +1,19 @@
-POST https://{{$dotenv SHOPIFY_STORE}}.myshopify.com/admin/api/2022-07/graphql.json
+
+@domain={{$dotenv SHOPIFY_DOMAIN}}
+@api_version={{$dotenv SHOPIFY_VERSION}}
+@amount=10.00
+@token={{$dotenv SHOPIFY_TOKEN}}
+@description=Super Mega Plan 1000 emails
+
+###
+POST https://{{domain}}.myshopify.com/admin/api/{{api_version}}/graphql.json
 Content-Type: application/json
-X-Shopify-Access-Token: {{$dotenv SHOPIFY_API_KEY}}
+X-Shopify-Access-Token: {{token}}
 X-REQUEST-TYPE: GraphQL
 
 mutation appUsageRecordCreate($lineItemId: ID!, $price: MoneyInput!, $description: String!) {
-  appUsageRecordCreate (subscriptionLineItemId: $lineItemId, price: $price, description: $descrition) {
+  appUsageRecordCreate (subscriptionLineItemId: $lineItemId, price: $price, description: $description) {
     appUsageRecord {
-      description
       id
       price {
         amount
@@ -22,24 +29,24 @@ mutation appUsageRecordCreate($lineItemId: ID!, $price: MoneyInput!, $descriptio
 {
   "lineItemId": "gid://shopify/AppSubscriptionLineItem/{{$dotenv SUBSCRIPTION_LINE_ITEM_ID}}?v=1&index=0",
   "price": {
-    "amount": 0.50,
+    "amount": "{{amount}}",
     "currencyCode": "USD"
   },
-  "description": "Monthly Invoice"
+  "description": "{{description}}"
 }
 
 
 ###
-POST https://{{$dotenv SHOPIFY_STORE}}.myshopify.com/admin/api/2022-07/graphql.json
+POST https://{{domain}}.myshopify.com/admin/api/{{api_version}}/graphql.json
 Content-Type: application/json
-X-Shopify-Access-Token: {{$dotenv SHOPIFY_API_KEY}}
+X-Shopify-Access-Token: {{token}}
 X-REQUEST-TYPE: GraphQL
 
 mutation {
   appUsageRecordCreate(
     subscriptionLineItemId: "gid://shopify/AppSubscriptionLineItem/{{$dotenv SUBSCRIPTION_LINE_ITEM_ID}}?v=1&index=0"
-    description: "Super Mega Plan 1000 emails",
-    price: { amount: 10.00, currencyCode: USD }
+    description: "{{description}}",
+    price: { amount: {{amount}}, currencyCode: USD }
   ) {
     userErrors {
       field
@@ -50,3 +57,5 @@ mutation {
     }
   }
 }
+
+###
