@@ -3,6 +3,7 @@ import retrieveProductsByCollection from "./Shopify/retrieve-products-by-collect
 import { PaginationLinkHeaders } from "./Shopify/pagination-link-headers.js";
 import saveProduct from "./database/sequelize/controller/saveProduct.js";
 import conn from "./database/sequelize/config/connection.js";
+import { writeFile } from "fs/promises";
 
 const { COLLECTION_ID } = process.env;
 
@@ -36,6 +37,8 @@ const saveProductsInCollection = async (collectionId) => {
         result = await retrieveProductsByCollection(collectionId);
       }
 
+      await writeFile(new URL(`./data/result-0-${paginationCount}.json`, import.meta.url), JSON.stringify(result.headers, null, 2));
+
       const {
         headers,
         data: { products },
@@ -50,6 +53,7 @@ const saveProductsInCollection = async (collectionId) => {
       nextPageInfo = nextPageUrl ? pageInfo : undefined;
       paginationCount += 1;
     } catch (error) {
+      console.log(error)
       console.log(`Paginated ${paginationCount} times`);
       console.log(`NextPageInfo: `, nextPageInfo);
       debugger;
@@ -66,7 +70,7 @@ const main = async (collectionId) => {
   }
 };
 
-const reloadDataBase = false;
+const reloadDataBase = true;
 conn.sq.sync({ force: reloadDataBase }).then(() => {
   main(COLLECTION_ID)
     .then(() => {
