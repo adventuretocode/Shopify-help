@@ -9,8 +9,8 @@ Content-Type: application/json
 X-Shopify-Access-Token: {{token}}
 X-REQUEST-TYPE: GraphQL
 
-query listFiles {
-  files (first: 50) {
+query listFiles($after: String) {
+  files (first: 50, after: $after) {
     pageInfo {
       endCursor
       startCursor
