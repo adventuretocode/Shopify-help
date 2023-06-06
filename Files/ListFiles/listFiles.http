@@ -1,0 +1,175 @@
+@api_version={{$dotenv SHOPIFY_VERSION}}
+@domain={{$dotenv SHOPIFY_DOMAIN}}
+@token={{$dotenv SHOPIFY_TOKEN}}
+@image={{$dotenv IMAGE_PATH}}
+
+###
+POST https://{{domain}}.myshopify.com/admin/api/{{api_version}}/graphql.json
+Content-Type: application/json
+X-Shopify-Access-Token: {{token}}
+X-REQUEST-TYPE: GraphQL
+
+query listFiles {
+  files (first: 50) {
+    pageInfo {
+      endCursor
+      startCursor
+    }
+    edges {
+      cursor
+      node {
+        ... on MediaImage {
+          id
+        }
+        alt
+        preview {
+          image {
+            url
+            id
+          }
+          status
+        }
+        fileErrors {
+          code
+          details
+          message
+        }
+      }
+    }
+  }
+}
+
+###
+# query
+## created_at
+## filename
+## media_type
+## original_upload_size
+## status
+## updated_at
+## used_in
+
+@file_name={{$dotenv FILE_NAME}}
+
+query listFiles($after: String) {
+  files (first: 1, after: $after, query: "filename:{{file_name}}") {
+    pageInfo {
+      endCursor
+      startCursor
+    }
+    edges {
+      cursor
+      node {
+        ... on MediaImage {
+          id
+        }
+        alt
+        preview {
+          image {
+            url
+            id
+          }
+          status
+        }
+        fileErrors {
+          code
+          details
+          message
+        }
+      }
+    }
+  }
+}
+
+###
+query listFiles($after: String) {
+  files (first: 50, after: $after) {
+    pageInfo {
+      endCursor
+      startCursor
+    }
+    edges {
+      cursor
+      node {
+        ... on MediaImage {
+          id
+        }
+        alt
+        preview {
+          image {
+            url
+            id
+          }
+          status
+        }
+        fileErrors {
+          code
+          details
+          message
+        }
+      }
+    }
+  }
+}
+
+{
+  "after": "eyJsYXN0X2lkIjozMzcyMDM0OTY1NTM1OCwibGFzdF92YWx1ZSI6IjMzNzIwMzQ5NjU1MzU4In0="
+}
+
+###
+# Response Example
+{
+  "data": {
+    "files": {
+      "pageInfo": {
+        "endCursor": "eyJsYXN0X2lkIjozMzcyMDM0OTc1MzY2MiwibGFzdF92YWx1ZSI6IjMzNzIwMzQ5NzUzNjYyIn0=",
+        "startCursor": "eyJsYXN0X2lkIjozMzcyMDM0OTY4ODEyNiwibGFzdF92YWx1ZSI6IjMzNzIwMzQ5Njg4MTI2In0="
+      },
+      "edges": [
+        {
+          "cursor": "eyJsYXN0X2lkIjozMzcyMDM0OTY4ODEyNiwibGFzdF92YWx1ZSI6IjMzNzIwMzQ5Njg4MTI2In0=",
+          "node": {
+            "id": "gid://shopify/MediaImage/338603971033230",
+            "__typename": "MediaImage",
+            "alt": "",
+            "preview": {
+              "image": {
+                "url": "https://cdn.shopify.com/s/files/1/3333/3333/3333/products/some-image?v=1684796231",
+                "id": "gid://shopify/ImageSource/337300623335230"
+              },
+              "status": "READY"
+            },
+            "fileErrors": []
+          }
+        },
+        {
+          "cursor": "eyJsYXN0X2lkIjozMzcyMDM0OTc1MzY2MiwibGFzdF92YWx1ZSI6IjMzNzIwMzQ5NzUzNjYyIn0=",
+          "node": {
+            "id": "gid://shopify/MediaImage/33860397105432112",
+            "__typename": "MediaImage",
+            "alt": "",
+            "preview": {
+              "image": {
+                "url": "https://cdn.shopify.com/s/files/1/3333/3333/3333/products/some-image-other?v=1684796233",
+                "id": "gid://shopify/ImageSource/33730068833333"
+              },
+              "status": "READY"
+            },
+            "fileErrors": []
+          }
+        }
+      ]
+    }
+  },
+  "extensions": {
+    "cost": {
+      "requestedQueryCost": 10,
+      "actualQueryCost": 10,
+      "throttleStatus": {
+        "maximumAvailable": 10000,
+        "currentlyAvailable": 9990,
+        "restoreRate": 500
+      }
+    }
+  }
+}

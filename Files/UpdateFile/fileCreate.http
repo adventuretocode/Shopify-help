@@ -1,0 +1,89 @@
+@api_version={{$dotenv SHOPIFY_VERSION}}
+@domain={{$dotenv SHOPIFY_DOMAIN}}
+@token={{$dotenv SHOPIFY_TOKEN}}
+@image_path={{$dotenv IMAGE_PATH}}
+@image_id={{$dotenv IMAGE_ID}}
+
+###
+POST https://{{domain}}.myshopify.com/admin/api/{{api_version}}/graphql.json
+Content-Type: application/json
+X-Shopify-Access-Token: {{token}}
+X-REQUEST-TYPE: GraphQL
+
+mutation fileUpdate($files: [FileUpdateInput!]!) {
+  fileUpdate(files: $files) {
+    files {
+      ... on MediaImage {
+        id
+      }
+      alt
+      createdAt
+      fileStatus
+      preview {
+        image {
+          url
+          id
+        }
+        status
+      }
+      __typename
+      fileErrors {
+        code
+        details
+        message
+      }
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}
+
+{
+  "files": [
+    {
+      "alt": "A new image",
+      "id": "gid://shopify/MediaImage/{{image_id}}",
+      "previewImageSource": "{{image_path}}"
+    }
+  ]
+}
+
+###
+# Response Example
+{
+  "data": {
+    "fileUpdate": {
+      "files": [
+        {
+          "id": "gid://shopify/MediaImage/3386039712220",
+          "alt": "A new image",
+          "createdAt": "2023-06-05T23:05:56Z",
+          "fileStatus": "READY",
+          "preview": {
+            "image": {
+              "url": "https://cdn.shopify.com/s/files/1/02221/72222/822226/files/updated-image.png?v=1686006358",
+              "id": "gid://shopify/ImageSource/33870164623222"
+            },
+            "status": "READY"
+          },
+          "__typename": "MediaImage",
+          "fileErrors": []
+        }
+      ],
+      "userErrors": []
+    }
+  },
+  "extensions": {
+    "cost": {
+      "requestedQueryCost": 13,
+      "actualQueryCost": 13,
+      "throttleStatus": {
+        "maximumAvailable": 10000.0,
+        "currentlyAvailable": 9987,
+        "restoreRate": 500.0
+      }
+    }
+  }
+}

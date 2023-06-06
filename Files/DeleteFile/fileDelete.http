@@ -1,0 +1,50 @@
+@api_version={{$dotenv SHOPIFY_VERSION}}
+@domain={{$dotenv SHOPIFY_DOMAIN}}
+@token={{$dotenv SHOPIFY_TOKEN}}
+@image_id={{$dotenv IMAGE_ID}}
+
+###
+POST https://{{domain}}.myshopify.com/admin/api/{{api_version}}/graphql.json
+Content-Type: application/json
+X-Shopify-Access-Token: {{token}}
+X-REQUEST-TYPE: GraphQL
+
+mutation fileDelete($fileIds: [ID!]!) {
+  fileDelete(fileIds: $fileIds) {
+    deletedFileIds
+    userErrors {
+      field
+      message
+    }
+  }
+}
+
+{
+  "fileIds": [
+    "gid://shopify/MediaImage/{{image_id}}"
+  ]
+}
+
+###
+# Response Example
+{
+  "data": {
+    "fileDelete": {
+      "deletedFileIds": [
+        "gid://shopify/MediaImage/{{image_id}}"
+      ],
+      "userErrors": []
+    }
+  },
+  "extensions": {
+    "cost": {
+      "requestedQueryCost": 10,
+      "actualQueryCost": 10,
+      "throttleStatus": {
+        "maximumAvailable": 10000.0,
+        "currentlyAvailable": 9990,
+        "restoreRate": 500.0
+      }
+    }
+  }
+}

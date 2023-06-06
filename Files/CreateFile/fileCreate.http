@@ -1,0 +1,81 @@
+@api_version={{$dotenv SHOPIFY_VERSION}}
+@domain={{$dotenv SHOPIFY_DOMAIN}}
+@token={{$dotenv SHOPIFY_TOKEN}}
+@image={{$dotenv IMAGE_PATH}}
+
+###
+POST https://{{domain}}.myshopify.com/admin/api/{{api_version}}/graphql.json
+Content-Type: application/json
+X-Shopify-Access-Token: {{token}}
+X-REQUEST-TYPE: GraphQL
+
+mutation fileCreate($files: [FileCreateInput!]!) {
+  fileCreate(files: $files) {
+    files {
+      alt
+      createdAt
+      fileStatus
+      preview {
+        image {
+          url
+          id
+        }
+        status
+      }
+      __typename
+      fileErrors {
+        code
+        details
+        message
+      }
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}
+
+{
+  "files": [
+    {
+      "alt": "",
+      "contentType": "IMAGE",
+      "originalSource": "{{image}}"
+    }
+  ]
+}
+
+###
+# Response Example
+{
+  "data": {
+    "fileCreate": {
+      "files": [
+        {
+          "alt": "",
+          "createdAt": "2023-06-05T23:05:56Z",
+          "fileStatus": "UPLOADED",
+          "preview": {
+            "image": null,
+            "status": "UPLOADED"
+          },
+          "__typename": "MediaImage",
+          "fileErrors": []
+        }
+      ],
+      "userErrors": []
+    }
+  },
+  "extensions": {
+    "cost": {
+      "requestedQueryCost": 23,
+      "actualQueryCost": 23,
+      "throttleStatus": {
+        "maximumAvailable": 10000.0,
+        "currentlyAvailable": 9977,
+        "restoreRate": 500.0
+      }
+    }
+  }
+}
