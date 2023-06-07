@@ -1,7 +1,7 @@
 const WEIGHT_UNIT_MAP = [
   { graphName: "KILOGRAMS", restName: "kg" },
   { graphName: "GRAMS", restName: "g" },
-  { graphName: "POUNDS", restName: "lbs" },
+  { graphName: "POUNDS", restName: "lb" },
   { graphName: "OUNCES", restName: "oz" },
 ];
 
