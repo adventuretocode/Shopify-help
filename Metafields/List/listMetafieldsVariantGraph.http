@@ -1,0 +1,32 @@
+@api_version={{$dotenv SHOPIFY_VERSION}}
+@domain={{$dotenv SHOPIFY_DOMAIN}}
+@token={{$dotenv SHOPIFY_TOKEN}}
+@resource_id={{$dotenv RESOURCE_ID}}
+
+###
+POST https://{{domain}}.myshopify.com/admin/api/{{api_version}}/graphql.json
+Content-Type: application/json
+X-Shopify-Access-Token: {{token}}
+X-REQUEST-TYPE: GraphQL
+
+query retreiveMetafields {
+  productVariant (id: "gid://shopify/ProductVariant/{{resource_id}}") {
+    metafields(first: 100) {
+      nodes {
+        namespace
+        key
+        ownerType
+        type
+        value
+        legacyResourceId
+        id
+        owner {
+          ... on ProductVariant {
+            id
+          }
+          __typename
+        }
+      }
+    }
+  }
+}
