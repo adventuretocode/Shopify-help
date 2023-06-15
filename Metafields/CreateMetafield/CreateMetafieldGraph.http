@@ -1,0 +1,48 @@
+@api_version={{$dotenv SHOPIFY_VERSION}}
+@domain={{$dotenv SHOPIFY_DOMAIN}}
+@token={{$dotenv SHOPIFY_TOKEN}}
+
+###
+@namespace={{$dotenv NAMESPACE}}
+@key={{$dotenv KEY}}
+@resource_type=Product
+# Product, Collection, Order, Page, Blog, Article, Customer
+@ownerId=gid://shopify/{{resource_type}}/{{$dotenv RESOURCE_ID}}
+@type={{$dotenv TYPE}}
+@value={{$dotenv VALUE}}
+
+
+###
+POST https://{{domain}}.myshopify.com/admin/api/{{api_version}}/graphql.json
+Content-Type: application/json
+X-Shopify-Access-Token: {{token}}
+X-REQUEST-TYPE: GraphQL
+
+mutation metafieldsSet($metafields: [MetafieldsSetInput!]!) {
+  metafieldsSet(metafields: $metafields) {
+    metafields {
+      # Metafield fields
+      id
+      ownerType
+      reference
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}
+
+{
+  "metafields": [
+    {
+      "namespace": "{{namespace}}",
+      "key": "{{key}}",
+      "ownerId": "{{ownerId}}",
+      "type": "{{type}}",
+      "value": "{{value}}"
+    }
+  ]
+}
+
+
