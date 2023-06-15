@@ -1,0 +1,30 @@
+###
+# Base
+@api_version={{$dotenv SHOPIFY_VERSION}}
+@domain={{$dotenv SHOPIFY_DOMAIN}}
+@token={{$dotenv SHOPIFY_TOKEN}}
+
+###
+# products, variants, collections, customers, orders, pages, blogs, articles, and shop
+@resource_id={{$dotenv RESOURCE_ID}}
+@resource_type={{$dotenv RESOURCE_TYPE}}
+
+###
+# metafield info
+@namespace={{$dotenv NAMESPACE}}
+@key={{$dotenv KEY}}
+@type={{$dotenv TYPE}}
+@value={{$dotenv VALUE}}
+
+POST https://{{domain}}.myshopify.com/admin/api/{{api_version}}/{{resource_type}}/{{resource_id}}/metafields.json
+Content-Type: application/json
+X-Shopify-Access-Token: {{token}}
+
+{
+  "metafield": {
+    "namespace": "{{namespace}}",
+    "key": "{{key}}",
+    "type": "{{type}}",
+    "value": "{{value}}"
+  }
+}
