@@ -48,15 +48,3 @@ mutation metafieldsSet($metafields: [MetafieldsSetInput!]!) {
     }
   ]
 }
-
-
-
-
-### 
-
-curl --request POST \
-  --url https://recharge-crbn8-mock.myshopify.com/admin/api/2022-07/graphql.json \
-  --header 'content-type: application/json' \
-  --header 'user-agent: vscode-restclient' \
-  --header 'x-shopify-access-token: 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' \
-  --data '{"query":"mutation metafieldsSet($metafields: [MetafieldsSetInput!]!) {\n  metafieldsSet(metafields: $metafields) {\n    metafields {\n      id\n      ownerType\n      reference\n      value\n      owner {\n        __typename\n      }\n    }\n    userErrors {\n      field\n      message\n    }\n  }\n}","variables":{"metafields":[{"namespace":"algolia_search","key":"cars","ownerId":"gid://shopify/Shop/47976251554","type":"json_string","value":"{ \"name\": \"Alfa Romeo\", \"value\": \"Alfa Romeo\" }"}]}}'

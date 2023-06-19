@@ -1,0 +1,14 @@
+###
+@api_version={{$dotenv SHOPIFY_VERSION}}
+@domain={{$dotenv SHOPIFY_DOMAIN}}
+@token={{$dotenv SHOPIFY_TOKEN}}
+@product_id={{$dotenv PRODUCT_ID}}
+@variant_id={{$dotenv VARIANT_ID}}
+@page_info={{$dotenv PAGE_INFO}}
+@qs=limit=250&page_info={{$page_info}}
+# @qs=limit=250
+
+### 
+GET https://{{domain}}.myshopify.com/admin/api/{{api_version}}/products/{{product_id}}/variants/{{variant_id}}/metafields.json?{{qs}}
+Content-Type: application/json
+X-Shopify-Access-Token: {{token}}

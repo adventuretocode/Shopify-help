@@ -2,6 +2,7 @@
 @domain={{$dotenv SHOPIFY_DOMAIN}}
 @token={{$dotenv SHOPIFY_TOKEN}}
 @resource_id={{$dotenv RESOURCE_ID}}
+@next_cursor={{$dotenv NEXT_CURSOR}}
 
 ###
 POST https://{{domain}}.myshopify.com/admin/api/{{api_version}}/graphql.json
@@ -11,7 +12,44 @@ X-REQUEST-TYPE: GraphQL
 
 query retreiveMetafields {
   productVariant (id: "gid://shopify/ProductVariant/{{resource_id}}") {
-    metafields(first: 100) {
+    metafields(first: 250) {
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+      nodes {
+        namespace
+        key
+        ownerType
+        type
+        value
+        legacyResourceId
+        id
+        owner {
+          ... on ProductVariant {
+            id
+          }
+          __typename
+        }
+      }
+    }
+  }
+}
+
+###
+# After
+POST https://{{domain}}.myshopify.com/admin/api/{{api_version}}/graphql.json
+Content-Type: application/json
+X-Shopify-Access-Token: {{token}}
+X-REQUEST-TYPE: GraphQL
+
+query retreiveMetafields {
+  productVariant (id: "gid://shopify/ProductVariant/{{resource_id}}") {
+    metafields(first: 250, after: "{{next_cursor}}") {
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
       nodes {
         namespace
         key
