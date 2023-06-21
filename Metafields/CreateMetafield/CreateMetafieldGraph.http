@@ -23,8 +23,9 @@ mutation metafieldsSet($metafields: [MetafieldsSetInput!]!) {
     metafields {
       # Metafield fields
       id
+      namespace
+      key
       ownerType
-      reference
       value
       owner {
         __typename
