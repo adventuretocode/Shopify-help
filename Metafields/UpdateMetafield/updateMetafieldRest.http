@@ -1,0 +1,36 @@
+###
+# basic
+@api_version={{$dotenv SHOPIFY_VERSION}}
+@shop_domain={{$dotenv SHOPIFY_DOMAIN}}
+@shopify_token={{$dotenv SHOPIFY_TOKEN}}
+###
+@metafield_id={{$dotenv METAFIELD_ID}}
+@metafield_value={{$dotenv METAFIELD_VALUE}}
+@resource={{$dotenv RESOURCE_TYPE}}/{{$dotenv RESOURCE_ID}}
+@value={{$dotenv VALUE}}
+
+### 
+# Metafield
+PUT https://{{shop_domain}}.myshopify.com/admin/api/{{api_version}}/{{resource}}/metafields/{{metafield_id}}.json HTTP/1.1
+X-Shopify-Access-Token: {{shopify_token}}
+Content-Type: application/json
+
+{
+  "metafield": {
+    "id": {{metafield_id}},
+    "value": "{{value}}",
+  }
+}
+
+### 
+# Shop Metafield
+PUT https://{{shop_domain}}.myshopify.com/admin/api/{{api_version}}/metafields/{{metafield_id}}.json HTTP/1.1
+X-Shopify-Access-Token: {{shopify_token}}
+Content-Type: application/json
+
+{
+  "metafield": {
+    "id": {{metafield_id}},
+    "value": "{{value}}"
+  }
+}
