@@ -1,0 +1,34 @@
+HTTP/1.1 200 OK
+Date: Mon, 19 Jun 2023 21:18:43 GMT
+Content-Type: application/json; charset=utf-8
+
+{
+  "data": {
+    "metafieldsSet": {
+      "metafields": [
+        {
+          "id": "gid:\/\/shopify\/Metafield\/26823394066594",
+          "namespace": "cars",
+          "key": "make",
+          "ownerType": "SHOP",
+          "value": "{\"name\":\"Alfa Romeo\",\"value\":\"Alfa Romeo\"}",
+          "owner": {
+            "__typename": "Shop"
+          }
+        }
+      ],
+      "userErrors": []
+    }
+  },
+  "extensions": {
+    "cost": {
+      "requestedQueryCost": 11,
+      "actualQueryCost": 11,
+      "throttleStatus": {
+        "maximumAvailable": 1000.0,
+        "currentlyAvailable": 989,
+        "restoreRate": 50.0
+      }
+    }
+  }
+}
