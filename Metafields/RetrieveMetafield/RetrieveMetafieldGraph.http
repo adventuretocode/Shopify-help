@@ -1,0 +1,26 @@
+@api_version={{$dotenv SHOPIFY_VERSION}}
+@domain={{$dotenv SHOPIFY_DOMAIN}}
+@token={{$dotenv SHOPIFY_TOKEN}}
+
+###
+@metafield_id={{$dotenv METAFIELD_ID}}
+
+###
+#
+POST https://{{domain}}.myshopify.com/admin/api/{{api_version}}/graphql.json
+Content-Type: application/json
+X-Shopify-Access-Token: {{token}}
+X-REQUEST-TYPE: GraphQL
+
+query getMetafield($metafield_gid: ID!){
+  metafield (id: $metafield_gid) {
+    id
+    namespace
+    key
+    value
+  }
+}
+
+{
+  "metafield_gid": "gid://shopify/Metafield/{{metafield_id}}"
+}

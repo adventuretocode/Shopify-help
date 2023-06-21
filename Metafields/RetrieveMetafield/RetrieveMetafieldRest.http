@@ -1,0 +1,23 @@
+###
+# basic
+@api_version={{$dotenv SHOPIFY_VERSION}}
+@shop_domain={{$dotenv SHOPIFY_DOMAIN}}
+@shopify_token={{$dotenv SHOPIFY_TOKEN}}
+###
+@metafield_id={{$dotenv METAFIELD_ID}}
+@resouce_type=products
+# products, collections, orders, customers
+@resource_id={{$dotenv RESOURCE_ID}}
+@resource={{resouce_type}}/{{resource_id}}
+@value={{$dotenv VALUE}}
+### 
+
+GET https://{{shop_domain}}.myshopify.com/admin/api/{{api_version}}/{{resource}}/metafields/{{metafield_id}}.json HTTP/1.1
+X-Shopify-Access-Token: {{shopify_token}}
+Content-Type: application/json
+
+### 
+# Shop Metafield
+GET https://{{shop_domain}}.myshopify.com/admin/api/{{api_version}}/metafields/{{metafield_id}}.json HTTP/1.1
+X-Shopify-Access-Token: {{shopify_token}}
+Content-Type: application/json
