@@ -1,0 +1,260 @@
+POST /api/webhooks HTTP/1.1
+Host: old-man-yelling.ngork.io
+User-Agent: Shopify-Captain-Hook
+Content-Length: 7063
+Accept: */*
+Accept-Encoding: gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+Content-Type: application/json
+X-Forwarded-For: 
+X-Forwarded-Proto: https
+X-Shopify-Api-Version: 2023-04
+X-Shopify-Hmac-Sha256: 
+X-Shopify-Product-Id: 7939620667554
+X-Shopify-Shop-Domain: old-man-yelling.myshopify.com
+X-Shopify-Topic: products/update
+X-Shopify-Triggered-At: 2023-06-29T05:32:07Z
+X-Shopify-Webhook-Id: 25d9a31d-712f-48eb-aa14-aad0a19accb9
+
+{
+  "id": 7939620667554,
+  "title": "ORIA Password Key Box Outdoor Key Safe Lock Box Decoration Key Code Box Key Storage Lock Box Wall Mounted Password Box",
+  "body_html": "\u003ch1\u003eSPECIFICATIONS\u003c/h1\u003e\u003cp\u003e\u003cspan\u003eOrigin\u003c/span\u003e: \u003cspan style=\"color:#333\"\u003eMainland China\u003c/span\u003e\u003c/p\u003e\u003cp\u003e\u003cspan\u003eModel Number\u003c/span\u003e: \u003cspan style=\"color:#333\"\u003eKEY LOCK BOX\u003c/span\u003e\u003c/p\u003e",
+  "vendor": "recharge-crbn8-mock",
+  "product_type": "0",
+  "created_at": "2023-06-06T10:09:10-04:00",
+  "handle": "oria-password-key-box-outdoor-key-safe-lock-box-decoration-key-code-box-key-storage-lock-box-wall-mounted-password-box",
+  "updated_at": "2023-06-29T01:32:07-04:00",
+  "published_at": "2023-06-06T10:09:08-04:00",
+  "template_suffix": null,
+  "status": "active",
+  "published_scope": "web",
+  "tags": "some",
+  "admin_graphql_api_id": "gid://shopify/Product/7939620667554",
+  "variants": [
+    {
+      "id": 43328645988514,
+      "product_id": 7939620667554,
+      "title": "A2",
+      "price": "16.59",
+      "sku": "14:29#A2",
+      "position": 1,
+      "inventory_policy": "continue",
+      "compare_at_price": "16.59",
+      "fulfillment_service": "dsers-fulfillment-service",
+      "inventory_management": "shopify",
+      "option1": "A2",
+      "option2": null,
+      "option3": null,
+      "created_at": "2023-06-06T10:09:10-04:00",
+      "updated_at": "2023-06-06T10:09:19-04:00",
+      "taxable": false,
+      "barcode": null,
+      "grams": 0,
+      "image_id": 35396091642018,
+      "weight": 0.0,
+      "weight_unit": "lb",
+      "inventory_item_id": 45431431135394,
+      "inventory_quantity": 50,
+      "old_inventory_quantity": 50,
+      "requires_shipping": true,
+      "admin_graphql_api_id": "gid://shopify/ProductVariant/43328645988514"
+    },
+    {
+      "id": 43328646021282,
+      "product_id": 7939620667554,
+      "title": "A1",
+      "price": "16.59",
+      "sku": "14:193#A1",
+      "position": 2,
+      "inventory_policy": "continue",
+      "compare_at_price": "16.59",
+      "fulfillment_service": "dsers-fulfillment-service",
+      "inventory_management": "shopify",
+      "option1": "A1",
+      "option2": null,
+      "option3": null,
+      "created_at": "2023-06-06T10:09:10-04:00",
+      "updated_at": "2023-06-06T10:09:17-04:00",
+      "taxable": false,
+      "barcode": null,
+      "grams": 0,
+      "image_id": 35396091019426,
+      "weight": 0.0,
+      "weight_unit": "lb",
+      "inventory_item_id": 45431431168162,
+      "inventory_quantity": 47,
+      "old_inventory_quantity": 47,
+      "requires_shipping": true,
+      "admin_graphql_api_id": "gid://shopify/ProductVariant/43328646021282"
+    },
+    {
+      "id": 43328646054050,
+      "product_id": 7939620667554,
+      "title": "A3",
+      "price": "16.59",
+      "sku": "14:691#A3",
+      "position": 3,
+      "inventory_policy": "continue",
+      "compare_at_price": "16.59",
+      "fulfillment_service": "dsers-fulfillment-service",
+      "inventory_management": "shopify",
+      "option1": "A3",
+      "option2": null,
+      "option3": null,
+      "created_at": "2023-06-06T10:09:10-04:00",
+      "updated_at": "2023-06-06T10:09:14-04:00",
+      "taxable": false,
+      "barcode": null,
+      "grams": 0,
+      "image_id": 35396090757282,
+      "weight": 0.0,
+      "weight_unit": "lb",
+      "inventory_item_id": 45431431200930,
+      "inventory_quantity": 50,
+      "old_inventory_quantity": 50,
+      "requires_shipping": true,
+      "admin_graphql_api_id": "gid://shopify/ProductVariant/43328646054050"
+    }
+  ],
+  "options": [
+    {
+      "id": 10187068407970,
+      "product_id": 7939620667554,
+      "name": "Color",
+      "position": 1,
+      "values": ["A2", "A1", "A3"]
+    }
+  ],
+  "images": [
+    {
+      "id": 35396090298530,
+      "product_id": 7939620667554,
+      "position": 1,
+      "created_at": "2023-06-06T10:09:10-04:00",
+      "updated_at": "2023-06-06T10:09:11-04:00",
+      "alt": null,
+      "width": 1000,
+      "height": 1000,
+      "src": "https://cdn.shopify.com/s/files/1/0479/7625/1554/products/H3686a2a0f76c442baa152511aedaa6bcI.jpg?v=1686060551",
+      "variant_ids": [],
+      "admin_graphql_api_id": "gid://shopify/ProductImage/35396090298530"
+    },
+    {
+      "id": 35396090757282,
+      "product_id": 7939620667554,
+      "position": 2,
+      "created_at": "2023-06-06T10:09:14-04:00",
+      "updated_at": "2023-06-06T10:09:14-04:00",
+      "alt": null,
+      "width": 1200,
+      "height": 1200,
+      "src": "https://cdn.shopify.com/s/files/1/0479/7625/1554/files/S0424695abdaa40d7875fe664762e5511E.jpg?v=1686060554",
+      "variant_ids": [43328646054050],
+      "admin_graphql_api_id": "gid://shopify/ProductImage/35396090757282"
+    },
+    {
+      "id": 35396091019426,
+      "product_id": 7939620667554,
+      "position": 3,
+      "created_at": "2023-06-06T10:09:17-04:00",
+      "updated_at": "2023-06-06T10:09:17-04:00",
+      "alt": null,
+      "width": 1000,
+      "height": 1000,
+      "src": "https://cdn.shopify.com/s/files/1/0479/7625/1554/files/H33a1362902584b43a308cbc8d7b9ee99W.jpg?v=1686060557",
+      "variant_ids": [43328646021282],
+      "admin_graphql_api_id": "gid://shopify/ProductImage/35396091019426"
+    },
+    {
+      "id": 35396091642018,
+      "product_id": 7939620667554,
+      "position": 4,
+      "created_at": "2023-06-06T10:09:19-04:00",
+      "updated_at": "2023-06-06T10:09:19-04:00",
+      "alt": null,
+      "width": 1000,
+      "height": 1000,
+      "src": "https://cdn.shopify.com/s/files/1/0479/7625/1554/files/Hb1441ebd14c84b549829ca7bb2ba14f0V.jpg?v=1686060559",
+      "variant_ids": [43328645988514],
+      "admin_graphql_api_id": "gid://shopify/ProductImage/35396091642018"
+    },
+    {
+      "id": 35396091904162,
+      "product_id": 7939620667554,
+      "position": 5,
+      "created_at": "2023-06-06T10:09:22-04:00",
+      "updated_at": "2023-06-06T10:09:22-04:00",
+      "alt": null,
+      "width": 1000,
+      "height": 1000,
+      "src": "https://cdn.shopify.com/s/files/1/0479/7625/1554/files/Hbf20027dd02741e68b60fb2c6380cabfs.jpg?v=1686060562",
+      "variant_ids": [],
+      "admin_graphql_api_id": "gid://shopify/ProductImage/35396091904162"
+    },
+    {
+      "id": 35396092297378,
+      "product_id": 7939620667554,
+      "position": 6,
+      "created_at": "2023-06-06T10:09:24-04:00",
+      "updated_at": "2023-06-06T10:09:24-04:00",
+      "alt": null,
+      "width": 1000,
+      "height": 1000,
+      "src": "https://cdn.shopify.com/s/files/1/0479/7625/1554/files/H486bb98bb8754334b0f88bf58657f109J.jpg?v=1686060564",
+      "variant_ids": [],
+      "admin_graphql_api_id": "gid://shopify/ProductImage/35396092297378"
+    },
+    {
+      "id": 35396092690594,
+      "product_id": 7939620667554,
+      "position": 7,
+      "created_at": "2023-06-06T10:09:27-04:00",
+      "updated_at": "2023-06-06T10:09:27-04:00",
+      "alt": null,
+      "width": 1600,
+      "height": 1600,
+      "src": "https://cdn.shopify.com/s/files/1/0479/7625/1554/files/S74a06a255c364f1f80b242f886d57489y.jpg?v=1686060567",
+      "variant_ids": [],
+      "admin_graphql_api_id": "gid://shopify/ProductImage/35396092690594"
+    },
+    {
+      "id": 35396093509794,
+      "product_id": 7939620667554,
+      "position": 8,
+      "created_at": "2023-06-06T10:09:30-04:00",
+      "updated_at": "2023-06-06T10:09:30-04:00",
+      "alt": null,
+      "width": 1600,
+      "height": 1600,
+      "src": "https://cdn.shopify.com/s/files/1/0479/7625/1554/files/S906b30d150934d0f9a066bd14960c0eco.jpg?v=1686060570",
+      "variant_ids": [],
+      "admin_graphql_api_id": "gid://shopify/ProductImage/35396093509794"
+    },
+    {
+      "id": 35396094001314,
+      "product_id": 7939620667554,
+      "position": 9,
+      "created_at": "2023-06-06T10:09:32-04:00",
+      "updated_at": "2023-06-06T10:09:32-04:00",
+      "alt": null,
+      "width": 1000,
+      "height": 1000,
+      "src": "https://cdn.shopify.com/s/files/1/0479/7625/1554/files/H11bf07b08f3c480b85031d3ede710b8b1.jpg?v=1686060572",
+      "variant_ids": [],
+      "admin_graphql_api_id": "gid://shopify/ProductImage/35396094001314"
+    }
+  ],
+  "image": {
+    "id": 35396090298530,
+    "product_id": 7939620667554,
+    "position": 1,
+    "created_at": "2023-06-06T10:09:10-04:00",
+    "updated_at": "2023-06-06T10:09:11-04:00",
+    "alt": null,
+    "width": 1000,
+    "height": 1000,
+    "src": "https://cdn.shopify.com/s/files/1/0479/7625/1554/products/H3686a2a0f76c442baa152511aedaa6bcI.jpg?v=1686060551",
+    "variant_ids": [],
+    "admin_graphql_api_id": "gid://shopify/ProductImage/35396090298530"
+  }
+}

@@ -1,5 +1,5 @@
 POST /webhooks/app/uninstalled HTTP/1.1
-Host: bryan-tran.ngrok.io
+Host: old-man-yelling.ngork.io
 User-Agent: Shopify-Captain-Hook
 Content-Length: 1616
 Accept: */*
@@ -9,7 +9,7 @@ X-Forwarded-For: 34.29.61.7
 X-Forwarded-Proto: https
 X-Shopify-Api-Version: 2022-07
 X-Shopify-Hmac-Sha256: Dac6TwsAt8Ar/m2mZWvOhDg2oxa3Ln2elvdQuDvuQ5Y=
-X-Shopify-Shop-Domain: crbn8-mock.myshopify.com
+X-Shopify-Shop-Domain: old-man-yelling.myshopify.com
 X-Shopify-Topic: app/uninstalled
 X-Shopify-Triggered-At: 2023-06-06T14:15:33.372734856Z
 X-Shopify-Webhook-Id: cbca04db-57e2-45d2-a9ea-5751ff342b40

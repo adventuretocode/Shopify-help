@@ -1,0 +1,42 @@
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+
+{
+  "data": {
+    "webhookSubscriptions": {
+      "edges": [
+        {
+          "node": {
+            "id": "gid://shopify/WebhookSubscription/1092081385527",
+            "topic": "PRODUCTS_UPDATE",
+            "callbackUrl": "https://old-man-yelling.ngork.io/api/webhooks",
+            "endpoint": {
+              "__typename": "WebhookHttpEndpoint"
+            }
+          }
+        },
+        {
+          "node": {
+            "id": "gid://shopify/WebhookSubscription/1092081418295",
+            "topic": "APP_UNINSTALLED",
+            "callbackUrl": "https://old-man-yelling.ngork.io/api/webhooks",
+            "endpoint": {
+              "__typename": "WebhookHttpEndpoint"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "extensions": {
+    "cost": {
+      "requestedQueryCost": 42,
+      "actualQueryCost": 6,
+      "throttleStatus": {
+        "maximumAvailable": 1000.0,
+        "currentlyAvailable": 994,
+        "restoreRate": 50.0
+      }
+    }
+  }
+}
