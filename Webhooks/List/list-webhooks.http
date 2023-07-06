@@ -16,6 +16,7 @@ query listWebhooks {
         id
         topic
 				callbackUrl
+        createdAt
 				endpoint {
           __typename
         }
