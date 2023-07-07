@@ -1,2 +1,0 @@
-DELETE https://{{$dotenv SHOP}}.myshopify.com/admin/api/{{$dotenv API_VERSION}}/orders/{{$dotenv ORDER_ID}}.json
-X-Shopify-Access-Token: {{$dotenv ACCESS_TOKEN}}
