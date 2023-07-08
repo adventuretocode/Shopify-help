@@ -1,0 +1,116 @@
+POST /api/webhooks HTTP/1.1
+Host: my-store.ngrok.dev
+User-Agent: Shopify-Captain-Hook
+Content-Length: 1798
+Accept: */*
+Accept-Encoding: gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+Content-Type: application/json
+X-Forwarded-For: xx.xxx.xxx.xxx
+X-Forwarded-Proto: https
+X-Shopify-Api-Version: 2023-04
+X-Shopify-Hmac-Sha256: bgntSqsdasldfkjaslfRiMu3F+I1mEhFrxAWD1k70=
+X-Shopify-Shop-Domain: my-store.myshopify.com
+X-Shopify-Topic: selling_plan_groups/update
+X-Shopify-Triggered-At: 2023-07-08T22:57:15.907587056Z
+X-Shopify-Webhook-Id: a1e37250-bb62-4b0e-9caf-b98eed2a22c3
+
+{
+  "admin_graphql_api_id": "gid://shopify/SellingPlanGroup/454033565",
+  "id": 454033565,
+  "name": "2017 Cabernet Sauvignon",
+  "merchant_code": "2017 Cabernet Sauvignon",
+  "admin_graphql_api_app": "gid://shopify/App/294517",
+  "app_id": "294517",
+  "description": null,
+  "options": ["1 Month(s), 2 Month(s), 3 Month(s)"],
+  "position": null,
+  "summary": "3 delivery frequencies, 10% discount",
+  "selling_plans": [
+    {
+      "name": "Delivery every 1 Month",
+      "options": ["1 Month(s)"],
+      "position": 1,
+      "description": null,
+      "billing_policy": {
+        "interval": "month",
+        "interval_count": 1,
+        "min_cycles": null,
+        "max_cycles": null
+      },
+      "delivery_policy": {
+        "interval": "month",
+        "interval_count": 1,
+        "anchors": [],
+        "cutoff": null,
+        "pre_anchor_behavior": "asap"
+      },
+      "pricing_policies": [
+        {
+          "adjustment_type": "percentage",
+          "adjustment_value": "10.0",
+          "after_cycle": 0
+        }
+      ]
+    },
+    {
+      "name": "Delivery every 2 Months",
+      "options": ["2 Month(s)"],
+      "position": 2,
+      "description": null,
+      "billing_policy": {
+        "interval": "month",
+        "interval_count": 2,
+        "min_cycles": null,
+        "max_cycles": null
+      },
+      "delivery_policy": {
+        "interval": "month",
+        "interval_count": 2,
+        "anchors": [],
+        "cutoff": null,
+        "pre_anchor_behavior": "asap"
+      },
+      "pricing_policies": [
+        {
+          "adjustment_type": "percentage",
+          "adjustment_value": "10.0",
+          "after_cycle": 0
+        }
+      ]
+    },
+    {
+      "name": "Delivery every 3 Months",
+      "options": ["3 Month(s)"],
+      "position": 3,
+      "description": null,
+      "billing_policy": {
+        "interval": "month",
+        "interval_count": 3,
+        "min_cycles": null,
+        "max_cycles": null
+      },
+      "delivery_policy": {
+        "interval": "month",
+        "interval_count": 3,
+        "anchors": [],
+        "cutoff": null,
+        "pre_anchor_behavior": "asap"
+      },
+      "pricing_policies": [
+        {
+          "adjustment_type": "percentage",
+          "adjustment_value": "10.0",
+          "after_cycle": 0
+        }
+      ]
+    }
+  ],
+  "product_variants": [],
+  "products": [
+    {
+      "title": "2017 Cabernet Sauvignon",
+      "storefront_graphql_api_id": "gid://shopify/Product/6826452811933",
+      "id": 6826452811933
+    }
+  ]
+}
