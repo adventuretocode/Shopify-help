@@ -1,8 +1,0 @@
-{
-  "ZAuto-90101": {
-    "errno": -2,
-    "code": "ENOENT",
-    "syscall": "open",
-    "path": "/Users/btran/Documents/Code/myCode/Shopify-help/collections/createSmartCollection/ZAuto/individual-prod-miraclebrow/zauto-90101.json"
-  }
-}
