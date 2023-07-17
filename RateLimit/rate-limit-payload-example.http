@@ -1,0 +1,37 @@
+HTTP/1.1 429 Too Many Requests
+Date: Mon, 17 Jul 2023 17:01:34 GMT
+Content-Type: application/json; charset=utf-8
+Transfer-Encoding: chunked
+Connection: close
+X-Sorting-Hat-PodId: 161
+X-Sorting-Hat-ShopId: 47976251554
+Referrer-Policy: origin-when-cross-origin
+X-Frame-Options: DENY
+X-ShopId: 47976251554
+X-ShardId: 161
+X-Stats-UserId: 
+X-Stats-ApiClientId: 47307227137
+X-Stats-ApiPermissionId: 454410240162
+X-Shopify-API-Version: 2022-07
+X-Shopify-API-Version-Warning: https://shopify.dev/concepts/about-apis/versioning
+Retry-After: 2.0
+Strict-Transport-Security: max-age=7889238
+Server-Timing: processing;dur=64, cfRequestDuration;dur=145.999908
+X-Shopify-Stage: production
+Content-Security-Policy: default-src 'self' data: blob: 'unsafe-inline' 'unsafe-eval' https://* shopify-pos://*; block-all-mixed-content; child-src 'self' https://* shopify-pos://*; connect-src 'self' wss://* https://*; frame-ancestors 'none'; img-src 'self' data: blob: https:; script-src https://cdn.shopify.com https://cdn.shopifycdn.net https://checkout.shopifycs.com https://api.stripe.com https://mpsnare.iesnare.com https://appcenter.intuit.com https://www.paypal.com https://js.braintreegateway.com https://c.paypal.com https://maps.googleapis.com https://www.google-analytics.com https://v.shopify.com 'self' 'unsafe-inline' 'unsafe-eval'; upgrade-insecure-requests; report-uri /csp-report?source%5Baction%5D=show&source%5Bapp%5D=Shopify&source%5Bcontroller%5D=admin%2Fshops&source%5Bsection%5D=admin_api&source%5Buuid%5D=dd337bd4-7dcb-4f6b-9915-c0144fb99f12
+X-Content-Type-Options: nosniff
+X-Download-Options: noopen
+X-Permitted-Cross-Domain-Policies: none
+X-XSS-Protection: 1; mode=block; report=/xss-report?source%5Baction%5D=show&source%5Bapp%5D=Shopify&source%5Bcontroller%5D=admin%2Fshops&source%5Bsection%5D=admin_api&source%5Buuid%5D=dd337bd4-7dcb-4f6b-9915-c0144fb99f12
+X-Dc: gcp-us-west2,gcp-us-central1,gcp-us-central1
+X-Request-ID: dd337bd4-7dcb-4f6b-9915-c0144fb99f12
+CF-Cache-Status: DYNAMIC
+Report-To: {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=TUajY0R4TC5QvbwT5bzSX0yOCmOSdOaU02yaQHpFsUkvejMUvXIXJZRilL7QIFpKdBcQk55P9P4ptp%2FVw46SjWiHYDSDEkftDKK6rzVyzOVFHXtgaKW9tYKc536qUMZGft2%2B%2FyT%2FdQhqE7vdGwp29NiFBA%3D%3D"}],"group":"cf-nel","max_age":604800}
+NEL: {"success_fraction":0.01,"report_to":"cf-nel","max_age":604800}
+Server: cloudflare
+CF-RAY: 7e840c30cd7f319d-LAX
+alt-svc: h3=":443"; ma=86400
+
+{
+  "errors": "Exceeded 2 calls per second for api client. Reduce request rates to resume uninterrupted service."
+}
