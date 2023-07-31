@@ -1,0 +1,26 @@
+HTTP/1.1 200 OK
+Date: Mon, 31 Jul 2023 19:00:41 GMT
+Content-Type: application/json; charset=utf-8
+
+{
+  "data": {
+    "bulkOperationRunQuery": {
+      "bulkOperation": {
+        "id": "gid://shopify/BulkOperation/4250405339298",
+        "status": "CREATED"
+      },
+      "userErrors": []
+    }
+  },
+  "extensions": {
+    "cost": {
+      "requestedQueryCost": 10,
+      "actualQueryCost": 10,
+      "throttleStatus": {
+        "maximumAvailable": 1000.0,
+        "currentlyAvailable": 990,
+        "restoreRate": 50.0
+      }
+    }
+  }
+}
