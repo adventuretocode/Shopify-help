@@ -1,0 +1,30 @@
+HTTP/1.1 200 OK
+Date: Mon, 31 Jul 2023 20:02:35 GMT
+Content-Type: application/json; charset=utf-8
+
+{
+  "data": {
+    "node": {
+      "id": "gid://shopify/BulkOperation/4250405339298",
+      "status": "COMPLETED",
+      "errorCode": null,
+      "createdAt": "2023-07-31T19:00:41Z",
+      "completedAt": "2023-07-31T19:00:42Z",
+      "objectCount": "3",
+      "fileSize": "12367",
+      "url": "https://storage.googleapis.com/shopify-tiers-assets-prod-us-east1%2Fjsonl",
+      "partialDataUrl": null
+    }
+  },
+  "extensions": {
+    "cost": {
+      "requestedQueryCost": 1,
+      "actualQueryCost": 1,
+      "throttleStatus": {
+        "maximumAvailable": 1000.0,
+        "currentlyAvailable": 999,
+        "restoreRate": 50.0
+      }
+    }
+  }
+}
