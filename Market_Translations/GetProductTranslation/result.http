@@ -1,0 +1,70 @@
+HTTP/1.1 200 OK
+Date: Wed, 26 Jul 2023 20:50:07 GMT
+Content-Type: application/json; charset=utf-8
+
+{
+  "data": {
+    "products": {
+      "edges": [
+        {
+          "node": {
+            "title": "ORIA Password Key Box Outdoor Key Safe Lock Box Decoration Key Code Box Key Storage Lock Box Wall Mounted Password Box",
+            "options": [
+              {
+                "id": "gid://shopify/ProductOption/10187068407970",
+                "name": "Color",
+                "values": [
+                  "A2"
+                ],
+                "translations": [
+                  {
+                    "key": "name",
+                    "locale": "fr",
+                    "value": "Couleur",
+                    "market": null
+                  }
+                ]
+              }
+            ],
+            "FR_default": [
+              {
+                "key": "body_html",
+                "locale": "fr",
+                "value": "<h1> CARACTÉRISTIQUES</h1>\n<p> <span>Origine</span> : <span style=\"color:#333\">Chine continentale</span></p>\n<p> <span>Numéro de modèle</span> : <span style=\"color:#333\">KEY LOCK BOX</span></p>",
+                "market": null
+              },
+              {
+                "key": "title",
+                "locale": "fr",
+                "value": "ORIA mot de passe clé boîte extérieure clé coffre-fort serrure boîte décoration clé Code boîte clé stockage serrure boîte murale mot de passe boîte",
+                "market": null
+              }
+            ],
+            "FR_1288732834": [],
+            "FR_1288765602": [
+              {
+                "key": "title",
+                "locale": "fr",
+                "value": "Some some some",
+                "market": {
+                  "id": "gid://shopify/Market/1288765602"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "extensions": {
+    "cost": {
+      "requestedQueryCost": 12,
+      "actualQueryCost": 12,
+      "throttleStatus": {
+        "maximumAvailable": 1000.0,
+        "currentlyAvailable": 988,
+        "restoreRate": 50.0
+      }
+    }
+  }
+}

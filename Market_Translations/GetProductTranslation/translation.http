@@ -1,0 +1,144 @@
+@api_version={{$dotenv SHOPIFY_VERSION}}
+@shop_domain={{$dotenv SHOPIFY_DOMAIN}}
+@shopify_token={{$dotenv SHOPIFY_TOKEN}}
+
+
+@market_id={{$dotenv MARKET_ID_ONE}}
+@market_id_one={{$dotenv MARKET_ID_ONE}}
+@market_id_two={{$dotenv MARKET_ID_TWO}}
+
+
+@locale={{$dotenv LOCALE_ONE}}
+@locale_one={{$dotenv LOCALE_ONE}}
+@locale_two={{$dotenv LOCALE_TWO}}
+
+###
+# GraphQL
+POST https://{{shop_domain}}.myshopify.com/admin/api/{{api_version}}/graphql.json
+Content-Type: application/json
+X-Shopify-Access-Token: {{shopify_token}}
+X-REQUEST-TYPE: GraphQL
+
+query productMarket{
+	products(first: 1) {
+    edges {
+      node {
+        title
+        options {
+          id
+          name
+          values
+          translations(locale: "{{locale}}") {
+            key
+            locale
+            value
+            market { # null if available everywhere
+              id 
+            }
+          }
+        }
+        {{locale}}_default: translations(locale: "{{locale}}") {
+          key
+          locale
+          value
+          market {
+            id 
+          }
+        }
+        {{locale}}_{{market_id_one}}: translations(locale: "{{locale}}", marketId: "gid://shopify/Market/{{market_id_one}}") {
+          key
+          locale
+          value
+          market {
+            id 
+          }
+        }
+        {{locale}}_{{market_id_two}}: translations(locale: "{{locale}}", marketId: "gid://shopify/Market/{{market_id_two}}") {
+          key
+          locale
+          value
+          market {
+            id 
+          }
+        }
+      }
+    }
+  }
+}
+
+
+###
+# GraphQL
+POST https://{{shop_domain}}.myshopify.com/admin/api/{{api_version}}/graphql.json
+Content-Type: application/json
+X-Shopify-Access-Token: {{shopify_token}}
+X-REQUEST-TYPE: GraphQL
+
+query productMarket{
+	products(first: 1) {
+    edges {
+      node {
+        title
+        options {
+          id
+          name
+          values
+        }
+        {{locale_one}}_{{market_id}}: translations(locale: "{{locale_one}}") {
+          key
+          locale
+          value
+          market {
+            id 
+          }
+        }
+        {{locale_two}}_{{market_id}}: translations(locale: "{{locale_two}}") {
+          key
+          locale
+          value
+          market {
+            id 
+          }
+        }
+      }
+    }
+  }
+}
+
+###
+# GraphQL
+POST https://{{shop_domain}}.myshopify.com/admin/api/{{api_version}}/graphql.json
+Content-Type: application/json
+X-Shopify-Access-Token: {{shopify_token}}
+X-REQUEST-TYPE: GraphQL
+
+query productMarket{
+	products(first: 1) {
+    edges {
+      node {
+        title
+        options {
+          id
+          name
+          values
+        }
+        {{locale_two}}_global: translations(locale: "{{locale_two}}") {
+          key
+          locale
+          value
+          market {
+            id 
+          }
+        }
+        {{locale_two}}_{{market_id}}: translations(locale: "{{locale_two}}", marketId: "gid://shopify/Market/{{market_id}}") {
+          key
+          locale
+          value
+          market {
+            id 
+          }
+        }
+      }
+    }
+  }
+}
