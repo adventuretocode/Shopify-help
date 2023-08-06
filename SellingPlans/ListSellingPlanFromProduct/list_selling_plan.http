@@ -11,12 +11,10 @@ X-REQUEST-TYPE: GraphQL
 
 query ListSellingPlansFromProduct($id: ID!) {
   product(id: $id) {
-    sellingPlanGroups (first: 2) {
+    sellingPlanGroups (first: 10) {
       nodes {
         appId
-        id
-        productCount
-        productVariantCount
+        gid: id
         sellingPlans (first: 10) {
           nodes {
             name

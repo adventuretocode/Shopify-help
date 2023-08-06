@@ -1,5 +1,5 @@
 HTTP/1.1 200 OK
-Date: Sun, 06 Aug 2023 20:41:07 GMT
+Date: Sun, 06 Aug 2023 20:46:02 GMT
 Content-Type: application/json; charset=utf-8
 
 {
@@ -9,9 +9,7 @@ Content-Type: application/json; charset=utf-8
         "nodes": [
           {
             "appId": "294517",
-            "id": "gid://shopify/SellingPlanGroup/464748701",
-            "productCount": 1,
-            "productVariantCount": 0,
+            "gid": "gid://shopify/SellingPlanGroup/464748701",
             "sellingPlans": {
               "nodes": [
                 {
@@ -35,7 +33,7 @@ Content-Type: application/json; charset=utf-8
   },
   "extensions": {
     "cost": {
-      "requestedQueryCost": 29,
+      "requestedQueryCost": 133,
       "actualQueryCost": 7,
       "throttleStatus": {
         "maximumAvailable": 1000.0,
