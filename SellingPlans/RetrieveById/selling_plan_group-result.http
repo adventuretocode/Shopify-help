@@ -1,0 +1,80 @@
+HTTP/1.1 200 OK
+Date: Sun, 06 Aug 2023 20:42:12 GMT
+Content-Type: application/json; charset=utf-8
+
+{
+  "data": {
+    "sellingPlanGroup": {
+      "id": "gid://shopify/SellingPlanGroup/464748701",
+      "appId": "294517",
+      "createdAt": "2023-08-05T05:28:21Z",
+      "description": null,
+      "merchantCode": "Avocado Oil",
+      "name": "Avocado Oil",
+      "options": [
+        "1 Month(s), 2 Month(s), 3 Month(s)"
+      ],
+      "productCount": 1,
+      "productVariantCount": 0,
+      "summary": "3 delivery frequencies, 10% discount",
+      "sellingPlans": {
+        "__typename": "SellingPlanConnection",
+        "nodes": [
+          {
+            "id": "gid://shopify/SellingPlan/1654554781",
+            "name": "Delivery every 1 Month",
+            "pricingPolicies": [
+              {
+                "adjustmentType": "PERCENTAGE",
+                "adjustmentValue": {
+                  "__typename": "SellingPlanPricingPolicyPercentageValue",
+                  "percentage": 10.0
+                }
+              }
+            ],
+            "inventoryPolicy": null
+          },
+          {
+            "id": "gid://shopify/SellingPlan/1654620317",
+            "name": "Delivery every 2 Months",
+            "pricingPolicies": [
+              {
+                "adjustmentType": "PERCENTAGE",
+                "adjustmentValue": {
+                  "__typename": "SellingPlanPricingPolicyPercentageValue",
+                  "percentage": 10.0
+                }
+              }
+            ],
+            "inventoryPolicy": null
+          },
+          {
+            "id": "gid://shopify/SellingPlan/1654653085",
+            "name": "Delivery every 3 Months",
+            "pricingPolicies": [
+              {
+                "adjustmentType": "PERCENTAGE",
+                "adjustmentValue": {
+                  "__typename": "SellingPlanPricingPolicyPercentageValue",
+                  "percentage": 10.0
+                }
+              }
+            ],
+            "inventoryPolicy": null
+          }
+        ]
+      }
+    }
+  },
+  "extensions": {
+    "cost": {
+      "requestedQueryCost": 803,
+      "actualQueryCost": 13,
+      "throttleStatus": {
+        "maximumAvailable": 1000.0,
+        "currentlyAvailable": 987,
+        "restoreRate": 50.0
+      }
+    }
+  }
+}
