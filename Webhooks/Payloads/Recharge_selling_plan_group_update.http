@@ -8,11 +8,11 @@ Content-Type: application/json
 X-Forwarded-For: xx.xxx.xxx.xxx
 X-Forwarded-Proto: https
 X-Shopify-Api-Version: 2023-04
-X-Shopify-Hmac-Sha256: bgntSqRNoqaaaaa2iMu3F+I1mEhFrxAWD1k70=
+X-Shopify-Hmac-Sha256: bgntSqsdasldfkjaslfRiMu3F+I1mEhFrxAWD1k70=
 X-Shopify-Shop-Domain: my-store.myshopify.com
-X-Shopify-Topic: selling_plan_groups/create
-X-Shopify-Triggered-At: 2023-07-08T15:17:30.586589893Z
-X-Shopify-Webhook-Id: e9fff765-2d1a-4731-ac75-ff5d01dd9c17
+X-Shopify-Topic: selling_plan_groups/update
+X-Shopify-Triggered-At: 2023-07-08T22:57:15.907587056Z
+X-Shopify-Webhook-Id: a1e37250-bb62-4b0e-9caf-b98eed2a22c3
 
 {
   "admin_graphql_api_id": "gid://shopify/SellingPlanGroup/454033565",
