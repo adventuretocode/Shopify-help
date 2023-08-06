@@ -1,0 +1,47 @@
+HTTP/1.1 200 OK
+Date: Sun, 06 Aug 2023 20:41:07 GMT
+Content-Type: application/json; charset=utf-8
+
+{
+  "data": {
+    "product": {
+      "sellingPlanGroups": {
+        "nodes": [
+          {
+            "appId": "294517",
+            "id": "gid://shopify/SellingPlanGroup/464748701",
+            "productCount": 1,
+            "productVariantCount": 0,
+            "sellingPlans": {
+              "nodes": [
+                {
+                  "name": "Delivery every 1 Month",
+                  "id": "gid://shopify/SellingPlan/1654554781"
+                },
+                {
+                  "name": "Delivery every 2 Months",
+                  "id": "gid://shopify/SellingPlan/1654620317"
+                },
+                {
+                  "name": "Delivery every 3 Months",
+                  "id": "gid://shopify/SellingPlan/1654653085"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  },
+  "extensions": {
+    "cost": {
+      "requestedQueryCost": 29,
+      "actualQueryCost": 7,
+      "throttleStatus": {
+        "maximumAvailable": 1000.0,
+        "currentlyAvailable": 993,
+        "restoreRate": 50.0
+      }
+    }
+  }
+}
