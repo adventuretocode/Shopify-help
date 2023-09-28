@@ -12,6 +12,7 @@ X-REQUEST-TYPE: GraphQL
 
 query retrieveMetafields {
   shop {
+    id
     metafields (first: 50, namespace: "{{namespace}}") {
       pageInfo {
         endCursor
